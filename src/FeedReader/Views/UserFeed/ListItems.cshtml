@@ -1,0 +1,49 @@
+﻿@model PagedList.IPagedList<FeedReader.Models.Rss>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Current News";
+}
+
+<h2>Current News Items</h2>
+
+@using (@Html.BeginForm("ListItems", "UserFeed", FormMethod.Get, new { @action = Url.Action("ListItems", "UserFeed", FormMethod.Get, Request.Url.Scheme) }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="searchBox" class="control-label col-md-1">Search:</label>
+            <div class="col-md-10" style="width: 300px;">
+                @Html.TextBox("searchFilter", ViewBag.CurrentFilter as string, new { @id = "searchBox", @class = "form-control", @autofocus = true })
+            </div>
+            <input type="submit" class="btn btn-default" value="Search" />
+        </div>
+    </div>
+}
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>
+               @Html.Raw(item.Title)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.Source)
+            </th>
+            <th align="right">
+                @Html.Raw(item.PubDate)
+            </th>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <span style="width: 95%; align-self: center">
+                    @Html.Raw(item.Description)
+                </span>
+            </td>
+        </tr>
+    }
+</table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager( Model, page => Url.Action("ListItems", new {page, searchFilter = ViewBag.CurrentFilter } ))
