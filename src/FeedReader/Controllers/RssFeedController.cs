@@ -7,29 +7,29 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FeedReader.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FeedReader.Controllers
 {
-    [Authorize]
     public class RssFeedController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        //Displays the RssFeeds tied to a given user (GET: /RssFeed/) 
+        // GET: /RssFeed/
         public ActionResult Index()
         {
             var rssfeeds = db.RssFeeds.Include(r => r.User);
             return View(rssfeeds.ToList());
         }
 
-        //Displays the details of an RssFeed tied to a given user (GET: /RssFeed/)  (GET: /RssFeed/Details/5)
-        public ActionResult Details(string id)
+        // GET: /RssFeed/Details/5
+        public ActionResult Details(string UserId, string Title)
         {
-            if (id == null)
+            if (UserId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RssFeed rssfeed = db.RssFeeds.Find(id);
+            RssFeed rssfeed = db.RssFeeds.Find(UserId,Title);
             if (rssfeed == null)
             {
                 return HttpNotFound();
@@ -37,7 +37,7 @@ namespace FeedReader.Controllers
             return View(rssfeed);
         }
 
-        // Create a new RssFeed on a given user (GET: /RssFeed/Create)
+        // GET: /RssFeed/Create
         public ActionResult Create()
         {
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
@@ -49,8 +49,10 @@ namespace FeedReader.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="UserId,Title,Description,Link")] RssFeed rssfeed)
+        public ActionResult Create([Bind(Include="Title,Link")] RssFeed rssfeed)
         {
+            rssfeed.UserId = User.Identity.GetUserId();
+
             if (ModelState.IsValid)
             {
                 db.RssFeeds.Add(rssfeed);
@@ -63,13 +65,14 @@ namespace FeedReader.Controllers
         }
 
         // GET: /RssFeed/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string UserId, string Title)
         {
-            if (id == null)
+            if (UserId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RssFeed rssfeed = db.RssFeeds.Find(id);
+
+            RssFeed rssfeed = db.RssFeeds.Find(UserId,Title);
             if (rssfeed == null)
             {
                 return HttpNotFound();
@@ -83,7 +86,7 @@ namespace FeedReader.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="UserId,Title,Description,Link")] RssFeed rssfeed)
+        public ActionResult Edit([Bind(Include="UserId,Title,Link")] RssFeed rssfeed)
         {
             if (ModelState.IsValid)
             {
@@ -96,13 +99,13 @@ namespace FeedReader.Controllers
         }
 
         // GET: /RssFeed/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string UserId, string Title)
         {
-            if (id == null)
+            if (UserId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RssFeed rssfeed = db.RssFeeds.Find(id);
+            RssFeed rssfeed = db.RssFeeds.Find(UserId, Title);
             if (rssfeed == null)
             {
                 return HttpNotFound();
@@ -113,9 +116,9 @@ namespace FeedReader.Controllers
         // POST: /RssFeed/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string UserId, string Title)
         {
-            RssFeed rssfeed = db.RssFeeds.Find(id);
+            RssFeed rssfeed = db.RssFeeds.Find(UserId,Title);
             db.RssFeeds.Remove(rssfeed);
             db.SaveChanges();
             return RedirectToAction("Index");

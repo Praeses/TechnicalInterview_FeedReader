@@ -178,10 +178,16 @@
     <Compile Include="Migrations\201406250254163_Initial.Designer.cs">
       <DependentUpon>201406250254163_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201406251750521_RemoveDescriptionFromRssFeed.cs" />
+    <Compile Include="Migrations\201406251750521_RemoveDescriptionFromRssFeed.Designer.cs">
+      <DependentUpon>201406251750521_RemoveDescriptionFromRssFeed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FeedReader.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\RssFeed.cs" />
+    <Compile Include="Models\RssArticle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -255,6 +261,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201406250254163_Initial.resx">
       <DependentUpon>201406250254163_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406251750521_RemoveDescriptionFromRssFeed.resx">
+      <DependentUpon>201406251750521_RemoveDescriptionFromRssFeed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

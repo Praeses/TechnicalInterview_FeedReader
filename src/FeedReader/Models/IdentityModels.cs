@@ -38,8 +38,8 @@ namespace FeedReader.Models
         {
             base.OnModelCreating(modelBuilder);
 
+            //Build relationship between RssFeeds and Users
             modelBuilder.Entity<RssFeed>().HasKey(x => new { x.UserId, x.Title });
-
             modelBuilder.Entity<ApplicationUser>().HasMany(x => x.RssFeeds).WithRequired(x => x.User).HasForeignKey(x => x.UserId).WillCascadeOnDelete(false);
 
         }

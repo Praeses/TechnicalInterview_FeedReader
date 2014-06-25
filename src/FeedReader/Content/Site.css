@@ -33,14 +33,40 @@ textarea {
     background-color: black;
 }
 
+.roundCorners {
+    border-radius: 10px;
+}
+
 .jumbotron-color{    
     color: #999;
 }
 
-.jumbotron-color h2{
+h2,table, .whiteText{
     color: white;
 }
 
 .orangeLink {
     color: #FF6600;
+}
+
+.slideRight {
+    float:right;
+}
+
+.backInGray {
+    background-color: #222;
+}
+
+#subDiv{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#buttonDiv{
+    margin-left: 130px;
+}
+
+#Link{
+    width: 350px;
+    max-width: 350px !important;
 }
