@@ -4,41 +4,41 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 class="top-buffer">Rss Subscriptions</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Link)
-        </th>
-        <th></th>
-    </tr>
+<div class="backInGray roundCorners">
+    <table class="table">
+        <tr>
+            <th style="border-top:none">
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th style="border-top:none">
+                @Html.DisplayNameFor(model => model.Link)
+            </th>
+            <th style="border-top:none"> 
+                <button class="btn btn-default slideRight">
+                    @Html.ActionLink("Create New", "Create", routeValues: null, htmlAttributes: new { @class = "btn-default"})
+                </button>
+            </th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Link)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Link)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { UserId=item.UserId, Title=item.Title },htmlAttributes: new { @class = "orangeLink"}) |
+                @Html.ActionLink("Details", "Details", new { UserId=item.UserId, Title=item.Title },htmlAttributes: new { @class = "orangeLink"}) |
+                @Html.ActionLink("Delete", "Delete", new { UserId=item.UserId, Title=item.Title },htmlAttributes: new { @class = "orangeLink"})
+            </td>
+        </tr>
+    }
+    </table>   
+</div>
 
-</table>
+
+
