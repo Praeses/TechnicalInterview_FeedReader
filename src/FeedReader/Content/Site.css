@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: url(Images/bg.jpg);
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -14,4 +15,32 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+#logo {
+    height: 40px;
+}
+
+.nav-buffer {
+    margin-top: 10px;
+}
+
+.top-buffer{
+    margin-top: 30px;
+}
+
+.backInBlack {
+    background-color: black;
+}
+
+.jumbotron-color{    
+    color: #999;
+}
+
+.jumbotron-color h2{
+    color: white;
+}
+
+.orangeLink {
+    color: #FF6600;
 }
