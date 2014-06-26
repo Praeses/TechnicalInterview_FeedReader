@@ -20,7 +20,7 @@
                     Subscriptions
                 </th>
                 <th style="border-top:none">
-                    Show&nbsp;All:&nbsp;&nbsp;<input type="checkbox" name="showAll" value="showAll" id="showAll"/>
+                    Show&nbsp;All:&nbsp;&nbsp;<input type="checkbox" value="showAll" id="showAll"/>
                 </th>
             </tr>
             </thead>
@@ -29,21 +29,17 @@
     </div>
 
     <div class="col-md-1"></div>
-
+    
     <div class="col-md-8 backInGray roundCorners">
-        <table class="table">
-            <tr>
-                <th style="border-top:none">
-                    Title
-                </th>
-                <th style="border-top:none">
-                    Description
-                </th>
-                <th style ="border-top:none">
-                    Link
-                </thstyle>
-            </tr>
-            <tr></tr>
+        <table id="subDiv" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Link</th>
+                    <th>Publication Date</th>
+                </tr>
+            </thead>
         </table>
     </div>
 </div>
@@ -51,19 +47,91 @@
 @section Scripts
 {
     <script type="text/javascript">
-        var keyList = @Html.Raw(Json.Encode(Model.Keys));
+    /* using the method below
+     * you can access parts of the object by calling .key
+     *
+     * for example:
+     * var model = JSON.parse(Model);
+     * model.channelName will return all articles for that channel
+    */
+    var model = @Html.Raw(Json.Encode(Model));
+    var keyList = @Html.Raw(Json.Encode(Model.Keys));
 
-        $(document).ready(function(){
-            for(var i = 0; i < keyList.length; i++){
-                buildSubscriptionTable(keyList[i]);
-            }
-        });
-        
-        function buildSubscriptionTable(key){
-            $('#subbedFeeds tbody').append('<tr><td>' + key + '</td><td><input type="checkbox" name="channel" value="' + key + '"><td></tr>');
+    $(document).ready(function(){
+        for(var i = 0; i < keyList.length; i++){
+            buildSubscriptionTable(keyList[i]);
         }
 
-        function ()
+        buildInitialTable();
+
+        $('#showAll').click(function(){
+            showAll();
+        });
+
+        $(".channel").click(function(){
+            createTable();
+        });
+    });
+
+    function buildSubscriptionTable(key){
+        $('#subbedFeeds tbody').append('<tr><td>' + key + '</td><td><input type="checkbox" class="channel" value="' + key + '"><td></tr>');
+    }
+
+    function buildInitialTable(){
+        //check all the checkboxes
+        $('#showAll').prop('checked',true);
+        $('.channel').each(function(){
+            $(this).prop("checked", true);
+        });
+
+        //create the table
+        createTable();
+    }
+
+    function showAll(){
+        //if the showAll check box got checked, check everything else too
+        //else deselect everything
+        var isShowAllChecked = $('#showAll').prop('checked');
+
+        if(isShowAllChecked){
+            $('.channel').each(function(){
+                $(this).prop("checked", true);
+            });
+        }else{
+            $('.channel').each(function(){
+                $(this).prop("checked", false);
+            });
+        }
+
+        createTable();
+    }
+
+    function createTable(){
+        var checkedChannels = [];
+
+        $(".channel:checked").each(function(){
+            checkedChannels.push($(this).val());
+        });
+
+        var dataSet = [];
+
+        for(var i = 0; i < checkedChannels.length; i++){
+            var data = model[checkedChannels[i]];
+
+            for (var i = 0; i < data.length; i++) {
+                var obj = data[i];
+                var objAsArray = [obj.Title,obj.Description,obj.Link,obj.PublicationDate];
+
+                dataSet.push(objAsArray);
+            }
+
+
+        }
+
+        $('#subDiv').dataTable({
+            "data": dataSet
+        });
+    }
     </script>
 }
 
