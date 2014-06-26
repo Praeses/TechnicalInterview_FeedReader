@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Data.SqlClient;
+using System.Xml.Linq;
 
 namespace FeedReader.Models
 {
@@ -29,11 +30,28 @@ namespace FeedReader.Models
          private List<RssArticle> ReadFeedForChannel(string Url)
          {
              List<RssArticle> album = new List<RssArticle>();
-             //Read the channel feed
+
+             XDocument feedXml = XDocument.Load(Url);
+
+             var articles = from feed in feedXml.Descendants("item")
+                         select new RssArticle
+                         {
+                             Title = feed.Element("title").Value,
+                             Link = feed.Element("link").Value,
+                             Description = feed.Element("description").Value,                             
+                             PublicationDate = feed.Element("pubDate").Value
+                         };
+
+
+             foreach (RssArticle article in articles)
+             {
+                 album.Add(article);
+             }
+
              return album;
          }
 
-         public List<RssFeed> LoadSubscribedFeeds(string UserId)
+         private List<RssFeed> LoadSubscribedFeeds(string UserId)
          {
              List<RssFeed> subbedFeeds = new List<RssFeed>();
 

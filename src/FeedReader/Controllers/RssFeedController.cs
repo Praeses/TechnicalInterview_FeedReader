@@ -13,7 +13,15 @@ namespace FeedReader.Controllers
 {
     public class RssFeedController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        ApplicationDbContext db = new ApplicationDbContext();
+        //GET: /RssFeed/ShowFeeds
+        public ActionResult ShowFeeds()
+        {
+            RssFeedReader rfr = new RssFeedReader();
+            Dictionary<string, List<RssArticle>> articleMap = rfr.ReadSubscribedFeeds(User.Identity.GetUserId());
+
+            return View(articleMap);
+        }
 
         // GET: /RssFeed/
         public ActionResult Index()

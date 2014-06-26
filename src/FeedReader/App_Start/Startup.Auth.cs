@@ -46,15 +46,15 @@ namespace FeedReader
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+                appId: "917398588285952",
+                appSecret: "7db43b9510b92d91f6298808ba83ab16");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "589431097545-s87639ggcs0f4a8eusuumbh0hlb922no.apps.googleusercontent.com",
+                ClientSecret = "68Rf3rjXGLS2b0EhLFTy1JJr"
+            });
         }
     }
 }
