@@ -198,6 +198,7 @@
     <Content Include="Content\Images\facebook.png" />
     <Content Include="Content\Images\google.PNG" />
     <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\twitter.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

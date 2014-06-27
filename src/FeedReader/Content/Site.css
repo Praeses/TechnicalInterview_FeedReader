@@ -37,6 +37,10 @@ textarea {
     border-radius: 10px;
 }
 
+.roundBottomCorners{
+    border-radius: 0px 0px 10px 10px;
+}
+
 .jumbotron-color{    
     color: #999;
 }
@@ -69,4 +73,13 @@ h2,table, .whiteText{
 #Link{
     width: 350px;
     max-width: 350px !important;
+}
+
+.transparent, transparent:hover{
+    background:transparent;
+    border:none;
+}
+
+.padding20{
+    padding:20px;
 }

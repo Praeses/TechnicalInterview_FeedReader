@@ -2,7 +2,7 @@
 @model ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>Use another service to log in.</h4>
+<h4 class="text-center">Use another service to log in.</h4>
 <hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
@@ -25,16 +25,20 @@
                             if (@p.AuthenticationType.Equals("Google", StringComparison.InvariantCultureIgnoreCase))
                             {
                                 <div class="col-md-6 text-center">
-                                    <img id="@p.AuthenticationType" alt="Log in using your @p.Caption account." src="~/Content/Images/google.PNG" />
+                                     <button type="submit" class="transparent" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
+                                         <img src="~/Content/Images/google.PNG"/>
+                                     </button>
+                                    
                                 </div>
                             }
                             else if (@p.AuthenticationType.Equals("facebook", StringComparison.InvariantCultureIgnoreCase))
                             {
                                 <div class="col-md-6 text-center">
-                                    <image id="@p.AuthenticationType" alt="Log in using your @p.Caption account." src="~/Content/Images/facebook.png" />
+                                    <button type="submit" class="transparent" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
+                                        <img src="~/Content/Images/facebook.png"/>
+                                    </button>
                                 </div>
                             }
-                                
                     }
             </div>
         }

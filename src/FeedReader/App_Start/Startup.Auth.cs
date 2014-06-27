@@ -43,8 +43,8 @@ namespace FeedReader
             //    clientSecret: "");
 
             //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            //   consumerKey: "uH1aa04K6HvMDr8ujWwsAaBvN ",
+            //   consumerSecret: "a0llBbkBs8iZeKDuRZrm3avn26NsJwfZOdx7lcK4OETEaKghep");
 
             app.UseFacebookAuthentication(
                 appId: "917398588285952",

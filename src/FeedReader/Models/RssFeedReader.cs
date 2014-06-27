@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Data.SqlClient;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace FeedReader.Models
 {
@@ -14,6 +15,8 @@ namespace FeedReader.Models
     {
          Dictionary<string, List<RssArticle>> rssMap = new Dictionary<string, List<RssArticle>>();
 
+         static Regex htmlRegex = new Regex("<.*?>", RegexOptions.Compiled);//for stripping html from descriptions     
+        
          public Dictionary<string, List<RssArticle>> ReadSubscribedFeeds(string UserId)
          {
              List<RssFeed> subscribedFeeds = LoadSubscribedFeeds(UserId);
@@ -38,7 +41,7 @@ namespace FeedReader.Models
                          {
                              Title = feed.Element("title").Value,
                              Link = feed.Element("link").Value,
-                             Description = feed.Element("description").Value,                             
+                             Description = StripTagsRegexCompiled(feed.Element("description").Value),                             
                              PublicationDate = feed.Element("pubDate").Value
                          };
 
@@ -71,6 +74,12 @@ namespace FeedReader.Models
              }
 
              return subbedFeeds;
+         }
+
+         private static string StripTagsRegexCompiled(string source)
+         {
+             source = Regex.Replace(source, Regex.Escape("[") + ".*?]", string.Empty);//replace [] elements too
+             return htmlRegex.Replace(source, string.Empty);
          }
          
     }

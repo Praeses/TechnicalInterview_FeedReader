@@ -10,7 +10,8 @@ using FeedReader.Models;
 using Microsoft.AspNet.Identity;
 
 namespace FeedReader.Controllers
-{
+{   
+    [Authorize]
     public class RssFeedController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();

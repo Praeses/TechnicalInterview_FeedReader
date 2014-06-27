@@ -63,7 +63,7 @@ namespace FeedReader.Controllers
 					await SignInAsync(user, model.RememberMe);
 
                     //authenticated: redirect to the RssFeed view here
-					return RedirectToAction("Index","RssFeed");
+					return RedirectToAction("ShowFeeds","RssFeed");
 				}
 				else
 				{
