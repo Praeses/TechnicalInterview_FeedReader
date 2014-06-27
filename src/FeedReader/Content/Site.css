@@ -17,6 +17,10 @@ textarea {
     max-width: 280px;
 }
 
+.minw415{
+    min-width:415px;
+}
+
 .minw1085{
     min-width:1085px;
 }
