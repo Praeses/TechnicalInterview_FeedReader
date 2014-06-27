@@ -34,6 +34,15 @@
 
 <div id="tabDivContainer" class="tab-content"></div>
 
+<br />
+
+<div id="createNew">
+    <button class="btn btn-default slideRight">
+        @Html.ActionLink("Add Feed", "Create", routeValues: null, htmlAttributes: new { @class = "btn-default" })
+    </button>
+</div>
+
+<br />
 
 @section Scripts
 {
@@ -56,9 +65,10 @@
             $(this).tab('show');
         });
 
-        //this listener is to fix a bug with datatables
+        //these listeners are to fix a bug with datatables
         //where the table header width is wrong
         //because the table is created when the div is hidden
+        //or when the window is resized
         $('#tabs a').on('shown.bs.tab',function(){
             var table = $(this).attr('href').replace('#','') + 'Table';
             var dataTable = $('#'+table).dataTable();
@@ -69,14 +79,14 @@
     function buildSubscriptionTabs(keyList){
 
         $('#tabs').append('<li class="active"><a href="#all" role="tab" data-toggle="tab">Show All</a></li>')
-        $('#tabDivContainer').append('<div class="tab-pane active backInGray padding20 roundBottomCorners fade in" id="all"><table id="allTable" class="table" cellspacing="0" width="100%"></div>');
+        $('#tabDivContainer').append('<div class="tab-pane active backInGray padding20 roundBottomCorners fade in minw1085" id="all"><table id="allTable" class="table minw1085" cellspacing="0" width="100%"></div>');
         buildShowAllTable();
 
         for(var i = 0; i < keyList.length; i++){
             var mapKey = keyList[i];
             var key = mapKey.replace(/ /g,'');
             $('#tabs').append('<li><a href="#' + key + '" role="tab" data-toggle="tab">' + mapKey + '</a></li>')
-            $('#tabDivContainer').append('<div class="tab-pane backInGray padding20 roundBottomCorners fade" id="' + key + '"><table id="'+ key +'Table" class="table" cellspacing="0" width="100%"></table></div>');
+            $('#tabDivContainer').append('<div class="tab-pane backInGray padding20 roundBottomCorners fade minw940" id="' + key + '"><table id="'+ key +'Table" class="table minw1085" cellspacing="0" width="100%"></table></div>');
 
             buildTableForKey(mapKey, key + 'Table');
         }
@@ -104,7 +114,8 @@
                 {"aTargets":[3], "sTitle":"Publication Date", "sClass": "text-center", "bSearchable":false, "bSortable":true, "sWidth": "15%"}
             ],
             "sScrollY": "500px",
-            "aaSorting": [[3, 'desc']]
+            "aaSorting": [[3, 'desc']],
+            "bAutoWidth" : false
         });
 
 
@@ -112,7 +123,7 @@
 
             showAllTable.fnAddData([
                 dataSet[i].Source,
-                dataSet[i].Title,
+                '<a href="'+ dataSet[i].Link +'" target="_blank">' + dataSet[i].Title + '</a>',
                 dataSet[i].Description + '<br /><a href="'+ dataSet[i].Link +'" target="_blank">Read More</a>',
                 dataSet[i].PublicationDate
             ]);
@@ -142,13 +153,14 @@
                 {"aTargets":[2], "sTitle":"Publication Date", "sClass": "text-center", "bSearchable":false, "bSortable":true,  "sWidth": "20%"}
             ],
             "sScrollY": "500px",
-            "aaSorting": [[2, 'desc']]
+            "aaSorting": [[2, 'desc']],
+            "bAutoWidth" : false
         });
 
 
         for(var i = 0; i < dataSet.length; i++){
             table.fnAddData([
-                dataSet[i].Title,
+                '<a href="'+ dataSet[i].Link +'" target="_blank">' + dataSet[i].Title + '</a>',
                 dataSet[i].Description + '<br /><a href="'+ dataSet[i].Link +'" target="_blank">Read More</a>',
                 dataSet[i].PublicationDate
             ]);
@@ -161,85 +173,6 @@
         $('select[name="'+tableName+'_length"').removeClass('whiteText');
 
     }
-
-    /*
-    function buildInitialTable(){
-        //check all the checkboxes
-        $('#showAll').prop('checked',true);
-        $('.channel').each(function(){
-            $(this).prop("checked", true);
-        });
-
-        //create the table
-        createTable();
-    }
-
-    function showAll(){
-        //if the showAll check box got checked, check everything else too
-        //else deselect everything
-        var isShowAllChecked = $('#showAll').prop('checked');
-
-        if(isShowAllChecked){
-            $('.channel').each(function(){
-                $(this).prop("checked", true);
-            });
-        }else{
-            $('.channel').each(function(){
-                $(this).prop("checked", false);
-            });
-        }
-
-        createTable();
-    }
-
-    function createTable(){
-        var checkedChannels = [];
-
-        $(".channel:checked").each(function(){
-            checkedChannels.push($(this).val());
-        });
-
-        var dataSet = [];
-
-        for(var i = 0; i < checkedChannels.length; i++){
-            var data = model[checkedChannels[i]];
-
-            for (var i = 0; i < data.length; i++) {
-                var obj = data[i];
-                var formattedObj = {"Title":obj.Title,"Description":obj.Description,"Link":obj.Link,"PublicationDate":obj.PublicationDate};
-                dataSet.push(formattedObj);
-            }
-        }
-
-        $('#rssTable').empty();
-
-        if (rssTable != undefined) {
-            rssTable.fnDestroy();
-            rssTable = null;
-        }
-
-        rssTable = $('#rssTable').dataTable( {
-            "aoColumnDefs": [
-                {"aTargets":[0], "sTitle":"Title", "sClass": "text-center", "bSearchable":true, "bSortable":false},
-                {"aTargets":[1], "sTitle":"Description", "sClass": "text-center", "bSearchable":true, "bSortable":false},
-                {"aTargets":[2], "sTitle":"Link", "sClass": "text-center", "bSearchable":false, "bSortable":false},
-                {"aTargets":[3], "sTitle":"Publication Date", "sClass": "text-center", "bSearchable":false, "bSortable":true}
-            ],
-            "sScrollY": "400px"
-        });
-
-
-        for(var i = 0; i < dataSet.length; i++){
-            rssTable.fnAddData([
-                dataSet[i].Title,
-                dataSet[i].Description,
-                dataSet[i].Link,
-                dataSet[i].PublicationDate
-            ]);
-        }
-
-        //rssTable.draw();
-    }*/
 </script>
 }
 
