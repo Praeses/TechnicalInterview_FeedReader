@@ -12,11 +12,10 @@ using System.Text.RegularExpressions;
 namespace FeedReader.Models
 {
     public class RssFeedReader
-    {
-         Dictionary<string, List<RssArticle>> rssMap = new Dictionary<string, List<RssArticle>>();
-          
-         public Dictionary<string, List<RssArticle>> ReadSubscribedFeeds(string UserId)
+    {          
+         public static Dictionary<string, List<RssArticle>> ReadSubscribedFeeds(string UserId)
          {
+             Dictionary<string, List<RssArticle>> rssMap = new Dictionary<string, List<RssArticle>>();
              List<RssFeed> subscribedFeeds = LoadSubscribedFeeds(UserId);
 
              foreach(RssFeed feed in subscribedFeeds){
@@ -28,21 +27,27 @@ namespace FeedReader.Models
          }
 
 
-         private List<RssArticle> ReadFeedForChannel(string Url)
+         private static List<RssArticle> ReadFeedForChannel(string Url)
          {
              List<RssArticle> album = new List<RssArticle>();
+             IEnumerable<RssArticle> articles = album;//using the album just to initialize here
 
-             XDocument feedXml = XDocument.Load(Url);
+             try
+             {
+                 XDocument feedXml = XDocument.Load(Url);
 
-             var articles = from feed in feedXml.Descendants("item")
-                         select new RssArticle
-                         {
-                             Title = feed.Element("title").Value,
-                             Link = feed.Element("link").Value,
-                             Description = StripTagsRegexCompiled(feed.Element("description").Value),                             
-                             PublicationDate = feed.Element("pubDate").Value
-                         };
-
+                 articles = from feed in feedXml.Descendants("item")
+                            select new RssArticle
+                            {
+                                Title = feed.Element("title").Value,
+                                Link = feed.Element("link").Value,
+                                Description = StripTagsRegexCompiled(feed.Element("description").Value),
+                                PublicationDate = feed.Element("pubDate").Value
+                            };
+             }
+             catch(Exception e)
+             {//Don't add anything to the album.
+             }
 
              foreach (RssArticle article in articles)
              {
@@ -52,7 +57,7 @@ namespace FeedReader.Models
              return album;
          }
 
-         public List<RssFeed> LoadSubscribedFeeds(string UserId)
+         public static List<RssFeed> LoadSubscribedFeeds(string UserId)
          {
              List<RssFeed> subbedFeeds = new List<RssFeed>();
 
@@ -84,6 +89,20 @@ namespace FeedReader.Models
 
              return source;
          }
+
+        public static bool validateRssLink(string Url){
+            bool isUrlValid = false;
+
+            try
+            {
+                 XDocument feedXml = XDocument.Load(Url);
+                 isUrlValid = true;
+            }
+            catch(Exception e)
+            { }
+
+            return isUrlValid;
+        }
          
     }
 

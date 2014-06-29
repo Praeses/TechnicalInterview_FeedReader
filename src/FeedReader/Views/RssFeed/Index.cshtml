@@ -28,7 +28,14 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Link)
+                @if (item.Link.Equals("An invalid RSS url was used. Please edit the URL and input a valid URL."))
+                {
+                    <div style="color:red">@Html.DisplayFor(modelItem => item.Link)</div>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Link)
+                }                
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { UserId=item.UserId, Title=item.Title },htmlAttributes: new { @class = "orangeLink"}) |

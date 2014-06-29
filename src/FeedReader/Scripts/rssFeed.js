@@ -8,7 +8,7 @@
         var mapKey = keyList[i];
         var key = mapKey.replace(/ /g, '');
         $('#tabs').append('<li><a href="#' + key + '" role="tab" data-toggle="tab">' + mapKey + '</a></li>')
-        $('#tabDivContainer').append('<div class="tab-pane backInGray padding20 roundBottomCorners fade minw940" id="' + key + '"><table id="' + key + 'Table" class="table minw1085" cellspacing="0" width="100%"></table></div>');
+        $('#tabDivContainer').append('<div class="tab-pane backInGray padding20 roundBottomCorners fade minw1085" id="' + key + '"><table id="' + key + 'Table" class="table minw1085" cellspacing="0" width="100%"></table></div>');
 
         buildTableForKey(mapKey, key + 'Table', model);
     }
@@ -32,8 +32,8 @@ function buildShowAllTable(keyList, model) {
         "aoColumnDefs": [
             { "aTargets": [0], "sTitle": "Source", "sClass": "text-center", "bSearchable": false, "bSortable": false, "sWidth": "10%" },
             { "aTargets": [1], "sTitle": "Title", "sClass": "text-center", "bSearchable": true, "bSortable": false, "sWidth": "10%" },
-            { "aTargets": [2], "sTitle": "Description", "sClass": "text-center", "bSearchable": true, "bSortable": false, "sWidth": "65%" },
-            { "aTargets": [3], "sTitle": "Publication Date", "sClass": "text-center", "bSearchable": false, "bSortable": true, "sWidth": "15%" }
+            { "aTargets": [2], "sTitle": "Description", "sClass": "text-center", "bSearchable": true, "bSortable": false, "sWidth": "50%" },
+            { "aTargets": [3], "sTitle": "Publication Date", "sClass": "text-center", "bSearchable": false, "bSortable": true, "sWidth": "30%" }
         ],
         "sScrollY": "500px",
         "aaSorting": [[3, 'desc']],
@@ -82,8 +82,8 @@ function buildTableForKey(key, tableName, model) {
     var table = $('#' + tableName).dataTable({
         "aoColumnDefs": [
             { "aTargets": [0], "sTitle": "Title", "sClass": "text-center", "bSearchable": true, "bSortable": false, "sWidth": "15%" },
-            { "aTargets": [1], "sTitle": "Description", "sClass": "text-center", "bSearchable": true, "bSortable": false, "sWidth": "65%" },
-            { "aTargets": [2], "sTitle": "Publication Date", "sClass": "text-center", "bSearchable": false, "bSortable": true, "sWidth": "20%" }
+            { "aTargets": [1], "sTitle": "Description", "sClass": "text-center", "bSearchable": true, "bSortable": false, "sWidth": "55%" },
+            { "aTargets": [2], "sTitle": "Publication Date", "sClass": "text-center", "bSearchable": false, "bSortable": true, "sWidth": "30%" }
         ],
         "sScrollY": "500px",
         "aaSorting": [[2, 'desc']],

@@ -15,12 +15,11 @@ namespace FeedReader.Controllers
     public class RssFeedController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
-        RssFeedReader rfr = new RssFeedReader();
 
         //GET: /RssFeed/ShowFeeds
         public ActionResult ShowFeeds()
         {            
-            Dictionary<string, List<RssArticle>> articleMap = rfr.ReadSubscribedFeeds(User.Identity.GetUserId());
+            Dictionary<string, List<RssArticle>> articleMap = RssFeedReader.ReadSubscribedFeeds(User.Identity.GetUserId());
 
             return View(articleMap);
         }
@@ -29,7 +28,7 @@ namespace FeedReader.Controllers
         public ActionResult Index()
         {
             string UserId = User.Identity.GetUserId();
-            var rssfeeds = rfr.LoadSubscribedFeeds(UserId);
+            var rssfeeds = RssFeedReader.LoadSubscribedFeeds(UserId);
             return View(rssfeeds.ToList());
         }
 
@@ -63,6 +62,11 @@ namespace FeedReader.Controllers
         public ActionResult Create([Bind(Include="Title,Link")] RssFeed rssfeed)
         {
             rssfeed.UserId = User.Identity.GetUserId();
+
+            if (!RssFeedReader.validateRssLink(rssfeed.Link))
+            {
+                rssfeed.Link = "An invalid RSS url was used. Please edit the URL and input a valid URL.";
+            }
 
             if (ModelState.IsValid)
             {
