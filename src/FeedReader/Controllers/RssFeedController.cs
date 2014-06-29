@@ -15,10 +15,11 @@ namespace FeedReader.Controllers
     public class RssFeedController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
+        RssFeedReader rfr = new RssFeedReader();
+
         //GET: /RssFeed/ShowFeeds
         public ActionResult ShowFeeds()
-        {
-            RssFeedReader rfr = new RssFeedReader();
+        {            
             Dictionary<string, List<RssArticle>> articleMap = rfr.ReadSubscribedFeeds(User.Identity.GetUserId());
 
             return View(articleMap);
@@ -27,7 +28,8 @@ namespace FeedReader.Controllers
         // GET: /RssFeed/
         public ActionResult Index()
         {
-            var rssfeeds = db.RssFeeds.Include(r => r.User);
+            string UserId = User.Identity.GetUserId();
+            var rssfeeds = rfr.LoadSubscribedFeeds(UserId);
             return View(rssfeeds.ToList());
         }
 

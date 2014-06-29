@@ -14,9 +14,7 @@ namespace FeedReader.Models
     public class RssFeedReader
     {
          Dictionary<string, List<RssArticle>> rssMap = new Dictionary<string, List<RssArticle>>();
-
-         static Regex htmlRegex = new Regex("<.*?>", RegexOptions.Compiled);//for stripping html from descriptions     
-        
+          
          public Dictionary<string, List<RssArticle>> ReadSubscribedFeeds(string UserId)
          {
              List<RssFeed> subscribedFeeds = LoadSubscribedFeeds(UserId);
@@ -54,7 +52,7 @@ namespace FeedReader.Models
              return album;
          }
 
-         private List<RssFeed> LoadSubscribedFeeds(string UserId)
+         public List<RssFeed> LoadSubscribedFeeds(string UserId)
          {
              List<RssFeed> subbedFeeds = new List<RssFeed>();
 
@@ -78,8 +76,13 @@ namespace FeedReader.Models
 
          private static string StripTagsRegexCompiled(string source)
          {
-             source = Regex.Replace(source, Regex.Escape("[") + ".*?]", string.Empty);//replace [] elements too
-             return htmlRegex.Replace(source, string.Empty);
+             Regex htmlRegex = new Regex("(?i)<.*?>", RegexOptions.Compiled);
+             Regex bbCodeRegex = new Regex(Regex.Escape("[") + ".*?]", RegexOptions.Compiled);
+             
+             source = bbCodeRegex.Replace(source, string.Empty);//replace [bbcode] elements
+             source = htmlRegex.Replace(source, string.Empty);//replace html tags
+
+             return source;
          }
          
     }

@@ -46,133 +46,32 @@
 
 @section Scripts
 {
+    <script src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/custom/rssfeed")"></script>
+
     <script type="text/javascript">
-    /* using the method below
-     * you can access parts of the object by calling .key
-     *
-     * for example:
-     * var model = JSON.parse(Model);
-     * model.channelName will return all articles for that channel
-    */
-    var model = @Html.Raw(Json.Encode(Model));
-    var keyList = @Html.Raw(Json.Encode(Model.Keys));
+        
+        var model = @Html.Raw(Json.Encode(Model));
+        var keyList = @Html.Raw(Json.Encode(Model.Keys));
 
-    $(document).ready(function(){
-        buildSubscriptionTabs(keyList);
+        $(document).ready(function(){
+            buildSubscriptionTabs(keyList, model);
 
-        $('#tabs a').click(function (e){
-            e.preventDefault() ;
-            $(this).tab('show');
-        });
+            $('#tabs a').click(function (e){
+                e.preventDefault() ;
+                $(this).tab('show');
+            });
 
-        //these listeners are to fix a bug with datatables
-        //where the table header width is wrong
-        //because the table is created when the div is hidden
-        //or when the window is resized
-        $('#tabs a').on('shown.bs.tab',function(){
-            var table = $(this).attr('href').replace('#','') + 'Table';
-            var dataTable = $('#'+table).dataTable();
-            dataTable.fnAdjustColumnSizing();
-        });
-    });
-
-    function buildSubscriptionTabs(keyList){
-
-        $('#tabs').append('<li class="active"><a href="#all" role="tab" data-toggle="tab">Show All</a></li>')
-        $('#tabDivContainer').append('<div class="tab-pane active backInGray padding20 roundBottomCorners fade in minw1085" id="all"><table id="allTable" class="table minw1085" cellspacing="0" width="100%"></div>');
-        buildShowAllTable();
-
-        for(var i = 0; i < keyList.length; i++){
-            var mapKey = keyList[i];
-            var key = mapKey.replace(/ /g,'');
-            $('#tabs').append('<li><a href="#' + key + '" role="tab" data-toggle="tab">' + mapKey + '</a></li>')
-            $('#tabDivContainer').append('<div class="tab-pane backInGray padding20 roundBottomCorners fade minw940" id="' + key + '"><table id="'+ key +'Table" class="table minw1085" cellspacing="0" width="100%"></table></div>');
-
-            buildTableForKey(mapKey, key + 'Table');
-        }
-    }
-
-    function buildShowAllTable(){
-        var dataSet = [];
-
-        for(var i = 0; i < keyList.length; i++){
-            var key = keyList[i];
-            var data = model[key];
-
-            for (var j = 0; j < data.length; j++) {
-                var obj = data[j];
-                var formattedObj = {"Source":key,"Title":obj.Title,"Description":obj.Description,"Link":obj.Link,"PublicationDate":obj.PublicationDate};
-                dataSet.push(formattedObj);
-            }
-        }
-
-        var showAllTable = $('#allTable').dataTable( {
-            "aoColumnDefs": [
-                {"aTargets":[0], "sTitle":"Source", "sClass": "text-center", "bSearchable":false, "bSortable":false, "sWidth": "10%"},
-                {"aTargets":[1], "sTitle":"Title", "sClass": "text-center", "bSearchable":true, "bSortable":false, "sWidth": "10%"},
-                {"aTargets":[2], "sTitle":"Description", "sClass": "text-center", "bSearchable":true, "bSortable":false, "sWidth": "65%"},
-                {"aTargets":[3], "sTitle":"Publication Date", "sClass": "text-center", "bSearchable":false, "bSortable":true, "sWidth": "15%"}
-            ],
-            "sScrollY": "500px",
-            "aaSorting": [[3, 'desc']],
-            "bAutoWidth" : false
-        });
-
-
-        for(var i = 0; i < dataSet.length; i++){
-
-            showAllTable.fnAddData([
-                dataSet[i].Source,
-                '<a href="'+ dataSet[i].Link +'" target="_blank">' + dataSet[i].Title + '</a>',
-                dataSet[i].Description + '<br /><a href="'+ dataSet[i].Link +'" target="_blank">Read More</a>',
-                dataSet[i].PublicationDate
-            ]);
-        }
-
-        $('#allTable_filter').addClass('whiteText');
-        $('#allTable_info').addClass('whiteText');
-        $('#allTable_length').addClass('whiteText');
-        $('select[name="allTable_length"').removeClass('whiteText');
-    }
-
-    function buildTableForKey(key, tableName){
-        var dataSet = [];
-
-        var data = model[key];
-
-        for (var j = 0; j < data.length; j++) {
-            var obj = data[j];
-            var formattedObj = {"Title":obj.Title,"Description":obj.Description,"Link":obj.Link,"PublicationDate":obj.PublicationDate};
-            dataSet.push(formattedObj);
-        }
-
-        var table = $('#'+tableName).dataTable( {
-            "aoColumnDefs": [
-                {"aTargets":[0], "sTitle":"Title", "sClass": "text-center", "bSearchable":true, "bSortable":false, "sWidth": "15%"},
-                {"aTargets":[1], "sTitle":"Description", "sClass": "text-center", "bSearchable":true, "bSortable":false, "sWidth": "65%"},
-                {"aTargets":[2], "sTitle":"Publication Date", "sClass": "text-center", "bSearchable":false, "bSortable":true,  "sWidth": "20%"}
-            ],
-            "sScrollY": "500px",
-            "aaSorting": [[2, 'desc']],
-            "bAutoWidth" : false
-        });
-
-
-        for(var i = 0; i < dataSet.length; i++){
-            table.fnAddData([
-                '<a href="'+ dataSet[i].Link +'" target="_blank">' + dataSet[i].Title + '</a>',
-                dataSet[i].Description + '<br /><a href="'+ dataSet[i].Link +'" target="_blank">Read More</a>',
-                dataSet[i].PublicationDate
-            ]);
-        }
-
-        $('#'+tableName+'_scrollHeadInner, #'+tableName+'_scrollHeadInner').width('100%');
-        $('#'+tableName+'_filter').addClass('whiteText');
-        $('#'+tableName+'_info').addClass('whiteText');
-        $('#'+tableName+'_length').addClass('whiteText');
-        $('select[name="'+tableName+'_length"').removeClass('whiteText');
-
-    }
-</script>
+            //this listeners are to fix a bug with datatables
+            //where the table header width is wrong
+            //because the table is created when the div is hidden
+            $('#tabs a').on('shown.bs.tab',function(){
+                var table = $(this).attr('href').replace('#','') + 'Table';
+                var dataTable = $('#'+table).dataTable();
+                dataTable.fnAdjustColumnSizing();
+            });
+        });   
+    </script>
 }
+
+
 
