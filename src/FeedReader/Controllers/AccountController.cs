@@ -60,10 +60,17 @@ namespace FeedReader.Controllers
 				var user = await UserManager.FindAsync(model.Email, model.Password);
 				if (user != null)
 				{
-					await SignInAsync(user, model.RememberMe);
+					if (user.EmailConfirmed)
+					{
+						await SignInAsync(user, model.RememberMe);
 
-                    //authenticated: redirect to the RssFeed view here
-					return RedirectToAction("ShowFeeds","RssFeed");
+						//authenticated: redirect to the RssFeed view here
+						return RedirectToAction("ShowFeeds", "RssFeed");
+					}
+					else
+					{
+						ModelState.AddModelError("", "Please confirm your email address.");
+					}					
 				}
 				else
 				{
@@ -96,15 +103,20 @@ namespace FeedReader.Controllers
 				IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
 				{
-					await SignInAsync(user, isPersistent: false);
+					System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage( 
+						new System.Net.Mail.MailAddress("EmberRss.webregistrar@gmail.com", "Web Registration"), 
+						new System.Net.Mail.MailAddress(user.Email)); 
+					m.Subject = "Email confirmation"; 
+					m.Body = string.Format("Dear {0}<BR/>Thank you for your registration, please click on the below link to complete your registration: <a href=\"{1}\" title=\"User Email Confirm\">{1}</a>", user.UserName, Url.Action("ConfirmEmail", "Account", new { Token = user.Id, Email = user.Email }, Request.Url.Scheme)); 
+					m.IsBodyHtml = true; 
+					System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
+					smtp.Port = 587;
+					smtp.EnableSsl = true;
+					smtp.UseDefaultCredentials = false;
+					smtp.Credentials = new System.Net.NetworkCredential("EmberRss.webregistrar@gmail.com", "Ember.2014"); 
+					smtp.Send(m);
 
-					// For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-					// Send an email with this link
-					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-					return RedirectToAction("Index", "Home");
+					return RedirectToAction("Confirm", "Account", new { Email = user.Email });
 				}
 				else
 				{
@@ -116,25 +128,34 @@ namespace FeedReader.Controllers
 			return View(model);
 		}
 
-		//
+		[AllowAnonymous]
+		public ActionResult Confirm(string Email)
+		{
+			ViewBag.Email = Email; 
+			return View();
+		}
+
 		// GET: /Account/ConfirmEmail
 		[AllowAnonymous]
-		public async Task<ActionResult> ConfirmEmail(string userId, string code)
+		public async Task<ActionResult> ConfirmEmail(string email, string token)
 		{
-			if (userId == null || code == null) 
+			if (email == null || token == null) 
 			{
 				return View("Error");
 			}
 
-			IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
-			if (result.Succeeded)
+			//IdentityResult result = await UserManager.ConfirmEmailAsync(email, token);
+			ApplicationUser user = this.UserManager.FindById(token);
+			if (user != null && user.Email == email)
 			{
-				return View("ConfirmEmail");
+				user.EmailConfirmed = true;
+				await UserManager.UpdateAsync(user);
+				await SignInAsync(user, isPersistent: false);
+				return View("ConfirmEmail");							
 			}
 			else
 			{
-				AddErrors(result);
-				return View();
+				return RedirectToAction("Confirm", "Account", new { Email = user.Email });
 			}
 		}
 
@@ -449,7 +470,7 @@ namespace FeedReader.Controllers
 		{
 			return View();
 		}
-
+		
 		[ChildActionOnly]
 		public ActionResult RemoveAccountList()
 		{
