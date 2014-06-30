@@ -46,37 +46,20 @@ namespace FeedReader.Models
                             };
              }
              catch(Exception e)
-             {//Don't add anything to the album.
-             }
-
-             foreach (RssArticle article in articles)
              {
-                 album.Add(article);
+                 //Don't add anything to the album.
              }
 
+             album.AddRange(articles);
+             
              return album;
          }
 
          public static List<RssFeed> LoadSubscribedFeeds(string UserId)
          {
-             List<RssFeed> subbedFeeds = new List<RssFeed>();
-
              ApplicationDbContext db = new ApplicationDbContext();
-
-             //Write the query to be used
-             string query = "SELECT * FROM RssFeeds WHERE UserId = @UserId";
-
-             //Set the parameters
-             SqlParameter userParam = new SqlParameter("UserId", UserId);
-             object[] parameters = new object[] { userParam };
-
-             IEnumerable<RssFeed> feeds = db.RssFeeds.SqlQuery(query, parameters);
-
-             foreach(RssFeed feed in feeds){
-                 subbedFeeds.Add(feed);
-             }
-
-             return subbedFeeds;
+             var subbedFeeds = db.RssFeeds.Where(x => x.UserId == UserId);
+             return subbedFeeds.ToList();             
          }
 
          private static string StripTagsRegexCompiled(string source)

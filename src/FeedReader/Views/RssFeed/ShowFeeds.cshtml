@@ -26,6 +26,11 @@
     .table tbody tr td{
         border-bottom: 1px solid white;
     }
+    .dataTables_scrollBody {
+        overflow: no-display !important;
+        height: auto !important;
+        width: 100%;
+    }
 </style>
 
 <h2 class="top-buffer">Show Feeds</h2>
@@ -49,28 +54,27 @@
     <script src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/custom/rssfeed")"></script>
 
     <script type="text/javascript">
-        
-        var model = @Html.Raw(Json.Encode(Model));
-        var keyList = @Html.Raw(Json.Encode(Model.Keys));
 
-        $(document).ready(function(){
-            buildSubscriptionTabs(keyList, model);
+    var model = @Html.Raw(Json.Encode(Model));
+    var keyList = @Html.Raw(Json.Encode(Model.Keys));
 
-            $('#tabs a').click(function (e){
-                e.preventDefault() ;
-                $(this).tab('show');
-            });
+    $(document).ready(function(){
+        buildSubscriptionTabs(keyList, model);
 
-            //this listeners are to fix a bug with datatables
-            //where the table header width is wrong
-            //because the table is created when the div is hidden
-            $('#tabs a').on('shown.bs.tab',function(){
-                var table = $(this).attr('href').replace('#','') + 'Table';
-                var dataTable = $('#'+table).dataTable();
-                dataTable.fnAdjustColumnSizing();
-            });
+        $('#tabs a').click(function (e){
+            e.preventDefault() ;
+            $(this).tab('show');
+        });
 
-        });   
+        //this listeners are to fix a bug with datatables
+        //where the table header width is wrong
+        //because the table is created when the div is hidden
+        $('#tabs a').on('shown.bs.tab',function(){
+            var table = $(this).attr('href').replace('#','') + 'Table';
+            var dataTable = $('#'+table).dataTable();
+            dataTable.fnAdjustColumnSizing();
+        });        
+    });
     </script>
 }
 

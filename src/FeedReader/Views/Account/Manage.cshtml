@@ -8,7 +8,7 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row" id="subDiv">
-    <div class="col-md-5 whiteText backInGray roundCorners">
+    <div class="col-md-8 whiteText backInGray roundCorners">
         @if (ViewBag.HasLocalPassword)
         {
             @Html.Partial("_ChangePasswordPartial")
@@ -20,7 +20,7 @@
 
 
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-1"></div>
     <div class="col-md-3 whiteText backInGray roundCorners">
         <section id="externalLogins">
             @Html.Action("RemoveAccountList")
