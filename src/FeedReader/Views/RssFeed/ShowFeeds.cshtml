@@ -42,9 +42,9 @@
 <br />
 
 <div id="createNew">
-    <button class="btn btn-default slideRight">
-        @Html.ActionLink("Add Feed", "Create", routeValues: null, htmlAttributes: new { @class = "btn-default" })
-    </button>
+        <a href='@Url.Action("Create","RssFeed")' class="slideRight">
+            <button class="btn btn-default">Add Feed</button>
+        </a>
 </div>
 
 <br />

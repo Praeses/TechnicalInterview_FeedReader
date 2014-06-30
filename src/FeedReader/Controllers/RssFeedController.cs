@@ -68,11 +68,15 @@ namespace FeedReader.Controllers
                 rssfeed.Link = "An invalid RSS url was used. Please edit the URL and input a valid URL.";
             }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && rssfeed.Title != null)
             {
                 db.RssFeeds.Add(rssfeed);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("Error");
             }
 
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", rssfeed.UserId);

@@ -15,10 +15,10 @@
             <th style="border-top:none">
                 @Html.DisplayNameFor(model => model.Link)
             </th>
-            <th style="border-top:none"> 
-                <button class="btn btn-default slideRight">
-                    @Html.ActionLink("Add Feed", "Create", routeValues: null, htmlAttributes: new { @class = "btn-default"})
-                </button>
+            <th style="border-top:none">
+                <a href='@Url.Action("Create","RssFeed")' class="slideRight">
+                    <button class="btn btn-default">Add Feed</button>
+                </a> 
             </th>
         </tr>
 
