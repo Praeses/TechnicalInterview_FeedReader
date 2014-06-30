@@ -8,7 +8,8 @@
         EmberRss provides an easy way to keep up with your favorite RSS feeds. What are you waiting for?
     </p>
     <p>
-        @Html.ActionLink("Register now!", "Register", "Account", routeValues: null, htmlAttributes: new { @class = "orangeLink"})
+        @Html.ActionLink("Register now!", "Register", "Account", routeValues: null, htmlAttributes: new { @class = "orangeLink"}) or
+        <a href="@Url.Action("Login","Account")" class="orangeLink">Login with Google or Facebook.</a>
     </p>
 </div>
 
