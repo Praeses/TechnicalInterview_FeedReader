@@ -1,0 +1,131 @@
+﻿<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <a href="#" class="navbar-brand" data-bind="click: brandClicked">FeedReader</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span data-bind="text: userName"></span>
+                        <i class="fa fa-cog"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" data-bind="click: logoutClicked">Sign Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search">
+                <div>
+                    <label>
+                        <span class="sr-only">Search</span>
+                        <span class="input-group">
+                            <input class="form-control" placeholder="Search" type="text" data-bind="value: search, event: { change: searchClicked }">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit" data-bind="click: searchClicked">
+                                    <i class="fa fa-fw fa-search"></i>
+                                </button>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="authenticatedLayout-addChannelModal" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content" role="form">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Feed</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label>
+                        <span class="sr-only">Feed Url</span>
+                        <span class="input-group" data-bind="css: { 'has-error': channelRssExists, 'has-success': channelRssExists() === false }">
+                            <span class="input-group-addon"><i class="fa fa-fw fa-rss"></i></span>
+                            <input class="form-control autofocus" placeholder="Feed Url" type="text" data-bind="value: channelRss, event: { input: clearStatusText }">
+                        </span>
+                    </label>
+                </div>
+                
+                <div class="alert alert-danger" data-bind="visible: statusText">
+                    <span data-bind="text: statusText"></span>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
+                <button class="btn btn-sm btn-primary" type="submit" data-bind="click: addChannelClicked">Ok</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2 well">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a href="#" data-toggle="tab" data-bind="click: allChannelsClicked">
+                        <i class="fa fa-rss"></i>
+                        <span>All</span>
+                    </a>
+                </li>
+                <!-- ko foreach: channels -->
+                <li>
+                    <a href="#" class="overflow-x-ellipsis" data-toggle="tab" data-bind="click: $root.channelClicked">
+                        <i class="fa fa-rss"></i>
+                        <span data-bind="text: title"></span>
+                    </a>
+                </li>
+                <!-- /ko -->
+                <li class="nav-divider"></li>
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#authenticatedLayout-addChannelModal">
+                        <i class="fa fa-plus"></i>
+                        <span>Add</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-10">
+            <div>
+                <h4>
+                    <span data-bind="text: selectedChannel().title"></span>
+                    <button class="btn btn-sm btn-default space-left" type="button" data-bind="click: removeSelectedChannelClicked, visible: showDeleteChannel">
+                        <i class="fa fa-minus"></i>
+                        <span>Delete</span>
+                    </button>
+                </h4>
+            </div>
+            <ul id="authenticatedLayout-items" class="list-group" data-bind="foreach: items">
+                <li class="list-group-item">
+                    <div class="overflow-x-ellipsis">
+                        <a data-bind="text: title, click: $root.itemClicked"></a>
+                        <span> - </span>
+                        <span data-bind="text: descriptionPlain"></span>
+                    </div>
+                    <div class="collapse">
+                        <div class="well space-top">
+                            <h3><a data-bind="attr: { href: link }, text: title" href="#" target="_blank"></a></h3>
+                            <div data-bind="html: description"></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div>
+                <button class="btn btn-sm btn-default" type="button" data-bind="click: moreClicked, visible: showMoreItems">
+                    <i class="fa fa-caret-square-o-down"></i>
+                    <span>More</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

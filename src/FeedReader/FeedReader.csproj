@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,19 +8,19 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}</ProjectGuid>
+    <ProjectGuid>{3AC32DD3-F12B-4189-A6A6-EB7E0B1747AD}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FeedReader</RootNamespace>
     <AssemblyName>FeedReader</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,222 +40,189 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http">
-    </Reference>
-    <Reference Include="System.Net.Http.WebRequest">
-    </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Optimization">
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="WebGrease">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
-    <Reference Include="Antlr3.Runtime">
-      <Private>True</Private>
-      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Formatting">
+    <Reference Include="SimpleInjector">
+      <HintPath>..\packages\SimpleInjector.2.5.0\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Diagnostics">
+      <HintPath>..\packages\SimpleInjector.2.5.0\lib\net45\SimpleInjector.Diagnostics.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Extensions.ExecutionContextScoping">
+      <HintPath>..\packages\SimpleInjector.Extensions.ExecutionContextScoping.2.5.0\lib\net45\SimpleInjector.Extensions.ExecutionContextScoping.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi">
+      <HintPath>..\packages\SimpleInjector.Integration.WebApi.2.5.0\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http">
+    <Reference Include="System.Web" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.2\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost">
+    <Reference Include="System.Web.Http.WebHost, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.1.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.0\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.0.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Owin">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.0.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin">
-      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin">
-      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security">
-      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Facebook">
-      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.2.1.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Cookies">
-      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.OAuth">
-      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Google">
-      <HintPath>..\packages\Microsoft.Owin.Security.Google.2.1.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Twitter">
-      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.2.1.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
-      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.2.1.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\bootstrap-3.2.0.css" />
+    <Content Include="Content\css\feedReader.css" />
+    <Content Include="Content\css\font-awesome-4.1.0.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\image\loading.gif" />
+    <Content Include="Global.asax" />
+    <Content Include="Script\implementation\layout\default\anonymousLayout.html" />
+    <Content Include="Script\implementation\layout\default\authenticatedLayout.html" />
+    <Content Include="Script\lib\css-0.1.2.js" />
+    <Content Include="Script\lib\normalize-2.0.12.js" />
+    <Content Include="Script\lib\require-2.1.14.js" />
+    <Content Include="Script\lib\text-2.0.12.js" />
+    <Content Include="Script\lib\underscore-1.6.0.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiControllers\ItemController.cs" />
+    <Compile Include="ApiControllers\RegistrationController.cs" />
+    <Compile Include="ApiControllers\ChannelController.cs" />
+    <Compile Include="Class\Error.cs" />
+    <Compile Include="Class\GlobalExceptionFilterAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\SimpleInjectorConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Class\Identity.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="ApiControllers\AuthenticationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <TypeScriptCompile Include="Script\config.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\authentication.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\config.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\history.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\historyHash.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\historyHistory.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\historyTimer.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\ioc.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\localStorage.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\router.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\sessionStorage.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\url.ts" />
+    <TypeScriptCompile Include="Script\implementation\binding\iso6801.ts" />
+    <TypeScriptCompile Include="Script\implementation\layout\default\anonymousLayout.ts" />
+    <TypeScriptCompile Include="Script\implementation\layout\default\authenticatedLayout.ts" />
+    <TypeScriptCompile Include="Script\implementation\layout\default\config.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\layout.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\layoutController.ts" />
+    <TypeScriptCompile Include="Script\implementation\base\view.ts" />
+    <TypeScriptCompile Include="Script\lib\bootstrap.d.ts" />
+    <TypeScriptCompile Include="Script\lib\jquery.d.ts" />
+    <TypeScriptCompile Include="Script\lib\knockout.d.ts" />
+    <TypeScriptCompile Include="Script\lib\lib.d.ts" />
+    <TypeScriptCompile Include="Script\lib\modernizr.d.ts" />
+    <TypeScriptCompile Include="Script\lib\require.d.ts" />
+    <TypeScriptCompile Include="Script\lib\underscore.d.ts" />
+    <TypeScriptCompile Include="Script\model\base\authentication.d.ts" />
+    <TypeScriptCompile Include="Script\model\base\history.d.ts" />
+    <TypeScriptCompile Include="Script\model\base\ioc.d.ts" />
+    <TypeScriptCompile Include="Script\model\base\router.d.ts" />
+    <TypeScriptCompile Include="Script\model\base\url.d.ts" />
+    <TypeScriptCompile Include="Script\model\base\anonymousLayout.d.ts" />
+    <TypeScriptCompile Include="Script\model\base\authenticatedLayout.d.ts" />
+    <TypeScriptCompile Include="Script\model\base\layout.d.ts" />
+    <TypeScriptCompile Include="Script\model\base\layoutController.d.ts" />
+    <TypeScriptCompile Include="Script\model\base\view.d.ts" />
+    <TypeScriptCompile Include="Script\requireConfig.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Implementation.Api\Implementation.Api.csproj">
+      <Project>{B3559A12-A6F7-4A61-B641-FF7919D529A4}</Project>
+      <Name>Implementation.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Implementation.Persistence.SqlServer\Implementation.Persistence.SqlServer.csproj">
+      <Project>{E33C72B5-3AE9-4DDA-940C-502C8EEBFFFA}</Project>
+      <Name>Implementation.Persistence.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model.Api\Model.Api.csproj">
+      <Project>{D94D53BF-45D4-44DF-8D0F-6916F862C957}</Project>
+      <Name>Model.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model.Persistence\Model.Persistence.csproj">
+      <Project>{CDB32071-459A-4E14-BF37-32FBFBF12DA3}</Project>
+      <Name>Model.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{0EE2F245-738A-4398-8D26-25D06BA3F8E5}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
-    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
-  </Target>
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>62750</DevelopmentServerPort>
+          <DevelopmentServerPort>51656</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:62750/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
@@ -266,10 +234,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
-  </Target> -->
+  </Target>
+  -->
 </Project>

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3B6CA073-71A1-4C60-9720-CE8BDF192046}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Test.Implementation.Persistence.SqlServer</RootNamespace>
+    <AssemblyName>Test.Implementation.Persistence.SqlServer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\SimpleInjectorConfig.cs" />
+    <Compile Include="Class\RssServiceTest.cs" />
+    <Compile Include="Class\UserServiceTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector">
+      <HintPath>..\..\packages\SimpleInjector.2.5.0\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Diagnostics">
+      <HintPath>..\..\packages\SimpleInjector.2.5.0\lib\net45\SimpleInjector.Diagnostics.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Implementation.Persistence.SqlServer\Implementation.Persistence.SqlServer.csproj">
+      <Project>{E33C72B5-3AE9-4DDA-940C-502C8EEBFFFA}</Project>
+      <Name>Implementation.Persistence.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Model.Persistence\Model.Persistence.csproj">
+      <Project>{CDB32071-459A-4E14-BF37-32FBFBF12DA3}</Project>
+      <Name>Model.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Test.Model.Persisence\Test.Model.Persisence.csproj">
+      <Project>{dc9e1bbe-a467-47e8-a0c3-362df97838fc}</Project>
+      <Name>Test.Model.Persisence</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
