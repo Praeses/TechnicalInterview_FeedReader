@@ -21,6 +21,7 @@
             if (File.Exists(databaseFile))
             {
                 Console.WriteLine("Database already exists.");
+                return;
             }
 
             string scriptFile = Path.Combine(dataDirectory, "feedReader.sql");
@@ -28,6 +29,7 @@
             if (!File.Exists(scriptFile))
             {
                 Console.WriteLine("Cannot find script.");
+                return;
             }
 
             //Process the script file.

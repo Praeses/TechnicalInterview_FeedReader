@@ -143,7 +143,7 @@
                 SqlParameter rssParameter = SqlHelper.Parameter<string>("@rss");
                 SqlParameter titleParameter = SqlHelper.Parameter<string>("@title");
                 int error = this.sqlHelper.ExecuteStoredProcedure(
-                    "getChannel",
+                    "getChannelByGuid",
                     channelGuidParameter,
                     lastCheckedParameter,
                     linkParameter,
@@ -169,6 +169,46 @@
             catch (Exception e)
             {
                 e.AddDumpObject(() => channelGuid);
+                throw;
+            }
+        }
+
+        public IChannel GetChannel(Uri rss)
+        {
+            try
+            {
+                SqlParameter rssParameter = SqlHelper.Parameter("@rss", rss.AbsoluteUri, typeof(string));
+                SqlParameter channelGuidParameter = SqlHelper.Parameter<Guid>("@channelGuid");
+                SqlParameter lastCheckedParameter = SqlHelper.Parameter<string>("@lastChecked");
+                SqlParameter linkParameter = SqlHelper.Parameter<string>("@link");
+                SqlParameter titleParameter = SqlHelper.Parameter<string>("@title");
+                int error = this.sqlHelper.ExecuteStoredProcedure(
+                    "getChannelByRss",
+                    rssParameter,
+                    channelGuidParameter,
+                    lastCheckedParameter,
+                    linkParameter,
+                    titleParameter);
+                switch (error)
+                {
+                    case 0:
+                        return new Channel(
+                            channelGuidParameter.CastTo<Guid>(),
+                            new TimeSpan(lastCheckedParameter.CastTo<int>() * TimeSpan.TicksPerSecond),
+                            new Uri(linkParameter.CastTo<string>()),
+                            rss,
+                            titleParameter.CastTo<string>());
+
+                    case 1:
+                        return default(IChannel);
+
+                    default:
+                        throw new ExternalException().AddDumpObject(() => error);
+                }
+            }
+            catch (Exception e)
+            {
+                e.AddDumpObject(() => rss);
                 throw;
             }
         }

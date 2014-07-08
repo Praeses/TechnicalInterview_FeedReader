@@ -19,7 +19,7 @@
     {
         #region Static Fields
 
-        private static readonly TimeSpan MaxCheckFrequencey = new TimeSpan(0, 0, 0, 10);
+        private static readonly TimeSpan MaxCheckFrequencey = new TimeSpan(0, 0, 1, 0);
 
         #endregion
 
@@ -29,18 +29,20 @@
         {
             try
             {
+                IChannel channel = rssService.GetChannel(rss);
+                if ((channel != default(IChannel)) && (channel.LastChecked < MaxCheckFrequencey))
+                {
+                    return channel;
+                }
+
                 XDocument rssXDocument = XDocument.Load(rss.AbsoluteUri);
                 XElement channelElement = rssXDocument.XPathSelectElement("/rss/channel");
 
                 string link = GetText(channelElement, "link[1]");
                 string title = GetText(channelElement, "title[1]");
 
-                IChannel channel = new Channel(new Uri(link), rss, title);
+                channel = new Channel(new Uri(link), rss, title);
                 rssService.PutChannel(channel);
-                if (channel.LastChecked < MaxCheckFrequencey)
-                {
-                    return channel;
-                }
 
                 var items = new List<IItem>();
                 foreach (XElement itemElement in channelElement.Descendants("item"))

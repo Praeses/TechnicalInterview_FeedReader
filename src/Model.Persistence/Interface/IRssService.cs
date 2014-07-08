@@ -15,6 +15,8 @@
 
         IChannel GetChannel(Guid channelGuid);
 
+        IChannel GetChannel(Uri rss);
+
         IItem GetItem(Guid itemGuid);
 
         void PutChannel(IChannel channel, out bool existed);

@@ -173,8 +173,19 @@ export module Implementation.Layout.Default {
             this.viewModel.showDeleteChannel(false);
             this.viewModel.showMoreUserItems(false);
 
+            var searchRegx = new RegExp(search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
             var userItems = _.filter(this.viewModel.userItems(), (userItem) => {
-                return userItem.descriptionPlain.indexOf(search) != -1;
+                var x = userItem.descriptionPlain.search(searchRegx);
+                if (x != -1) {
+                    return true;
+                }
+
+                x = userItem.title.search(searchRegx);
+                if (x != -1) {
+                    return true;
+                }
+
+                return false;
             });
             this.setUserItems(userItems);
         }
@@ -198,8 +209,8 @@ export module Implementation.Layout.Default {
 
         private sortChannels() {
             this.viewModel.channels.sort((a: IChannel, b: IChannel) => {
-                var aName = a.title.toLowerCase();
-                var bName = b.title.toLowerCase();
+                var aName = a.title.toLocaleLowerCase();
+                var bName = b.title.toLocaleLowerCase();
                 return aName === bName ? 0 : aName < bName ? -1 : 1;
             });
         }
