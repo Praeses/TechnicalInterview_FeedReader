@@ -34,7 +34,7 @@ namespace FeedReader
             // Model.Api Registrations
             container.Register<IAuthenticationService, AuthenticationService>();
             container.Register<IChannelService, ChannelService>();
-            container.Register<IItemService, ItemService>();
+            container.Register<IUserItemService, UserItemService>();
             container.Register<IRegistrationService, RegistrationService>();
 
             // Model.Persistence Registations

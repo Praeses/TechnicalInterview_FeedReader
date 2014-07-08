@@ -1,7 +1,6 @@
 ﻿namespace Implementation.Persistence.SqlServer.Implementation
 {
     using System;
-    using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
     using System.Runtime.InteropServices;
@@ -98,42 +97,6 @@
             catch (Exception e)
             {
                 e.AddDumpObject(() => channelGuid);
-                throw;
-            }
-        }
-
-        public IEnumerable<IItem> EnumerateItemsAfter(Guid channelGuid, int limit, Guid? itemGuid)
-        {
-            try
-            {
-                IEnumerable<IItem> items;
-                SqlParameter channelGuidParameter = SqlHelper.Parameter(() => channelGuid);
-                SqlParameter limitParameter = SqlHelper.Parameter(() => limit);
-                SqlParameter itemGuidParameter = SqlHelper.Parameter(() => itemGuid);
-                int error = this.sqlHelper.ExecuteStoredProcedureItems(
-                    "enumerateItemsAfter",
-                    out items,
-                    channelGuidParameter,
-                    limitParameter,
-                    itemGuidParameter);
-                switch (error)
-                {
-                    case 0:
-                        return items;
-
-                    case 1:
-                        throw new NotFoundException("channelGuid");
-
-                    case 2:
-                        throw new NotFoundException("itemGuid");
-
-                    default:
-                        throw new ExternalException().AddDumpObject(() => error);
-                }
-            }
-            catch (Exception e)
-            {
-                e.AddDumpObject(() => channelGuid).AddDumpObject(() => limit).AddDumpObject(() => itemGuid);
                 throw;
             }
         }

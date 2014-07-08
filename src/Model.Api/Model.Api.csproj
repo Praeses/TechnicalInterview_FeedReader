@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Interface\IAuthenticationService.cs" />
-    <Compile Include="Interface\IItemService.cs" />
+    <Compile Include="Interface\IUserItemService.cs" />
     <Compile Include="Interface\IRegistrationService.cs" />
     <Compile Include="Interface\IChannelService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

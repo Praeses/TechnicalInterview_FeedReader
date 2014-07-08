@@ -43,6 +43,17 @@
             return this.userService.EnumerateChannels(userGuid);
         }
 
+        public IEnumerable<IUserItem> EnumerateUserItemsAfter(
+            Guid userGuid,
+            Guid channelGuid,
+            int limit,
+            Guid? itemGuid)
+        {
+            IChannel channel = this.rssService.GetChannel(channelGuid);
+            RssHelper.Process(channel.Rss, this.rssService);
+            return this.userService.EnumerateUserItemsAfter(userGuid, channelGuid, limit, itemGuid);
+        }
+
         public void RemoveChannel(Guid userGuid, Guid channelGuid)
         {
             this.userService.RemoveChannel(userGuid, channelGuid);

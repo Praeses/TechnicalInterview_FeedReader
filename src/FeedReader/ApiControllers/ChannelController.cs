@@ -17,16 +17,13 @@
 
         private readonly IChannelService channelService;
 
-        private readonly IItemService itemService;
-
         #endregion
 
         #region Constructors and Destructors
 
-        public ChannelController(IChannelService channelService, IItemService itemService)
+        public ChannelController(IChannelService channelService)
         {
             this.channelService = channelService;
-            this.itemService = itemService;
         }
 
         #endregion
@@ -51,9 +48,14 @@
 
         [HttpGet]
         [Route("{channelGuid}")]
-        public IEnumerable<IItem> Get(Guid channelGuid, int limit = 0, Guid? itemGuid = default(Guid?))
+        public IEnumerable<IUserItem> Get(Guid channelGuid, int limit = 0, Guid? itemGuid = default(Guid?))
         {
-            return this.itemService.EnumerateItemsAfter(channelGuid, limit, itemGuid);
+            var identity = (Identity)this.User.Identity;
+            return this.channelService.EnumerateUserItemsAfter(
+                identity.User.GetUserGuid(),
+                channelGuid,
+                limit,
+                itemGuid);
         }
 
         [HttpPost]

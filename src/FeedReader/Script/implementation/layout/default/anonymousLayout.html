@@ -1,52 +1,50 @@
 ﻿<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <a href="#" class="navbar-brand" data-bind="click: brandClicked">FeedReader</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#anonymousLayout-signupModal">Sign Up</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign In <i class="fa fa-cog"></i></a>
-                    <div class="dropdown-menu" role="menu">
-                        <form class="navbar-form" role="form">
-                            <div>
-                                <label>
-                                    <span class="sr-only">Name</span>
-                                    <span class="input-group" data-bind="css: { 'has-error': userNameExists() === false, 'has-success': userNameExists }">
-                                        <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
-                                        <input class="form-control autofocus" placeholder="Name" type="text" data-bind="value: userName, event: { change: userNameChangedEvent }">
-                                    </span>
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <span class="sr-only">Password</span>
-                                    <span class="input-group" data-bind="css: { 'has-error': passwordIncorrect }">
-                                        <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                                        <input class="form-control" placeholder="Password" type="password" data-bind="value: password, event: { input: passwordInputEvent }">
-                                    </span>
-                                </label>
-                            </div>
-                            <div>
-                                <button class="btn btn-sm btn-primary" type="submit" data-bind="click: loginClicked">Sign in</button>
-                            </div>
-                            <div class="space-top">
-                                <label class="checkbox">
-                                    <input type="checkbox" data-bind="checked: rememberMe">
-                                    <span>Stay signed in</span>
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-            </ul>
-        </div>
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <a href="#" class="navbar-brand" data-bind="click: brandClicked">FeedReader</a>
+    </div>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#" data-toggle="modal" data-target="#anonymousLayout-signupModal">Sign Up</a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign In <i class="fa fa-cog"></i></a>
+                <div class="dropdown-menu" role="menu">
+                    <form class="navbar-form" role="form">
+                        <div>
+                            <label>
+                                <span class="sr-only">Name</span>
+                                <span class="input-group" data-bind="css: { 'has-error': userNameExists() === false, 'has-success': userNameExists }">
+                                    <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
+                                    <input class="form-control autofocus" placeholder="Name" type="text" data-bind="value: userName, event: { change: userNameChangedEvent }">
+                                </span>
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <span class="sr-only">Password</span>
+                                <span class="input-group" data-bind="css: { 'has-error': passwordIncorrect }">
+                                    <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                                    <input class="form-control" placeholder="Password" type="password" data-bind="value: password, event: { input: passwordInputEvent }">
+                                </span>
+                            </label>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-primary" type="submit" data-bind="click: loginClicked">Sign in</button>
+                        </div>
+                        <div class="space-top">
+                            <label class="checkbox">
+                                <input type="checkbox" data-bind="checked: rememberMe">
+                                <span>Stay signed in</span>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
 

@@ -8,18 +8,18 @@ export module Implementation.Layout.Default {
 
         private allChannel: IChannel = {
             channelGuid: undefined,
-            items: [],
+            userItems: [],
             link: undefined,
-            moreItems: true,
+            moreUserItems: true,
             rss: undefined,
             title: 'All'
         };
 
         private searchChannel: IChannel = {
             channelGuid: undefined,
-            items: [],
+            userItems: [],
             link: undefined,
-            moreItems: true,
+            moreUserItems: true,
             rss: undefined,
             title: 'Search Results'
         };
@@ -33,8 +33,8 @@ export module Implementation.Layout.Default {
 
         private addChannelNoMutate(channel: IChannel): void {
             _.defaults(channel, {
-                items: [],
-                moreItems: true,
+                userItems: [],
+                moreUserItems: true,
                 title: ''
             });
             var foundChannel = _.find(this.viewModel.channels(), (chan) => {
@@ -56,14 +56,14 @@ export module Implementation.Layout.Default {
             this.viewModel.statusText(undefined);
         }
 
-        private getMoreItems(channel: IChannel): void {
+        private getMoreUserItems(channel: IChannel): void {
             if (channel === this.allChannel) {
-                this.getMoreItemsAll();
+                this.getMoreUserItemsAll();
                 return;
             }
 
             var itemGuid = null;
-            var lastItem = _.last(channel.items);
+            var lastItem = _.last(channel.userItems);
             if (!_.isUndefined(lastItem)) {
                 itemGuid = lastItem.itemGuid;
             }
@@ -73,64 +73,71 @@ export module Implementation.Layout.Default {
                 channelGuid: channel.channelGuid,
                 limit: limit,
                 itemGuid: itemGuid
-            }).done((items: IItem[]) => {
-                _.forEach(items, (item) => {
-                    _.defaults(item, { descriptionPlain: jQuery('<div>').html(item.description).text() });
+            }).done((userItems: IUserItem[]) => {
+                _.forEach(userItems, (userItem) => {
+                    _.defaults(userItem, { descriptionPlain: jQuery('<div>').html(userItem.description).text() });
                 });
 
-                channel.items = channel.items.concat(items);
-                if (items.length < limit) {
-                    channel.moreItems = false;
+                channel.userItems = channel.userItems.concat(userItems);
+                if (userItems.length < limit) {
+                    channel.moreUserItems = false;
                 }
 
                 //Update if visible.
                 if (this.viewModel.selectedChannel() == channel) {
-                    this.viewModel.items(channel.items);
-                    this.viewModel.showMoreItems(channel.moreItems);
+                    this.viewModel.userItems(channel.userItems);
+                    this.viewModel.showMoreUserItems(channel.moreUserItems);
                 } else if (this.viewModel.selectedChannel() == this.allChannel) {
-                    if (items.length > 0) {
+                    if (userItems.length > 0) {
                         this.selectChannelAll();
                     }
                 }
             });
         }
 
-        private getMoreItemsAll(): void {
+        private getMoreUserItemsAll(): void {
             _.forEach(this.viewModel.channels(), (channel: IChannel) => {
-                this.getMoreItems(channel);
+                this.getMoreUserItems(channel);
             });
         }
 
         private routerCatchAllCallback: Model.Base.IRouterCatchAllCallback = (): void => {
         };
 
+        private saveUserItem(userItem: IUserItem): void {
+            this.authentication.put('/api/userItem/{itemGuid}', {
+                itemGuid: userItem.itemGuid,
+                read: userItem.read
+            });
+        }
+
         private selectChannel(channel: IChannel): void {
             this.viewModel.selectedChannel(channel);
             this.viewModel.showDeleteChannel(true);
-            this.viewModel.showMoreItems(channel.moreItems);
-            this.viewModel.items(channel.items);
-            if (channel.items.length === 0) {
-                this.getMoreItems(channel);
+            this.viewModel.showMoreUserItems(channel.moreUserItems);
+            this.viewModel.userItems(channel.userItems);
+            if (channel.userItems.length === 0) {
+                this.getMoreUserItems(channel);
             }
         }
 
         private selectChannelAll(): void {
             this.viewModel.selectedChannel(this.allChannel);
             this.viewModel.showDeleteChannel(false);
-            var items = [];
-            var moreItems = false;
+            var userItems = [];
+            var moreUserItems = false;
             _.forEach(this.viewModel.channels(), (channel: IChannel) => {
-                items = items.concat(channel.items);
-                moreItems = moreItems || channel.moreItems;
+                userItems = userItems.concat(channel.userItems);
+                moreUserItems = moreUserItems || channel.moreUserItems;
             });
 
-            items.sort((a: IItem, b: IItem) => b.sequence - a.sequence);
+            userItems.sort((a: IUserItem, b: IUserItem) => b.sequence - a.sequence);
 
-            this.viewModel.items(items);
-            this.viewModel.showMoreItems(moreItems);
+            this.viewModel.userItems(userItems);
+            this.viewModel.showMoreUserItems(moreUserItems);
 
-            if (items.length === 0) {
-                this.getMoreItemsAll();
+            if (userItems.length === 0) {
+                this.getMoreUserItemsAll();
             }
         }
 
@@ -144,12 +151,12 @@ export module Implementation.Layout.Default {
 
             this.viewModel.selectedChannel(this.searchChannel);
             this.viewModel.showDeleteChannel(false);
-            this.viewModel.showMoreItems(false);
+            this.viewModel.showMoreUserItems(false);
 
-            var items = _.filter(this.viewModel.items(), (item) => {
-                return item.descriptionPlain.indexOf(search) != -1;
+            var userItems = _.filter(this.viewModel.userItems(), (userItem) => {
+                return userItem.descriptionPlain.indexOf(search) != -1;
             });
-            this.viewModel.items(items);
+            this.viewModel.userItems(userItems);
         }
 
         private sortChannels() {
@@ -170,12 +177,12 @@ export module Implementation.Layout.Default {
                 channelRss: ko.observable(),
                 channelRssExists: ko.observable(),
                 channels: ko.observableArray([]),
-                items: ko.observableArray([]),
                 search: ko.observable(),
                 selectedChannel: ko.observable(this.allChannel),
                 showDeleteChannel: ko.observable(false),
-                showMoreItems: ko.observable(false),
+                showMoreUserItems: ko.observable(false),
                 statusText: ko.observable(),
+                userItems: ko.observableArray([]),
 
                 addChannelClicked: (): void => {
                     this.clearStatusText();
@@ -201,9 +208,13 @@ export module Implementation.Layout.Default {
                     this.clearStatusText();
                 },
 
-                itemClicked: (item: IItem, event: JQueryEventObject): void => {
-                    jQuery('#authenticatedLayout-items .collapse.in').collapse('hide');
+                userItemClicked: (userItem: IUserItem, event: JQueryEventObject): void => {
+                    jQuery('#authenticatedLayout-userItems .collapse.in').collapse('hide');
                     jQuery(event.target).parent().parent().children('.collapse').collapse('show');
+                    if (!userItem.read) {
+                        userItem.read = true;
+                        this.saveUserItem(userItem);
+                    }
                 },
 
                 logoutClicked: (): void => {
@@ -211,10 +222,11 @@ export module Implementation.Layout.Default {
                 },
 
                 moreClicked: (): void => {
-                    this.getMoreItems(this.viewModel.selectedChannel());
+                    this.getMoreUserItems(this.viewModel.selectedChannel());
                 },
 
                 removeSelectedChannelClicked: (): void => {
+                    jQuery('#authenticatedLayout-addChannelModal').modal('hide');
                     if (this.viewModel.selectedChannel() === this.allChannel) {
                         return;
                     }
@@ -268,28 +280,29 @@ export module Implementation.Layout.Default {
         channelRss: KnockoutObservable<string>;
         channelRssExists: KnockoutObservable<boolean>;
         channels: KnockoutObservableArray<IChannel>;
-        items: KnockoutObservableArray<IItem>;
+        userItems: KnockoutObservableArray<IUserItem>;
         search: KnockoutObservable<string>;
         selectedChannel: KnockoutObservable<IChannel>;
         showDeleteChannel: KnockoutObservable<boolean>;
-        showMoreItems: KnockoutObservable<boolean>;
+        showMoreUserItems: KnockoutObservable<boolean>;
         statusText: KnockoutObservable<string>;
     }
 
     export interface IChannel {
         channelGuid: string;
-        items: IItem[];
         link: string;
-        moreItems: boolean;
+        moreUserItems: boolean;
         rss: string;
         title: string;
+        userItems: IUserItem[];
     }
 
-    export interface IItem {
+    export interface IUserItem {
         description: string;
         descriptionPlain: string;
         itemGuid: string;
         link: string;
+        read: boolean;
         sequence: number;
         title: string;
     }

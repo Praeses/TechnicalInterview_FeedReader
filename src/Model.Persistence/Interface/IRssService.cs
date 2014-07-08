@@ -1,7 +1,6 @@
 ﻿namespace Model.Persistence.Interface
 {
     using System;
-    using System.Collections.Generic;
 
     public interface IRssService
     {
@@ -10,8 +9,6 @@
         void AddItem(Guid channelGuid, IItem item, out bool existed);
 
         void DeleteChannel(Guid channelGuid);
-
-        IEnumerable<IItem> EnumerateItemsAfter(Guid channelGuid, int limit, Guid? itemGuid);
 
         IChannel GetChannel(Guid channelGuid);
 

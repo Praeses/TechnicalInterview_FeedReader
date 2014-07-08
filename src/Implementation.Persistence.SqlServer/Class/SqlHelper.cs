@@ -244,13 +244,13 @@
             }
         }
 
-        public int ExecuteStoredProcedureItems(
+        public int ExecuteStoredProcedureUserItems(
             string storedProcedureName,
-            out IEnumerable<IItem> items,
+            out IEnumerable<IUserItem> userItems,
             params SqlParameter[] parameters)
         {
-            var itemList = new List<IItem>();
-            items = itemList;
+            var userItemList = new List<IUserItem>();
+            userItems = userItemList;
             using (var sqlConnection = new SqlConnection(this.connectionString))
             {
                 using (var sqlCommand = new SqlCommand(storedProcedureName, sqlConnection))
@@ -269,13 +269,15 @@
                         while (sqlDataReader.Read())
                         {
                             var link = new Uri(sqlDataReader.GetString(2));
-                            var item = new Item(
+                            bool read = !sqlDataReader.IsDBNull(5) && sqlDataReader.GetBoolean(5);
+                            var userItem = new UserItem(
                                 sqlDataReader.GetGuid(0),
                                 sqlDataReader.GetString(1),
                                 link,
                                 sqlDataReader.GetInt32(3),
-                                sqlDataReader.GetString(4));
-                            itemList.Add(item);
+                                sqlDataReader.GetString(4),
+                                read);
+                            userItemList.Add(userItem);
                         }
                     }
 

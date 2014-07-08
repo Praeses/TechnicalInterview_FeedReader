@@ -13,6 +13,8 @@
 
         IEnumerable<IChannel> EnumerateChannels(Guid userGuid);
 
+        IEnumerable<IUserItem> EnumerateUserItemsAfter(Guid userGuid, Guid channelGuid, int limit, Guid? itemGuid);
+
         void RemoveChannel(Guid userGuid, Guid channelGuid);
 
         #endregion

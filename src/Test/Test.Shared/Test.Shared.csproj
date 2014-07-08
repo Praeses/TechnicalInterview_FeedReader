@@ -43,9 +43,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Class\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.csproj">
       <Project>{0EE2F245-738A-4398-8D26-25D06BA3F8E5}</Project>

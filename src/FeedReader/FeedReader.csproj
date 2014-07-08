@@ -115,7 +115,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiControllers\ItemController.cs" />
+    <Compile Include="ApiControllers\UserItemController.cs" />
     <Compile Include="ApiControllers\RegistrationController.cs" />
     <Compile Include="ApiControllers\ChannelController.cs" />
     <Compile Include="Class\Error.cs" />

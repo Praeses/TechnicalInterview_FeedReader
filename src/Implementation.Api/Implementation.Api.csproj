@@ -32,7 +32,7 @@
   <ItemGroup>
     <Compile Include="Class\RssHelper.cs" />
     <Compile Include="Implementation\AuthenticationService.cs" />
-    <Compile Include="Implementation\ItemService.cs" />
+    <Compile Include="Implementation\UserItemService.cs" />
     <Compile Include="Implementation\RegistrationService.cs" />
     <Compile Include="Implementation\ChannelService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

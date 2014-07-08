@@ -32,6 +32,12 @@
             @this.PutUser(user, out existed);
         }
 
+        public static void PutUserItem(this IUserService @this, Guid userGuid, Guid itemGuid, bool read)
+        {
+            bool existed;
+            @this.PutUserItem(userGuid, itemGuid, read, out existed);
+        }
+
         #endregion
     }
 }
