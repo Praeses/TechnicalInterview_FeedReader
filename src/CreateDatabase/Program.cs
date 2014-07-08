@@ -8,7 +8,7 @@
     {
         #region Methods
 
-        private static void Main(string[] args)
+        private static void Main()
         {
             // Set up the localdb data directory.
             string dataDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -36,17 +36,20 @@
             string[] sqlCommands = sqlScript.Split('~');
 
             SqlConnection sqlConnection = null;
-            foreach (string sql in sqlCommands)
+            foreach (string sqlCmd in sqlCommands)
             {
+                string sql = sqlCmd;
                 if (string.IsNullOrWhiteSpace(sql))
                 {
                     continue;
                 }
 
                 Console.WriteLine(sql);
+
+                int start;
                 if (sql.StartsWith("USE ["))
                 {
-                    int start = sql.IndexOf('[') + 1;
+                    start = sql.IndexOf('[') + 1;
                     int stop = sql.IndexOf(']');
                     string catalog = sql.Substring(start, stop - start);
                     string connectionString =
@@ -61,6 +64,17 @@
                     sqlConnection = new SqlConnection(connectionString);
                     sqlConnection.Open();
                     continue;
+                }
+
+                start = sql.IndexOf("FILENAME = N'", StringComparison.Ordinal);
+                while (start != -1)
+                {
+                    start += 13;
+                    int stop = sql.IndexOf('\'', start);
+                    string fileName = sql.Substring(start, stop - start);
+                    sql = sql.Replace(fileName, Path.Combine(dataDirectory, Path.GetFileName(fileName)));
+
+                    start = sql.IndexOf("FILENAME = N'", start, StringComparison.Ordinal);
                 }
 
                 using (var sqlCommand = new SqlCommand(sql, sqlConnection))
