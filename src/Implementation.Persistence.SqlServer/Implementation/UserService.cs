@@ -48,6 +48,7 @@
                     channel.ChannelGuid,
                     typeof(Guid?),
                     ParameterDirection.InputOutput);
+                SqlParameter lastCheckedParameter = SqlHelper.Parameter<string>("@lastChecked");
                 SqlParameter existedParameter = SqlHelper.Parameter<bool>("@existed");
                 int error = this.sqlHelper.ExecuteStoredProcedure(
                     "addChannel",
@@ -56,11 +57,13 @@
                     rssParameter,
                     titleParameter,
                     channelGuidParameter,
+                    lastCheckedParameter,
                     existedParameter);
                 switch (error)
                 {
                     case 0:
                         channel.ChannelGuid = channelGuidParameter.CastTo<Guid>();
+                        channel.LastChecked = new TimeSpan(lastCheckedParameter.CastTo<int>() * TimeSpan.TicksPerSecond);
                         existed = existedParameter.CastTo<bool>();
                         return;
 

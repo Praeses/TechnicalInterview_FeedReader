@@ -13,6 +13,10 @@
     text-overflow:ellipsis;
 }
 
+.unread {
+    font-weight: bold;
+}
+
 .space-bottom {
     margin-bottom: 5px;
 }

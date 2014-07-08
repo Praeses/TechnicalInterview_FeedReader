@@ -315,12 +315,12 @@
 
         private static IChannel CreateTestChannel()
         {
-            return new Channel(TestChannelGuid, TestChannelLink, TestChannelRss, TestChannelTitle);
+            return new Channel(TestChannelGuid, TimeSpan.Zero, TestChannelLink, TestChannelRss, TestChannelTitle);
         }
 
         private static IChannel CreateTestChannel2()
         {
-            return new Channel(TestChannelGuid2, TestChannelLink2, TestChannelRss2, TestChannelTitle2);
+            return new Channel(TestChannelGuid2, TimeSpan.Zero, TestChannelLink2, TestChannelRss2, TestChannelTitle2);
         }
 
         private static IUser CreateTestUser()

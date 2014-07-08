@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Shared", "Test\Test.Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implementation.Api", "Implementation.Api\Implementation.Api.csproj", "{B3559A12-A6F7-4A61-B641-FF7919D529A4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{22C259C9-AFB2-468B-9ABA-67929A402D08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateDatabase", "CreateDatabase\CreateDatabase.csproj", "{9BFE79C5-CEF7-4130-8D75-854056BBC4F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +83,10 @@ Global
 		{B3559A12-A6F7-4A61-B641-FF7919D529A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3559A12-A6F7-4A61-B641-FF7919D529A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3559A12-A6F7-4A61-B641-FF7919D529A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BFE79C5-CEF7-4130-8D75-854056BBC4F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BFE79C5-CEF7-4130-8D75-854056BBC4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BFE79C5-CEF7-4130-8D75-854056BBC4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BFE79C5-CEF7-4130-8D75-854056BBC4F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,5 +104,6 @@ Global
 		{2AB1FFF6-7429-4996-A155-C683EC102C80} = {4BCA7472-ED16-4E87-8671-933FAE5AA90C}
 		{9EC10BC9-AF8D-4A49-A22D-0BC44D531157} = {2AB1FFF6-7429-4996-A155-C683EC102C80}
 		{B3559A12-A6F7-4A61-B641-FF7919D529A4} = {2462B782-A11C-467A-915B-C3952B80754E}
+		{9BFE79C5-CEF7-4130-8D75-854056BBC4F6} = {22C259C9-AFB2-468B-9ABA-67929A402D08}
 	EndGlobalSection
 EndGlobal

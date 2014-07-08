@@ -232,10 +232,55 @@
                     {
                         while (sqlDataReader.Read())
                         {
-                            var link = new Uri(sqlDataReader.GetString(1));
-                            var rss = new Uri(sqlDataReader.GetString(2));
-                            var channel = new Channel(sqlDataReader.GetGuid(0), link, rss, sqlDataReader.GetString(3));
+                            var link = new Uri(sqlDataReader.GetString(2));
+                            var rss = new Uri(sqlDataReader.GetString(3));
+                            var channel = new Channel(
+                                sqlDataReader.GetGuid(0),
+                                new TimeSpan(sqlDataReader.GetInt32(1) * TimeSpan.TicksPerSecond),
+                                link,
+                                rss,
+                                sqlDataReader.GetString(4));
                             channelList.Add(channel);
+                        }
+                    }
+
+                    return returnValueParameter.CastTo<int>();
+                }
+            }
+        }
+
+        public int ExecuteStoredProcedureItems(
+            string storedProcedureName,
+            out IEnumerable<IItem> items,
+            params SqlParameter[] parameters)
+        {
+            var itemList = new List<IItem>();
+            items = itemList;
+            using (var sqlConnection = new SqlConnection(this.connectionString))
+            {
+                using (var sqlCommand = new SqlCommand(storedProcedureName, sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    var returnValueParameter = new SqlParameter("@returnValue", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.ReturnValue
+                    };
+                    sqlCommand.Parameters.Add(returnValueParameter);
+                    sqlCommand.Parameters.AddRange(parameters);
+
+                    sqlConnection.Open();
+                    using (SqlDataReader sqlDataReader = sqlCommand.ExecuteReader())
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            var link = new Uri(sqlDataReader.GetString(2));
+                            var item = new Item(
+                                sqlDataReader.GetGuid(0),
+                                sqlDataReader.GetString(1),
+                                link,
+                                sqlDataReader.GetInt32(3),
+                                sqlDataReader.GetString(4));
+                            itemList.Add(item);
                         }
                     }
 

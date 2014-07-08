@@ -25,13 +25,6 @@ export module Implementation.Layout.Default {
         };
 
         private addChannel(channel: IChannel): void {
-            this.viewModel.channels.valueWillMutate();
-            this.addChannelNoMutate(channel);
-            this.sortChannels();
-            this.viewModel.channels.valueHasMutated();
-        }
-
-        private addChannelNoMutate(channel: IChannel): void {
             _.defaults(channel, {
                 userItems: [],
                 moreUserItems: true,
@@ -46,6 +39,14 @@ export module Implementation.Layout.Default {
             }
 
             this.viewModel.channels.push(channel);
+        }
+
+        private addChannelSort(channel: IChannel): void {
+            this.viewModel.channels.valueWillMutate();
+            this.addChannel(channel);
+            this.sortChannels();
+            this.viewModel.channels.valueHasMutated();
+            this.getMoreUserItems(channel);
         }
 
         private authenticationChangedCallback: Model.Base.IAuthenticationChangedCallback = (): void => {
@@ -63,10 +64,15 @@ export module Implementation.Layout.Default {
             }
 
             var itemGuid = null;
-            var lastItem = _.last(channel.userItems);
-            if (!_.isUndefined(lastItem)) {
-                itemGuid = lastItem.itemGuid;
-            }
+            var sequence = Number.MAX_VALUE;
+            _.forEach(channel.userItems, (userItem: IUserItem) => {
+                if (userItem.sequence > sequence) {
+                    return;
+                }
+
+                itemGuid = userItem.itemGuid;
+                sequence = userItem.sequence;
+            });
 
             var limit = 10;
             this.authentication.get('/api/channel/{channelGuid}?limit={limit?}&itemGuid={itemGuid?}', {
@@ -75,7 +81,10 @@ export module Implementation.Layout.Default {
                 itemGuid: itemGuid
             }).done((userItems: IUserItem[]) => {
                 _.forEach(userItems, (userItem) => {
-                    _.defaults(userItem, { descriptionPlain: jQuery('<div>').html(userItem.description).text() });
+                    _.defaults(userItem, {
+                        descriptionPlain: jQuery('<div>').html(userItem.description).text(),
+                        readObservable: ko.observable(userItem['read'])
+                    });
                 });
 
                 channel.userItems = channel.userItems.concat(userItems);
@@ -85,7 +94,7 @@ export module Implementation.Layout.Default {
 
                 //Update if visible.
                 if (this.viewModel.selectedChannel() == channel) {
-                    this.viewModel.userItems(channel.userItems);
+                    this.setUserItems(channel.userItems);
                     this.viewModel.showMoreUserItems(channel.moreUserItems);
                 } else if (this.viewModel.selectedChannel() == this.allChannel) {
                     if (userItems.length > 0) {
@@ -101,13 +110,24 @@ export module Implementation.Layout.Default {
             });
         }
 
+        private markAllAsRead(): void {
+            _.forEach(this.viewModel.userItems(), (userItem: IUserItem) => {
+                if (userItem.readObservable()) {
+                    return;
+                }
+
+                userItem.readObservable(true);
+                this.saveUserItem(userItem);
+            });
+        }
+
         private routerCatchAllCallback: Model.Base.IRouterCatchAllCallback = (): void => {
         };
 
         private saveUserItem(userItem: IUserItem): void {
             this.authentication.put('/api/userItem/{itemGuid}', {
                 itemGuid: userItem.itemGuid,
-                read: userItem.read
+                read: userItem.readObservable()
             });
         }
 
@@ -115,7 +135,7 @@ export module Implementation.Layout.Default {
             this.viewModel.selectedChannel(channel);
             this.viewModel.showDeleteChannel(true);
             this.viewModel.showMoreUserItems(channel.moreUserItems);
-            this.viewModel.userItems(channel.userItems);
+            this.setUserItems(channel.userItems);
             if (channel.userItems.length === 0) {
                 this.getMoreUserItems(channel);
             }
@@ -133,7 +153,7 @@ export module Implementation.Layout.Default {
 
             userItems.sort((a: IUserItem, b: IUserItem) => b.sequence - a.sequence);
 
-            this.viewModel.userItems(userItems);
+            this.setUserItems(userItems);
             this.viewModel.showMoreUserItems(moreUserItems);
 
             if (userItems.length === 0) {
@@ -156,7 +176,24 @@ export module Implementation.Layout.Default {
             var userItems = _.filter(this.viewModel.userItems(), (userItem) => {
                 return userItem.descriptionPlain.indexOf(search) != -1;
             });
+            this.setUserItems(userItems);
+        }
+
+        private setUserItems(userItems: IUserItem[]): void {
+            this.viewModel.userItems.valueWillMutate();
             this.viewModel.userItems(userItems);
+            this.viewModel.userItems.sort((a: IUserItem, b: IUserItem) => {
+                if (!a.readObservable() && b.readObservable()) {
+                    return -1;
+                }
+
+                if (a.readObservable() && !b.readObservable()) {
+                    return 1;
+                }
+
+                return b.sequence - a.sequence;
+            });
+            this.viewModel.userItems.valueHasMutated();
         }
 
         private sortChannels() {
@@ -188,7 +225,7 @@ export module Implementation.Layout.Default {
                     this.clearStatusText();
                     this.authentication.post('/api/channel', { rss: this.viewModel.channelRss() })
                         .done((channel: IChannel) => {
-                            this.addChannel(channel);
+                            this.addChannelSort(channel);
                             jQuery('#authenticatedLayout-addChannelModal').modal('hide');
                         })
                         .fail((jqXhr: JQueryXHR) => {
@@ -208,17 +245,19 @@ export module Implementation.Layout.Default {
                     this.clearStatusText();
                 },
 
-                userItemClicked: (userItem: IUserItem, event: JQueryEventObject): void => {
-                    jQuery('#authenticatedLayout-userItems .collapse.in').collapse('hide');
-                    jQuery(event.target).parent().parent().children('.collapse').collapse('show');
-                    if (!userItem.read) {
-                        userItem.read = true;
-                        this.saveUserItem(userItem);
-                    }
-                },
-
                 logoutClicked: (): void => {
                     this.logout();
+                },
+
+                markAllAsReadClicked: (): void => {
+                    this.markAllAsRead();
+                },
+
+                markAsUnreadClicked: (userItem: IUserItem): void => {
+                    if (userItem.readObservable()) {
+                        userItem.readObservable(false);
+                        this.saveUserItem(userItem);
+                    }
                 },
 
                 moreClicked: (): void => {
@@ -226,24 +265,39 @@ export module Implementation.Layout.Default {
                 },
 
                 removeSelectedChannelClicked: (): void => {
-                    jQuery('#authenticatedLayout-addChannelModal').modal('hide');
-                    if (this.viewModel.selectedChannel() === this.allChannel) {
+                    var channel = this.viewModel.selectedChannel();
+                    jQuery('#authenticatedLayout-deleteChannelModal').modal('hide');
+                    if ((channel === this.allChannel) || (channel === this.searchChannel)) {
                         return;
                     }
 
                     this.authentication.delete('/api/channel/{channelGuid}', {
-                            channelGuid: this.viewModel.selectedChannel().channelGuid
+                            channelGuid: channel.channelGuid
                         })
                         .done(() => {
-                            var channel = this.viewModel.selectedChannel();
-                            this.viewModel.selectedChannel(this.allChannel);
+                            this.selectChannel(this.allChannel);
                             this.viewModel.channels.remove(channel);
                         });
                 },
 
                 searchClicked: (): void => {
                     this.selectChannelSearch();
-                }
+                },
+
+                userItemClicked: (userItem: IUserItem, event: JQueryEventObject): void => {
+                    var target = jQuery(event.target).parent().parent().children('.collapse');
+                    if (target.hasClass('in')) {
+                        target.collapse('hide');
+                        return;
+                    }
+
+                    jQuery('#authenticatedLayout-userItems .collapse.in').collapse('hide');
+                    target.collapse('show');
+                    if (!userItem.readObservable()) {
+                        userItem.readObservable(true);
+                        this.saveUserItem(userItem);
+                    }
+                },
             });
 
             this.viewModel.userName(this.authentication.session.userName);
@@ -257,7 +311,7 @@ export module Implementation.Layout.Default {
                 .done((channels: IChannel[]) => {
                     this.viewModel.channels.valueWillMutate();
                     _.forEach(channels, (channel: IChannel) => {
-                        this.addChannelNoMutate(channel);
+                        this.addChannel(channel);
                     });
                     this.sortChannels();
                     this.viewModel.channels.valueHasMutated();
@@ -302,7 +356,7 @@ export module Implementation.Layout.Default {
         descriptionPlain: string;
         itemGuid: string;
         link: string;
-        read: boolean;
+        readObservable: KnockoutObservable<boolean>;
         sequence: number;
         title: string;
     }

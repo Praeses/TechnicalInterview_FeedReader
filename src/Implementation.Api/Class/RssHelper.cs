@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Xml;
     using System.Xml.Linq;
@@ -16,6 +17,12 @@
 
     public static class RssHelper
     {
+        #region Static Fields
+
+        private static readonly TimeSpan MaxCheckFrequencey = new TimeSpan(0, 0, 0, 10);
+
+        #endregion
+
         #region Public Methods and Operators
 
         public static IChannel Process(Uri rss, IRssService rssService)
@@ -30,6 +37,10 @@
 
                 IChannel channel = new Channel(new Uri(link), rss, title);
                 rssService.PutChannel(channel);
+                if (channel.LastChecked < MaxCheckFrequencey)
+                {
+                    return channel;
+                }
 
                 var items = new List<IItem>();
                 foreach (XElement itemElement in channelElement.Descendants("item"))
@@ -47,10 +58,30 @@
                     items.Add(item);
                 }
 
-                items.Reverse();
-                foreach (IItem item in items)
+                List<IItem> existingItems = rssService.EnumerateItems(channel.GetChannelGuid(), items.Count).ToList();
+
+                bool saveItems = existingItems.Count != items.Count;
+                if (!saveItems)
                 {
-                    rssService.AddItem(channel.GetChannelGuid(), item);
+                    for (int index = 0; index < items.Count; index += 1)
+                    {
+                        if (items[index].Link == existingItems[index].Link)
+                        {
+                            continue;
+                        }
+
+                        saveItems = true;
+                        break;
+                    }
+                }
+
+                if (saveItems)
+                {
+                    items.Reverse();
+                    foreach (IItem item in items)
+                    {
+                        rssService.AddItem(channel.GetChannelGuid(), item);
+                    }
                 }
 
                 return channel;

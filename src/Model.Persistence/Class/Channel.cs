@@ -15,9 +15,10 @@
             this.Title = title;
         }
 
-        public Channel(Guid channelGuid, Uri link, Uri rss, string title)
+        public Channel(Guid channelGuid, TimeSpan lastChecked, Uri link, Uri rss, string title)
         {
             this.ChannelGuid = channelGuid;
+            this.LastChecked = lastChecked;
             this.Link = link;
             this.Rss = rss;
             this.Title = title;
@@ -28,6 +29,8 @@
         #region Public Properties
 
         public Guid? ChannelGuid { get; set; }
+
+        public TimeSpan LastChecked { get; set; }
 
         public Uri Link { get; private set; }
 

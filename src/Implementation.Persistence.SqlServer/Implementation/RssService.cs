@@ -1,6 +1,7 @@
 ﻿namespace Implementation.Persistence.SqlServer.Implementation
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
     using System.Runtime.InteropServices;
@@ -101,17 +102,50 @@
             }
         }
 
+        public IEnumerable<IItem> EnumerateItems(Guid channelGuid, int limit)
+        {
+            try
+            {
+                IEnumerable<IItem> items;
+                SqlParameter channelGuidParameter = SqlHelper.Parameter(() => channelGuid);
+                SqlParameter limitParameter = SqlHelper.Parameter(() => limit);
+                int error = this.sqlHelper.ExecuteStoredProcedureItems(
+                    "enumerateItems",
+                    out items,
+                    channelGuidParameter,
+                    limitParameter);
+                switch (error)
+                {
+                    case 0:
+                        return items;
+
+                    case 1:
+                        throw new NotFoundException("channelGuid");
+
+                    default:
+                        throw new ExternalException().AddDumpObject(() => error);
+                }
+            }
+            catch (Exception e)
+            {
+                e.AddDumpObject(() => channelGuid).AddDumpObject(() => limit);
+                throw;
+            }
+        }
+
         public IChannel GetChannel(Guid channelGuid)
         {
             try
             {
                 SqlParameter channelGuidParameter = SqlHelper.Parameter(() => channelGuid);
+                SqlParameter lastCheckedParameter = SqlHelper.Parameter<string>("@lastChecked");
                 SqlParameter linkParameter = SqlHelper.Parameter<string>("@link");
                 SqlParameter rssParameter = SqlHelper.Parameter<string>("@rss");
                 SqlParameter titleParameter = SqlHelper.Parameter<string>("@title");
                 int error = this.sqlHelper.ExecuteStoredProcedure(
                     "getChannel",
                     channelGuidParameter,
+                    lastCheckedParameter,
                     linkParameter,
                     rssParameter,
                     titleParameter);
@@ -120,6 +154,7 @@
                     case 0:
                         return new Channel(
                             channelGuid,
+                            new TimeSpan(lastCheckedParameter.CastTo<int>() * TimeSpan.TicksPerSecond),
                             new Uri(linkParameter.CastTo<string>()),
                             new Uri(rssParameter.CastTo<string>()),
                             titleParameter.CastTo<string>());
@@ -190,6 +225,7 @@
                     channel.ChannelGuid,
                     typeof(Guid?),
                     ParameterDirection.InputOutput);
+                SqlParameter lastCheckedParameter = SqlHelper.Parameter<string>("@lastChecked");
                 SqlParameter existedParameter = SqlHelper.Parameter<bool>("@existed");
                 int error = this.sqlHelper.ExecuteStoredProcedure(
                     "putChannel",
@@ -197,11 +233,13 @@
                     rssParameter,
                     titleParameter,
                     channelGuidParameter,
+                    lastCheckedParameter,
                     existedParameter);
                 switch (error)
                 {
                     case 0:
                         channel.ChannelGuid = channelGuidParameter.CastTo<Guid>();
+                        channel.LastChecked = new TimeSpan(lastCheckedParameter.CastTo<int>() * TimeSpan.TicksPerSecond);
                         existed = existedParameter.CastTo<bool>();
                         return;
 

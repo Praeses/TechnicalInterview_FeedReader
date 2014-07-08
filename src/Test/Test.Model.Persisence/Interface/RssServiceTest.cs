@@ -222,7 +222,7 @@
 
         private static IChannel CreateTestChannel()
         {
-            return new Channel(TestChannelGuid, TestChannelLink, TestChannelRss, TestChannelTitle);
+            return new Channel(TestChannelGuid, TimeSpan.Zero, TestChannelLink, TestChannelRss, TestChannelTitle);
         }
 
         private static IItem CreateTestItem()

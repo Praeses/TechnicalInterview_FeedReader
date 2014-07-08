@@ -8,6 +8,8 @@
 
         Guid? ChannelGuid { get; set; }
 
+        TimeSpan LastChecked { get; set; }
+
         Uri Link { get; }
 
         Uri Rss { get; }
