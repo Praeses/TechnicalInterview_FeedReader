@@ -11,7 +11,7 @@ export module Implementation.View {
 
             this.view = null;
 
-            this.authenticationApi.changedJqCallback.empty();
+            this.authenticationApi.changedJqCallback = jQuery.Callbacks('memory unique');
             this.authenticationApi.changedJqCallback.add(this.authenticateChangedCallback);
 
             if (!this.authenticationApi.session.authenticated) {
