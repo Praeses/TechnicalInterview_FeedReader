@@ -6,34 +6,24 @@ export module Implementation.Api {
 
         constructor(private dto: Model.Api.IDto) {}
 
-        addChannel(rss: string): JQueryPromise<Model.Api.IChannelApiChannel> {
+        addChannel(rss: string): Model.Api.IDtoPromise<Model.Api.IChannelApiChannel> {
             return this.dto.send<IChannelApiAddChannel, Model.Api.IChannelApiChannel>(
-                    new ChannelApiAddChannelRequest(rss))
-                .then((response) => {
-                    return response.data;
-                });
+                new ChannelApiAddChannelRequest(rss));
         }
 
-        enumerateChannels(): JQueryPromise<Model.Api.IChannelApiChannel[]> {
+        enumerateChannels(): Model.Api.IDtoPromise<Model.Api.IChannelApiChannel[]> {
             return this.dto.send<void, Model.Api.IChannelApiChannel[]>(
-                    new ChannelApiEnumerateChannelsRequest())
-                .then((response) => {
-                    return response.data;
-                });
+                new ChannelApiEnumerateChannelsRequest());
         }
 
-        enumerateUserItemsAfter(channelGuid: string, limit: number, itemGuid: string): JQueryPromise<Model.Api.IChannelApiUserItem[]> {
+        enumerateUserItems(channelGuid: string, limit: number, before: boolean, itemGuid: string): Model.Api.IDtoPromise<Model.Api.IChannelApiUserItem[]> {
             return this.dto.send<IChannelApiEnumerateUserItemsAfter, Model.Api.IChannelApiUserItem[]>(
-                    new ChannelApiEnumerateUserItemsAfterRequest(channelGuid, limit, itemGuid))
-                .then((response) => {
-                    return response.data;
-                });
+                new ChannelApiEnumerateUserItemsRequest(channelGuid, limit, before, itemGuid));
         }
 
-        removeChannel(channelGuid: string): JQueryPromise<void> {
+        removeChannel(channelGuid: string): Model.Api.IDtoPromise<void> {
             return this.dto.send<IChannelApiRemoveChannel, void>(
-                    new ChannelApiRemoveChannelRequest(channelGuid))
-                .then(() => {});
+                new ChannelApiRemoveChannelRequest(channelGuid));
         }
 
     }
@@ -64,11 +54,12 @@ export module Implementation.Api {
         url: Model.Base.IUrl;
     }
 
-    class ChannelApiEnumerateUserItemsAfterRequest implements Model.Api.IDtoRequest<IChannelApiEnumerateUserItemsAfter, Model.Api.IChannelApiUserItem[]> {
-        constructor(channelGuid: string, limit: number, itemGuid: string) {
+    class ChannelApiEnumerateUserItemsRequest implements Model.Api.IDtoRequest<IChannelApiEnumerateUserItemsAfter, Model.Api.IChannelApiUserItem[]> {
+        constructor(channelGuid: string, limit: number, before: boolean, itemGuid: string) {
             this.data = {
                 channelGuid: channelGuid,
                 limit: limit,
+                before: before,
                 itemGuid: itemGuid
             };
             this.method = "GET";

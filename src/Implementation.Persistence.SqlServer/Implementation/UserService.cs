@@ -172,10 +172,11 @@
             }
         }
 
-        public IEnumerable<IUserItem> EnumerateUserItemsAfter(
+        public IEnumerable<IUserItem> EnumerateUserItems(
             Guid userGuid,
             Guid channelGuid,
             int limit,
+            bool before,
             Guid? itemGuid)
         {
             try
@@ -184,13 +185,15 @@
                 SqlParameter userGuidParameter = SqlHelper.Parameter(() => userGuid);
                 SqlParameter channelGuidParameter = SqlHelper.Parameter(() => channelGuid);
                 SqlParameter limitParameter = SqlHelper.Parameter(() => limit);
+                SqlParameter beforeParameter = SqlHelper.Parameter(() => before);
                 SqlParameter itemGuidParameter = SqlHelper.Parameter(() => itemGuid);
                 int error = this.sqlHelper.ExecuteStoredProcedureUserItems(
-                    "enumerateUserItemsAfter",
+                    "enumerateUserItems",
                     out userItems,
                     userGuidParameter,
                     channelGuidParameter,
                     limitParameter,
+                    beforeParameter,
                     itemGuidParameter);
                 switch (error)
                 {
@@ -215,6 +218,7 @@
                 e.AddDumpObject(() => userGuid)
                     .AddDumpObject(() => channelGuid)
                     .AddDumpObject(() => limit)
+                    .AddDumpObject(() => before)
                     .AddDumpObject(() => itemGuid);
                 throw;
             }

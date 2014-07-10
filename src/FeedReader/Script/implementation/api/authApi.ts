@@ -88,59 +88,59 @@ export module Implementation.Api {
         changedJqCallback: JQueryCallback = jQuery.Callbacks('memory unique');
         session: Model.Api.IAuthenticationApiSession;
 
-        login(userName: string, password: string, rememberMe: boolean): JQueryPromise<void> {
-            return this.send<IAuthenticationApiLogin, IAuthenticationApiToken>(
+        login(userName: string, password: string, rememberMe: boolean): Model.Api.IDtoPromise<Model.Api.IAuthenticationApiToken> {
+            return this.send<IAuthenticationApiLogin, Model.Api.IAuthenticationApiToken>(
                     new AuthenticationLoginRequest(userName, password, this.getTokenName()))
-                .then((response) => {
+                .done((response) => {
                     this.session = {
                         authenticated: true,
                         authenticatedWithToken: false,
                         rememberMe: rememberMe,
-                        tokenGuid: response.data.tokenGuid,
+                        tokenGuid: response.tokenGuid,
                         userName: userName
                     };
                     this.saveSession();
                 });
         }
 
-        logout(): JQueryPromise<void> {
+        logout(): Model.Api.IDtoPromise<void> {
             return this.send<void, void>(
                     new AuthenticationLogoutRequest())
-                .then(() => {
+                .done(() => {
                     this.logoutSession();
                 });
         }
 
-        register(userName: string, password: string, rememberMe: boolean): JQueryPromise<void> {
-            return this.send<IRegistrationApiRegisterUserName, IAuthenticationApiToken>(
+        register(userName: string, password: string, rememberMe: boolean): Model.Api.IDtoPromise<Model.Api.IAuthenticationApiToken> {
+            return this.send<IRegistrationApiRegisterUserName, Model.Api.IAuthenticationApiToken>(
                     new RegistrationRegisterUserNameRequest(userName, password, this.getTokenName()))
-                .then((response) => {
+                .done((response) => {
                     this.session = {
                         authenticated: true,
                         authenticatedWithToken: false,
                         rememberMe: rememberMe,
-                        tokenGuid: response.data.tokenGuid,
+                        tokenGuid: response.tokenGuid,
                         userName: userName
                     };
                     this.saveSession();
                 });
         }
 
-        send<TRequest, TResponse>(request: Model.Api.IDtoRequest<TRequest, TResponse>): JQueryPromise<Model.Api.IDtoResponse<TResponse>> {
-            var data = _.extend({}, request.data);
-            var url = request.url.replaceVariables(data, true).removeVariables();
+        send<TRequest, TResponse>(request: Model.Api.IDtoRequest<TRequest, TResponse>): Model.Api.IDtoPromise<TResponse> {
+            var dataCopy = _.extend({}, request.data);
+            var url = request.url.replaceVariables(dataCopy, true).removeVariables();
 
             var method = request.method.toUpperCase();
             if (((method === 'DELETE') || (method === 'GET') || (method === 'HEAD')) &&
-                _.size(data)) {
-                _.forEach(data, (value: string, key) => {
+                _.size(dataCopy)) {
+                _.forEach(dataCopy, (value: string, key) => {
                     url.query[key] = value;
                 });
-                data = undefined;
+                dataCopy = undefined;
             }
 
             var settings: JQueryAjaxSettings = {
-                data: data,
+                data: dataCopy,
                 dataType: 'json',
                 headers: {
                     Accept: 'application/json'
@@ -153,41 +153,38 @@ export module Implementation.Api {
 
             return jQuery.ajax(url.toString(), settings)
                 .then(
-                (json: TResponse) => {
-                    var jqXhr: JQueryXHR = arguments[2];
-                    return {
-                        data: json,
-                        status: jqXhr.status,
-                        statusText: jqXhr.statusText
-                    };
+                (data: TResponse, textStatus, jqXhr: JQueryXHR) => {
+                    return jQuery.Deferred().resolve(data, jqXhr).promise();
                 },
-                () => {
-                    var jqXhr: JQueryXHR = arguments[0];
-                    return {
-                        data: jqXhr['responseJSON'],
+                (jqXhr: JQueryXHR) => {
+                    var error = _.extend({
+                        dumpObjects: undefined,
+                        exceptionType: undefined,
+                        innerException: undefined,
+                        message: undefined,
                         status: jqXhr.status,
                         statusText: jqXhr.statusText
-                    };
+                    }, jqXhr.responseJSON);
+                    return jQuery.Deferred().reject(error, jqXhr).promise();
                 });
         }
 
-        unregister(userName: string, password: string): JQueryPromise<void> {
+        unregister(userName: string, password: string): Model.Api.IDtoPromise<void> {
             return this.send<void, void>(
                     new RegistrationUnregisterUserRequest())
-                .then(() => {
+                .always(() => {
                     this.logoutSession();
                 });
         }
 
-        userNameExists(userName: string): JQueryPromise<void> {
+        userNameExists(userName: string): Model.Api.IDtoPromise<void> {
             return this.send<IRegistrationApiUserNameExists, void>(
-                    new RegistrationUserNameExistsRequest(userName))
-                .then(() => {});
+                new RegistrationUserNameExistsRequest(userName));
         }
     }
 
     // Authentication Dtos
-    class AuthenticationLoginRequest implements Model.Api.IDtoRequest<IAuthenticationApiLogin, IAuthenticationApiToken> {
+    class AuthenticationLoginRequest implements Model.Api.IDtoRequest<IAuthenticationApiLogin, Model.Api.IAuthenticationApiToken> {
         constructor(private userName: string, private password: string, private tokenName: string) {
             this.data = {
                 password: password,
@@ -231,15 +228,8 @@ export module Implementation.Api {
         userName: string;
     }
 
-    interface IAuthenticationApiToken {
-        created: Date;
-        tokenGuid: string;
-        tokenName: string;
-        tokenType: string;
-    }
-
     // Registration Dtos
-    class RegistrationRegisterUserNameRequest implements Model.Api.IDtoRequest<IRegistrationApiRegisterUserName, IAuthenticationApiToken> {
+    class RegistrationRegisterUserNameRequest implements Model.Api.IDtoRequest<IRegistrationApiRegisterUserName, Model.Api.IAuthenticationApiToken> {
         constructor(private userName: string, private password: string, private tokenName: string) {
             this.data = {
                 password: password,

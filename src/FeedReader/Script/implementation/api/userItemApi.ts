@@ -6,10 +6,9 @@ export module Implementation.Api {
 
         constructor(private dto: Model.Api.IDto) {}
 
-        putUserItem(itemGuid: string, read: boolean): JQueryPromise<void> {
+        putUserItem(itemGuid: string, read: boolean): Model.Api.IDtoPromise<void> {
             return this.dto.send<IUserItemApiPutUserItem, void>(
-                    new UserItemApiPutUserItemRequest(itemGuid, read))
-                .then(() => {});
+                new UserItemApiPutUserItemRequest(itemGuid, read));
         }
 
     }

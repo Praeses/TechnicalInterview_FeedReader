@@ -1,10 +1,10 @@
 ﻿declare module Model.Api {
 
     interface IChannelApi {
-        addChannel(rss: string): JQueryPromise<IChannelApiChannel>;
-        enumerateChannels(): JQueryPromise<IChannelApiChannel[]>;
-        enumerateUserItemsAfter(channelGuid: string, limit: number, itemGuid: string): JQueryPromise<IChannelApiUserItem[]>;
-        removeChannel(channelGuid: string): JQueryPromise<void>;
+        addChannel(rss: string): IDtoPromise<IChannelApiChannel>;
+        enumerateChannels(): IDtoPromise<IChannelApiChannel[]>;
+        enumerateUserItems(channelGuid: string, limit: number, before: boolean, itemGuid: string): IDtoPromise<IChannelApiUserItem[]>;
+        removeChannel(channelGuid: string): IDtoPromise<void>;
     }
 
     interface IChannelApiChannel {
