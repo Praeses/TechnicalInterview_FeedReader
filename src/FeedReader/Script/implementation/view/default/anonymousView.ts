@@ -1,15 +1,15 @@
-﻿/// <reference path='../../../model/base/anonymousLayout.d.ts' />
-/// <amd-dependency path='text!implementation/layout/default/anonymousLayout.html' />
-import LayoutModule = require('implementation/base/layout');
+﻿/// <reference path='../../../model/base/view.d.ts' />
+/// <amd-dependency path='text!implementation/view/default/anonymousView.html' />
+import ViewModule = require('implementation/base/view');
 
-export module Implementation.Layout.Default {
+export module Implementation.View.Default {
 
-    export class AnonymousLayout extends LayoutModule.Implementation.Base.Layout implements Model.Base.IAnonymousLayout {
+    export class AnonymousView extends ViewModule.Implementation.Base.View {
 
-        private authenticationChangedCallback: Model.Base.IAuthenticationChangedCallback = (): void => {
-            this.viewModel.userName(this.authentication.session.userName);
+        private authenticationChangedCallback: Model.Api.IAuthenticationApiChangedCallback = (): void => {
+            this.viewModel.userName(this.authenticationApi.session.userName);
             this.userNameChanged();
-            jQuery('#anonymousLayout-signupModal').modal('hide');
+            jQuery('#anonymousView-signupModal').modal('hide');
             jQuery('.modal-backdrop').remove();
         };
 
@@ -21,17 +21,17 @@ export module Implementation.Layout.Default {
             }
 
             this.viewModel.passwordIncorrect(undefined);
-            this.authentication.userNameExists(this.viewModel.userName())
+            this.registrationApi.userNameExists(this.viewModel.userName())
                 .done(() => this.viewModel.userNameExists(true))
                 .fail(() => this.viewModel.userNameExists(false));
             return;
         }
 
         constructor(
-            public viewModel: Model.Base.IAnonymousLayoutViewModel,
-            public authentication: Model.Base.IAuthentication,
-            public router: Model.Base.IRouter) {
-            super(viewModel, authentication, router);
+            public viewModel: IAnonymousViewModel,
+            public authenticationApi: Model.Api.IAuthenticationApi,
+            public registrationApi: Model.Api.IRegistrationApi) {
+            super(viewModel);
 
             _.defaults(this.viewModel, {
                 password: ko.observable(),
@@ -51,7 +51,7 @@ export module Implementation.Layout.Default {
                         return;
                     }
 
-                    this.authentication.login(
+                    this.authenticationApi.login(
                             this.viewModel.userName(),
                             this.viewModel.password(),
                             this.viewModel.rememberMe())
@@ -75,7 +75,7 @@ export module Implementation.Layout.Default {
                         return;
                     }
 
-                    this.authentication.registerUser(
+                    this.registrationApi.register(
                             this.viewModel.userName(),
                             this.viewModel.password(),
                             this.viewModel.rememberMe())
@@ -89,9 +89,9 @@ export module Implementation.Layout.Default {
                 }
             });
 
-            this.viewModel.rememberMe(this.authentication.session.rememberMe);
-            this.viewModel.userName(this.authentication.session.userName);
-            this.authentication.changedJqCallback.add(this.authenticationChangedCallback);
+            this.viewModel.rememberMe(this.authenticationApi.session.rememberMe);
+            this.viewModel.userName(this.authenticationApi.session.userName);
+            this.authenticationApi.changedJqCallback.add(this.authenticationChangedCallback);
             this.userNameChanged();
         }
 
@@ -100,7 +100,7 @@ export module Implementation.Layout.Default {
         render(el: JQuery, html?: JQuery): Model.Base.IView;
         render(el: JQuery, html?: any): Model.Base.IView {
             jQuery('body').css('overflow-x', 'hidden').css('overflow-y', 'scroll').css('padding-top', '60px');
-            super.render(el, require('text!implementation/layout/default/anonymousLayout.html'));
+            super.render(el, require('text!implementation/view/default/anonymousView.html'));
 
             el.find('.dropdown').on('shown.bs.dropdown', function() {
                 setTimeout(() => jQuery(this).find('.autofocus:visible:first').focus(), 200);
@@ -109,6 +109,14 @@ export module Implementation.Layout.Default {
             return this;
         }
 
+    }
+
+    export interface IAnonymousViewModel extends Model.Base.IViewModel {
+        password: KnockoutObservable<string>;
+        passwordIncorrect: KnockoutObservable<boolean>;
+        rememberMe: KnockoutObservable<boolean>;
+        userName: KnockoutObservable<string>;
+        userNameExists: KnockoutObservable<boolean>;
     }
 
 }

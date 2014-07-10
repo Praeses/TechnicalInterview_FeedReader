@@ -5,7 +5,9 @@ declare module Model.Base {
         lazyResolve(modelName: string, parameters?: IContainerParameterFactory): IContainerLazyResolver;
         lazyResolveNamed(modelName: string, name: string, parameters?: IContainerParameterFactory): IContainerLazyResolver;
         register(modelName: string, implementationName: string, parameterFactory?: IContainerParameterFactory): IContainerRegistration;
+        registerSingleton(modelName: string, singleton: any): IContainerRegistration;
         registerNamed(modelName: string, implementationName: string, name: string, parameterFactory?: IContainerParameterFactory): IContainerRegistration;
+        registerNamedSingleton(modelName: string, singleton: any): IContainerRegistration;
         resolve(modelName: string, parameters?: { [parameterName: string]: any }): JQueryPromise<any>;
         resolveNamed(modelName: string, name: string, parameters?: { [parameterName: string]: any }): JQueryPromise<any>;
     }

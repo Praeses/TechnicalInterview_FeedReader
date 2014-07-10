@@ -1,10 +1,10 @@
-﻿/// <reference path='../../../model/base/authenticatedLayout.d.ts' />
-/// <amd-dependency path='text!implementation/layout/default/authenticatedLayout.html' />
-import LayoutModule = require('implementation/base/layout');
+﻿/// <reference path='../../../model/base/view.d.ts' />
+/// <amd-dependency path='text!implementation/view/default/authenticatedView.html' />
+import ViewModule = require('implementation/base/view');
 
-export module Implementation.Layout.Default {
+export module Implementation.View.Default {
 
-    export class AuthenticatedLayout extends LayoutModule.Implementation.Base.Layout implements Model.Base.IAuthenticatedLayout {
+    export class AuthenticatedView extends ViewModule.Implementation.Base.View {
 
         private allChannel: IChannel = {
             channelGuid: undefined,
@@ -49,8 +49,8 @@ export module Implementation.Layout.Default {
             this.getMoreUserItems(channel);
         }
 
-        private authenticationChangedCallback: Model.Base.IAuthenticationChangedCallback = (): void => {
-            this.viewModel.userName(this.authentication.session.userName);
+        private authenticationChangedCallback: Model.Api.IAuthenticationApiChangedCallback = (): void => {
+            this.viewModel.userName(this.authenticationApi.session.userName);
         };
 
         private clearStatusText(): void {
@@ -75,33 +75,30 @@ export module Implementation.Layout.Default {
             });
 
             var limit = 10;
-            this.authentication.get('/api/channel/{channelGuid}?limit={limit?}&itemGuid={itemGuid?}', {
-                channelGuid: channel.channelGuid,
-                limit: limit,
-                itemGuid: itemGuid
-            }).done((userItems: IUserItem[]) => {
-                _.forEach(userItems, (userItem) => {
-                    _.defaults(userItem, {
-                        descriptionPlain: jQuery('<div>').html(userItem.description).text(),
-                        readObservable: ko.observable(userItem['read'])
+            this.channelApi.enumerateUserItemsAfter(channel.channelGuid, limit, itemGuid)
+                .done((userItems: IUserItem[]) => {
+                    _.forEach(userItems, (userItem) => {
+                        _.defaults(userItem, {
+                            descriptionPlain: jQuery('<div>').html(userItem.description).text(),
+                            readObservable: ko.observable(userItem['read'])
+                        });
                     });
-                });
 
-                channel.userItems = channel.userItems.concat(userItems);
-                if (userItems.length < limit) {
-                    channel.moreUserItems = false;
-                }
-
-                //Update if visible.
-                if (this.viewModel.selectedChannel() == channel) {
-                    this.setUserItems(channel.userItems);
-                    this.viewModel.showMoreUserItems(channel.moreUserItems);
-                } else if (this.viewModel.selectedChannel() == this.allChannel) {
-                    if (userItems.length > 0) {
-                        this.selectChannelAll();
+                    channel.userItems = channel.userItems.concat(userItems);
+                    if (userItems.length < limit) {
+                        channel.moreUserItems = false;
                     }
-                }
-            });
+
+                    //Update if visible.
+                    if (this.viewModel.selectedChannel() == channel) {
+                        this.setUserItems(channel.userItems);
+                        this.viewModel.showMoreUserItems(channel.moreUserItems);
+                    } else if (this.viewModel.selectedChannel() == this.allChannel) {
+                        if (userItems.length > 0) {
+                            this.selectChannelAll();
+                        }
+                    }
+                });
         }
 
         private getMoreUserItemsAll(): void {
@@ -121,14 +118,19 @@ export module Implementation.Layout.Default {
             });
         }
 
-        private routerCatchAllCallback: Model.Base.IRouterCatchAllCallback = (): void => {
-        };
+        private markAllAsUnread(): void {
+            _.forEach(this.viewModel.userItems(), (userItem: IUserItem) => {
+                if (!userItem.readObservable()) {
+                    return;
+                }
+
+                userItem.readObservable(false);
+                this.saveUserItem(userItem);
+            });
+        }
 
         private saveUserItem(userItem: IUserItem): void {
-            this.authentication.put('/api/userItem/{itemGuid}', {
-                itemGuid: userItem.itemGuid,
-                read: userItem.readObservable()
-            });
+            this.userItemApi.putUserItem(userItem.itemGuid, userItem.readObservable());
         }
 
         private selectChannel(channel: IChannel): void {
@@ -216,10 +218,11 @@ export module Implementation.Layout.Default {
         }
 
         constructor(
-            public viewModel: IAuthenticatedLayoutViewModel,
-            public authentication: Model.Base.IAuthentication,
-            public router: Model.Base.IRouter) {
-            super(viewModel, authentication, router);
+            public viewModel: IAuthenticatedViewModel,
+            public authenticationApi: Model.Api.IAuthenticationApi,
+            public channelApi: Model.Api.IChannelApi,
+            public userItemApi: Model.Api.IUserItemApi) {
+            super(viewModel);
 
             _.defaults(this.viewModel, {
                 channelRss: ko.observable(),
@@ -231,16 +234,19 @@ export module Implementation.Layout.Default {
                 showMoreUserItems: ko.observable(false),
                 statusText: ko.observable(),
                 userItems: ko.observableArray([]),
+                userName: ko.observable(),
 
                 addChannelClicked: (): void => {
                     this.clearStatusText();
-                    this.authentication.post('/api/channel', { rss: this.viewModel.channelRss() })
+                    this.channelApi.addChannel(this.viewModel.channelRss())
                         .done((channel: IChannel) => {
                             this.addChannelSort(channel);
                             jQuery('#authenticatedLayout-addChannelModal').modal('hide');
                         })
-                        .fail((jqXhr: JQueryXHR) => {
-                            this.viewModel.statusText(jqXhr.responseJSON.message);
+                        .fail(() => {
+                            //jqXhr: JQueryXHR
+                            var x = arguments;
+                            //this.viewModel.statusText(jqXhr.responseJSON.message);
                         });
                 },
 
@@ -257,11 +263,15 @@ export module Implementation.Layout.Default {
                 },
 
                 logoutClicked: (): void => {
-                    this.logout();
+                    this.authenticationApi.logout();
                 },
 
                 markAllAsReadClicked: (): void => {
                     this.markAllAsRead();
+                },
+
+                markAllAsUnreadClicked: (): void => {
+                    this.markAllAsUnread();
                 },
 
                 markAsUnreadClicked: (userItem: IUserItem): void => {
@@ -275,6 +285,9 @@ export module Implementation.Layout.Default {
                     this.getMoreUserItems(this.viewModel.selectedChannel());
                 },
 
+                refreshClicked: (): void => {
+                },
+
                 removeSelectedChannelClicked: (): void => {
                     var channel = this.viewModel.selectedChannel();
                     jQuery('#authenticatedLayout-deleteChannelModal').modal('hide');
@@ -282,11 +295,9 @@ export module Implementation.Layout.Default {
                         return;
                     }
 
-                    this.authentication.delete('/api/channel/{channelGuid}', {
-                            channelGuid: channel.channelGuid
-                        })
+                    this.channelApi.removeChannel(channel.channelGuid)
                         .done(() => {
-                            this.selectChannel(this.allChannel);
+                            this.selectChannelAll();
                             this.viewModel.channels.remove(channel);
                         });
                 },
@@ -311,14 +322,10 @@ export module Implementation.Layout.Default {
                 },
             });
 
-            this.viewModel.userName(this.authentication.session.userName);
-            this.authentication.changedJqCallback.add(this.authenticationChangedCallback);
+            this.viewModel.userName(this.authenticationApi.session.userName);
+            this.authenticationApi.changedJqCallback.add(this.authenticationChangedCallback);
 
-            this.router.catchAllJqCallback.add(this.routerCatchAllCallback);
-
-            this.router.navigated(this.router.currentUrlString());
-
-            this.authentication.get("/api/channel")
+            this.channelApi.enumerateChannels()
                 .done((channels: IChannel[]) => {
                     this.viewModel.channels.valueWillMutate();
                     _.forEach(channels, (channel: IChannel) => {
@@ -336,12 +343,12 @@ export module Implementation.Layout.Default {
         render(el: JQuery, html?: JQuery): Model.Base.IView;
         render(el: JQuery, html?: any): Model.Base.IView {
             jQuery('body').css('overflow-x', 'hidden').css('overflow-y', 'scroll').css('padding-top', '60px');
-            super.render(el, require('text!implementation/layout/default/authenticatedLayout.html'));
+            super.render(el, require('text!implementation/view/default/authenticatedView.html'));
             return this;
         }
     }
 
-    export interface IAuthenticatedLayoutViewModel extends Model.Base.IAuthenticatedLayoutViewModel {
+    export interface IAuthenticatedViewModel extends Model.Base.IViewModel {
         channelRss: KnockoutObservable<string>;
         channelRssExists: KnockoutObservable<boolean>;
         channels: KnockoutObservableArray<IChannel>;
@@ -351,25 +358,17 @@ export module Implementation.Layout.Default {
         showDeleteChannel: KnockoutObservable<boolean>;
         showMoreUserItems: KnockoutObservable<boolean>;
         statusText: KnockoutObservable<string>;
+        userName: KnockoutObservable<string>;
     }
 
-    export interface IChannel {
-        channelGuid: string;
-        link: string;
+    export interface IChannel extends Model.Api.IChannelApiChannel {
         moreUserItems: boolean;
-        rss: string;
-        title: string;
         userItems: IUserItem[];
     }
 
-    export interface IUserItem {
-        description: string;
+    export interface IUserItem extends Model.Api.IChannelApiUserItem {
         descriptionPlain: string;
-        itemGuid: string;
-        link: string;
         readObservable: KnockoutObservable<boolean>;
-        sequence: number;
-        title: string;
     }
 
 }

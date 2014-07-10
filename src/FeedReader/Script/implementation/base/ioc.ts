@@ -44,12 +44,21 @@ export module Implementation.Base {
             return new ContainerRegistration(modelName, implementationName, undefined, parameterFactory);
         }
 
+        registerSingleton(modelName: string, singleton: any): Model.Base.IContainerRegistration {
+            return new ContainerRegistration(modelName, undefined, undefined, undefined, singleton);
+        }
+
+
         registerNamed(
             modelName: string,
             implementationName: string,
             name: string,
             parameterFactory?: Model.Base.IContainerParameterFactory): Model.Base.IContainerRegistration {
             return new ContainerRegistration(modelName, implementationName, name, parameterFactory);
+        }
+
+        registerNamedSingleton(modelName: string, singleton: any): Model.Base.IContainerRegistration {
+            return new ContainerRegistration(modelName, undefined, name, undefined, singleton);
         }
 
         resolve(modelName: string, parameters?: { [parameterName: string]: any }): JQueryPromise<any> {
@@ -90,7 +99,7 @@ export module Implementation.Base {
                 _.forEach(this.implementationName.split('.'), (part) => {
                     implementation = implementation[part];
                     if (!implementation) {
-                        throw 'implementation not defined.';
+                        throw 'implementation not defined. ';
                     }
                 });
                 this.implementation = implementation;
@@ -111,13 +120,17 @@ export module Implementation.Base {
             private modelName: string,
             private implementationName: string,
             private name: string,
-            private parameterFactory?: Model.Base.IContainerParameterFactory) {
+            private parameterFactory?: Model.Base.IContainerParameterFactory,
+            singleton?: any) {
             var fullName = createFullName(modelName, name);
             if (registrations[fullName]) {
                 throw 'modelName/name has already been defined!';
             }
 
             registrations[fullName] = this;
+            if (singleton) {
+                this.singletonDeferred = jQuery.Deferred().resolve(singleton);
+            }
         }
 
         resolve(parameters?: { [parameterName: string]: any }): JQueryPromise<any> {

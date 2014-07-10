@@ -8,9 +8,9 @@
     {
         #region Public Methods and Operators
 
-        IUser RegisterUser(string userName, string password, string tokenName, out IToken token);
+        IUser Register(string userName, string password, string tokenName, out IToken token);
 
-        void UnregisterUser(Guid userGuid);
+        void Unregister(Guid userGuid);
 
         void UserNameExists(string userName);
 

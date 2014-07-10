@@ -33,7 +33,7 @@
         public void Delete()
         {
             var identity = (Identity)this.User.Identity;
-            this.registrationService.UnregisterUser(identity.User.GetUserGuid());
+            this.registrationService.Unregister(identity.User.GetUserGuid());
         }
 
         [HttpHead]
@@ -45,20 +45,20 @@
 
         [HttpPost]
         [Route("")]
-        public IToken Post(RegisterUserDto registerUserDto)
+        public IToken Post(RegisterDto registerDto)
         {
             IToken token;
-            this.registrationService.RegisterUser(
-                registerUserDto.UserName,
-                registerUserDto.Password,
-                registerUserDto.TokenName,
+            this.registrationService.Register(
+                registerDto.UserName,
+                registerDto.Password,
+                registerDto.TokenName,
                 out token);
             return token;
         }
 
         #endregion
 
-        public class RegisterUserDto
+        public class RegisterDto
         {
             #region Public Properties
 

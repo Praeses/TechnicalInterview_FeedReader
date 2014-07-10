@@ -105,8 +105,8 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\image\loading.gif" />
     <Content Include="Global.asax" />
-    <Content Include="Script\implementation\layout\default\anonymousLayout.html" />
-    <Content Include="Script\implementation\layout\default\authenticatedLayout.html" />
+    <Content Include="Script\implementation\view\default\anonymousView.html" />
+    <Content Include="Script\implementation\view\default\authenticatedView.html" />
     <Content Include="Script\lib\css-0.1.2.js" />
     <Content Include="Script\lib\normalize-2.0.12.js" />
     <Content Include="Script\lib\require-2.1.14.js" />
@@ -149,24 +149,18 @@
   <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="Script\config.ts" />
-    <TypeScriptCompile Include="Script\implementation\base\authentication.ts" />
-    <TypeScriptCompile Include="Script\implementation\base\config.ts" />
-    <TypeScriptCompile Include="Script\implementation\base\history.ts" />
-    <TypeScriptCompile Include="Script\implementation\base\historyHash.ts" />
-    <TypeScriptCompile Include="Script\implementation\base\historyHistory.ts" />
-    <TypeScriptCompile Include="Script\implementation\base\historyTimer.ts" />
+    <TypeScriptCompile Include="Script\implementation\api\authApi.ts" />
+    <TypeScriptCompile Include="Script\implementation\api\channelApi.ts" />
+    <TypeScriptCompile Include="Script\implementation\api\userItemApi.ts" />
     <TypeScriptCompile Include="Script\implementation\base\ioc.ts" />
     <TypeScriptCompile Include="Script\implementation\base\localStorage.ts" />
-    <TypeScriptCompile Include="Script\implementation\base\router.ts" />
     <TypeScriptCompile Include="Script\implementation\base\sessionStorage.ts" />
     <TypeScriptCompile Include="Script\implementation\base\url.ts" />
     <TypeScriptCompile Include="Script\implementation\binding\iso6801.ts" />
-    <TypeScriptCompile Include="Script\implementation\layout\default\anonymousLayout.ts" />
-    <TypeScriptCompile Include="Script\implementation\layout\default\authenticatedLayout.ts" />
-    <TypeScriptCompile Include="Script\implementation\layout\default\config.ts" />
-    <TypeScriptCompile Include="Script\implementation\base\layout.ts" />
-    <TypeScriptCompile Include="Script\implementation\base\layoutController.ts" />
+    <TypeScriptCompile Include="Script\implementation\view\default\anonymousView.ts" />
     <TypeScriptCompile Include="Script\implementation\base\view.ts" />
+    <TypeScriptCompile Include="Script\implementation\view\default\authenticatedView.ts" />
+    <TypeScriptCompile Include="Script\implementation\view\viewController.ts" />
     <TypeScriptCompile Include="Script\lib\bootstrap.d.ts" />
     <TypeScriptCompile Include="Script\lib\jquery.d.ts" />
     <TypeScriptCompile Include="Script\lib\knockout.d.ts" />
@@ -174,15 +168,13 @@
     <TypeScriptCompile Include="Script\lib\modernizr.d.ts" />
     <TypeScriptCompile Include="Script\lib\require.d.ts" />
     <TypeScriptCompile Include="Script\lib\underscore.d.ts" />
-    <TypeScriptCompile Include="Script\model\base\authentication.d.ts" />
-    <TypeScriptCompile Include="Script\model\base\history.d.ts" />
+    <TypeScriptCompile Include="Script\model\api\authenticationApi.d.ts" />
+    <TypeScriptCompile Include="Script\model\api\channelApi.d.ts" />
+    <TypeScriptCompile Include="Script\model\api\dto.d.ts" />
+    <TypeScriptCompile Include="Script\model\api\registrationApi.d.ts" />
+    <TypeScriptCompile Include="Script\model\api\userItemApi.d.ts" />
     <TypeScriptCompile Include="Script\model\base\ioc.d.ts" />
-    <TypeScriptCompile Include="Script\model\base\router.d.ts" />
     <TypeScriptCompile Include="Script\model\base\url.d.ts" />
-    <TypeScriptCompile Include="Script\model\base\anonymousLayout.d.ts" />
-    <TypeScriptCompile Include="Script\model\base\authenticatedLayout.d.ts" />
-    <TypeScriptCompile Include="Script\model\base\layout.d.ts" />
-    <TypeScriptCompile Include="Script\model\base\layoutController.d.ts" />
     <TypeScriptCompile Include="Script\model\base\view.d.ts" />
     <TypeScriptCompile Include="Script\requireConfig.ts" />
   </ItemGroup>

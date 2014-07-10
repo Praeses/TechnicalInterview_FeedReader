@@ -29,7 +29,7 @@
 
         #region Public Methods and Operators
 
-        public IUser RegisterUser(string userName, string password, string tokenName, out IToken token)
+        public IUser Register(string userName, string password, string tokenName, out IToken token)
         {
             IUser user = this.userService.GetUser(userName);
             if (user == default(IUser))
@@ -47,7 +47,7 @@
             return user;
         }
 
-        public void UnregisterUser(Guid userGuid)
+        public void Unregister(Guid userGuid)
         {
             this.userService.DeleteUser(userGuid);
         }

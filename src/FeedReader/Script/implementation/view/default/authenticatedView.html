@@ -3,7 +3,7 @@
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="fa fa-bars"></span>
         </button>
-        <a href="#" class="navbar-brand" data-bind="click: brandClicked">FeedReader</a>
+        <a href="#" class="navbar-brand">FeedReader</a>
     </div>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -123,10 +123,22 @@
             <div>
                 <h4>
                     <span data-bind="text: selectedChannel().title"></span>
+                    <!--
+                        <button class="btn btn-sm btn-default space-left" type="button" data-bind="click: refreshClicked">
+                            <i class=" fa fa-refresh">
+                            </i>
+                            <span>Refresh</span>
+                        </button>
+                        -->
                     <button class="btn btn-sm btn-default space-left" type="button" data-bind="click: markAllAsReadClicked">
                         <i class=" fa fa-check-square-o">
                         </i>
                         <span>Mark all as read</span>
+                    </button>
+                    <button class="btn btn-sm btn-default space-left" type="button" data-bind="click: markAllAsUnreadClicked">
+                        <i class=" fa fa-square-o">
+                        </i>
+                        <span>Mark all as unread</span>
                     </button>
                 </h4>
 
