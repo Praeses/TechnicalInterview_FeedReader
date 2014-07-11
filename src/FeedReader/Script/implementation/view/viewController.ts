@@ -10,10 +10,9 @@ export module Implementation.View {
             }
 
             this.view = null;
-
-            this.authenticationApi.changedJqCallback = jQuery.Callbacks('memory unique');
-            this.authenticationApi.changedJqCallback.add(this.authenticateChangedCallback);
-
+            jQuery('.modal').remove();
+            jQuery('.modal-backdrop').remove();
+            jQuery('body').removeClass("modal-open");
             if (!this.authenticationApi.session.authenticated) {
                 this.anonymousViewResolver()
                     .done((view: Model.Base.IView) => {

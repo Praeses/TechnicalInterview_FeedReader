@@ -20,6 +20,9 @@ declare module Model.Api {
         url: Model.Base.IUrl;
     }
 
+    interface IDtoFilterCallback<T> {
+        (value?: T, jqXhr?: JQueryXHR): void;
+    }
 
     interface IDtoPromiseCallbackAlways {
         (jqXhr?: JQueryXHR): void;
@@ -33,5 +36,6 @@ declare module Model.Api {
         always(callback?: IDtoPromiseCallbackAlways): IDtoPromise<T>;
         done(callback?: IDtoPromiseCallback<T>): IDtoPromise<T>;
         fail(callback?: IDtoPromiseCallback<IDtoError>): IDtoPromise<T>;
+        then<TFilter>(callback: IDtoFilterCallback<T>): IDtoPromise<TFilter>;
     }
 }

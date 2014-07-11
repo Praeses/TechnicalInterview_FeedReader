@@ -90,14 +90,14 @@
     <div class="row">
         <div class="col-sm-2 well">
             <ul class="nav nav-pills nav-stacked">
-                <li class="active">
+                <li data-bind="css: { active: activeObservable }">
                     <a href="#" data-toggle="tab" data-bind="click: allChannelsClicked">
                         <i class="fa fa-rss"></i>
                         <span>All</span>
                     </a>
                 </li>
                 <!-- ko foreach: channels -->
-                <li>
+                <li data-bind="css: { active: activeObservable }">
                     <a href="#" class="overflow-x-ellipsis" data-toggle="tab" data-bind="click: $root.channelClicked">
                         <i class="fa fa-rss"></i>
                         <span data-bind="text: title"></span>

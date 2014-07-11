@@ -6,13 +6,6 @@ export module Implementation.View.Default {
 
     export class AnonymousView extends ViewModule.Implementation.Base.View {
 
-        private authenticationChangedCallback: Model.Api.IAuthenticationApiChangedCallback = (): void => {
-            this.viewModel.userName(this.authenticationApi.session.userName);
-            this.userNameChanged();
-            jQuery('#anonymousView-signupModal').modal('hide');
-            jQuery('.modal-backdrop').remove();
-        };
-
         private userNameChanged(): void {
             if (!this.viewModel.userName()) {
                 this.viewModel.userNameExists(undefined);
@@ -29,8 +22,8 @@ export module Implementation.View.Default {
 
         constructor(
             public viewModel: IAnonymousViewModel,
-            public authenticationApi: Model.Api.IAuthenticationApi,
-            public registrationApi: Model.Api.IRegistrationApi) {
+            private authenticationApi: Model.Api.IAuthenticationApi,
+            private registrationApi: Model.Api.IRegistrationApi) {
             super(viewModel);
 
             _.defaults(this.viewModel, {
@@ -79,6 +72,9 @@ export module Implementation.View.Default {
                             this.viewModel.userName(),
                             this.viewModel.password(),
                             this.viewModel.rememberMe())
+                        .done(() => {
+                            jQuery('#anonymousView-signupModal').modal('hide');
+                        })
                         .fail(() => {
                             this.viewModel.passwordIncorrect(true);
                         });
@@ -91,7 +87,6 @@ export module Implementation.View.Default {
 
             this.viewModel.rememberMe(this.authenticationApi.session.rememberMe);
             this.viewModel.userName(this.authenticationApi.session.userName);
-            this.authenticationApi.changedJqCallback.add(this.authenticationChangedCallback);
             this.userNameChanged();
         }
 

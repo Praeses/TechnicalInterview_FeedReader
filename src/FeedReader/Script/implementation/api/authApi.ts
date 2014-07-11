@@ -157,6 +157,12 @@ export module Implementation.Api {
                     return jQuery.Deferred().resolve(data, jqXhr).promise();
                 },
                 (jqXhr: JQueryXHR) => {
+                    // Check for unauthorized.
+                    if (jqXhr.status === 401) {
+                        this.logoutSession();
+                        return jqXhr;
+                    }
+
                     var error = _.extend({
                         dumpObjects: undefined,
                         exceptionType: undefined,

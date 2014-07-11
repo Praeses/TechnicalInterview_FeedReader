@@ -157,6 +157,9 @@
     <TypeScriptCompile Include="Script\implementation\base\sessionStorage.ts" />
     <TypeScriptCompile Include="Script\implementation\base\url.ts" />
     <TypeScriptCompile Include="Script\implementation\binding\iso6801.ts" />
+    <TypeScriptCompile Include="Script\implementation\class\channelClass.ts" />
+    <TypeScriptCompile Include="Script\implementation\class\rssClass.ts" />
+    <TypeScriptCompile Include="Script\implementation\class\userItemClass.ts" />
     <TypeScriptCompile Include="Script\implementation\view\default\anonymousView.ts" />
     <TypeScriptCompile Include="Script\implementation\base\view.ts" />
     <TypeScriptCompile Include="Script\implementation\view\default\authenticatedView.ts" />
@@ -176,6 +179,9 @@
     <TypeScriptCompile Include="Script\model\base\ioc.d.ts" />
     <TypeScriptCompile Include="Script\model\base\url.d.ts" />
     <TypeScriptCompile Include="Script\model\base\view.d.ts" />
+    <TypeScriptCompile Include="Script\model\class\channelClass.d.ts" />
+    <TypeScriptCompile Include="Script\model\class\rssClass.d.ts" />
+    <TypeScriptCompile Include="Script\model\class\userItem.d.ts" />
     <TypeScriptCompile Include="Script\requireConfig.ts" />
   </ItemGroup>
   <ItemGroup>

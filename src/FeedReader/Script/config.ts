@@ -10,6 +10,14 @@ export module Configure {
     container.registerNamed('Storage', 'Implementation.Base.LocalStorage', 'base.localStorage').singleton();
     container.registerNamed('Storage', 'Implementation.Base.SessionStorage', 'base.sessionStorage').singleton();
 
+    // Configure Class
+    container.register('Model.Class.IRssClass', 'Implementation.Class.RssClass', () => {
+        return {
+            channelApi: container.resolve('Model.Api.IChannelApi'),
+            userItemApi: container.resolve('Model.Api.IUserItemApi')
+        };
+    });
+
     // Configure View
     container.register('Implementation.View.ViewController', 'Implementation.View.ViewController', () => {
         return {
@@ -33,7 +41,8 @@ export module Configure {
             viewModel: {},
             authenticationApi: container.resolve('Model.Api.IAuthenticationApi'),
             channelApi: container.resolve('Model.Api.IChannelApi'),
-            userItemApi: container.resolve('Model.Api.IUserItemApi')
+            userItemApi: container.resolve('Model.Api.IUserItemApi'),
+            rssClass: container.resolve('Model.Class.IRssClass')
         };
     });
 

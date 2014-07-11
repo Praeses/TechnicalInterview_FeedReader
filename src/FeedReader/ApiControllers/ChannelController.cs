@@ -48,7 +48,11 @@
 
         [HttpGet]
         [Route("{channelGuid}")]
-        public IEnumerable<IUserItem> Get(Guid channelGuid, int limit = 0, bool before = false, Guid? itemGuid = default(Guid?))
+        public IEnumerable<IUserItem> Get(
+            Guid channelGuid,
+            int limit = 0,
+            bool before = false,
+            Guid? itemGuid = default(Guid?))
         {
             var identity = (Identity)this.User.Identity;
             return this.channelService.EnumerateUserItems(

@@ -7,258 +7,178 @@ export module Implementation.View.Default {
     export class AuthenticatedView extends ViewModule.Implementation.Base.View {
 
         private allChannel: IChannel = {
+            activeObservable: ko.observable(true),
             channelGuid: undefined,
-            userItems: [],
             link: undefined,
             moreUserItems: true,
             rss: undefined,
-            title: 'All'
+            title: 'All',
+            showDeleteChannel: false,
+            userItems: [],
+
+            getMoreUserItems: (): Model.Api.IDtoPromise<void> => {
+                _.forEach(this.viewModel.channels(), (subChannel: IChannel) => {
+                    this.getMoreUserItems(subChannel)
+                        .done(() => {
+                            if (this.viewModel.selectedChannel() == this.allChannel) {
+                                this.setUserItems(this.allChannel);
+                            }
+                        });
+                });
+
+                return jQuery.Deferred().resolve().promise();
+            },
+
+            refresh: (): Model.Api.IDtoPromise<void> =>{
+                _.forEach(this.viewModel.channels(), (subChannel: IChannel) => {
+                    this.refresh(subChannel)
+                        .done(() => {
+                            if (this.viewModel.selectedChannel() == this.allChannel) {
+                                this.setUserItems(this.allChannel);
+                            }
+                        });
+                });
+
+                return jQuery.Deferred().resolve().promise();
+            },
+
+            sort: (): void => {
+                this.allChannel.moreUserItems = false;
+                this.allChannel.userItems = [];
+                _.forEach(this.viewModel.channels(), (channel: IChannel) => {
+                    this.allChannel.userItems = this.allChannel.userItems.concat(channel.userItems);
+                    this.allChannel.moreUserItems = this.allChannel.moreUserItems || channel.moreUserItems;
+                });
+
+                this.allChannel.userItems.sort((a, b) => {
+                    if (!a.read && b.read) {
+                        return -1;
+                    }
+
+                    if (a.read && !b.read) {
+                        return 1;
+                    }
+
+                    return b.sequence - a.sequence;
+                });
+            }
         };
 
         private searchChannel: IChannel = {
+            activeObservable: ko.observable(false),
             channelGuid: undefined,
-            userItems: [],
             link: undefined,
-            moreUserItems: true,
+            moreUserItems: false,
             rss: undefined,
-            title: 'Search Results'
-        };
+            title: 'Search Results',
+            showDeleteChannel: false,
+            userItems: [],
 
-        private addChannel(channel: IChannel): void {
-            _.defaults(channel, {
-                userItems: [],
-                moreUserItems: true,
-                title: ''
-            });
-            var foundChannel = _.find(this.viewModel.channels(), (chan) => {
-                return channel.rss === chan.rss;
-            });
-            if (foundChannel) {
-                _.extend(foundChannel, channel);
-                return;
-            }
+            getMoreUserItems: (): Model.Api.IDtoPromise<void> => {
+                return jQuery.Deferred().resolve().promise();
+            },
 
-            this.viewModel.channels.push(channel);
-        }
+            refresh: (): Model.Api.IDtoPromise<void> => {
+                this.searchChannel.sort();
+                return jQuery.Deferred().resolve().promise();
+            },
 
-        private addChannelSort(channel: IChannel): void {
-            this.viewModel.channels.valueWillMutate();
-            this.addChannel(channel);
-            this.sortChannels();
-            this.viewModel.channels.valueHasMutated();
-            this.getMoreUserItems(channel);
-        }
-
-        private addUserItems(channel: IChannel, userItems: IUserItem[], limit: number) {
-            _.forEach(userItems, (userItem) => {
-                _.defaults(userItem, {
-                    descriptionPlain: jQuery('<div>').html(userItem.description).text(),
-                    readObservable: ko.observable(userItem['read'])
-                });
-            });
-
-            channel.userItems = channel.userItems.concat(userItems);
-            if (userItems.length < limit) {
-                channel.moreUserItems = false;
-            }
-
-            //Update if visible.
-            if (this.viewModel.selectedChannel() == channel) {
-                this.setUserItems(channel.userItems);
-                this.viewModel.showMoreUserItems(channel.moreUserItems);
-            } else if (this.viewModel.selectedChannel() == this.allChannel) {
-                if (userItems.length > 0) {
-                    this.selectChannelAll();
+            sort: (): void => {
+                var search = this.viewModel.search();
+                if (!search) {
+                    this.searchChannel.userItems = this.viewModel.userItems();
+                    return;
                 }
-            }
-        }
 
-        private authenticationChangedCallback: Model.Api.IAuthenticationApiChangedCallback = (): void => {
-            this.viewModel.userName(this.authenticationApi.session.userName);
+                var searchRegx = new RegExp(search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
+                this.searchChannel.userItems = _.filter(this.viewModel.userItems(), (userItem: IUserItem) => {
+                    var x = userItem.descriptionPlain.search(searchRegx);
+                    if (x != -1) {
+                        return true;
+                    }
+
+                    x = userItem.title.search(searchRegx);
+                    if (x != -1) {
+                        return true;
+                    }
+
+                    return false;
+                });
+            }
         };
 
         private clearStatusText(): void {
             this.viewModel.statusText(undefined);
         }
 
-        private getMoreUserItems(channel: IChannel): void {
-            if (channel === this.allChannel) {
-                _.forEach(this.viewModel.channels(), (subChannel: IChannel) => {
-                    this.getMoreUserItems(subChannel);
-                });
-                return;
-            }
-
-            if (channel == this.searchChannel) {
-                return;
-            }
-
-            var itemGuid = null;
-            var sequence = Number.MAX_VALUE;
-            _.forEach(channel.userItems, (userItem: IUserItem) => {
-                if (userItem.sequence > sequence) {
-                    return;
-                }
-
-                itemGuid = userItem.itemGuid;
-                sequence = userItem.sequence;
-            });
-
-            var limit = 10;
-            this.channelApi.enumerateUserItems(channel.channelGuid, limit, false, itemGuid)
-                .done((userItems: IUserItem[]) => {
-                    this.addUserItems(channel, userItems, limit);
+        private getMoreUserItems(channel: IChannel): Model.Api.IDtoPromise<void> {
+            return channel.getMoreUserItems()
+                .done(() => {
+                    if (this.viewModel.selectedChannel() == channel) {
+                        this.setUserItems(channel);
+                    }
                 });
         }
 
-        private markAllAsRead(): void {
-            _.forEach(this.viewModel.userItems(), (userItem: IUserItem) => {
-                if (userItem.readObservable()) {
-                    return;
-                }
-
-                userItem.readObservable(true);
-                this.saveUserItem(userItem);
-            });
-        }
-
-        private markAllAsUnread(): void {
-            _.forEach(this.viewModel.userItems(), (userItem: IUserItem) => {
-                if (!userItem.readObservable()) {
-                    return;
-                }
-
-                userItem.readObservable(false);
-                this.saveUserItem(userItem);
-            });
-        }
-
-        private refreshUserItems(channel: IChannel): void {
-            if (channel === this.allChannel) {
-                _.forEach(this.viewModel.channels(), (subChannel: IChannel) => {
-                    this.refreshUserItems(subChannel);
+        private refresh(channel: IChannel): Model.Api.IDtoPromise<void> {
+            return channel.refresh()
+                .done(() => {
+                    if (this.viewModel.selectedChannel() == channel) {
+                        this.setUserItems(channel);
+                    }
                 });
-                return;
-            }
-
-            if (channel == this.searchChannel) {
-                return;
-            }
-
-            var itemGuid = null;
-            var sequence = 0;
-            _.forEach(channel.userItems, (userItem: IUserItem) => {
-                if (userItem.sequence < sequence) {
-                    return;
-                }
-
-                itemGuid = userItem.itemGuid;
-                sequence = userItem.sequence;
-            });
-
-            var limit = 100;
-            this.channelApi.enumerateUserItems(channel.channelGuid, limit, true, itemGuid)
-                .done((userItems: IUserItem[]) => {
-                    this.addUserItems(channel, userItems, limit);
-                });
-        }
-
-        private saveUserItem(userItem: IUserItem): void {
-            this.userItemApi.putUserItem(userItem.itemGuid, userItem.readObservable());
         }
 
         private selectChannel(channel: IChannel): void {
+            this.allChannel.activeObservable(false);
+            this.searchChannel.activeObservable(false);
+            _.forEach(this.viewModel.channels(), (chan) => chan.activeObservable(false));
+            channel.activeObservable(true);
             this.viewModel.selectedChannel(channel);
-            this.viewModel.showDeleteChannel(true);
+            this.viewModel.showDeleteChannel(channel.showDeleteChannel);
             this.viewModel.showMoreUserItems(channel.moreUserItems);
-            this.setUserItems(channel.userItems);
+            this.setUserItems(channel);
             if (channel.userItems.length === 0) {
                 this.getMoreUserItems(channel);
             }
         }
 
-        private selectChannelAll(): void {
-            this.viewModel.selectedChannel(this.allChannel);
-            this.viewModel.showDeleteChannel(false);
-            var userItems = [];
-            var moreUserItems = false;
-            _.forEach(this.viewModel.channels(), (channel: IChannel) => {
-                userItems = userItems.concat(channel.userItems);
-                moreUserItems = moreUserItems || channel.moreUserItems;
+        private setChannels() {
+            this.rssClass.sort();
+            _.forEach(this.rssClass.channels, (channel) => {
+                var chan = <IChannel>channel;
+                chan.showDeleteChannel = true;
+                if (_.isUndefined(chan.activeObservable)) {
+                    chan.activeObservable = ko.observable(false);
+                }
             });
 
-            userItems.sort((a: IUserItem, b: IUserItem) => b.sequence - a.sequence);
-
-            this.setUserItems(userItems);
-            this.viewModel.showMoreUserItems(moreUserItems);
-
-            if (userItems.length === 0) {
-                this.getMoreUserItems(this.viewModel.selectedChannel());
-            }
+            this.viewModel.channels(<IChannel[]>this.rssClass.channels);
         }
 
-        private selectChannelSearch(): void {
-            var search = this.viewModel.search();
-            if (!search) {
-                return;
-            }
-
-            jQuery('.nav.nav-pills.nav-stacked li').removeClass('active');
-
-            this.viewModel.selectedChannel(this.searchChannel);
-            this.viewModel.showDeleteChannel(false);
-            this.viewModel.showMoreUserItems(false);
-
-            var searchRegx = new RegExp(search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
-            var userItems = _.filter(this.viewModel.userItems(), (userItem) => {
-                var x = userItem.descriptionPlain.search(searchRegx);
-                if (x != -1) {
-                    return true;
+        private setUserItems(channel: IChannel) {
+            jQuery('#authenticatedLayout-userItems .collapse.in').collapse('hide');
+            channel.sort();
+            _.forEach(channel.userItems, (userItem) => {
+                var item = <IUserItem>userItem;
+                if (_.isUndefined(item.readObservable)) {
+                    item.readObservable = ko.observable(item.read);
                 }
-
-                x = userItem.title.search(searchRegx);
-                if (x != -1) {
-                    return true;
-                }
-
-                return false;
             });
-            this.setUserItems(userItems);
-        }
-
-        private setUserItems(userItems: IUserItem[]): void {
-            this.viewModel.userItems.valueWillMutate();
-            this.viewModel.userItems(userItems);
-            this.viewModel.userItems.sort((a: IUserItem, b: IUserItem) => {
-                if (!a.readObservable() && b.readObservable()) {
-                    return -1;
-                }
-
-                if (a.readObservable() && !b.readObservable()) {
-                    return 1;
-                }
-
-                return b.sequence - a.sequence;
-            });
-            this.viewModel.userItems.valueHasMutated();
-        }
-
-        private sortChannels() {
-            this.viewModel.channels.sort((a: IChannel, b: IChannel) => {
-                var aName = a.title.toLocaleLowerCase();
-                var bName = b.title.toLocaleLowerCase();
-                return aName === bName ? 0 : aName < bName ? -1 : 1;
-            });
+            this.viewModel.showMoreUserItems(channel.moreUserItems);
+            this.viewModel.userItems(<IUserItem[]>channel.userItems);
         }
 
         constructor(
             public viewModel: IAuthenticatedViewModel,
-            public authenticationApi: Model.Api.IAuthenticationApi,
-            public channelApi: Model.Api.IChannelApi,
-            public userItemApi: Model.Api.IUserItemApi) {
+            private authenticationApi: Model.Api.IAuthenticationApi,
+            private channelApi: Model.Api.IChannelApi,
+            private userItemApi: Model.Api.IUserItemApi,
+            private rssClass: Model.Class.IRssClass) {
             super(viewModel);
 
             _.defaults(this.viewModel, {
+                activeObservable: this.allChannel.activeObservable,
                 channelRss: ko.observable(),
                 channelRssExists: ko.observable(),
                 channels: ko.observableArray([]),
@@ -272,10 +192,11 @@ export module Implementation.View.Default {
 
                 addChannelClicked: (): void => {
                     this.clearStatusText();
-                    this.channelApi.addChannel(this.viewModel.channelRss())
+                    this.rssClass.addChannel(this.viewModel.channelRss())
                         .done((channel: IChannel) => {
-                            this.addChannelSort(channel);
                             jQuery('#authenticatedLayout-addChannelModal').modal('hide');
+                            this.setChannels();
+                            this.selectChannel(channel);
                         })
                         .fail((error: Model.Api.IDtoError) => {
                             this.viewModel.statusText(error.message);
@@ -283,7 +204,7 @@ export module Implementation.View.Default {
                 },
 
                 allChannelsClicked: (): void => {
-                    this.selectChannelAll();
+                    this.selectChannel(this.allChannel);
                 },
 
                 channelClicked: (channel: IChannel): void => {
@@ -299,18 +220,33 @@ export module Implementation.View.Default {
                 },
 
                 markAllAsReadClicked: (): void => {
-                    this.markAllAsRead();
+                    _.forEach(this.viewModel.userItems(), (userItem: IUserItem) => {
+                        if (userItem.readObservable()) {
+                            return;
+                        }
+
+                        userItem.read = true;
+                        userItem.readObservable(userItem.read);
+                        userItem.save();
+                    });
                 },
 
                 markAllAsUnreadClicked: (): void => {
-                    this.markAllAsUnread();
+                    _.forEach(this.viewModel.userItems(), (userItem: IUserItem) => {
+                        if (!userItem.readObservable()) {
+                            return;
+                        }
+
+                        userItem.read = false;
+                        userItem.readObservable(userItem.read);
+                        userItem.save();
+                    });
                 },
 
                 markAsUnreadClicked: (userItem: IUserItem): void => {
-                    if (userItem.readObservable()) {
-                        userItem.readObservable(false);
-                        this.saveUserItem(userItem);
-                    }
+                    userItem.read = false;
+                    userItem.readObservable(userItem.read);
+                    userItem.save();
                 },
 
                 moreClicked: (): void => {
@@ -318,7 +254,7 @@ export module Implementation.View.Default {
                 },
 
                 refreshClicked: (): void => {
-                    this.refreshUserItems(this.viewModel.selectedChannel());
+                    this.refresh(this.viewModel.selectedChannel());
                 },
 
                 removeSelectedChannelClicked: (): void => {
@@ -328,15 +264,13 @@ export module Implementation.View.Default {
                         return;
                     }
 
-                    this.channelApi.removeChannel(channel.channelGuid)
-                        .done(() => {
-                            this.selectChannelAll();
-                            this.viewModel.channels.remove(channel);
-                        });
+                    this.rssClass.removeChannel(channel);
+                    this.setChannels();
+                    this.selectChannel(this.allChannel);
                 },
 
                 searchClicked: (): void => {
-                    this.selectChannelSearch();
+                    this.selectChannel(this.searchChannel);
                 },
 
                 userItemClicked: (userItem: IUserItem, event: JQueryEventObject): void => {
@@ -348,26 +282,19 @@ export module Implementation.View.Default {
 
                     jQuery('#authenticatedLayout-userItems .collapse.in').collapse('hide');
                     target.collapse('show');
-                    if (!userItem.readObservable()) {
-                        userItem.readObservable(true);
-                        this.saveUserItem(userItem);
+                    if (!userItem.read) {
+                        userItem.read = true;
+                        userItem.readObservable(userItem.read);
+                        userItem.save();
                     }
                 },
             });
 
             this.viewModel.userName(this.authenticationApi.session.userName);
-            this.authenticationApi.changedJqCallback.add(this.authenticationChangedCallback);
-
-            this.channelApi.enumerateChannels()
-                .done((channels: IChannel[]) => {
-                    this.viewModel.channels.valueWillMutate();
-                    _.forEach(channels, (channel: IChannel) => {
-                        this.addChannel(channel);
-                    });
-                    this.sortChannels();
-                    this.viewModel.channels.valueHasMutated();
-
-                    this.selectChannelAll();
+            this.rssClass.refresh()
+                .done(() => {
+                    this.setChannels();
+                    this.selectChannel(this.allChannel);
                 });
         }
 
@@ -394,13 +321,12 @@ export module Implementation.View.Default {
         userName: KnockoutObservable<string>;
     }
 
-    export interface IChannel extends Model.Api.IChannelApiChannel {
-        moreUserItems: boolean;
-        userItems: IUserItem[];
+    export interface IChannel extends Model.Class.IChannelClass {
+        activeObservable: KnockoutObservable<boolean>;
+        showDeleteChannel: boolean;
     }
 
-    export interface IUserItem extends Model.Api.IChannelApiUserItem {
-        descriptionPlain: string;
+    export interface IUserItem extends Model.Class.IUserItemClass {
         readObservable: KnockoutObservable<boolean>;
     }
 

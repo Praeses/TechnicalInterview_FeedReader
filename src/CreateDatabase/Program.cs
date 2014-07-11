@@ -1,6 +1,8 @@
 ﻿namespace CreateDatabase
 {
     using System;
+    using System.Collections.Generic;
+    using System.Data;
     using System.Data.SqlClient;
     using System.IO;
 
@@ -16,14 +18,6 @@
             dataDirectory = Path.GetFullPath(dataDirectory);
             AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectory);
 
-            string databaseFile = Path.Combine(dataDirectory, "FeedReader.mdf");
-            Console.WriteLine(databaseFile);
-            if (File.Exists(databaseFile))
-            {
-                Console.WriteLine("Database already exists.");
-                return;
-            }
-
             string scriptFile = Path.Combine(dataDirectory, "feedReader.sql");
             Console.WriteLine(scriptFile);
             if (!File.Exists(scriptFile))
@@ -32,11 +26,25 @@
                 return;
             }
 
+            string databaseFile = Path.Combine(dataDirectory, "FeedReader.mdf");
+            Console.WriteLine(databaseFile);
+            if (File.Exists(databaseFile))
+            {
+                Console.WriteLine("Database already exists!");
+                Console.WriteLine("Do you want to overwrite it? (y/n)");
+                string verify = Console.ReadLine();
+                if (verify != "y")
+                {
+                    return;
+                }
+            }
+
             //Process the script file.
             string sqlScript = File.ReadAllText(scriptFile);
             sqlScript = sqlScript.Replace("GO\r\n", "~");
             string[] sqlCommands = sqlScript.Split('~');
 
+            var existingDatabases = new List<string>();
             SqlConnection sqlConnection = null;
             foreach (string sqlCmd in sqlCommands)
             {
@@ -64,8 +72,59 @@
                     }
 
                     sqlConnection = new SqlConnection(connectionString);
-                    sqlConnection.Open();
+                    try
+                    {
+                        sqlConnection.Open();
+                        if (!existingDatabases.Contains(catalog))
+                        {
+                            existingDatabases.Add(catalog);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Write("*****");
+                        Console.WriteLine(e.Message);
+                    }
+
                     continue;
+                }
+
+                if ((sqlConnection == default(SqlConnection)) || (sqlConnection.State == ConnectionState.Closed))
+                {
+                    continue;
+                }
+
+
+                if (sql.Contains("ALTER DATABASE ") && sql.Contains("DISABLE_BROKER"))
+                {
+                    continue;
+                }
+
+                if (sql.Contains("ALTER DATABASE ") && sql.Contains("DATE_CORRELATION_OPTIMIZATION"))
+                {
+                    continue;
+                }
+
+                if (sql.Contains("ALTER DATABASE ") && sql.Contains("FILESTREAM"))
+                {
+                    continue;
+                }
+
+                if (sql.Contains("DROP DATABASE "))
+                {
+                    continue;
+                }
+
+                start = sql.IndexOf("CREATE DATABASE [", StringComparison.Ordinal);
+                if (start != -1)
+                {
+                    start += 17;
+                    int stop = sql.IndexOf(']', start);
+                    string catalog = sql.Substring(start, stop - start);
+                    if (existingDatabases.Contains(catalog))
+                    {
+                        continue;
+                    }
                 }
 
                 start = sql.IndexOf("FILENAME = N'", StringComparison.Ordinal);
@@ -81,12 +140,19 @@
 
                 using (var sqlCommand = new SqlCommand(sql, sqlConnection))
                 {
-                    sqlCommand.ExecuteNonQuery();
+                    try
+                    {
+                        sqlCommand.ExecuteNonQuery();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Write("*****");
+                        Console.WriteLine(e.Message);
+                    }
                 }
             }
 
             Console.WriteLine("done.");
-
             if (sqlConnection == default(SqlConnection))
             {
                 return;
