@@ -47,7 +47,9 @@
                     <label>
                         <span class="sr-only">Feed Url</span>
                         <span class="input-group" data-bind="css: { 'has-error': channelRssExists, 'has-success': channelRssExists() === false }">
-                            <span class="input-group-addon"><i class="fa fa-fw fa-rss"></i></span>
+                            <span class="input-group-addon">
+                                <i class="fa fa-fw fa-rss"></i>
+                            </span>
                             <input class="form-control autofocus" placeholder="Feed Url" type="text" data-bind="value: channelRss, event: { input: clearStatusText }">
                         </span>
                     </label>
@@ -60,7 +62,10 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
-                <button class="btn btn-sm btn-primary" type="submit" data-bind="click: addChannelClicked">Ok</button>
+                <button class="btn btn-sm btn-primary" type="submit" data-bind="click: addChannelClicked">
+                    <i class="fa fa-fw fa-circle-o-notch fa-spin" data-bind="visible: addingChannel"></i>
+                    <span data-bind="visible: !addingChannel()">Ok</span>
+                </button>
             </div>
         </form>
     </div>
@@ -124,7 +129,7 @@
                 <h4>
                     <span data-bind="text: selectedChannel().title"></span>
                     <button class="btn btn-sm btn-default space-left" type="button" data-bind="click: refreshClicked">
-                        <i class=" fa fa-refresh">
+                        <i class=" fa fa-refresh" data-bind="css: { 'fa-spin': refreshing }">
                         </i>
                         <span>Refresh</span>
                     </button>
@@ -164,9 +169,9 @@
                 </li>
             </ul>
             <div>
-                <button class="btn btn-sm btn-default" type="button" data-bind="click: moreClicked, visible: showMoreUserItems">
-                    <i class="fa fa-caret-square-o-down"></i>
-                    <span>More</span>
+                <button class="btn btn-sm btn-default" type="submit" data-bind="click: moreClicked, visible: showMoreUserItems">
+                    <i class="fa fa-fw fa-circle-o-notch fa-spin" data-bind="visible: gettingMore"></i>
+                    <span data-bind="visible: !gettingMore()">More</span>
                 </button>
             </div>
         </div>

@@ -13,10 +13,18 @@ export module Implementation.Class {
         addChannel(rss: string): Model.Api.IDtoPromise<Model.Class.IChannelClass> {
             return this.channelApi.addChannel(rss)
                 .then((channel) => {
+                    var existingChannel = _.find(this.channels, (chan) => {
+                        return chan.channelGuid === channel.channelGuid;
+                    });
+                    if (existingChannel) {
+                        return existingChannel;
+                    }
+
                     var channelClass = new ChannelClassModule.Implementation.Class.ChannelClass(
                         this.channelApi,
                         this.userItemApi,
                         channel);
+
                     this.channels.push(channelClass);
                     return channelClass;
                 });

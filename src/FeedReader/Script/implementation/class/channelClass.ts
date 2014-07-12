@@ -4,8 +4,15 @@ export module Implementation.Class {
 
     export class ChannelClass implements Model.Class.IChannelClass {
 
-        private addUserItems(userItems: Model.Api.IChannelApiUserItem[], limit: number) {
+        private addUserItems(userItems: Model.Api.IChannelApiUserItem[], limit: number): void {
             _.forEach(userItems, (userItem) => {
+                var existingUserItem = _.find(this.userItems, (item) => {
+                    return item.itemGuid === userItem.itemGuid;
+                });
+                if (existingUserItem) {
+                    return;
+                }
+
                 var userItemClass = new UserItemClassModule.Implementation.Class.UserItemClass(this.userItemApi, userItem);
                 this.userItems.push(userItemClass);
             });
@@ -16,6 +23,7 @@ export module Implementation.Class {
             private userItemApi: Model.Api.IUserItemApi,
             channel: Model.Api.IChannelApiChannel) {
             _.extend(this, channel);
+            this.moreUserItems = true;
         }
 
         channelGuid: string = undefined;
@@ -61,7 +69,7 @@ export module Implementation.Class {
             return this.channelApi.enumerateUserItems(this.channelGuid, limit, true, itemGuid)
                 .then<void>((userItems: Model.Api.IChannelApiUserItem[]) => {
                     this.addUserItems(userItems, limit);
-               });
+                });
         }
 
         sort(): void {
@@ -76,7 +84,7 @@ export module Implementation.Class {
 
                 return b.sequence - a.sequence;
             });
-            
+
         }
 
     }

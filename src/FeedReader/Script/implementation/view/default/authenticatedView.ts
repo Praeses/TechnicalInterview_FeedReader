@@ -17,29 +17,31 @@ export module Implementation.View.Default {
             userItems: [],
 
             getMoreUserItems: (): Model.Api.IDtoPromise<void> => {
+                var deferreds: JQueryDeferred<void>[] = [];
                 _.forEach(this.viewModel.channels(), (subChannel: IChannel) => {
-                    this.getMoreUserItems(subChannel)
+                    deferreds.push(<any>this.getMoreUserItems(subChannel)
                         .done(() => {
                             if (this.viewModel.selectedChannel() == this.allChannel) {
                                 this.setUserItems(this.allChannel);
                             }
-                        });
+                        }));
                 });
 
-                return jQuery.Deferred().resolve().promise();
+                return jQuery.when.apply(this, deferreds);
             },
 
-            refresh: (): Model.Api.IDtoPromise<void> =>{
+            refresh: (): Model.Api.IDtoPromise<void> => {
+                var deferreds: JQueryDeferred<void>[] = [];
                 _.forEach(this.viewModel.channels(), (subChannel: IChannel) => {
-                    this.refresh(subChannel)
+                    deferreds.push(<any>this.refresh(subChannel)
                         .done(() => {
                             if (this.viewModel.selectedChannel() == this.allChannel) {
                                 this.setUserItems(this.allChannel);
                             }
-                        });
+                        }));
                 });
 
-                return jQuery.Deferred().resolve().promise();
+                return jQuery.when.apply(this, deferreds);
             },
 
             sort: (): void => {
@@ -139,7 +141,9 @@ export module Implementation.View.Default {
             this.viewModel.showMoreUserItems(channel.moreUserItems);
             this.setUserItems(channel);
             if (channel.userItems.length === 0) {
-                this.getMoreUserItems(channel);
+                this.viewModel.gettingMore(true);
+                this.getMoreUserItems(channel)
+                    .always(() => this.viewModel.gettingMore(false));
             }
         }
 
@@ -179,9 +183,12 @@ export module Implementation.View.Default {
 
             _.defaults(this.viewModel, {
                 activeObservable: this.allChannel.activeObservable,
+                addingChannel: ko.observable(false),
                 channelRss: ko.observable(),
                 channelRssExists: ko.observable(),
                 channels: ko.observableArray([]),
+                gettingMore: ko.observable(false),
+                refreshing: ko.observable(false),
                 search: ko.observable(),
                 selectedChannel: ko.observable(this.allChannel),
                 showDeleteChannel: ko.observable(false),
@@ -191,8 +198,14 @@ export module Implementation.View.Default {
                 userName: ko.observable(),
 
                 addChannelClicked: (): void => {
+                    if (this.viewModel.addingChannel()) {
+                        return;
+                    }
+
                     this.clearStatusText();
+                    this.viewModel.addingChannel(true);
                     this.rssClass.addChannel(this.viewModel.channelRss())
+                        .always(() => this.viewModel.addingChannel(false))
                         .done((channel: IChannel) => {
                             jQuery('#authenticatedLayout-addChannelModal').modal('hide');
                             this.setChannels();
@@ -250,11 +263,25 @@ export module Implementation.View.Default {
                 },
 
                 moreClicked: (): void => {
-                    this.getMoreUserItems(this.viewModel.selectedChannel());
+                    if (this.viewModel.gettingMore()) {
+                        return;
+                    }
+
+                    this.viewModel.gettingMore(true);
+                    this.getMoreUserItems(this.viewModel.selectedChannel())
+                        .always(() => this.viewModel.gettingMore(false));
                 },
 
                 refreshClicked: (): void => {
-                    this.refresh(this.viewModel.selectedChannel());
+                    if (this.viewModel.refreshing()) {
+                        return;
+                    }
+
+                    this.viewModel.refreshing(true);
+                    this.refresh(this.viewModel.selectedChannel())
+                        .always(() => {
+                            setTimeout(() => this.viewModel.refreshing(false), 500);
+                        });
                 },
 
                 removeSelectedChannelClicked: (): void => {
@@ -309,15 +336,18 @@ export module Implementation.View.Default {
     }
 
     export interface IAuthenticatedViewModel extends Model.Base.IViewModel {
+        addingChannel: KnockoutObservable<boolean>;
         channelRss: KnockoutObservable<string>;
         channelRssExists: KnockoutObservable<boolean>;
         channels: KnockoutObservableArray<IChannel>;
-        userItems: KnockoutObservableArray<IUserItem>;
+        gettingMore: KnockoutObservable<boolean>;
+        refreshing: KnockoutObservable<boolean>;
         search: KnockoutObservable<string>;
         selectedChannel: KnockoutObservable<IChannel>;
         showDeleteChannel: KnockoutObservable<boolean>;
         showMoreUserItems: KnockoutObservable<boolean>;
         statusText: KnockoutObservable<string>;
+        userItems: KnockoutObservableArray<IUserItem>;
         userName: KnockoutObservable<string>;
     }
 

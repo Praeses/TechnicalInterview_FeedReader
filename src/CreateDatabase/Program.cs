@@ -94,13 +94,17 @@
                     continue;
                 }
 
-
                 if (sql.Contains("ALTER DATABASE ") && sql.Contains("DISABLE_BROKER"))
                 {
                     continue;
                 }
 
                 if (sql.Contains("ALTER DATABASE ") && sql.Contains("DATE_CORRELATION_OPTIMIZATION"))
+                {
+                    continue;
+                }
+
+                if (sql.Contains("ALTER DATABASE ") && sql.Contains("ENABLE_BROKER"))
                 {
                     continue;
                 }
@@ -152,7 +156,7 @@
                 }
             }
 
-            Console.WriteLine("done.");
+            Console.WriteLine("Closing connection...");
             if (sqlConnection == default(SqlConnection))
             {
                 return;
@@ -160,6 +164,10 @@
 
             sqlConnection.Close();
             sqlConnection.Dispose();
+
+            Console.WriteLine("Done. ");
+            Console.WriteLine("Hit any key to exit.");
+            Console.ReadKey();
         }
 
         #endregion
