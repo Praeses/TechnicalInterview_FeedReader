@@ -1,0 +1,76 @@
+﻿@model RSS_Feed.Models.ApplicationViewModel
+
+@{
+    ViewBag.Title = "RSS Reader";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    @Styles.Render("~/Content/tableStyle")
+    @Scripts.Render("~/bundles/jquery")
+    <meta name="viewport" content="width=device-width" />
+    <title>Application</title>
+    <style>
+        table.tablesorter thead {
+            display: block;
+            width: 100%;
+            border: 1px solid #000000;
+            overflow:auto;
+        }
+        table.tablesorter thead th {
+            width:280px;
+        }
+        table.tablesorter tbody.scroll {
+            width:250px;
+            display: block;
+            height: 600px;
+            width: 100%;
+            overflow:auto;
+        }
+        table.tablesorter tbody td {
+            display: inline-block;
+            width:280px;
+            word-wrap:break-word;
+            height: 50px;
+            overflow:hidden;
+        }
+
+        .ui-selectee {
+            background: #808080;
+            color: white;
+        }
+
+        .ui-selected {
+            background: #000;
+        }
+
+    </style>
+</head>
+<body>
+    <div> 
+        <table id="RSSTable" style="table-layout:fixed" border="1"class="row RSSTable tablesorter">
+            <thead>
+            <tr>
+                <th class="RSSTitle">Title</th>
+                <th class="RSSDate">Date</th>
+                <th class="RSSLink">Link</th>
+                <th class="RSSFeedName">Feed</th>
+            </tr>
+            </thead>
+            <tbody class="scroll">
+</tbody>
+        </table>
+        <div class="row">
+            <div class="col-md-8">
+                <button class="MitchellRSSAdd">Add</button>
+                <button class="MitchellRSSRefresh">Refresh</button>
+                <button class="MitchellRSSRemove">Remove</button>
+                <button class="MitchellRSSSearch">Search</button>
+            </div>
+        </div>
+
+</div>
+    @Scripts.Render("~/bundles/RSSReading")
+</body>
+</html>
