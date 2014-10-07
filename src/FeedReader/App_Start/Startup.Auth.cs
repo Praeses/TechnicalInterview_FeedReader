@@ -50,11 +50,11 @@ namespace FeedReader
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "763089711032-trf4odagkb42ri2lk3ckore5lrfea1mv.apps.googleusercontent.com",
+                ClientSecret = "0qDU1NljgAniFS0KkooGJMIE"
+            });
         }
     }
 }
