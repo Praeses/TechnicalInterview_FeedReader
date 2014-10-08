@@ -1,0 +1,43 @@
+﻿@using System.Xml.Linq
+@model FeedReader.Models.FeedViewModel
+
+<div id="feedViewer">
+@if (Model.NewsFeed != null)
+{
+    foreach (XElement item in Model.NewsFeed.Descendants("item"))
+    {
+        var feedItem =
+            new
+            {
+                Source = (item.Element("source") != null) ? item.Element("source").Value : "",
+                Title = (item.Element("title") != null) ? item.Element("title").Value : "",
+                Link = (item.Element("link") != null) ? item.Element("link").Value : "",
+                Description = (item.Element("description") != null) ? item.Element("description").Value : "",
+                PubDate = (item.Element("pubDate") != null) ? DateTime.Parse(item.Element("pubDate").Value).ToShortDateString() : ""
+            };
+
+        <div class="feedItem">
+            <div class="source">
+                @feedItem.Source
+            </div>
+            <div class="title">
+                <a href="@feedItem.Link" target="_blank">@feedItem.Title</a> 
+            </div>    
+            <div class="pubDate">
+                @feedItem.PubDate
+            </div>
+            <div class="description">
+                @Html.Raw(@feedItem.Description)
+            </div>
+        
+        </div>
+    }
+}
+</div>
+
+
+
+
+
+
+    
