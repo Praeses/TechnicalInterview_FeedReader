@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Data.Entity.Migrations;
+using System.Globalization;
+using System.Web.UI.WebControls;
 using FeedReader.Domain;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,7 @@ namespace FeedReader.Infastructure
 
         IQueryable<Feed> IFeedReaderDataSource.Feeds
         {
-            get { return Feeds; }
+            get { return Feeds.OrderBy(f=>f.Name); }
         }
 
         IQueryable<Subscription> IFeedReaderDataSource.Subscriptions
@@ -145,9 +147,6 @@ namespace FeedReader.Infastructure
             }
 
             return rdoc;
-
-
-
         }
     }
 }
