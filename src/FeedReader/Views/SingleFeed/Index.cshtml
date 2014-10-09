@@ -1,4 +1,4 @@
-﻿@model FeedReader.Models.FeedItem
+﻿@model IEnumerable<FeedReader.Models.FeedItem>
 
 @{
     ViewBag.Title = "Index";
@@ -7,7 +7,10 @@
 <h2>Your Feed</h2>
 
 <ul>
-    @foreach (var item in Model){
-        <li><a href="@item.address">@item.title</a></li>
-    }
+   @{foreach (var item in Model)
+     {
+         <li><a href="@item.address">@item.Title</a></li>
+     }
+         
+         }
 </ul>

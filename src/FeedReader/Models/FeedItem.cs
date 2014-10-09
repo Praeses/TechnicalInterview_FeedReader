@@ -4,9 +4,9 @@ namespace FeedReader.Models
 {
     public class FeedItem
     {
-        public string title { get; set; }
+        public int ID { get; set; }
+        public string Title { get; set; }
         public string address { get; set; }
-        public int siteID { get; set; }
     }
 
     public class FeedItemsDBContext : DbContext
