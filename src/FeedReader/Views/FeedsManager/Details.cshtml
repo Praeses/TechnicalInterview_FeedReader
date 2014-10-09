@@ -1,0 +1,42 @@
+﻿@model FeedReader.Models.Feed
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Feed</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.siteName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.siteName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.feedAdress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.feedAdress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.updateInterval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.updateInterval)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,13 @@
+﻿@model FeedReader.Models.FeedItem
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Your Feed</h2>
+
+<ul>
+    @foreach (var item in Model){
+        <li><a href="@item.address">@item.title</a></li>
+    }
+</ul>
