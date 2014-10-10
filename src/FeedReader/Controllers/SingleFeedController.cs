@@ -12,10 +12,9 @@ namespace FeedReader.Controllers
 {
     public class SingleFeedController : Controller
     {
-        private FeedItemsDBContext db = new FeedItemsDBContext();
 
         // GET: SingleFeed
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             
             string url = "http://xkcd.com/rss.xml";
@@ -31,10 +30,14 @@ namespace FeedReader.Controllers
                 uri = item.Links[0].Uri;
                 fi.address = uri.OriginalString;
                 fil.Add(fi);
-                    db.FeedItems.Add(fi);
 
 
             }
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                IEnumerable<FeedItem> iFil = fil.AsEnumerable<FeedItem>();
+                fil = new List<FeedItem>(iFil.Where(s => s.Title.Contains(searchString)));
+            } 
             return View(fil);
         }
     }

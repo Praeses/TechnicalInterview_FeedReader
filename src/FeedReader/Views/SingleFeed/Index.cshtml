@@ -6,6 +6,14 @@
 
 <h2>Your Feed</h2>
 
+@using (Html.BeginForm())
+{
+    <p>
+        Title: @Html.TextBox("SearchString") <br />
+        <input type="submit" value="Filter" />
+    </p>
+}
+
 <ul>
    @{foreach (var item in Model)
      {

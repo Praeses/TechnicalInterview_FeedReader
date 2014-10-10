@@ -4,13 +4,11 @@ namespace FeedReader.Models
 {
     public class FeedItem
     {
-        public int ID { get; set; }
         public string Title { get; set; }
         public string address { get; set; }
+        public string siteTitle { get; set; }
+        public string baseUri { get; set; }
     }
 
-    public class FeedItemsDBContext : DbContext
-    {
-        public DbSet<FeedItem> FeedItems { get; set; }
-    }
+
 }
