@@ -56,9 +56,7 @@ namespace FeedReader.Controllers
                     fil.Add(fi);
                 }
 
-                fil.Sort(delegate(FeedItem x, FeedItem y){
-                    return x.CompareTo(y);
-                });
+                fil.Sort();
                 fil.Reverse();
             }
 
