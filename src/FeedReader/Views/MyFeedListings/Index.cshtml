@@ -9,6 +9,7 @@
 @using (Html.BeginForm())
 {
     <p>
+        Site Name: @Html.DropDownList("feedTitles", "All")
         Title: @Html.TextBox("SearchString") <br />
         <input type="submit" value="Filter" />
     </p>
@@ -17,7 +18,7 @@
 <ul>
    @{foreach (var item in Model)
      {
-         <li><a href="@item.address">@item.Title</a></li>
+         <li>@item.siteTitle : <a href="@item.address">@item.Title</a></li>
      }
          
          }

@@ -202,7 +202,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedsManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SingleFeedController.cs" />
+    <Compile Include="Controllers\MyFeedListingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -328,7 +328,7 @@
     <Content Include="Views\FeedsManager\Details.cshtml" />
     <Content Include="Views\FeedsManager\Edit.cshtml" />
     <Content Include="Views\FeedsManager\Index.cshtml" />
-    <Content Include="Views\SingleFeed\Index.cshtml" />
+    <Content Include="Views\MyFeedListings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
