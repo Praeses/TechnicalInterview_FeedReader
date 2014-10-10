@@ -52,11 +52,14 @@ namespace FeedReader.Controllers
                     fi.Title = item.Title.Text;
                     uri = item.Links[0].Uri;
                     fi.address = uri.OriginalString;
+                    fi.published = item.PublishDate;
                     fil.Add(fi);
-
-
                 }
-                
+
+                fil.Sort(delegate(FeedItem x, FeedItem y){
+                    return x.CompareTo(y);
+                });
+                fil.Reverse();
             }
 
             if (!String.IsNullOrEmpty(searchString))
