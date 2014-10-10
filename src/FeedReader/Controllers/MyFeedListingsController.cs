@@ -15,7 +15,7 @@ namespace FeedReader.Controllers
         private FeedDBContext db = new FeedDBContext();
 
         // GET: SingleFeed
-        public ActionResult Index(string searchString, string feedTitle)
+        public ActionResult Index(string searchString, string feedTitles)
         {
 
             var feeds = from f in db.Feeds
@@ -28,9 +28,9 @@ namespace FeedReader.Controllers
             titlesList.AddRange(titles);
             ViewBag.feedTitles = new SelectList(titlesList);
 
-            if (!String.IsNullOrEmpty(feedTitle))
+            if (!String.IsNullOrEmpty(feedTitles))
             {
-                feeds = feeds.Where(x => x.siteName == feedTitle);
+                feeds = feeds.Where(x => x.siteName == feedTitles);
             }
             
 
