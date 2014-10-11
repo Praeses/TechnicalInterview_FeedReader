@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNet.Identity
+
+@using (Html.BeginForm("Subscribe", "Home"))
+{   
+    @Html.AntiForgeryToken()   
+    <fieldset>
+        <legend>Add A Link</legend>
+        @Html.TextBox("link") <input type="submit" value="Subscribe" />
+        <input type="hidden" name="user_id" value="@User.Identity.GetUserId()" />
+        <input type="hidden" name="current_id" value=@ViewBag.feed_id />
+    </fieldset>
+}

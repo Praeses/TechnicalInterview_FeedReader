@@ -1,31 +1,69 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "The Reader";
+    ViewBag.user_id = User.Identity.GetUserId();
 }
 
-<div class="jumbotron">
-    <h1>Feed Reader</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="row">
+    <div class="col-md-3">
+        @{Html.RenderAction("LoadUserFeedWindow", "UserFeed", new { user_id = (string)ViewBag.user_id });}
+        <div>
+            <button class="btn btn-danger" id="showmodalbox">Manage</button>
+        </div>
+        <div id="modalbox" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1> Manage My Feeds</h1>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            @Html.Partial("_SubscribeForm")
+                        </div>
+                        <div style="padding-top:40px;">
+                            @Html.Partial("_SearchForm")
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal">Close</button>
+                        <!--<button class="btn btn-primary">Ok</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        @if ((bool)ViewBag.search == false)
+{
+    Html.RenderAction("LoadFeedItemWindow", "FeedItem",
+      new
+      {
+          feed_id = (int)ViewBag.feed_id,
+          user_id = (string)ViewBag.user_id
+      }
+   );
+}
+else
+{
+    Html.RenderAction("SearchFeedItemWindow", "FeedItem",
+      new
+      {          
+          needle = (string)ViewBag.needle,
+          feed_id = (int)ViewBag.feed_id,
+          user_id = (string)ViewBag.user_id
+      }
+   );
+}
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+@section scripts{
+    <script>
+        $(function () {
+            var modelbox = function () {
+                $("#modalbox").modal("show");
+            };
+            $("#showmodalbox").click(modelbox);
+        });
+    </script>
+}

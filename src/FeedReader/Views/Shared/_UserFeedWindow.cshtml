@@ -1,0 +1,35 @@
+﻿@model IEnumerable<FeedReader.Models.Feed>
+
+<ul style="list-style-type:none; margin-left:0px; padding-left:0px;">
+    @if (ViewBag.ID == 0) 
+    { 
+        <li>
+            <strong>
+                @Html.ActionLink("All", "Index", "Home", new { id = "0" }, null)
+            </strong>
+        </li>
+    }
+    else
+    {
+        <li>
+            @Html.ActionLink("All", "Index", "Home", new { id = "0" }, null)
+        </li>
+    }
+    @foreach (var item in Model)
+    {
+        if(ViewBag.ID == item.ID)
+        { 
+            <li>
+                <strong>
+                    @Html.ActionLink(item.Title, "Index", "Home", new { id = item.ID }, null)
+                </strong>
+            </li>
+        }
+        else 
+        {
+            <li>
+                @Html.ActionLink(item.Title, "Index", "Home", new { id = item.ID }, null)
+            </li>
+        }
+    }
+</ul>

@@ -1,0 +1,12 @@
+﻿@using (Html.BeginForm("Index", "Home"))
+{   
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>Search Current Feed</legend>
+        @Html.TextBox("needle")
+        <input type="checkbox" name="current_only" value="yes" /> Current Feed Only
+        <input type="submit" value="Search" />
+        <input type="hidden" name="current_id" value=@ViewBag.feed_id />
+    </fieldset>
+}
+

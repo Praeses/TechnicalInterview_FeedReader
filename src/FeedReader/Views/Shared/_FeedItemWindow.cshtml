@@ -1,0 +1,18 @@
+﻿@model IEnumerable<FeedReader.Models.FeedItem>
+
+    <ul style="list-style-type:none;">
+        @foreach (var item in Model)
+        {
+            <li class="row">
+                <a href="@Html.Raw(item.Feed.Link)" target="_blank" class="col-md-3">
+                    @Html.Raw(item.Feed.Title)
+                </a>
+                <a href="@Html.Raw(item.Link)" target="_blank" class="col-md-7">
+                    @Html.Raw(item.Title)
+                </a>
+                <span class="col-md-2">
+                    @Html.Encode(item.PublishDate.DayOfWeek)
+                </span>
+            </li>
+        }
+    </ul>
