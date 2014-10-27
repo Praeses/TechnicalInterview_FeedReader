@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Xml.Linq;
+using FeedReader.Domain;
 
 namespace FeedReader.Models
 {
@@ -10,9 +10,9 @@ namespace FeedReader.Models
         public string FeedName { get; set; }
         public string FeedUrl { get; set; }
 
-        public IEnumerable<Domain.Feed> Subscriptions { get; set; }
-        public XDocument NewsFeed { get; set; }
+        public IEnumerable<Feed> Subscriptions { get; set; }
+        public IEnumerable<FeedItem> NewsFeed { get; set; }
 
-        public IEnumerable<Domain.Feed> Feeds { get; set; }
+        public IEnumerable<Feed> Feeds { get; set; }
     }
 }

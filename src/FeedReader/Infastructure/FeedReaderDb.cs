@@ -1,12 +1,9 @@
-﻿using System.Data.Entity.Migrations;
-using System.Globalization;
-using System.Web.UI.WebControls;
-using FeedReader.Domain;
+﻿using FeedReader.Domain;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace FeedReader.Infastructure
 {
@@ -14,7 +11,7 @@ namespace FeedReader.Infastructure
     {
         public DbSet<Feed> Feeds { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
-
+       
         public FeedReaderDb() : base("DefaultConnection")
         {
         }
@@ -28,6 +25,7 @@ namespace FeedReader.Infastructure
         {
             get { return Subscriptions; }
         }
+        
 
         void IFeedReaderDataSource.Save()
         {
@@ -60,12 +58,12 @@ namespace FeedReader.Infastructure
             SaveChanges();
         }
 
-        XDocument IFeedReaderDataSource.GetFeed(Feed feed)
+        IEnumerable<FeedItem> IFeedReaderDataSource.GetFeed(Feed feed)
         {
             return GetFeed(feed);
         }
 
-        private XDocument GetFeed(Feed feed)
+        private IEnumerable<FeedItem> GetFeed(Feed feed)
         {
             return feed.GetFeed();
         }
@@ -93,60 +91,31 @@ namespace FeedReader.Infastructure
             return (culture.CompareInfo.IndexOf(source, value, CompareOptions.IgnoreCase) >= 0);
         }
 
-        private bool Search(XElement item, string s)
+        private bool Search(FeedItem item, string s)
         {
             if (string.IsNullOrEmpty(s))
                 return true;
 
-            var tElement = item.Element("title");
-            
-            if (tElement != null && SearchCompare(tElement.Value, s))
+            if( SearchCompare(item.Title, s))
                 return true;
 
-            var dElement = item.Element("description");
-            if (dElement != null && SearchCompare(dElement.Value, s))
+            if (SearchCompare(item.Description, s))
                 return true;
 
             return false;
         }
-        
-        XDocument IFeedReaderDataSource.GetFeeds(string userId, string s)
-        {
-            var feedDocs = new List<XDocument>();
 
+        IEnumerable<FeedItem> IFeedReaderDataSource.GetFeeds(string userId, string s)
+        {
+            var feedList = new List<FeedItem>();
             var feeds = GetUserFeeds(userId);
 
             foreach (var feed in feeds)
-                feedDocs.Add(GetFeed(feed));
-
-            var rdoc =
-                XDocument.Parse(@"<?xml version='1.0' encoding='utf-8'?><rss version='2.0'><channel></channel></rss>");
-
-            var xElement = rdoc.Element("rss").Element("channel");
-            if (xElement != null)
             {
-                foreach (var doc in feedDocs)
-                    foreach (var item in doc.Descendants("item"))
-                    {
-                        if (Search(item, s))
-                            xElement.Add(item);
-
-                    }
-
-            }
-            
-            var srtElements = rdoc.Descendants("item")
-                .OrderByDescending(p => DateTime.Parse(p.Element("pubDate").Value));
-
-            rdoc = XDocument.Parse(@"<?xml version='1.0' encoding='utf-8'?><rss version='2.0'><channel></channel></rss>");
-            xElement = rdoc.Element("rss").Element("channel");
-            if (xElement != null)
-            {
-                foreach (var item in srtElements)
-                    xElement.Add(item);
+                feedList.AddRange(feed.GetFeed().Where(item => Search(item, s)));
             }
 
-            return rdoc;
+            return feedList.OrderByDescending(p => p.PublishDate);
         }
     }
 }

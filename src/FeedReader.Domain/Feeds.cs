@@ -1,33 +1,34 @@
-﻿using System;
-using System.Collections;
-using System.Linq.Expressions;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Collections.Generic;
 
 namespace FeedReader.Domain
 {
-    public class Feed 
+    public class Feed
     {
+        private readonly IFeedReader _reader;
+
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual string Url { get; set; }
 
-        public XDocument GetFeed()
+        public List<FeedItem> FeedItems;
+
+
+        public Feed()
         {
-            try
-            {   
-                var xmlDoc = XDocument.Load(Url);
+            FeedItems = new List<FeedItem>();
+            _reader = new WebFeedReader();
+        }
 
-                // Add source!
-                foreach (var item in xmlDoc.Descendants("item"))
-                    item.Add(new XElement("source", Name));
+        public Feed(IFeedReader reader)
+        {
+            FeedItems = new List<FeedItem>();
+            _reader = reader;
+        }
 
-                return xmlDoc;
-            }
-            catch (Exception)
-            {
-                return new XDocument();
-            }
+        public IEnumerable<FeedItem> GetFeed()
+        {
+            _reader.LoadFeedItems(this);
+            return FeedItems;
         }
     }
 }
