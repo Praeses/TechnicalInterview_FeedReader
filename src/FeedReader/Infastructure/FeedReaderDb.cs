@@ -65,7 +65,7 @@ namespace FeedReader.Infastructure
 
         private IEnumerable<FeedItem> GetFeed(Feed feed)
         {
-            return feed.GetFeed();
+            return feed.FeedItems;
         }
 
         IQueryable<Feed> IFeedReaderDataSource.GetUserFeeds(string userId)
@@ -112,7 +112,7 @@ namespace FeedReader.Infastructure
 
             foreach (var feed in feeds)
             {
-                feedList.AddRange(feed.GetFeed().Where(item => Search(item, s)));
+                feedList.AddRange(feed.FeedItems.Where(item => Search(item, s)));
             }
 
             return feedList.OrderByDescending(p => p.PublishDate);

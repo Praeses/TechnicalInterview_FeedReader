@@ -21,24 +21,16 @@ namespace FeedReader
     private static IUnityContainer BuildUnityContainer()
     {
       var container = new UnityContainer();
-
-      // register all your components with the container here
-      // it is NOT necessary to register your controllers
-
-      // e.g. container.RegisterType<ITestService, TestService>();  
-      container.RegisterType<AccountController>(new InjectionConstructor());
-      container.RegisterType<IFeedReaderDataSource, FeedReaderDb>();
-      
-      RegisterTypes(container);
-
         
+      RegisterTypes(container);
 
       return container;
     }
 
     public static void RegisterTypes(IUnityContainer container)
     {
-        
+        container.RegisterType<AccountController>(new InjectionConstructor());
+        container.RegisterType<IFeedReaderDataSource, FeedReaderDb>();
     }
   }
 }

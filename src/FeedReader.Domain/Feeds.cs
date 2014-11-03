@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FeedReader.Domain
 {
@@ -10,25 +11,40 @@ namespace FeedReader.Domain
         public virtual string Name { get; set; }
         public virtual string Url { get; set; }
 
-        public List<FeedItem> FeedItems;
+        private ICollection<FeedItem> _feedItems;
 
+        public ICollection<FeedItem> FeedItems
+        {
+            get
+            {
+                try
+                {
+                    if (_feedItems == null)
+                    {
+                        _feedItems = new List<FeedItem>();
+                        _reader.LoadFeedItems(this);
+                    }
+
+                    return _feedItems;
+                }
+                catch (Exception)
+                {
+                    
+                    throw new Exception("Unable to load feed Items for feed " + Name);
+                }
+                
+            }
+            set { _feedItems = value; }
+        }
 
         public Feed()
         {
-            FeedItems = new List<FeedItem>();
             _reader = new WebFeedReader();
         }
 
         public Feed(IFeedReader reader)
         {
-            FeedItems = new List<FeedItem>();
             _reader = reader;
-        }
-
-        public IEnumerable<FeedItem> GetFeed()
-        {
-            _reader.LoadFeedItems(this);
-            return FeedItems;
         }
     }
 }

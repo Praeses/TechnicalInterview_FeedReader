@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace FeedReader.Domain
 {
-    class WebFeedReader : IFeedReader
+    public class WebFeedReader : IFeedReader
     {
         public bool LoadFeedItems(Feed f)
         {
