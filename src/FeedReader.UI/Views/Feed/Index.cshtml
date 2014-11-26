@@ -1,0 +1,117 @@
+﻿@model IEnumerable<FeedReader.Models.Views.Feed>
+
+@{
+    ViewBag.Title = "My Feeds";
+}
+
+<h2>My Feeds</h2>
+
+<div class="row">
+    @Html.Partial("../Shared/_SearchForm")
+</div>
+<div class="row top15">
+    <p><span>or.. search for an article in your current feeds </span></p>
+    <div class="form-group col-md-3">
+        <input type="text" class="form-control" name="feedSearchEntry" id="feedSearchEntry" placeholder="Search current articles by keyword..." />
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-4 top10">
+            <button class="btn btn-primary" id="feedSearchBtn">Search articles</button>
+            <button class="btn btn-default" id="viewAll">View all articles</button>
+        </div>
+    </div>
+</div>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    @foreach (var item in Model)
+    {
+
+        <div class="row top15" data-row-key="@item.FeedID">
+            <div class="panel panel-default">
+                <div role="tab" id="@item.Title">
+                    @if (!string.IsNullOrEmpty(item.Image.Url))
+                    {
+                        <div class="col-xs-2 frame">
+                            <img class="img-responsive" src="@item.Image.Url" alt="@item.Image.Title">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-2 frame">
+                            <img class="img-responsive" src="~/Content/img/news_default.png" alt="News">
+                        </div>
+                    }
+                    <div class="col-xs-10">
+                        <h3>
+                            @Html.DisplayFor(modelItem => item.Title) |
+                            <button class="btn btn-info collapsed" data-toggle="collapse" data-target="#@string.Format("{0}feed",item.FeedID)" data-parent="#accordion"
+                                    aria-expanded="false" aria-controls="@string.Format("{0}feed",item.FeedID)">
+                                View Articles
+                            </button>
+                            <button class="btn btn-warning unsubscribe" id="@item.FeedID">Unsubscribe</button>
+                        </h3>
+                        <p>
+                            <a href="@item.Url" title="@item.Title">View Website</a> | Last Updated: @Html.DisplayFor(modelItem => item.LastBuildDate) |
+                            Subscribers: @Html.DisplayFor(modelItem => item.Subscribers)
+                        </p>
+                        <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                    </div>
+                </div>
+                <div id="@string.Format("{0}feed",item.FeedID)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@item.Title">
+                    <div class="panel-body top15">
+                        <table class="table table-hover feedArticles">
+                            <tbody>
+                                @foreach (var feedItem in item.FeedItems)
+                                {
+                                    <tr id="@feedItem.Guid">
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="media" id="@item.FeedID+mediaDiv">
+                                                        <a class="media-left media-top" href="#">
+                                                            @if (feedItem.MediaSrc.FirstOrDefault() != null)
+                                                            {
+                                                                <div class="col-xs-2 col-lg-1 frame">
+                                                                    <img class="img-responsive" src="@feedItem.MediaSrc.First()" alt="Feed Item Image" />
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="col-xs-2 col-lg-1 frame">
+                                                                    <img class="img-responsive" src="~/Content/img/news_default.png" alt="News" />
+                                                                </div>
+                                                            }
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">@Html.DisplayFor(modelItem => feedItem.Title)</h4>
+                                                            <p>
+                                                                <a href="@feedItem.Url" title="@feedItem.Title">View Full Story</a> | Published: @Html.DisplayFor(modelItem => feedItem.PubDate)
+                                                            </p>
+                                                            <p>@Html.Raw(feedItem.Description)</p>
+
+                                                        </div>
+                                                    </div><!--media end-->
+                                                </div>
+                                            </div><!--row end-->
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!--tab end-->
+            </div><!--panel end-->
+        </div>
+    }
+
+</div><!--Accordion End-->
+<div class="row hidden" id="searchFeedResults">
+    <div class="col-xs-12" id="foundArticles">
+        <div>some stuff to remove</div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/Scripts/app/myfeeds.js" type="text/javascript"></script>        
+}

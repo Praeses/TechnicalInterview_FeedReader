@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-xs-8 col-xs-offset-2" id="homePg">
+        <h1><strong>FeedReader</strong></h1>
+        <p class="description">All of your news in one place.</p>
+        <p class="links">
+            @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) or
+            @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" }) to get started.
+        </p>              
+    </div>
+</div>
+
+@section styles{
+    <link href="~/Content/homepg.css" type="text/css" rel="stylesheet" />
+}
