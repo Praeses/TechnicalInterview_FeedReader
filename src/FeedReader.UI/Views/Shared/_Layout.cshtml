@@ -35,7 +35,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - FeedReader</p>
+            <p>&copy; @DateTime.Now.Year - FeedReader @RenderSection("photoCred", false)</p>
         </footer>
     </div>
 

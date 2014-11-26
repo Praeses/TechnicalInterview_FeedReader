@@ -28,6 +28,15 @@ footer{
     color: lightgray;
 }
 
+footer span{
+    font-size:0.7em;
+    padding-left: 5px;
+}
+
+footer a {
+    color: gray;
+}
+
 hr{
     visibility: hidden;
 }
