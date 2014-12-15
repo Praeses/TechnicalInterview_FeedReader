@@ -4,6 +4,8 @@ Technical Interview: FeedReader
 
 The purpose of this exercise is to measure the candidate’s ability to satisfy business rules, while also demonstrating their ability to further enhance the solution. The solution should not only satisfy the business requirements outlined below, but should also give the candidate an opportunity to show-off their skills.
 
+We should be able to pull down the source, hit F5 in Visual Studio and the solution should run with all databases created and populated.  We will reject submissions that do not follow this rule.  Once you think you have finished, it is suggested that you wipe all remnants of your application from your computer (delete databases, etc), clone the repository into a different directory and try to run it to ensure it works properly.  Assume we have Visual Studio 2013 and SQL Local DB on our boxes.  If your app needs something outside of those requirements, make sure you bootstrap that in your application code so we don't have to manually install any dependencies when looking at your solution.  Nuget packages you wish to add are perfectly acceptable.
+
 **Pre-Interview Requirements**
 
 1. User should be able to register for an account.
