@@ -9,6 +9,11 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm())
+    {
+        <p> Keyword: @Html.TextBox("SearchString")
+        <input type="submit" value="Filter" /></p>
+    }
 </p>
 <table class="table">
     <tr>

@@ -16,9 +16,18 @@ namespace FeedReader.Controllers
         private UserSubscriptionDBContext db = new UserSubscriptionDBContext();
 
         // GET: UserSubscriptions
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.UserSubscriptions.ToList());
+            string username = User.Identity.GetUserName();//FIXME: Not sure if this is safe?
+            var subscriptions = from s in db.UserSubscriptions
+                                select s;
+            subscriptions = subscriptions.Where(n => n.userName.Equals(username));
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                subscriptions = subscriptions.Where(n => n.rssFeedURL.Contains(searchString));
+            }
+
+            return View(subscriptions);
         }
 
         // GET: UserSubscriptions/Details/5
@@ -49,7 +58,7 @@ namespace FeedReader.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,userName,rssFeedURL")] UserSubscription userSubscription)
         {
-            string username = User.Identity.GetUserName();
+            string username = User.Identity.GetUserName();//FIXME: Not sure if this is safe
             if (username != null && username != "")
             {
                 if(userSubscription != null)//Check for valid entry
