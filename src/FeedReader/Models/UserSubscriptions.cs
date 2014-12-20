@@ -14,7 +14,8 @@ namespace FeedReader.Models
         public string userName { get; set; }
         [Display(Name = "RSS Feed")]
         public string rssFeedURL { get; set; }
-
+        [Display(Name = "RSS Name")]
+        public string rssFeedName { get; set; }
     }
 
     public class UserSubscriptionDBContext:DbContext

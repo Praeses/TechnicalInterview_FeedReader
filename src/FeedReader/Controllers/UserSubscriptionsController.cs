@@ -56,7 +56,7 @@ namespace FeedReader.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,userName,rssFeedURL")] UserSubscription userSubscription)
+        public ActionResult Create([Bind(Include = "ID,userName,rssFeedURL, rssFeedName")] UserSubscription userSubscription)
         {
             string username = User.Identity.GetUserName();//FIXME: Not sure if this is safe
             if (username != null && username != "")
