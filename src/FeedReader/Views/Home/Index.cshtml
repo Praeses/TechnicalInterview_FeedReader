@@ -1,16 +1,23 @@
-﻿@{
+﻿@model IEnumerable<FeedReader.Models.UserSubscription>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
 <div class="jumbotron">
     <h1>Feed Reader</h1>
-    <p class="lead">RSS feed data area</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <table class="table">
+        <tr>
+            <th>
+            </th>
+        </tr>
+       
+    </table>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Manage Subscriptions</h2>
+        <h2>Manage Subscriptions</h2>@*TODO: Move this functionality to the top-bar layout to keep this page dealing with simply data*@
         <p>
             Subscribe to RSS Feeds 
         </p>

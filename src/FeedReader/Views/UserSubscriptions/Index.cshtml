@@ -17,9 +17,10 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.userName)
-        </th>
+        @*
+    <th>
+        @Html.DisplayNameFor(model => model.userName)
+    </th>*@
         <th>
             @Html.DisplayNameFor(model => model.rssFeedURL)
         </th>
@@ -31,9 +32,10 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.userName)
-        </td>
+        @*
+    <td>
+        @Html.DisplayFor(modelItem => item.userName)
+    </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.rssFeedURL)
         </td>
