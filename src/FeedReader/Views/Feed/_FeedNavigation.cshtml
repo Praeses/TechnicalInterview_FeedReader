@@ -1,0 +1,22 @@
+﻿<ul id="ulFeeds" class="navMenu">
+    <li class="ui-widget-header">Views</li>
+    <li>@Ajax.ActionLink("All Items", "LoadDetailPane", new { SubscriptionId = 0 }, 
+                         new AjaxOptions
+                             {
+                                 UpdateTargetId="feedItemsPanel", 
+                                 InsertionMode = InsertionMode.Replace, 
+                                 HttpMethod = "GET"
+                             })</li>
+    <li class="ui-widget-header">Subscriptions</li>
+    @foreach (var item in Model.MenuItems)
+    {
+        <li>@Ajax.ActionLink((string)item.Name, "LoadDetailPane", new { item.SubscriptionId }, 
+                             new AjaxOptions
+                                 {
+                                     UpdateTargetId="feedItemsPanel", 
+                                     InsertionMode = InsertionMode.Replace, 
+                                     HttpMethod = "GET"
+                                 })
+        </li>
+    }
+</ul>

@@ -1,0 +1,48 @@
+﻿@model FeedReader.Models.ManageSubscriptionsModel
+@{
+    ViewBag.Title = "Subscriptions";
+    
+    var grid = new WebGrid(Model.Subscriptions, canPage: false,
+    selectionFieldName: "selectedRow");
+}
+@functions{
+    public string TokenHeaderValue()
+    {
+        string cookieToken, formToken;
+        AntiForgery.GetTokens(null, out cookieToken, out formToken);
+        return cookieToken + ":" + formToken;                
+    }
+    public string ResolveImage(string imagePath)
+    {
+        return !string.IsNullOrWhiteSpace(imagePath) ? imagePath : Url.Content("~/Images/RSS_Default_32.png");
+    }
+
+}
+<h2>Manage Subscriptions</h2>
+<input type="button" id="buttonNewSubscription" value="Add New Subscription"/>
+<h3>Current Subscriptions</h3>
+<div id="divSubscriptionList">
+
+        @Html.AntiForgeryToken()
+     
+        @grid.GetHtml(tableStyle: "webGrid",
+                      headerStyle: "webGridHeader",
+                      alternatingRowStyle: "webGridAlt",
+                      selectedRowStyle: "webGridSelect",
+                      columns: grid.Columns(
+                          grid.Column(style: "gridIcon", format: @<text><img src="@ResolveImage(item.ImageUrl)" alt="Image " class="feedIcon"/> </text>),
+                          grid.Column("Name", " Name", style: "gridName", format: @<text><label title="@item.Uri">@item.Name</label></text>),
+                          grid.Column("Description", "Description", style: "gridDescription"),
+                          grid.Column(null, "Action", style: "gridAction", format: @<text><a href="#" id="Remove_@item.SubscriptionId" class="webGridRemoveAction">Remove</a></text>)
+                        )
+        )  
+    <div id="divConfirmRemove" title="Confirmation" data-request-url="@Url.Action("Remove", "Subscription")" data-token="@TokenHeaderValue()">
+        <p>Are you sure you want to remove this subscription?</p>
+    </div>
+</div>
+
+<div id="divNewSubscription">
+    @Html.Partial("_NewSubscriptionPartial")    
+</div>
+
+<script src="~/Scripts/app/subscription.manage.js"></script>

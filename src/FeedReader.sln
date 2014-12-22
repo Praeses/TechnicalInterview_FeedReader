@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedReader", "FeedReader\FeedReader.csproj", "{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BB7ECBC2-C14F-49EA-B4E7-A068D301AA94} = {BB7ECBC2-C14F-49EA-B4E7-A068D301AA94}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedService", "FeedService\FeedService.csproj", "{BB7ECBC2-C14F-49EA-B4E7-A068D301AA94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +18,10 @@ Global
 		{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB7ECBC2-C14F-49EA-B4E7-A068D301AA94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7ECBC2-C14F-49EA-B4E7-A068D301AA94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7ECBC2-C14F-49EA-B4E7-A068D301AA94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7ECBC2-C14F-49EA-B4E7-A068D301AA94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

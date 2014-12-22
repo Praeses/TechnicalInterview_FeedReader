@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AccountModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="AccountModelStoreContainer">
+          <EntitySet Name="Account" EntityType="AccountModel.Store.Account" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ServiceOption" EntityType="AccountModel.Store.ServiceOption" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_ServiceOption_Account" Association="AccountModel.Store.FK_ServiceOption_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="ServiceOption" EntitySet="ServiceOption" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="account_id" />
+          </Key>
+          <Property Name="account_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="varchar" Nullable="false" MaxLength="75" />
+          <Property Name="last_name" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="time_zone_code" Type="varchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ServiceOption">
+          <Key>
+            <PropertyRef Name="service_option_id" />
+          </Key>
+          <Property Name="service_option_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="option_code" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="effective_start_utc" Type="datetime2" Nullable="false" />
+          <Property Name="effective_end_utc" Type="datetime2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ServiceOption_Account">
+          <End Role="Account" Type="AccountModel.Store.Account" Multiplicity="1" />
+          <End Role="ServiceOption" Type="AccountModel.Store.ServiceOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="ServiceOption">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AccountModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AccountEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="AccountModel.Account" />
+          <EntitySet Name="ServiceOptions" EntityType="AccountModel.ServiceOption" />
+          <AssociationSet Name="FK_ServiceOption_Account" Association="AccountModel.FK_ServiceOption_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="ServiceOption" EntitySet="ServiceOptions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="75" Unicode="false" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="TimeZoneCode" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="ServiceOptions" Relationship="AccountModel.FK_ServiceOption_Account" FromRole="Account" ToRole="ServiceOption" />
+        </EntityType>
+        <EntityType Name="ServiceOption">
+          <Key>
+            <PropertyRef Name="ServiceOptionId" />
+          </Key>
+          <Property Name="ServiceOptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OptionCode" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="EffectiveStartDateUtc" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EffectiveEndDateUtc" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Account" Relationship="AccountModel.FK_ServiceOption_Account" FromRole="ServiceOption" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK_ServiceOption_Account">
+          <End Role="Account" Type="AccountModel.Account" Multiplicity="1" />
+          <End Role="ServiceOption" Type="AccountModel.ServiceOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="ServiceOption">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AccountModelStoreContainer" CdmEntityContainer="AccountEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="AccountModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="AccountId" ColumnName="account_id" />
+                <ScalarProperty Name="FirstName" ColumnName="first_name" />
+                <ScalarProperty Name="LastName" ColumnName="last_name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TimeZoneCode" ColumnName="time_zone_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceOptions">
+            <EntityTypeMapping TypeName="AccountModel.ServiceOption">
+              <MappingFragment StoreEntitySet="ServiceOption">
+                <ScalarProperty Name="ServiceOptionId" ColumnName="service_option_id" />
+                <ScalarProperty Name="OptionCode" ColumnName="option_code" />
+                <ScalarProperty Name="AccountId" ColumnName="account_id" />
+                <ScalarProperty Name="Active" ColumnName="active" />
+                <ScalarProperty Name="EffectiveStartDateUtc" ColumnName="effective_start_utc" />
+                <ScalarProperty Name="EffectiveEndDateUtc" ColumnName="effective_end_utc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

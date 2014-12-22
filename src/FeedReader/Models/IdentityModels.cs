@@ -15,6 +15,8 @@ namespace FeedReader.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public int AccountId { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

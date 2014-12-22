@@ -1,0 +1,20 @@
+﻿@using FeedReader.Models
+@model FeedReader.Models.FeedModel
+
+@{
+    ViewBag.Title = "Feeds";
+}
+<section class="doublePane">
+    <div class="panelSearch ui-widget-header ui-helper-clearfix" style="padding: 5px;">
+         <input class="feedSearchInput" placeholder="Search" type="text" />
+        <span class="feedSearch ui-state-default" title="search">
+            <span class="ui-icon ui-icon-search"></span>
+        </span>
+    </div>
+    <div class="panelLeft">@Html.Partial("_FeedNavigation")</div>
+    <div class="panelRight" id="feedItemsPanel">@Html.Partial("_FeedItems", new DetailModel { DisplayItems = Model.DisplayItems})</div>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

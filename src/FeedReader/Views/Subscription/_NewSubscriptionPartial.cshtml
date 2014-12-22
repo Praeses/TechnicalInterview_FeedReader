@@ -1,0 +1,23 @@
+﻿@model FeedReader.Models.ManageSubscriptionsModel 
+
+<h3>New Subscription</h3>
+
+@using (Html.BeginForm("Add", "Subscription"))
+{
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>New Subscription Form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m=> m.NewItem.Name)
+                @Html.TextBoxFor(m=> m.NewItem.Name)
+            </li>
+            <li>
+                @Html.LabelFor(m=> m.NewItem.Uri)
+                @Html.TextBoxFor(m=> m.NewItem.Uri)
+            </li>
+        </ol>
+        <input type="submit" value="Add subscription"/>
+    </fieldset>
+}

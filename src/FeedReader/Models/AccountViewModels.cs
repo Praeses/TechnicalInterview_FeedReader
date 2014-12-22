@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FeedReader.Models
 {
@@ -68,6 +70,23 @@ namespace FeedReader.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Timezone")]
+        public string TimeZoneId { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        public IEnumerable<TimeZoneInfo> TimeZones
+        {
+            get { return TimeZoneInfo.GetSystemTimeZones(); }
+        }
     }
 
     public class ResetPasswordViewModel

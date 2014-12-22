@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/FeedService.Contract.SubscriptionService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/FeedService.Contract.SubscriptionService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:52238/SubscriptionService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/FeedService.Contract" />
+  <xs:complexType name="LoadSubscriptionsResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/FeedService.Contract" base="q1:Result">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Subscriptions" nillable="true" type="tns:ArrayOfAccountSubscription" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="LoadSubscriptionsResult" nillable="true" type="tns:LoadSubscriptionsResult" />
+  <xs:complexType name="ArrayOfAccountSubscription">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountSubscription" nillable="true" type="tns:AccountSubscription" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountSubscription" nillable="true" type="tns:ArrayOfAccountSubscription" />
+  <xs:complexType name="AccountSubscription">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostRetentionInDays" type="xs:int" />
+      <xs:element minOccurs="0" name="SubscriptionId" type="xs:int" />
+      <xs:element minOccurs="0" name="Summary" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Uri" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountSubscription" nillable="true" type="tns:AccountSubscription" />
+  <xs:complexType name="NewSubscription">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostRetentionInDays" type="xs:int" />
+      <xs:element minOccurs="0" name="ResourceUri" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NewSubscription" nillable="true" type="tns:NewSubscription" />
+</xs:schema>

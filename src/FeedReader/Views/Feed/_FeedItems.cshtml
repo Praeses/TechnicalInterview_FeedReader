@@ -1,0 +1,11 @@
+﻿@if (Model.DisplayItems != null && Model.DisplayItems.Count > 0)
+{
+    foreach (var item in Model.DisplayItems)
+    {
+    <p>@item.SubscriptionItemId.ToString()</p>
+    }
+}
+else
+{
+  <p>You have no items to view</p>
+}
