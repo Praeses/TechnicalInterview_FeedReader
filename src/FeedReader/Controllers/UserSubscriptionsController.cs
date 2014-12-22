@@ -20,10 +20,8 @@ namespace FeedReader.Controllers
         // GET: UserSubscriptions
         public ActionResult Index(string searchString)
         {
-            string username = User.Identity.GetUserName();//FIXME: Not sure if this is safe?
-            var subscriptions = from s in db.UserSubscriptions
-                                select s;
-            subscriptions = subscriptions.Where(n => n.userName.Equals(username));
+            var subscriptions = getAllSubscriptionsForUser();
+            
             if(!String.IsNullOrEmpty(searchString))
             {
                 subscriptions = subscriptions.Where(n => n.rssFeedURL.Contains(searchString));
@@ -35,11 +33,14 @@ namespace FeedReader.Controllers
         // GET: UserSubscriptions/Details/5
         public ActionResult Details(int? id)//TODO: Add search string (similar to Index())
         {
+            UserSubscription userSubscription;
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                
             }
-            UserSubscription userSubscription = db.UserSubscriptions.Find(id);
+
+            userSubscription = db.UserSubscriptions.Find(id);
             if (userSubscription == null)
             {
                 return HttpNotFound();
@@ -168,6 +169,15 @@ namespace FeedReader.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private IEnumerable<UserSubscription> getAllSubscriptionsForUser()
+        {
+            string username = User.Identity.GetUserName();//FIXME: Not sure if this is safe?
+            var subscriptions = from s in db.UserSubscriptions
+                                select s;
+            subscriptions = subscriptions.Where(n => n.userName.Equals(username));
+            return subscriptions;
         }
     }
 }

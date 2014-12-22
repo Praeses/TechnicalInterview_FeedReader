@@ -5,19 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-.boxed{
-    border: 1px solid black;
-}
-
 <h2>//TODO: Dynamically add feed name</h2>
 @*TODO: Figure out what this view is for...*@
-<div class="boxed">
+<div>
     <hr />
     <dl>
         @foreach (var item in Model)
         {
             <dt><a href=@item.link>@item.title</a></dt>
-            <dd>@item.description</dd>
+            <dd>@(new HtmlString(@item.description))</dd>@*The summary is saved as html, so it seemed like it would look better to just parse it*@
         }
     </dl>
 </div>
