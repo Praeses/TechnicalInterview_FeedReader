@@ -33,7 +33,7 @@ namespace FeedReader.Controllers
         }
 
         // GET: UserSubscriptions/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id)//TODO: Add search string (similar to Index())
         {
             if (id == null)
             {
@@ -56,11 +56,22 @@ namespace FeedReader.Controllers
             SyndicationFeed feed = SyndicationFeed.Load(reader);
             reader.Close();
 
-            foreach(SyndicationItem item in feed.Items )
+            if(feed != null)
             {
-                string tmp = item.Title.Text;
+                var item = (from rss in feed.Items
+                            select new RSSFeed
+                            {
+                                id = rss.Id,
+                                title = rss.Title.Text,
+                                description = rss.Summary.Text,
+                                link = rss.Links.Count > 0 ? rss.Links.First().Uri : null,//FIXME: Not sure if this is correct//FIXME: Consider making this a list of some sort
+                                category = rss.Categories.Count > 0 ? rss.Categories.First().Label : "",//FIXME: Not sure if this is correct//FIXME: Consider making this a list of some sort
+                                publishDate = rss.PublishDate.DateTime
+                            });
+                //return View(userSubscription);
+                return View(item);
             }
-            return View(userSubscription);
+            return View();
         }
 
         // GET: UserSubscriptions/Create

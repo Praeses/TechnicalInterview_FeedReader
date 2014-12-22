@@ -1,35 +1,27 @@
-﻿@model FeedReader.Models.UserSubscription
-
+﻿@*model FeedReader.Models.UserSubscription*@
+@model IEnumerable<FeedReader.Models.RSSFeed>
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+.boxed{
+    border: 1px solid black;
+}
+
+<h2>//TODO: Dynamically add feed name</h2>
 @*TODO: Figure out what this view is for...*@
-<div>
-    <h4>UserSubscription</h4>
+<div class="boxed">
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.userName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.userName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.rssFeedURL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.rssFeedURL)
-        </dd>
-
+    <dl>
+        @foreach (var item in Model)
+        {
+            <dt><a href=@item.link>@item.title</a></dt>
+            <dd>@item.description</dd>
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+   @* @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |*@
     @Html.ActionLink("Back to List", "Index")
 </p>
