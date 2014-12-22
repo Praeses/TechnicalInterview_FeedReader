@@ -1,0 +1,23 @@
+﻿@*model FeedReader.Models.UserSubscription*@
+@model IEnumerable<FeedReader.Models.RSSFeed>
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>//TODO: Dynamically add feed name</h2>
+@*TODO: Figure out what this view is for...*@
+<div>
+    <hr />
+    <dl>
+        @foreach (var item in Model)
+        {
+            <dt><a href=@item.link>@item.title</a></dt>
+            <dd>@(new HtmlString(@item.description))</dd>@*The summary is saved as html, so it seemed like it would look better to just parse it*@
+        }
+    </dl>
+</div>
+<p>
+   @* @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>
