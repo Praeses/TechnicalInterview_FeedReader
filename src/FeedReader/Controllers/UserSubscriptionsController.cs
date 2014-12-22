@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using FeedReader.Models;
 using Microsoft.AspNet.Identity;
+using System.Xml;
+using System.ServiceModel.Syndication;
 
 namespace FeedReader.Controllers
 {
@@ -41,6 +43,22 @@ namespace FeedReader.Controllers
             if (userSubscription == null)
             {
                 return HttpNotFound();
+            }
+
+            //WebClient client = new WebClient();
+            //client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.202 Safari/535.1";
+            //client.Headers["Accept"] = "xml;q=0.9, */*;q=0.8";
+            //string data = client.DownloadString(userSubscription.rssFeedURL);
+            //XmlDocument doc = new XmlDocument();
+            //doc.LoadXml(data);
+
+            XmlReader reader = XmlReader.Create(userSubscription.rssFeedURL);
+            SyndicationFeed feed = SyndicationFeed.Load(reader);
+            reader.Close();
+
+            foreach(SyndicationItem item in feed.Items )
+            {
+                string tmp = item.Title.Text;
             }
             return View(userSubscription);
         }
