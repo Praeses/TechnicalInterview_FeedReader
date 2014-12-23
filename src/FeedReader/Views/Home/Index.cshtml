@@ -6,13 +6,14 @@
 
 <div class="jumbotron">
     <h1>Feed Reader</h1>
-    <table class="table">
-        <tr>
-            <th>
-            </th>
-        </tr>
-       
-    </table>
+    @foreach(var sub in Model)
+    {
+        { 
+            @*Html.RenderPartial("~/Views/UserSubscriptions/_feed.cshtml", 
+                new ViewDataDictionary(new { id = sub.ID }));*@
+            Html.RenderAction("_feed", "UserSubscriptions", new { id = @sub.ID });
+        }
+    }
 </div>
 
 <div class="row">

@@ -53,6 +53,7 @@ namespace FeedReader.Controllers
             //XmlDocument doc = new XmlDocument();
             //doc.LoadXml(data);
 
+            //Consider Removing
             XmlReader reader = XmlReader.Create(userSubscription.rssFeedURL);
             SyndicationFeed feed = SyndicationFeed.Load(reader);
             reader.Close();
@@ -72,6 +73,7 @@ namespace FeedReader.Controllers
                 //return View(userSubscription);
                 return View(item);
             }
+            //End Remove
             return View();
         }
 
@@ -160,6 +162,36 @@ namespace FeedReader.Controllers
             db.UserSubscriptions.Remove(userSubscription);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        //GET: UserSubscriptions/_Feed
+        public ActionResult _Feed(int? id, string searchString)//TODO: Handle searching via the search string
+        {
+            UserSubscription userSubscription;
+            if(id != null)
+            {
+                userSubscription = db.UserSubscriptions.Find(id);
+
+                XmlReader reader = XmlReader.Create(userSubscription.rssFeedURL);
+                SyndicationFeed feed = SyndicationFeed.Load(reader);
+                reader.Close();
+
+                if (feed != null)
+                {
+                    var item = (from rss in feed.Items
+                                select new RSSFeed
+                                {
+                                    id = rss.Id,
+                                    title = rss.Title.Text,
+                                    description = rss.Summary.Text,
+                                    link = rss.Links.Count > 0 ? rss.Links.First().Uri : null,//FIXME: Not sure if this is correct//FIXME: Consider making this a list of some sort (IEnumerable perhaps)
+                                    category = rss.Categories.Count > 0 ? rss.Categories.First().Label : "",//FIXME: Not sure if this is correct//FIXME: Consider making this a list of some sort (IEnumerable perhaps)
+                                    publishDate = rss.PublishDate.DateTime
+                                });
+                    return PartialView(item);
+                }
+            }
+            return PartialView(); 
         }
 
         protected override void Dispose(bool disposing)

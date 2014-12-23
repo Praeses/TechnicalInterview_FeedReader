@@ -1,0 +1,13 @@
+﻿@model IEnumerable<FeedReader.Models.RSSFeed>
+
+<h2>TODO: Dynamically add feed name</h2>
+<div>
+    <hr />
+    <dl>
+        @foreach (var item in Model)
+        {
+            <dt><a href=@item.link>@item.title</a></dt>
+            <dd>@(new HtmlString(@item.description))</dd>
+        }
+    </dl>
+</div>
