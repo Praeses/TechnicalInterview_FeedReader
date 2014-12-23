@@ -4,35 +4,33 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>Feed Reader</h1>
-    @foreach(var sub in Model)
-    {
-        { 
-            @*Html.RenderPartial("~/Views/UserSubscriptions/_feed.cshtml", 
-                new ViewDataDictionary(new { id = sub.ID }));*@
-            Html.RenderAction("_feed", "UserSubscriptions", new { id = @sub.ID });
-        }
-    }
-</div>
-
 <div class="row">
-    <div class="col-md-4">
-        <h2>Manage Subscriptions</h2>@*TODO: Move this functionality to the top-bar layout to keep this page dealing with simply data*@
-        <p>
-            Subscribe to RSS Feeds 
-        </p>
-        @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
-        <p><button onclick="location.href='@Url.Action("Index", "UserSubscriptions")'">Subscribe!</button></p>
+    <div class="col-sm-3">
+        <div>
+            <h2>Manage Subscriptions</h2>@*TODO: Move this functionality to the top-bar layout to keep this page dealing with simply data*@
+            <p>
+                Subscribe to RSS Feeds 
+            </p>
+            @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
+            <p><button onclick="location.href='@Url.Action("Index", "UserSubscriptions")'">Subscriptions</button></p>
+        </div>
+        <div>
+            <h2>Search Module</h2>
+            <p>RESERVED</p>
+        </div>
+        <div>
+            <h2>Reserved</h2>
+            <p>Reserved</p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Search Module</h2>
-        <p>RESERVED</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="col-lg-8">
+        <h1>Feed Reader</h1>
+        @foreach(var sub in Model)
+        {
+            { 
+                Html.RenderAction("_feed", "UserSubscriptions", new { id = @sub.ID });
+            }
+        }
     </div>
-    <div class="col-md-4">
-        <h2>View All Module</h2>
-        <p>View ALL THE FEEDS!</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+
 </div>

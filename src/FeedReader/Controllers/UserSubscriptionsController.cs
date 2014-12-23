@@ -172,6 +172,8 @@ namespace FeedReader.Controllers
             {
                 userSubscription = db.UserSubscriptions.Find(id);
 
+                ViewBag.Title = userSubscription.rssFeedName;
+
                 XmlReader reader = XmlReader.Create(userSubscription.rssFeedURL);
                 SyndicationFeed feed = SyndicationFeed.Load(reader);
                 reader.Close();
@@ -210,6 +212,18 @@ namespace FeedReader.Controllers
                                 select s;
             subscriptions = subscriptions.Where(n => n.userName.Equals(username));
             return subscriptions;
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            //base.OnException(filterContext);
+            Exception e = filterContext.Exception;
+
+            filterContext.ExceptionHandled = true;
+            filterContext.Result = new ViewResult()
+            {
+                ViewName = "Error"
+            };
         }
     }
 }

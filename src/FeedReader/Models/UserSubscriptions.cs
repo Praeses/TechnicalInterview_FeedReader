@@ -10,10 +10,15 @@ namespace FeedReader.Models
     public class UserSubscription
     {
         public int ID { get; set; }
+
+        [StringLength(60, MinimumLength = 3)]
         [Display(Name="User")]
         public string userName { get; set; }
+
         [Display(Name = "RSS Feed")]
         public string rssFeedURL { get; set; }
+
+        [StringLength(60, MinimumLength = 3)]
         [Display(Name = "RSS Name")]
         public string rssFeedName { get; set; }
     }
