@@ -1,0 +1,33 @@
+﻿@model IEnumerable<FeedReader.Models.AspNetUserInfo>
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (var item in Model)
+{
+    //Only Display User Information for the currently signed in user.
+    
+    if (item.UserId == User.Identity.GetUserId())
+    {
+        <h2>User Info: @item.FirstName @item.LastName</h2>
+        <h3>Global Id: @item.UserId</h3>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    }
+     
+    
+    //Will Display All Entities regardless of who is signed in.
+    /*
+    <h2>User Info: @item.FirstName @item.LastName</h2>
+    <h3>Global Id: @item.UserId</h3>
+    <td>
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+    </td>
+     */
+}
+
