@@ -15,6 +15,10 @@ namespace FeedReader.Models
         public ObservableCollection<SubscriptionListItem> Subscriptions { get; set; }
         public NewSubscriptionModel NewItem { get; set; }
     }
+    public class RemoveSubscriptionModel
+    {
+        public int SubscriptionId { get; set; }
+    }
     public class NewSubscriptionModel
     {
         [Required]

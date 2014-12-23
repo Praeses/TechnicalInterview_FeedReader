@@ -314,6 +314,67 @@ namespace FeedReader.SubscriptionService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UnsubscribeRequest", Namespace="http://schemas.datacontract.org/2004/07/FeedService.Contract.SubscriptionService")]
+    [System.SerializableAttribute()]
+    public partial class UnsubscribeRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int AccountIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int SubscriptionIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int AccountId {
+            get {
+                return this.AccountIdField;
+            }
+            set {
+                if ((this.AccountIdField.Equals(value) != true)) {
+                    this.AccountIdField = value;
+                    this.RaisePropertyChanged("AccountId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SubscriptionId {
+            get {
+                return this.SubscriptionIdField;
+            }
+            set {
+                if ((this.SubscriptionIdField.Equals(value) != true)) {
+                    this.SubscriptionIdField = value;
+                    this.RaisePropertyChanged("SubscriptionId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="SubscriptionService.ISubscriptionService")]
     public interface ISubscriptionService {
@@ -331,10 +392,10 @@ namespace FeedReader.SubscriptionService {
         System.Threading.Tasks.Task<FeedReader.SubscriptionService.Result> SubscribeAsync(FeedReader.SubscriptionService.NewSubscription subscription);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISubscriptionService/Unsubscribe", ReplyAction="http://tempuri.org/ISubscriptionService/UnsubscribeResponse")]
-        FeedReader.SubscriptionService.Result Unsubscribe(int subscriptionId);
+        FeedReader.SubscriptionService.Result Unsubscribe(FeedReader.SubscriptionService.UnsubscribeRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISubscriptionService/Unsubscribe", ReplyAction="http://tempuri.org/ISubscriptionService/UnsubscribeResponse")]
-        System.Threading.Tasks.Task<FeedReader.SubscriptionService.Result> UnsubscribeAsync(int subscriptionId);
+        System.Threading.Tasks.Task<FeedReader.SubscriptionService.Result> UnsubscribeAsync(FeedReader.SubscriptionService.UnsubscribeRequest request);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -380,12 +441,12 @@ namespace FeedReader.SubscriptionService {
             return base.Channel.SubscribeAsync(subscription);
         }
         
-        public FeedReader.SubscriptionService.Result Unsubscribe(int subscriptionId) {
-            return base.Channel.Unsubscribe(subscriptionId);
+        public FeedReader.SubscriptionService.Result Unsubscribe(FeedReader.SubscriptionService.UnsubscribeRequest request) {
+            return base.Channel.Unsubscribe(request);
         }
         
-        public System.Threading.Tasks.Task<FeedReader.SubscriptionService.Result> UnsubscribeAsync(int subscriptionId) {
-            return base.Channel.UnsubscribeAsync(subscriptionId);
+        public System.Threading.Tasks.Task<FeedReader.SubscriptionService.Result> UnsubscribeAsync(FeedReader.SubscriptionService.UnsubscribeRequest request) {
+            return base.Channel.UnsubscribeAsync(request);
         }
     }
 }

@@ -1,16 +1,26 @@
 ﻿@using FeedReader.Models
-@model FeedReader.Models.FeedModel
+@model FeedModel
 
 @{
     ViewBag.Title = "Feeds";
 }
 <section class="doublePane">
-    <div class="panelSearch ui-widget-header ui-helper-clearfix" style="padding: 5px;">
-         <input class="feedSearchInput" placeholder="Search" type="text" />
+    <div class="panelSearch">
+        <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+    </form>
+    </div>
+    @*    <div class="panelSearch ui-widget-header ui-helper-clearfix" style="padding: 5px;">
+        <input class="feedSearchInput" placeholder="Search" type="text" />
         <span class="feedSearch ui-state-default" title="search">
             <span class="ui-icon ui-icon-search"></span>
         </span>
-    </div>
+    </div>*@
     <div class="panelLeft">@Html.Partial("_FeedNavigation")</div>
     <div class="panelRight" id="feedItemsPanel">@Html.Partial("_FeedItems", new DetailModel { DisplayItems = Model.DisplayItems})</div>
 </section>

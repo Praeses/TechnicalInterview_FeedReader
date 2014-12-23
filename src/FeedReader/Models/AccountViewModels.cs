@@ -55,6 +55,11 @@ namespace FeedReader.Models
 
     public class RegisterViewModel
     {
+        public RegisterViewModel()
+        {
+            TimeZoneId = "Central Standard Time";
+        }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

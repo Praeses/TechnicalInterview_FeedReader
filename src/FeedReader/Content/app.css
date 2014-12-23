@@ -14,7 +14,7 @@
     .webGridDescription { width:auto}
     .webGridSelect{background-color: #71857C}
     .webGridRemoveAction { }
-
+.subscription-control-group { height: 130px; }
 section.doublePane {
     width: 100%;
     height: 100%;
@@ -22,7 +22,14 @@ section.doublePane {
     padding: 10px;
 }
 div.panelSearch {
-    margin-left: 25%;
+    margin-left: 18%;
+    padding: 5px;
+}
+div.panelSearch .input-group {
+    width: 100%;
+}
+div.panelSearch .form-control {
+    max-width: 800px;
 }
 div.panelLeft {
     width: 20%;

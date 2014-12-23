@@ -39,10 +39,10 @@ namespace FeedReader.Controllers
         public ActionResult Index()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user == null || !(UserManager.IsEmailConfirmed(user.Id)))
+            if (user == null)
             {
                 ModelState.AddModelError("", "The user either does not exist or is not confirmed.");
-                return View();
+                return View(new FeedModel());
             }
             var model = new FeedModel();
             model.MenuItems = GetSubscriptions(user.AccountId);

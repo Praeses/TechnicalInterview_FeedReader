@@ -12,7 +12,7 @@ namespace FeedService.Contract.SubscriptionService
         Result Subscribe(NewSubscription subscription);
 
         [OperationContract]
-        Result Unsubscribe(int subscriptionId);
+        Result Unsubscribe(UnsubscribeRequest request);
 
         Result Search();
         Result Share();

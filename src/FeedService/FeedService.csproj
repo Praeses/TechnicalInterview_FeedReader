@@ -95,6 +95,7 @@
     <Compile Include="Contract\SubscriptionService\AccountSubscription.cs" />
     <Compile Include="Contract\SubscriptionService\NewSubscription.cs" />
     <Compile Include="Contract\SubscriptionService\LoadSubscriptionsResult.cs" />
+    <Compile Include="Contract\SubscriptionService\UnsubscribeRequest.cs" />
     <Compile Include="DataAccess\Subscription.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

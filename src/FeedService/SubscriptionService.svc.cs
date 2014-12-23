@@ -99,7 +99,7 @@ namespace FeedService
 
             return result;
         }
-        public Result Unsubscribe(int subscriptionId)
+        public Result Unsubscribe(UnsubscribeRequest request)
         {
             var result = new Result();
             try
@@ -107,10 +107,22 @@ namespace FeedService
                 using (var context = new ContentEntities())
                 {
                     //inactivate subscription
-                    var subscription = context.Subscriptions.Find(subscriptionId);
-                    subscription.EndDateUtc = DateTime.UtcNow;
-                    context.SaveChanges();
-                    result.Code = ResultCode.Success;
+                    var subscription =
+                        context.Subscriptions.FirstOrDefault(
+                            tmp =>
+                            tmp.AccountId == request.AccountId && tmp.SubscriptionId == request.SubscriptionId &&
+                            !tmp.EndDateUtc.HasValue);
+                    if (subscription != null)
+                    {
+                        subscription.EndDateUtc = DateTime.UtcNow;
+                        context.SaveChanges();
+                        result.Code = ResultCode.Success;
+                    }
+                    else
+                    {
+                        result.Code = ResultCode.Failure;
+                        result.Message = "Subscription not found";
+                    }
                 }
             }
             catch (Exception ex)

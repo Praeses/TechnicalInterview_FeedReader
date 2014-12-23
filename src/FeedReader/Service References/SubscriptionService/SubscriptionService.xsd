@@ -36,4 +36,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="NewSubscription" nillable="true" type="tns:NewSubscription" />
+  <xs:complexType name="UnsubscribeRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element minOccurs="0" name="SubscriptionId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnsubscribeRequest" nillable="true" type="tns:UnsubscribeRequest" />
 </xs:schema>

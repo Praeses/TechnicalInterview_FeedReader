@@ -41,12 +41,11 @@ namespace FeedReader.Controllers
 
         public ActionResult Manage()
         {
-
             var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user == null || !(UserManager.IsEmailConfirmed(user.Id)))
+            if (user == null)
             {
                 ModelState.AddModelError("", "The user either does not exist or is not confirmed.");
-                return View();
+                return View(new ManageSubscriptionsModel());
             }
             var model = new ManageSubscriptionsModel {Subscriptions = GetSubscriptions(user.AccountId)};
             return View(model);
@@ -83,10 +82,10 @@ namespace FeedReader.Controllers
         {
             if (ModelState.IsValid)
             {
-                var accountId = Convert.ToInt32(Session["AccountId"]);
+                var user = UserManager.FindById(User.Identity.GetUserId());
                 var newSubscription = new NewSubscription
                     {
-                        AccountId = accountId,
+                        AccountId = user.AccountId,
                         Name = model.NewItem.Name,
                         PostRetentionInDays = 30,
                         ResourceUri = model.NewItem.Uri
@@ -100,42 +99,36 @@ namespace FeedReader.Controllers
                     if (string.IsNullOrWhiteSpace(result.Message))
                         result.Message = "Unknown error";
                     ModelState.AddModelError(string.Empty, result.Message);
+                    return View(model);
                 }
             }
             return RedirectToAction("Manage", "Subscription");
         }
 
-        [HttpPost]
         public ActionResult Remove(int subscriptionId)
         {
-            ValidateRequestHeader(Request);
-            var client = new SubscriptionServiceClient();
-            var result = client.Unsubscribe(subscriptionId);
-            return Json(new {result = result.Code == ResultCode.Success});
+            var model = new RemoveSubscriptionModel {SubscriptionId = subscriptionId};
+            return PartialView("_RemoveSubscriptionPartial", model);
         }
 
-        protected void ValidateRequestHeader(HttpRequestBase request)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Remove(RemoveSubscriptionModel model)
         {
-            string cookieToken = "";
-            string formToken = "";
-
-            IEnumerable<string> tokenHeaders = request.Headers.GetValues("__RequestVerificationToken");
-            if (tokenHeaders != null)
+            if (ModelState.IsValid)
             {
-                string[] tokens = tokenHeaders.First().Split(':');
-                if (tokens.Length == 2)
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                var client = new SubscriptionServiceClient();
+                var request = new UnsubscribeRequest { AccountId = user.AccountId, SubscriptionId = model.SubscriptionId };
+                var result = client.Unsubscribe(request);
+                if (result.Code == ResultCode.Success)
                 {
-                    cookieToken = tokens[0].Trim();
-                    formToken = tokens[1].Trim();
+                    return RedirectToAction("Manage", "Subscription");
                 }
             }
-            AntiForgery.Validate(cookieToken, formToken);
+            return PartialView("_RemoveSubscriptionPartial", model);
         }
 
-        //public ActionResult Search()
-        //{
-        //    return View();
-        //}
 
     }
 }

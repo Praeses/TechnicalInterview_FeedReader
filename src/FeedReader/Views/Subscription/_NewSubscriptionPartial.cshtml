@@ -1,23 +1,32 @@
 ﻿@model FeedReader.Models.ManageSubscriptionsModel 
 
-<h3>New Subscription</h3>
-
 @using (Html.BeginForm("Add", "Subscription"))
 {
-    @Html.ValidationSummary()
-
-    <fieldset>
-        <legend>New Subscription Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m=> m.NewItem.Name)
-                @Html.TextBoxFor(m=> m.NewItem.Name)
-            </li>
-            <li>
-                @Html.LabelFor(m=> m.NewItem.Uri)
-                @Html.TextBoxFor(m=> m.NewItem.Uri)
-            </li>
-        </ol>
-        <input type="submit" value="Add subscription"/>
-    </fieldset>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                <h4 class="modal-title" id="myModalLabel">New Subscription</h4>
+            </div>
+            <div class="modal-body subscription-control-group">
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NewItem.Name, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.NewItem.Name, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NewItem.Uri, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.NewItem.Uri, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Add Subscription</button>
+            </div>
+        </div>
+    </div>
 }

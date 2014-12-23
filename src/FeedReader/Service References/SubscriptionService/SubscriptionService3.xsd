@@ -33,14 +33,14 @@
   <xs:element name="Unsubscribe">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="subscriptionId" type="xs:int" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/FeedService.Contract.SubscriptionService" minOccurs="0" name="request" nillable="true" type="q4:UnsubscribeRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UnsubscribeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/FeedService.Contract" minOccurs="0" name="UnsubscribeResult" nillable="true" type="q4:Result" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/FeedService.Contract" minOccurs="0" name="UnsubscribeResult" nillable="true" type="q5:Result" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
