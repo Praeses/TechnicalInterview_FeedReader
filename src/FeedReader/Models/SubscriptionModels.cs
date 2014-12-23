@@ -65,7 +65,7 @@ namespace FeedReader.Models
         {
             get
             {
-                if (Feed != null)
+                if (Feed != null && Feed.Description != null)
                     return Feed.Description.Text;
                 return string.Empty;
             }

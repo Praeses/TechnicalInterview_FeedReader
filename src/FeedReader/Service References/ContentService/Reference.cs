@@ -29,9 +29,6 @@ namespace FeedReader.ContentService {
         private int FetchSizeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int LastSubscriptionItemIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private FeedReader.ContentService.FeedMode ModeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -39,6 +36,9 @@ namespace FeedReader.ContentService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int SubscriptionIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTimeOffset UtcDateIndexField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -72,19 +72,6 @@ namespace FeedReader.ContentService {
                 if ((this.FetchSizeField.Equals(value) != true)) {
                     this.FetchSizeField = value;
                     this.RaisePropertyChanged("FetchSize");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int LastSubscriptionItemId {
-            get {
-                return this.LastSubscriptionItemIdField;
-            }
-            set {
-                if ((this.LastSubscriptionItemIdField.Equals(value) != true)) {
-                    this.LastSubscriptionItemIdField = value;
-                    this.RaisePropertyChanged("LastSubscriptionItemId");
                 }
             }
         }
@@ -124,6 +111,19 @@ namespace FeedReader.ContentService {
                 if ((this.SubscriptionIdField.Equals(value) != true)) {
                     this.SubscriptionIdField = value;
                     this.RaisePropertyChanged("SubscriptionId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTimeOffset UtcDateIndex {
+            get {
+                return this.UtcDateIndexField;
+            }
+            set {
+                if ((this.UtcDateIndexField.Equals(value) != true)) {
+                    this.UtcDateIndexField = value;
+                    this.RaisePropertyChanged("UtcDateIndex");
                 }
             }
         }

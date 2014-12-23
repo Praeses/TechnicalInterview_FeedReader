@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/FeedService.Contract" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/FeedService.Contract" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" type="tns:ResultCode" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Result" nillable="true" type="tns:Result" />
+  <xs:simpleType name="ResultCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unknown" />
+      <xs:enumeration value="Success" />
+      <xs:enumeration value="Failure" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ResultCode" nillable="true" type="tns:ResultCode" />
+</xs:schema>

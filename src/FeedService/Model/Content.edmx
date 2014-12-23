@@ -35,8 +35,9 @@
           <Property Name="subscription_item_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="subscription_id" Type="int" Nullable="false" />
           <Property Name="content" Type="xml" Nullable="false" />
-          <Property Name="expiration_date_utc" Type="datetime" Nullable="false" />
+          <Property Name="expiration_date_utc" Type="datetime2" Nullable="false" />
           <Property Name="item_id" Type="nvarchar" Nullable="false" MaxLength="2000" />
+          <Property Name="published_date" Type="datetime2" Nullable="false" />
         </EntityType>
         <Association Name="FK_SubscriptionItem_Subscription">
           <End Role="Subscription" Type="ContentModel.Store.Subscription" Multiplicity="1" />
@@ -84,10 +85,11 @@
           </Key>
           <Property Name="SubscriptionItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SubscriptionId" Type="Int32" Nullable="false" />
-          <Property Name="ExpirationDateUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpirationDateUtc" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Subscription" Relationship="ContentModel.FK_SubscriptionItem_Subscription" FromRole="SubscriptionItem" ToRole="Subscription" />
           <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ItemId" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="PublishedDateUtc" Nullable="false" Precision="7" />
         </EntityType>
         <Association Name="FK_SubscriptionItem_Subscription">
           <End Type="ContentModel.Subscription" Role="Subscription" Multiplicity="1" />
@@ -126,6 +128,7 @@
           <EntitySetMapping Name="SubscriptionItems">
             <EntityTypeMapping TypeName="ContentModel.SubscriptionItem">
               <MappingFragment StoreEntitySet="SubscriptionItem">
+                <ScalarProperty Name="PublishedDateUtc" ColumnName="published_date" />
                 <ScalarProperty Name="ItemId" ColumnName="item_id" />
                 <ScalarProperty Name="Content" ColumnName="content" />
                 <ScalarProperty Name="SubscriptionItemId" ColumnName="subscription_item_id" />

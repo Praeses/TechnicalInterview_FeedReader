@@ -265,6 +265,9 @@
     <Content Include="Service References\ContentService\FeedReader.ContentService.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Service References\ContentService\ContentService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ContentService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

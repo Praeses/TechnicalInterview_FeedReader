@@ -61,7 +61,8 @@ namespace FeedService.DataAccess
                                 SubscriptionId = feed.SubscriptionId,
                                 ItemId = item.Id,
                                 ExpirationDateUtc = expiration,
-                                Content = feedBuilder.ToString()
+                                Content = feedBuilder.ToString(),
+                                PublishedDateUtc = item.PublishDate.UtcDateTime
                             };
                             retList.Add(returnItem);
                         }

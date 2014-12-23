@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using FeedService.Contract;
 using FeedService.Contract.ContentService;
@@ -20,30 +19,12 @@ namespace FeedService
                 switch (request.Mode)
                 {
                     case FeedMode.All:
-                        if (request.LastSubscriptionItemId > 0)
-                        {
-                            result.Items = queryHelper.LoadAllItems(request.AccountId, request.SearchPattern,
-                                                                    request.LastSubscriptionItemId, request.FetchSize);
-                        }
-                        else
-                        {
-                            result.Items = queryHelper.LoadAllItems(request.AccountId, request.SearchPattern, request.FetchSize);
-                        }
+                        result.Items = queryHelper.LoadAllItems(request.AccountId, request.SearchPattern, request.FetchSize);
                         break;
                     case FeedMode.Subscription:
-                        if (request.LastSubscriptionItemId > 0)
-                        {
-                            result.Items = queryHelper.LoadItemsForSubscription(request.AccountId, request.SubscriptionId,
-                                                                                request.SearchPattern,
-                                                                                request.LastSubscriptionItemId,
-                                                                                request.FetchSize);
-                        }
-                        else
-                        {
-                            result.Items = queryHelper.LoadItemsForSubscription(request.AccountId, request.SubscriptionId,
-                                                                                request.SearchPattern,
-                                                                                request.FetchSize);
-                        }
+                        result.Items = queryHelper.LoadItemsForSubscription(request.AccountId, request.SubscriptionId,
+                                                                            request.SearchPattern,
+                                                                            request.FetchSize);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

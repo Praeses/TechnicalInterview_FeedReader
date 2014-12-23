@@ -1,14 +1,17 @@
-﻿@model FeedReader.Models.DetailOptions 
+﻿@using FeedReader.Models
+@model DetailOptions 
 @if (Model.DisplayItems != null && Model.DisplayItems.Count > 0)
 {
-    var lastSubscriptionItemId = 0;
     foreach (var item in Model.DisplayItems)
     {
-        <h4>@item.Title</h4>
-        <p>@item.Summary</p>
-        lastSubscriptionItemId = item.SubscriptionItemId;
+        <h4><a href="@item.Link" target="_blank">@item.Title</a></h4>
+        if (Model.Mode == ViewMode.All)
+         {
+             <small>Source: @item.Publisher</small>
+         }
+        <p>@Html.Raw(item.Summary)</p>
     }
-@Ajax.ActionLink("LoadMore", "LoadDetailPane", new { Model.SubscriptionId, Model.Mode, LastSubscriptionItemId = lastSubscriptionItemId, Model.SearchPattern }, 
+@Ajax.ActionLink("LoadMore", "LoadDetailPane", new { Model.SubscriptionId, Model.Mode, Model.SearchPattern }, 
                                  new AjaxOptions
                                      {
                                          UpdateTargetId="feedItemsPanel", 

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/FeedService.Contract.ContentService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/FeedService.Contract.ContentService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/FeedService.Contract" />
+  <xs:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/FeedService.Contract" />
   <xs:complexType name="LoadFeedRequest">
     <xs:sequence>
       <xs:element minOccurs="0" name="AccountId" type="xs:int" />
       <xs:element minOccurs="0" name="FetchSize" type="xs:int" />
-      <xs:element minOccurs="0" name="LastSubscriptionItemId" type="xs:int" />
       <xs:element minOccurs="0" name="Mode" type="tns:FeedMode" />
       <xs:element minOccurs="0" name="SearchPattern" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SubscriptionId" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="UtcDateIndex" type="q1:DateTimeOffset" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="LoadFeedRequest" nillable="true" type="tns:LoadFeedRequest" />
@@ -21,7 +22,7 @@
   <xs:element name="FeedMode" nillable="true" type="tns:FeedMode" />
   <xs:complexType name="LoadFeedResult">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/FeedService.Contract" base="q1:Result">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/FeedService.Contract" base="q2:Result">
         <xs:sequence>
           <xs:element minOccurs="0" name="Items" nillable="true" type="tns:ArrayOfAccountFeedItem" />
         </xs:sequence>

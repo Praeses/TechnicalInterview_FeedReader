@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace FeedService.Contract.ContentService
 {
@@ -16,6 +17,6 @@ namespace FeedService.Contract.ContentService
         [DataMember]
         public int FetchSize { get; set; }
         [DataMember]
-        public int LastSubscriptionItemId { get; set; }
+        public DateTimeOffset UtcDateIndex { get; set; }
     }
 }

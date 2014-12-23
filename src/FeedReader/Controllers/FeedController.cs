@@ -56,11 +56,13 @@ namespace FeedReader.Controllers
             {
                 model.DetailOptions = new DetailOptions();
                 model.DetailOptions.DisplayItems = (from fi in result.Items
-                                        select new FeedItem
-                                        {
-                                            SubscriptionItemId = fi.SubscriptionItemId,
-                                            PublishedContent = fi.ItemContent
-                                        }).ToList();
+                                                    join sub in model.MenuItems on fi.SubscriptionId equals sub.SubscriptionId
+                                                    select new FeedItem
+                                                        {
+                                                            SubscriptionItemId = fi.SubscriptionItemId,
+                                                            PublishedContent = fi.ItemContent,
+                                                            Publisher = sub.Name
+                                                        }).ToList();
             }
             return View(model);
         }
@@ -81,15 +83,17 @@ namespace FeedReader.Controllers
                     request.Mode = FeedMode.All;
                     break;
             }
-
+            var subs = GetSubscriptions(user.AccountId);
             var result = client.LoadItemFeed(request);
             if (result.Code == ContentService.ResultCode.Success)
             {
                 options.DisplayItems = (from fi in result.Items
+                                        join sub in subs on fi.SubscriptionId equals sub.SubscriptionId
                                       select new FeedItem
                                               {
                                                   SubscriptionItemId = fi.SubscriptionItemId,
-                                                  PublishedContent = fi.ItemContent
+                                                  PublishedContent = fi.ItemContent,
+                                                  Publisher = sub.Name
                                               }).ToList();
             }
             return PartialView("_FeedItems", options);

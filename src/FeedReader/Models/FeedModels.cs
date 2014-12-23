@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.ServiceModel.Syndication;
 using System.Xml;
 
@@ -37,6 +38,7 @@ namespace FeedReader.Models
     {
         private SyndicationItem _item;
         public int SubscriptionItemId { get; set; }
+        public string Publisher { get; set; }
         public string PublishedContent { get; set; }
         protected SyndicationItem PublishedItem
         {
@@ -64,11 +66,19 @@ namespace FeedReader.Models
         }
         public string Summary
         {
-            get { return PublishedItem != null ? PublishedItem.Summary.Text : string.Empty; }
+            get { return PublishedItem != null && PublishedItem.Summary != null ? WebUtility.HtmlDecode(PublishedItem.Summary.Text) : string.Empty; }
         }
         public string Content
         {
             get { return PublishedItem != null ? PublishedItem.Content.ToString() : string.Empty; }
+        }
+        public string Link
+        {
+            get
+            {
+                return PublishedItem != null
+                           && PublishedItem.Links.Count > 0 ? PublishedItem.Links[0].Uri.ToString() : string.Empty;
+            }
         }
     }
 

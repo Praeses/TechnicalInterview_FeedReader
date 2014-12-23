@@ -36,36 +36,6 @@ namespace FeedService.DataAccess
             return subscriptions;
         }
 
-        public List<AccountFeedItem> LoadItemsForSubscription(int accountId, int subscriptionId, string searchPattern, int lastSubscriptionItemId, int size)
-        {
-            var nowUtc = DateTime.UtcNow;
-            using (var context = new ContentEntities())
-            {
-                if (string.IsNullOrWhiteSpace(searchPattern))
-                {
-                    var items = (from si in context.SubscriptionItems
-                                 join s in context.Subscriptions on si.SubscriptionId equals s.SubscriptionId
-                                 where si.SubscriptionId == subscriptionId
-                                       && s.AccountId == accountId
-                                       && si.SubscriptionItemId < lastSubscriptionItemId
-                                       && si.ExpirationDateUtc > nowUtc
-                                 orderby si.SubscriptionItemId descending 
-                                 select
-                                     new AccountFeedItem
-                                         {
-                                             SubscriptionId = subscriptionId,
-                                             SubscriptionItemId = si.SubscriptionItemId,
-                                             ItemContent = si.Content
-                                         }).Take(size).ToList();
-                    return items;
-                }
-                else
-                {
-                    //going to be a stored proc call
-                    throw new NotImplementedException();
-                }
-            }
-        }
         public List<AccountFeedItem> LoadItemsForSubscription(int accountId, int subscriptionId, string searchPattern, int size)
         {
             var nowUtc = DateTime.UtcNow;
@@ -78,39 +48,11 @@ namespace FeedService.DataAccess
                                  where si.SubscriptionId == subscriptionId
                                        && s.AccountId == accountId
                                        && si.ExpirationDateUtc > nowUtc
-                                 orderby si.SubscriptionItemId descending
+                                 orderby si.PublishedDateUtc descending
                                  select
                                      new AccountFeedItem
                                      {
                                          SubscriptionId = subscriptionId,
-                                         SubscriptionItemId = si.SubscriptionItemId,
-                                         ItemContent = si.Content
-                                     }).Take(size).ToList();
-                    return items;
-                }
-                else
-                {
-                    //going to be a stored proc call
-                    throw new NotImplementedException();
-                }
-            }
-        }
-        public List<AccountFeedItem> LoadAllItems(int accountId, string searchPattern, int lastSubscriptionItemId, int size)
-        {
-            var nowUtc = DateTime.UtcNow;
-            using (var context = new ContentEntities())
-            {
-                if (string.IsNullOrWhiteSpace(searchPattern))
-                {
-                    var items = (from si in context.SubscriptionItems
-                                 join s in context.Subscriptions on si.SubscriptionId equals s.SubscriptionId
-                                 where si.ExpirationDateUtc > nowUtc
-                                       && s.AccountId == accountId
-                                       && si.SubscriptionItemId < lastSubscriptionItemId
-                                 orderby si.SubscriptionItemId descending 
-                                 select new AccountFeedItem
-                                     {
-                                         SubscriptionId = s.SubscriptionId,
                                          SubscriptionItemId = si.SubscriptionItemId,
                                          ItemContent = si.Content
                                      }).Take(size).ToList();
@@ -134,7 +76,7 @@ namespace FeedService.DataAccess
                                  join s in context.Subscriptions on si.SubscriptionId equals s.SubscriptionId
                                  where si.ExpirationDateUtc > nowUtc
                                        && s.AccountId == accountId
-                                 orderby si.SubscriptionItemId descending
+                                 orderby si.PublishedDateUtc descending
                                  select new AccountFeedItem
                                  {
                                      SubscriptionId = s.SubscriptionId,

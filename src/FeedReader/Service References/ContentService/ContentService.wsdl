@@ -5,7 +5,8 @@
       <xsd:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FeedService.Contract.ContentService" />
-      <xsd:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/FeedService.Contract" />
+      <xsd:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/FeedService.Contract" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IContentService_LoadItemFeed_InputMessage">
