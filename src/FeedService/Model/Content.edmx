@@ -36,7 +36,7 @@
           <Property Name="subscription_id" Type="int" Nullable="false" />
           <Property Name="content" Type="xml" Nullable="false" />
           <Property Name="expiration_date_utc" Type="datetime" Nullable="false" />
-          <Property Name="archived" Type="bit" Nullable="false" />
+          <Property Name="item_id" Type="nvarchar" Nullable="false" MaxLength="2000" />
         </EntityType>
         <Association Name="FK_SubscriptionItem_Subscription">
           <End Role="Subscription" Type="ContentModel.Store.Subscription" Multiplicity="1" />
@@ -85,9 +85,9 @@
           <Property Name="SubscriptionItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SubscriptionId" Type="Int32" Nullable="false" />
           <Property Name="ExpirationDateUtc" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Archived" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Subscription" Relationship="ContentModel.FK_SubscriptionItem_Subscription" FromRole="SubscriptionItem" ToRole="Subscription" />
           <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ItemId" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_SubscriptionItem_Subscription">
           <End Type="ContentModel.Subscription" Role="Subscription" Multiplicity="1" />
@@ -126,11 +126,11 @@
           <EntitySetMapping Name="SubscriptionItems">
             <EntityTypeMapping TypeName="ContentModel.SubscriptionItem">
               <MappingFragment StoreEntitySet="SubscriptionItem">
+                <ScalarProperty Name="ItemId" ColumnName="item_id" />
                 <ScalarProperty Name="Content" ColumnName="content" />
                 <ScalarProperty Name="SubscriptionItemId" ColumnName="subscription_item_id" />
                 <ScalarProperty Name="SubscriptionId" ColumnName="subscription_id" />
                 <ScalarProperty Name="ExpirationDateUtc" ColumnName="expiration_date_utc" />
-                <ScalarProperty Name="Archived" ColumnName="archived" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

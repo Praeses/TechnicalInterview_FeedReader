@@ -17,8 +17,8 @@ namespace FeedService.Model
         public int SubscriptionItemId { get; set; }
         public int SubscriptionId { get; set; }
         public System.DateTime ExpirationDateUtc { get; set; }
-        public bool Archived { get; set; }
         public string Content { get; set; }
+        public string ItemId { get; set; }
     
         public virtual Subscription Subscription { get; set; }
     }

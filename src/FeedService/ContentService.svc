@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="FeedService.Content" CodeBehind="ContentService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="FeedService.ContentService" CodeBehind="ContentService.svc.cs" %>

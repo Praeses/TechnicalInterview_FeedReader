@@ -1,28 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
+﻿using System.ServiceModel;
+using System.Threading.Tasks;
 
-namespace FeedService
+namespace FeedService.Contract.ContentService
 {
     [ServiceContract]
     public interface IContentService
     {
         [OperationContract]
-        void Load();
-
-        void Synchronize();
-
-        void RemoveItem();
-
-        void KeepItem();
-
-        void Search();
-
-        void Share();
-
-        void Notify();
+        LoadFeedResult LoadItemFeed(LoadFeedRequest request);
+        [OperationContract]
+        Task<Result> SynchronizeSubscriptions(int accountId);
     }
 }

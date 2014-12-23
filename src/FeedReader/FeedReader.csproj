@@ -192,6 +192,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\ContentService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\SubscriptionService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -251,12 +256,38 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\ContentService\ContentService.disco" />
+    <None Include="Service References\ContentService\configuration91.svcinfo" />
+    <None Include="Service References\ContentService\configuration.svcinfo" />
+    <Content Include="Service References\ContentService\FeedReader.ContentService.LoadFeedResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ContentService\FeedReader.ContentService.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\ContentService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Service References\SubscriptionService\FeedReader.SubscriptionService.LoadSubscriptionsResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\SubscriptionService\FeedReader.SubscriptionService.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Service References\ContentService\ContentService.wsdl" />
+    <None Include="Service References\ContentService\ContentService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContentService\ContentService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContentService\ContentService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ContentService\ContentService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\SubscriptionService\SubscriptionService.disco" />
     <None Include="Service References\SubscriptionService\configuration91.svcinfo" />
     <None Include="Service References\SubscriptionService\configuration.svcinfo" />
@@ -342,6 +373,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\AccountService\" />
+    <WCFMetadataStorage Include="Service References\ContentService\" />
     <WCFMetadataStorage Include="Service References\SubscriptionService\" />
   </ItemGroup>
   <PropertyGroup>

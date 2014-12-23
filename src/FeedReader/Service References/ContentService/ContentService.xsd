@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FeedService.Contract.ContentService" />
+  <xs:import schemaLocation="http://localhost:52238/ContentService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/FeedService.Contract" />
+  <xs:element name="LoadItemFeed">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/FeedService.Contract.ContentService" minOccurs="0" name="request" nillable="true" type="q1:LoadFeedRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoadItemFeedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/FeedService.Contract.ContentService" minOccurs="0" name="LoadItemFeedResult" nillable="true" type="q2:LoadFeedResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SynchronizeSubscriptions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="accountId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SynchronizeSubscriptionsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/FeedService.Contract" minOccurs="0" name="SynchronizeSubscriptionsResult" nillable="true" type="q3:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

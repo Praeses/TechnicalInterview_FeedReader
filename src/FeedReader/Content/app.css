@@ -37,6 +37,7 @@ div.panelLeft {
 }
 div.panelRight {
     margin-left: 25%;
+    min-height: 500px;
 }
 .feedSearch {
 position: relative;

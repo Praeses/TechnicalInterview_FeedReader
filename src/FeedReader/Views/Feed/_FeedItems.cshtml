@@ -1,9 +1,20 @@
-﻿@if (Model.DisplayItems != null && Model.DisplayItems.Count > 0)
+﻿@model FeedReader.Models.DetailOptions 
+@if (Model.DisplayItems != null && Model.DisplayItems.Count > 0)
 {
+    var lastSubscriptionItemId = 0;
     foreach (var item in Model.DisplayItems)
     {
-    <p>@item.SubscriptionItemId.ToString()</p>
+        <h4>@item.Title</h4>
+        <p>@item.Summary</p>
+        lastSubscriptionItemId = item.SubscriptionItemId;
     }
+@Ajax.ActionLink("LoadMore", "LoadDetailPane", new { Model.SubscriptionId, Model.Mode, LastSubscriptionItemId = lastSubscriptionItemId, Model.SearchPattern }, 
+                                 new AjaxOptions
+                                     {
+                                         UpdateTargetId="feedItemsPanel", 
+                                         InsertionMode = InsertionMode.Replace, 
+                                         HttpMethod = "GET"
+                                     })
 }
 else
 {

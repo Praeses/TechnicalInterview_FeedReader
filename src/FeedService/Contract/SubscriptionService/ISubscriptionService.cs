@@ -14,8 +14,5 @@ namespace FeedService.Contract.SubscriptionService
         [OperationContract]
         Result Unsubscribe(UnsubscribeRequest request);
 
-        Result Search();
-        Result Share();
-        Result Notify();
     }
 }

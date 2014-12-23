@@ -90,29 +90,21 @@
     <Compile Include="Contract\AccountService\AddOptionResult.cs" />
     <Compile Include="Contract\AccountService\FindAccountResult.cs" />
     <Compile Include="Contract\AccountService\RegisterResult.cs" />
+    <Compile Include="Contract\ContentService\AccountFeedItem.cs" />
+    <Compile Include="Contract\ContentService\FeedMode.cs" />
+    <Compile Include="Contract\ContentService\LoadFeedRequest.cs" />
+    <Compile Include="Contract\ContentService\LoadFeedResult.cs" />
+    <Compile Include="Contract\ContentService\SubscriptionSynchronization.cs" />
     <Compile Include="Contract\Result.cs" />
     <Compile Include="Contract\ResultCode.cs" />
     <Compile Include="Contract\SubscriptionService\AccountSubscription.cs" />
     <Compile Include="Contract\SubscriptionService\NewSubscription.cs" />
     <Compile Include="Contract\SubscriptionService\LoadSubscriptionsResult.cs" />
     <Compile Include="Contract\SubscriptionService\UnsubscribeRequest.cs" />
-    <Compile Include="DataAccess\Subscription.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Subscription.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\Subscription.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Subscription.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\Subscription.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Subscription.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Contract\AccountService\IAccountService.cs" />
     <Compile Include="Contract\ContentService\IContentService.cs" />
+    <Compile Include="DataAccess\ContentQueryHelper.cs" />
+    <Compile Include="DataAccess\FeedHelper.cs" />
     <Compile Include="Model\Account.cs">
       <DependentUpon>Accounts.tt</DependentUpon>
     </Compile>
@@ -163,23 +155,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EntityDeploy Include="DataAccess\Subscription.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Subscription.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DataAccess\Subscription.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Subscription.edmx</DependentUpon>
-      <LastGenOutput>Subscription.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataAccess\Subscription.edmx.diagram">
-      <DependentUpon>Subscription.edmx</DependentUpon>
-    </Content>
-    <Content Include="DataAccess\Subscription.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Subscription.edmx</DependentUpon>
-      <LastGenOutput>Subscription.cs</LastGenOutput>
-    </Content>
     <Content Include="packages.config" />
     <EntityDeploy Include="Model\Accounts.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

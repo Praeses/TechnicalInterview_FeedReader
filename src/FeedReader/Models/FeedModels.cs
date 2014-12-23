@@ -10,21 +10,23 @@ namespace FeedReader.Models
         public FeedModel()
         {
             MenuItems = new List<MenuItem>();
-            DisplayItems = new List<FeedItem>();
         }
         public List<MenuItem> MenuItems { get; set; }
-        public List<FeedItem> DisplayItems { get; set; }
         public FeedItem SelectedItem { get; set; }
+        public DetailOptions DetailOptions { get; set; }
+    }
+    public enum ViewMode
+    {
+        All = 0,
+        Subscription = 1
     }
     public class DetailOptions
     {
-        public int? SubscriptionId { get; set; }
-        public string SearchString { get; set; }
-    }
-    public class DetailModel
-    {
+        public ViewMode Mode { get; set; }
+        public int SubscriptionId { get; set; }
+        public string SearchPattern { get; set; }
+        public int LastSubscriptionItemId { get; set; }
         public List<FeedItem> DisplayItems { get; set; }
-        public FeedItem SelectedItem { get; set; }
     }
     public class MenuItem
     {
