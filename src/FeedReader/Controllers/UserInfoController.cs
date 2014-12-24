@@ -53,7 +53,7 @@ namespace FeedReader.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,FirstName,LastName")] AspNetUserInfo aspNetUserInfo)
+        public ActionResult Create([Bind(Include = "Id,UserId,Created,FirstName,LastName")] AspNetUserInfo aspNetUserInfo)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace FeedReader.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,FirstName,LastName")] AspNetUserInfo aspNetUserInfo)
+        public ActionResult Edit([Bind(Include = "Id,UserId,Created,FirstName,LastName")] AspNetUserInfo aspNetUserInfo)
         {
             if (ModelState.IsValid)
             {

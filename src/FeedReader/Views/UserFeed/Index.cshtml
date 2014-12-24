@@ -8,12 +8,6 @@
 <h2>Subscribed Feeds</h2>
 <table class="table">
     <tr>
-        @*<th>
-        @Html.DisplayNameFor(model => model.AccountId)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.FeedId)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.FeedName)
         </th>
@@ -29,13 +23,6 @@
 {
     if (item.AccountId == User.Identity.GetUserId()){
         <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.AccountId)
-
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedId)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FeedName)
             </td>

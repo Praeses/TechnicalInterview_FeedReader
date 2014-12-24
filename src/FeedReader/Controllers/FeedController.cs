@@ -47,7 +47,7 @@ namespace FeedReader.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,FeedUrl,RecentPostId,DatePosted,Title,Info")] AspNetFeed aspNetFeed)
+        public ActionResult Create([Bind(Include = "Id,AccountId,Name,FeedUrl,RecentPostId,DatePosted,Title,Info")] AspNetFeed aspNetFeed)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +65,7 @@ namespace FeedReader.Controllers
                 //-------------------------------------------------------
                 //Need to Implement how to get the most current post here.
                 //-------------------------------------------------------
+                aspNetFeed.AccountId = User.Identity.GetUserId();
                 db.AspNetFeed.Add(aspNetFeed);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -93,7 +94,7 @@ namespace FeedReader.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,FeedUrl,RecentPostId,DatePosted,Title,Info")] AspNetFeed aspNetFeed)
+        public ActionResult Edit([Bind(Include = "Id,AccountId,Name,FeedUrl,RecentPostId,DatePosted,Title,Info")] AspNetFeed aspNetFeed)
         {
             if (ModelState.IsValid)
             {

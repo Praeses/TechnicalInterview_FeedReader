@@ -10,12 +10,13 @@ namespace FeedReader.Models
 {
     public class AspNetUserInfo
     {
-        [Key]
         [Required]
         public int Id { get; set; }
 
         [Display(Name = "Account ID")]
         public string UserId { get; set; }
+
+        public bool Created { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -26,7 +27,6 @@ namespace FeedReader.Models
 
     public class AspNetUserFeed
     {
-        [Key]
         [Required]
         public int Id { get; set; }
 
@@ -48,9 +48,10 @@ namespace FeedReader.Models
 
     public class AspNetFeed
     {
-        [Key]
         [Required]
         public int Id { get; set; }
+        [Display(Name = "Account ID")]
+        public string AccountId { get; set; }
 
         [Display(Name = "Name")]
         public string Name { get; set; }
@@ -69,7 +70,6 @@ namespace FeedReader.Models
 
     public class AspNetPost
     {
-        [Key]
         [Required]
         public int Id { set; get; }
         [Display(Name = "Feed ID")]

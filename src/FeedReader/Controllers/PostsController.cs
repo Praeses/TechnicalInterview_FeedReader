@@ -49,26 +49,20 @@ namespace FeedReader.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,FeedId,Author,Title,Body,Date")] AspNetPost aspNetPost)
         {
-
             if (ModelState.IsValid)
             {
-                Console.Out.WriteLine("IsValid ModelState");
                 //Will search through the list of users to find the one that is currently logged in.
                 //Will then create the AspNetUserFeed table based on the Ids of the feedEntry and Feed.
                 var feedList = db.AspNetFeed.ToList();
                 foreach (var feedEntry in feedList)
                 {
-                    Console.Out.WriteLine("Looping through feedList");
                     if (feedEntry.Id.ToString().Trim() == aspNetPost.FeedId.Trim())
                     {
-                        Console.Out.WriteLine("Found Feed ID");
-
                         //Removes the AspNetFeed database entry
                         //Updates the data to aspNetFeed
                         //Adds aspNetFeed to the database with the updated Info.
                         AspNetFeed aspNetFeed = db.AspNetFeed.Find(feedEntry.Id);
                         db.AspNetFeed.Remove(aspNetFeed);
-                        db.SaveChanges();
                         aspNetFeed.Id = aspNetFeed.Id;
                         aspNetFeed.RecentPostId = aspNetPost.Id.ToString();
                         aspNetFeed.DatePosted = aspNetPost.Date;
@@ -80,18 +74,15 @@ namespace FeedReader.Controllers
                         {
                             if (User.Identity.GetUserId() == entry.AccountId && aspNetFeed.Id.ToString() == entry.FeedId)
                             {
-                                Console.Out.WriteLine("Found UserFeed ID");
                                 //Removes the AspNetUserFeed that matches from the database
                                 //Updates the data for tempEntry
                                 //Adds tempEntry to the database with the updated Info.
                                 var tempEntry = entry;
                                 db.AspNetUserFeed.Remove(tempEntry);
-                                db.SaveChanges();
                                 tempEntry.Id = tempEntry.Id;
                                 tempEntry.Title = aspNetPost.Title;
                                 tempEntry.Info = aspNetPost.Body;
                                 db.AspNetUserFeed.Add(tempEntry);
-                                db.SaveChanges();
                             }
                         }
                     }

@@ -17,6 +17,12 @@ namespace FeedReader.Models
         public string ReturnUrl { get; set; }
     }
 
+    public class DisplayUserInfoModel
+    {
+        public string UserName { get; set; }
+        public string AccountId { get; set; }
+    }
+
     public class ManageUserViewModel
     {
         [Required]
