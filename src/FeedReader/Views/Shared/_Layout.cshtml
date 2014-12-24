@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -23,9 +24,15 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("UserInfo", "Index", "UserInfo")</li>
-                    <li>@Html.ActionLink("Feed", "Index", "Feed")</li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("User Info", "Index", "UserInfo")</li>
+                        <li>@Html.ActionLink("Feed View", "Index", "UserFeed")</li>
+                        <li>@Html.ActionLink("Feed Settings", "Index", "Feed")</li>
+                    }
+
                 </ul>
+
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

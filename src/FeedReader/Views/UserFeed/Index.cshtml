@@ -1,0 +1,51 @@
+﻿@model IEnumerable<FeedReader.Models.AspNetUserFeed>
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Subscribed Feeds</h2>
+<table class="table">
+    <tr>
+        @*<th>
+        @Html.DisplayNameFor(model => model.AccountId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.FeedId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FeedName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Info)
+        </th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    if (item.AccountId == User.Identity.GetUserId()){
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.AccountId)
+
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Info)
+            </td>
+        </tr>
+    }
+}
+</table>

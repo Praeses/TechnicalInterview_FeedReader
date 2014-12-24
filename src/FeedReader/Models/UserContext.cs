@@ -11,5 +11,7 @@ namespace FeedReader.Models
         public DbSet<AspNetUserInfo> AspNetUserInfo { get; set; }
         public DbSet<AspNetFeed> AspNetFeed { get; set; }
         public DbSet<AspNetUserFeed> AspNetUserFeed { get; set; }
+
+        public System.Data.Entity.DbSet<FeedReader.Models.AspNetPost> AspNetPosts { get; set; }
     }
 }

@@ -1,13 +1,15 @@
 ﻿@model IEnumerable<FeedReader.Models.AspNetFeed>
+@using Microsoft.AspNet.Identity;
+@using FeedReader.Models;
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Feed List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Subscribe", "Create", "Feed")
 </p>
 <table class="table">
     <tr>
@@ -18,7 +20,7 @@
             @Html.DisplayNameFor(model => model.FeedUrl)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.RecentPostId)
         </th>
         <th></th>
     </tr>
@@ -32,7 +34,7 @@
             @Html.DisplayFor(modelItem => item.FeedUrl)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @Html.DisplayFor(modelItem => item.RecentPostId)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

@@ -5,7 +5,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>User Info</h2>
 
 @foreach (var item in Model)
 {
@@ -13,7 +13,7 @@
     
     if (item.UserId == User.Identity.GetUserId())
     {
-        <h2>User Info: @item.FirstName @item.LastName</h2>
+        <h2>Name: @item.FirstName @item.LastName</h2>
         <h3>Global Id: @item.UserId</h3>
         <td>
             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
