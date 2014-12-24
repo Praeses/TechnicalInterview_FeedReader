@@ -17,11 +17,24 @@
         <div>
             <h2>Search</h2>
             <p>Search for specific content</p>
-            @using(Html.BeginForm())
-            {
-                @Html.TextBox("searchString")
-                <input type="submit" value="Search"/>
-            }
+            <p>
+                @using (Html.BeginForm())
+                {
+                    <p>
+                        Keyword: @Html.TextBox("searchString")
+                    </p>
+                }
+            </p>
+            <p>
+                @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                {
+                    <p>
+                        @*I would like to make this a set of check boxes to toggle each individual RSS Feed, but I ran out of time*@
+                        RSS Feed: @Html.DropDownList("rssFeed", "All")
+                    </p>
+                    <input type="submit" value="Search" />
+                }
+            </p>
         </div>
         <div>
             <h2>Reserved</h2>
