@@ -192,6 +192,11 @@ namespace FeedReader.Controllers
                                     category = rss.Categories.Count > 0 ? rss.Categories.First().Label : "",//FIXME: Not sure if this is correct//FIXME: Consider making this a list of some sort (IEnumerable perhaps)
                                     publishDate = rss.PublishDate.DateTime
                                 });
+                    if(!String.IsNullOrEmpty(searchString))
+                    {
+                        searchString = searchString.ToLower();
+                        item = item.Where(i => i.title.ToLower().Contains(searchString) || i.description.ToLower().Contains(searchString));
+                    }
                     return PartialView(item);
                 }
             }

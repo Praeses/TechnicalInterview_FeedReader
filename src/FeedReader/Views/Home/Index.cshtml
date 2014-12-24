@@ -15,8 +15,13 @@
             <p><button onclick="location.href='@Url.Action("Index", "UserSubscriptions")'">Subscriptions</button></p>
         </div>
         <div>
-            <h2>Search Module</h2>
-            <p>RESERVED</p>
+            <h2>Search</h2>
+            <p>Search for specific content</p>
+            @using(Html.BeginForm())
+            {
+                @Html.TextBox("searchString")
+                <input type="submit" value="Search"/>
+            }
         </div>
         <div>
             <h2>Reserved</h2>
