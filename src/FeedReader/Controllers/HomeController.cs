@@ -13,27 +13,31 @@ namespace FeedReader.Controllers
         public ActionResult Index(string rssFeed)
         {
             string username = User.Identity.GetUserName();//FIXME: Not sure if this is safe?
-            var RssLst = new List<string>();
-
-
-            var subscriptions = from s in db.UserSubscriptions
-                                select s;
-            subscriptions = subscriptions.Where(n => n.userName.Equals(username));
             
-            var RssQuery = from d in subscriptions
-                           orderby d.rssFeedName
-                           select d.rssFeedName;
-
-            RssLst.AddRange(RssQuery.Distinct());
-
-            ViewBag.rssFeed = new SelectList(RssLst);
-
-            //Search by rss Feed name
-            if(!string.IsNullOrEmpty(rssFeed))
+            if(!string.IsNullOrEmpty(username))
             {
-                subscriptions = subscriptions.Where(f => f.rssFeedName == rssFeed);
+                var RssLst = new List<string>();
+
+                var subscriptions = from s in db.UserSubscriptions
+                                    select s;
+                subscriptions = subscriptions.Where(n => n.userName.Equals(username));
+            
+                var RssQuery = from d in subscriptions
+                               orderby d.rssFeedName
+                               select d.rssFeedName;
+
+                RssLst.AddRange(RssQuery.Distinct());
+
+                ViewBag.rssFeed = new SelectList(RssLst);
+
+                //Search by rss Feed name
+                if(!string.IsNullOrEmpty(rssFeed))
+                {
+                    subscriptions = subscriptions.Where(f => f.rssFeedName == rssFeed);
+                }
+                return View(subscriptions);
             }
-            return View(subscriptions);
+            return View("LoginError");
         }
     }
 }
