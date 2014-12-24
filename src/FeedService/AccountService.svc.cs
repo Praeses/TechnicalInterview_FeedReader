@@ -29,6 +29,7 @@ namespace FeedService
             {
                 result.Code = ResultCode.Failure;
                 result.Message = ex.ToString();
+                result.DisplayMessage = "Registration failed due to internal error";
             }
 
             return result;
@@ -50,6 +51,7 @@ namespace FeedService
             {
                 result.Code = ResultCode.Failure;
                 result.Message = ex.ToString();
+                result.DisplayMessage = "Account lookup failed due to internal error";
             }
 
             return result;
@@ -75,6 +77,7 @@ namespace FeedService
             {
                 result.Code = ResultCode.Failure;
                 result.Message = ex.ToString();
+                result.DisplayMessage = "Account de-activation failed due to internal error";
             }
 
             return result;
@@ -97,6 +100,7 @@ namespace FeedService
             {
                 result.Code = ResultCode.Failure;
                 result.Message = ex.ToString();
+                result.DisplayMessage = "New service option failed due to internal error";
             }
 
             return result;
@@ -123,6 +127,7 @@ namespace FeedService
             {
                 result.Code = ResultCode.Failure;
                 result.Message = ex.ToString();
+                result.DisplayMessage = "Remove service option failed due to internal error";
             }
 
             return result;

@@ -7,12 +7,45 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using FeedService.Contract.ContentService;
+using FeedService.Contract.SubscriptionService;
 using FeedService.Model;
 
 namespace FeedService.DataAccess
 {
     internal class FeedHelper
     {
+        public Subscription BuildSubscription(NewSubscription subscriptionRequest)
+        {
+            //lookup resource
+            var webClient = new WebClient();
+            webClient.Headers.Add("user-agent", "myNewsstand/1.0");
+            var xmlReader = new RssXmlReader(webClient.OpenRead(subscriptionRequest.ResourceUri));
+            var feed = SyndicationFeed.Load(xmlReader);
+            if (feed != null)
+            {
+                feed.Items = new List<SyndicationItem>();
+                var feedBuilder = new StringBuilder();
+                using (var feedWriter = XmlWriter.Create(feedBuilder))
+                {
+                    var formatter = feed.GetAtom10Formatter();
+                    formatter.WriteTo(feedWriter);
+                    feedWriter.Close();
+                }
+
+                return new Subscription
+                    {
+                        AccountId = subscriptionRequest.AccountId,
+                        ResourceUri = subscriptionRequest.ResourceUri,
+                        Name = subscriptionRequest.Name,
+                        ItemRetentionInDays = 30,
+                        StartDateUtc = DateTime.UtcNow,
+                        ContentType = "NEWSFEED",
+                        LastRefreshedUtc = new DateTime(1900, 1, 1),
+                        Summary = feedBuilder.ToString()
+                    };
+            }
+            throw new Exception("Feed not found at specified uri");
+        }
         public async Task DownloadFeeds(ContentEntities context, IEnumerable<SubscriptionSynchronization> subscriptions)
         {
             IEnumerable<Task<List<SubscriptionItem>>> downloadTasksQuery =
@@ -41,7 +74,7 @@ namespace FeedService.DataAccess
                 var resourceStream = client.OpenRead(new Uri(feed.ResourceUri));
                 if (resourceStream != null)
                 {
-                    var xmlReader = XmlReader.Create(resourceStream);
+                    var xmlReader = new RssXmlReader(resourceStream);
                     var loadedFeed = SyndicationFeed.Load(xmlReader);
                     if (loadedFeed != null)
                     {

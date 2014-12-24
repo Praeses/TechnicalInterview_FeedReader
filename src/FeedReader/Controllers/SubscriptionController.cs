@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using FeedReader.Models;
 using FeedReader.SubscriptionService;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using log4net;
 
 namespace FeedReader.Controllers
 {
     [Authorize]
     public class SubscriptionController : Controller
     {
+        protected ILog Log
+        {
+            get { return LogManager.GetLogger("SubscriptionController"); }
+        }
         private ApplicationUserManager _userManager;
         
         public SubscriptionController()
@@ -96,10 +97,10 @@ namespace FeedReader.Controllers
                 var result = client.Subscribe(newSubscription);
                 if (result.Code != ResultCode.Success)
                 {
-                    if (string.IsNullOrWhiteSpace(result.Message))
-                        result.Message = "Unknown error";
-                    ModelState.AddModelError(string.Empty, result.Message);
-                    return View(model);
+                    if (string.IsNullOrWhiteSpace(result.DisplayMessage))
+                        result.DisplayMessage = "Unknown error";
+                    ModelState.AddModelError(string.Empty, result.DisplayMessage);
+                    return PartialView("_NewSubscriptionPartial", model);
                 }
             }
             return RedirectToAction("Manage", "Subscription");
@@ -129,6 +130,16 @@ namespace FeedReader.Controllers
             return PartialView("_RemoveSubscriptionPartial", model);
         }
 
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            var e = filterContext.Exception;
+            Log.Error("Subscription Error:", e);
+            filterContext.ExceptionHandled = true;
+            filterContext.Result = new ViewResult()
+            {
+                ViewName = "Error"
+            };
+        }
 
     }
 }

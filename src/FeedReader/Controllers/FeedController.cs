@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using FeedReader.ContentService;
@@ -7,6 +8,7 @@ using FeedReader.Models;
 using FeedReader.SubscriptionService;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using log4net;
 using ResultCode = FeedReader.SubscriptionService.ResultCode;
 
 namespace FeedReader.Controllers
@@ -14,6 +16,10 @@ namespace FeedReader.Controllers
     [Authorize]
     public class FeedController : Controller
     {
+        protected ILog Log
+        {
+            get { return LogManager.GetLogger("FeedController"); }
+        }
         private ApplicationUserManager _userManager;
         
         public FeedController()
@@ -66,8 +72,8 @@ namespace FeedReader.Controllers
             }
             return View(model);
         }
-
-        public PartialViewResult LoadDetailPane(DetailOptions options)
+        [HttpPost]
+        public ActionResult LoadDetailPane(DetailOptions options)
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             var client = new ContentServiceClient();
@@ -78,16 +84,19 @@ namespace FeedReader.Controllers
                     request.Mode = FeedMode.Subscription;
                     request.SubscriptionId = options.SubscriptionId;
                     break;
-                case ViewMode.All:
                 default:
                     request.Mode = FeedMode.All;
                     break;
             }
+            if (!string.IsNullOrWhiteSpace(options.SearchPattern))
+                request.SearchPattern = options.SearchPattern;
             var subs = GetSubscriptions(user.AccountId);
             var result = client.LoadItemFeed(request);
+            var model = new FeedModel();
+            model.DetailOptions = options;
             if (result.Code == ContentService.ResultCode.Success)
             {
-                options.DisplayItems = (from fi in result.Items
+                model.DetailOptions.DisplayItems = (from fi in result.Items
                                         join sub in subs on fi.SubscriptionId equals sub.SubscriptionId
                                       select new FeedItem
                                               {
@@ -96,7 +105,8 @@ namespace FeedReader.Controllers
                                                   Publisher = sub.Name
                                               }).ToList();
             }
-            return PartialView("_FeedItems", options);
+            model.MenuItems = GetSubscriptions(user.AccountId);
+            return PartialView("Index", model);
         }
 
         protected void UpdateSubscriptions(int accountId)
@@ -128,35 +138,16 @@ namespace FeedReader.Controllers
 
             return retList;
         }
-
-        //public ActionResult Load()
-        //{
-        //    return View();
-        //}
-
-        //public ActionResult Search()
-        //{
-        //    return View();
-        //}
-
-        //public ActionResult Save()
-        //{
-        //    return View();
-
-        //}
-
-        //public ActionResult Remove()
-        //{
-        //    return View();
-
-        //}
-
-        //[HttpPost]
-        //public ActionResult Share()
-        //{
-        //    return View();
-
-        //}
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            var e = filterContext.Exception;
+            Log.Error("Feed Error:", e);
+            filterContext.ExceptionHandled = true;
+            filterContext.Result = new ViewResult()
+            {
+                ViewName = "Error"
+            };
+        }
 
     }
 }

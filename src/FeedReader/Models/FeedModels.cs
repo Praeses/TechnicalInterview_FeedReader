@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.ServiceModel.Syndication;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace FeedReader.Models
@@ -66,7 +67,15 @@ namespace FeedReader.Models
         }
         public string Summary
         {
-            get { return PublishedItem != null && PublishedItem.Summary != null ? WebUtility.HtmlDecode(PublishedItem.Summary.Text) : string.Empty; }
+            get
+            {
+                if (PublishedItem == null || PublishedItem.Summary == null)
+                    return string.Empty;
+                //remove some annoying br tags
+                const string pattern = @"(?:<br clear=[^>]*>)|(?:<br>[\r\n]*<br>)";
+                var parsedSummary = Regex.Replace(PublishedItem.Summary.Text, pattern, string.Empty);
+                return WebUtility.HtmlDecode(parsedSummary);
+            }
         }
         public string Content
         {

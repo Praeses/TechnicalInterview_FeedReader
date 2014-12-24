@@ -3,6 +3,7 @@
   <xs:complexType name="Result">
     <xs:sequence>
       <xs:element minOccurs="0" name="Code" type="tns:ResultCode" />
+      <xs:element minOccurs="0" name="DisplayMessage" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

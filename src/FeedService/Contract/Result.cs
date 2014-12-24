@@ -9,5 +9,7 @@ namespace FeedService.Contract
         public ResultCode Code { get; set; }
         [DataMember]
         public string Message { get; set; }
+        [DataMember]
+        public string DisplayMessage { get; set; }
     }
 }

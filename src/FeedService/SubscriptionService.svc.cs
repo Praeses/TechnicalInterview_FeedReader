@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.ServiceModel.Syndication;
-using System.Text;
-using System.Xml;
+using FeedService.DataAccess;
 using FeedService.Model;
 using FeedService.Contract;
 using FeedService.Contract.SubscriptionService;
@@ -41,6 +37,7 @@ namespace FeedService
             {
                 result.Code = ResultCode.Failure;
                 result.Message = ex.ToString();
+                result.DisplayMessage = "Subscription lookup failed due to internal error";
             }
 
             return result;
@@ -51,36 +48,23 @@ namespace FeedService
             var result = new Result();
             try
             {
-                //lookup resource
-                var webClient = new WebClient();
-                webClient.Headers.Add("user-agent", "myNewsstand/1.0");
-                var xmlReader = XmlReader.Create(webClient.OpenRead(subscription.ResourceUri));
-                var feed = SyndicationFeed.Load(xmlReader);
-                if (feed != null)
+                var feedHelper = new FeedHelper();
+                Subscription newSubscription;
+                try
                 {
-                    feed.Items = new List<SyndicationItem>();
-                    var feedBuilder = new StringBuilder();
-                    using (var feedWriter = XmlWriter.Create(feedBuilder))
-                    {
-                        var formatter = feed.GetAtom10Formatter();
-                        formatter.WriteTo(feedWriter);
-                        feedWriter.Close();
-                    }
-
+                    newSubscription = feedHelper.BuildSubscription(subscription);
+                }
+                catch (Exception ex)
+                {
+                    result.Code = ResultCode.Failure;
+                    result.Message = ex.ToString();
+                    result.DisplayMessage = "Could not add subscription. Requested URI is not valid";
+                    return result;
+                }
+                if (newSubscription != null)
+                {
                     using (var context = new ContentEntities())
                     {
-                        //add subscription
-                        var newSubscription = new Subscription
-                        {
-                            AccountId = subscription.AccountId,
-                            ResourceUri = subscription.ResourceUri,
-                            Name = subscription.Name,
-                            ItemRetentionInDays = 30,
-                            StartDateUtc = DateTime.UtcNow,
-                            ContentType = "NEWSFEED",
-                            LastRefreshedUtc = new DateTime(1900, 1, 1),
-                            Summary = feedBuilder.ToString()
-                        };
                         context.Subscriptions.Add(newSubscription);
                         context.SaveChanges();
                         result.Code = ResultCode.Success;
@@ -88,13 +72,16 @@ namespace FeedService
                 }
                 else
                 {
-                    throw new Exception("Feed not found at specified uri");
+                    result.Code = ResultCode.Failure;
+                    result.Message = "Could not add subscription. Requested URI is not valid";
+                    result.DisplayMessage = "Could not add subscription. Requested URI is not valid";
                 }
             }
             catch (Exception ex)
             {
                 result.Code = ResultCode.Failure;
                 result.Message = ex.ToString();
+                result.DisplayMessage = "New subscription failed due to internal error";
             }
 
             return result;
@@ -122,6 +109,7 @@ namespace FeedService
                     {
                         result.Code = ResultCode.Failure;
                         result.Message = "Subscription not found";
+                        result.DisplayMessage = "Removing subscription failed because the subscription could not be found";
                     }
                 }
             }
@@ -129,62 +117,11 @@ namespace FeedService
             {
                 result.Code = ResultCode.Failure;
                 result.Message = ex.ToString();
+                result.DisplayMessage = "Removing subscription failed due to internal error";
             }
 
             return result;
 
-        }
-
-        public Result Search()
-        {
-            var result = new Result();
-            try
-            {
-                using (var context = new AccountEntities())
-                {
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Code = ResultCode.Failure;
-                result.Message = ex.ToString();
-            }
-
-            return result;
-        }
-        public Result Share()
-        {
-            var result = new Result();
-            try
-            {
-                using (var context = new AccountEntities())
-                {
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Code = ResultCode.Failure;
-                result.Message = ex.ToString();
-            }
-
-            return result;
-        }
-        public Result Notify()
-        {
-            var result = new Result();
-            try
-            {
-                using (var context = new AccountEntities())
-                {
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Code = ResultCode.Failure;
-                result.Message = ex.ToString();
-            }
-
-            return result;
         }
     }
 }

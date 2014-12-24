@@ -163,6 +163,9 @@ namespace FeedReader.ContentService {
         private FeedReader.ContentService.ResultCode CodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DisplayMessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MessageField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -184,6 +187,19 @@ namespace FeedReader.ContentService {
                 if ((this.CodeField.Equals(value) != true)) {
                     this.CodeField = value;
                     this.RaisePropertyChanged("Code");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DisplayMessage {
+            get {
+                return this.DisplayMessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DisplayMessageField, value) != true)) {
+                    this.DisplayMessageField = value;
+                    this.RaisePropertyChanged("DisplayMessage");
                 }
             }
         }

@@ -1,23 +1,16 @@
 ﻿@using FeedReader.Models
-@model DetailOptions 
-@if (Model.DisplayItems != null && Model.DisplayItems.Count > 0)
+@model FeedModel 
+@if (Model.DetailOptions.DisplayItems != null && Model.DetailOptions.DisplayItems.Count > 0)
 {
-    foreach (var item in Model.DisplayItems)
+    foreach (var item in Model.DetailOptions.DisplayItems)
     {
         <h4><a href="@item.Link" target="_blank">@item.Title</a></h4>
-        if (Model.Mode == ViewMode.All)
+        if (Model.DetailOptions.Mode == ViewMode.All)
          {
              <small>Source: @item.Publisher</small>
          }
         <p>@Html.Raw(item.Summary)</p>
     }
-@Ajax.ActionLink("LoadMore", "LoadDetailPane", new { Model.SubscriptionId, Model.Mode, Model.SearchPattern }, 
-                                 new AjaxOptions
-                                     {
-                                         UpdateTargetId="feedItemsPanel", 
-                                         InsertionMode = InsertionMode.Replace, 
-                                         HttpMethod = "GET"
-                                     })
 }
 else
 {

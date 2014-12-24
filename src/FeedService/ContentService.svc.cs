@@ -19,10 +19,10 @@ namespace FeedService
                 switch (request.Mode)
                 {
                     case FeedMode.All:
-                        result.Items = queryHelper.LoadAllItems(request.AccountId, request.SearchPattern, request.FetchSize);
+                        result.Items = queryHelper.LoadItems(request.AccountId, null, request.SearchPattern, request.FetchSize);
                         break;
                     case FeedMode.Subscription:
-                        result.Items = queryHelper.LoadItemsForSubscription(request.AccountId, request.SubscriptionId,
+                        result.Items = queryHelper.LoadItems(request.AccountId, request.SubscriptionId,
                                                                             request.SearchPattern,
                                                                             request.FetchSize);
                         break;
@@ -35,6 +35,7 @@ namespace FeedService
             {
                 result.Code = ResultCode.Failure;
                 result.Message = ex.ToString();
+                result.DisplayMessage = "Loading item feed failed due to internal error";
             }
             return result;
         }
@@ -61,6 +62,7 @@ namespace FeedService
             {
                 result.Code = ResultCode.Failure;
                 result.Message = ex.ToString();
+                result.DisplayMessage = "Subscription synchronization failed due to internal error";
             }
             return result;
         }

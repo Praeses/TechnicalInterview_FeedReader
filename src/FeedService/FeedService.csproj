@@ -42,6 +42,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.Entity" />
@@ -84,6 +87,9 @@
     <Compile Include="AccountService.svc.cs">
       <DependentUpon>AccountService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Behavior\Log4NetBehaviorExtensionElement.cs" />
+    <Compile Include="Behavior\Log4NetErrorHandler.cs" />
+    <Compile Include="Behavior\Log4NetServiceBehavior.cs" />
     <Compile Include="ContentService.svc.cs">
       <DependentUpon>ContentService.svc</DependentUpon>
     </Compile>
@@ -105,6 +111,7 @@
     <Compile Include="Contract\ContentService\IContentService.cs" />
     <Compile Include="DataAccess\ContentQueryHelper.cs" />
     <Compile Include="DataAccess\FeedHelper.cs" />
+    <Compile Include="DataAccess\RssXmlReader.cs" />
     <Compile Include="Model\Account.cs">
       <DependentUpon>Accounts.tt</DependentUpon>
     </Compile>
@@ -145,6 +152,9 @@
       <DependentUpon>Content.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SubscriptionItem.cs">
+      <DependentUpon>Content.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\usp_SearchFeedItems_Result.cs">
       <DependentUpon>Content.tt</DependentUpon>
     </Compile>
     <Compile Include="SubscriptionService.svc.cs">
@@ -190,6 +200,7 @@
       <DependentUpon>Content.edmx</DependentUpon>
       <LastGenOutput>Content.cs</LastGenOutput>
     </Content>
+    <Content Include="log4net.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

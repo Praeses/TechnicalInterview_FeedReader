@@ -18,9 +18,6 @@
    data-target="#divNewSubscription">Add New Subscription</a>
 <h3>Current Subscriptions</h3>
 <div id="divSubscriptionList">
-
-        @Html.AntiForgeryToken()
-     
         @grid.GetHtml(tableStyle: "webGrid",
                       headerStyle: "webGridHeader",
                       alternatingRowStyle: "webGridAlt",
@@ -33,12 +30,11 @@
                                       format: @<text><a href="#" id="Remove_@item.SubscriptionId" class="webGridRemoveAction btn btn-danger" 
                                                 data-request-url="@Url.Action("Remove", "Subscription", new {subscriptionId=item.SubscriptionId})">Remove</a></text>)
                         )
-        )  
+        )
     
     <div class="modal fade" id="divConfirmRemove" tabindex="-1" role="dialog" aria-labelledby="divConfirmRemove" aria-hidden="true">
         
         <div id="removeDialog" class="modal-dialog"></div>
-        @*@Html.Partial("_RemoveSubscriptionPartial")  *@
     </div>
 </div>
 <div class="modal fade" id="divNewSubscription" tabindex="-1" role="dialog" aria-labelledby="divNewSubscription" aria-hidden="true">

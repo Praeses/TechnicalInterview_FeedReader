@@ -1,6 +1,6 @@
 ﻿@model FeedReader.Models.ManageSubscriptionsModel 
 
-@using (Html.BeginForm("Add", "Subscription"))
+@using (Ajax.BeginForm("Add", "Subscription", new AjaxOptions {HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "divNewSubscription"}))
 {
     <div class="modal-dialog">
         <div class="modal-content">
@@ -10,6 +10,8 @@
             </div>
             <div class="modal-body subscription-control-group">
                 @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.AntiForgeryToken()
+
                 <div class="form-group">
                     @Html.LabelFor(m => m.NewItem.Name, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">

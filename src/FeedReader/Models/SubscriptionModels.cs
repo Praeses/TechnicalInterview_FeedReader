@@ -26,7 +26,7 @@ namespace FeedReader.Models
         public string Name { get; set; }
 
         [Required]
-        [DataType(DataType.Url)]
+        [Url]
         public string Uri { get; set; }
     }
     public class SubscriptionListItem
