@@ -18,10 +18,31 @@ namespace FeedReader.Migrations
             context.UserSubscriptions.AddOrUpdate(i => new { i.rssFeedURL , i.userName},//NOTE: This database has two primary keys: rssFeedURL and userName
                 new UserSubscription
                 {
-                    userName = "testName",
+                    userName = "test@test.test",
                     rssFeedURL = "http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml",
-                    rssFeedName = "testFeedName"
+                    rssFeedName = "NYT_Tech"
                 });
+            context.UserSubscriptions.AddOrUpdate(i => new { i.rssFeedURL, i.userName },//NOTE: This database has two primary keys: rssFeedURL and userName
+                new UserSubscription
+                {
+                    userName = "test@test.test",
+                    rssFeedURL = "http://www.npr.org/rss/rss.php?id=2",
+                    rssFeedName = "All Things Considered"
+                });
+            context.UserSubscriptions.AddOrUpdate(i => new { i.rssFeedURL, i.userName },//NOTE: This database has two primary keys: rssFeedURL and userName
+               new UserSubscription
+               {
+                   userName = "test@test.test",
+                   rssFeedURL = "http://www.npr.org/rss/rss.php?id=1019",
+                   rssFeedName = "NPR Tech"
+               });
+            context.UserSubscriptions.AddOrUpdate(i => new { i.rssFeedURL, i.userName },//NOTE: This database has two primary keys: rssFeedURL and userName
+               new UserSubscription
+               {
+                   userName = "test@test.test",
+                   rssFeedURL = "http://www.npr.org/rss/rss.php?id=1049",
+                   rssFeedName = "NPR Digital Life"
+               });
         }
     }
 }
