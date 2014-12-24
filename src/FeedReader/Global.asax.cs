@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FeedReader.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -13,6 +15,10 @@ namespace FeedReader
     {
         protected void Application_Start()
         {
+            //Used to insert test data into the UserContext Database
+            Database.SetInitializer<UserContext>(new UserInitializer());
+
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

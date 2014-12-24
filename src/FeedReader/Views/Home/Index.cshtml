@@ -1,31 +1,44 @@
-﻿@{
+﻿@model FeedReader.Models.AspNetUserInfo
+@using Microsoft.AspNet.Identity
+@{
     ViewBag.Title = "Home Page";
 }
+@if (Request.IsAuthenticated)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <h1>@User.Identity.Name.ToString()</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="h1">
+        </div>
+        I had just realized a problem last minute with registering a new user. I did not quite understand the Code First
+        type of programming that comes with the Entity framework having never worked with it before so I hardcoded a test
+        user into the database. The Class to change this is the 'UserInitializer' class in the Models folder. I believe in
+        order to fix it for a new user all you need to do is drop the user's ID in the string. This is the current logged in
+        user's ID: @User.Identity.GetUserId()
+    </div><div>                                                                                                      
+    </div>
+    <div>
+        Some obsticles I ran into during this project was obciously my lack of experience with many of the tools that were used
+        in this application. I have never created an MVC model application before. After the exposure that this project has given 
+        me I do feel more comfortable with using the MVC model. Some other areas that I had trouble with was creating affluent api
+        and key attributes for my model data. 
+        <div>
+            Had I had a little more time I would have fixed the register bug, Found a better way to create the database and fix the
+            posting of feeds to the database.
+        </div>
+         
+    </div>
+}
+else
+{
+    <div class="jumbotron">
+        <h1>Feed Reader</h1>
+        <p class="lead">Please login to continue.</p>
+    </div>
+}
 
-<div class="jumbotron">
-    <h1>Feed Reader</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+

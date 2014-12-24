@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FeedReader.Models
 {
@@ -14,6 +15,12 @@ namespace FeedReader.Models
     {
         public string Action { get; set; }
         public string ReturnUrl { get; set; }
+    }
+
+    public class DisplayUserInfoModel
+    {
+        public string UserName { get; set; }
+        public string AccountId { get; set; }
     }
 
     public class ManageUserViewModel

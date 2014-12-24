@@ -7,7 +7,7 @@ using FeedReader.Models;
 
 namespace FeedReader
 {
-    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
+    // Configure the application feedEntry manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
 
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
@@ -34,7 +34,7 @@ namespace FeedReader
                 RequireLowercase = true,
                 RequireUppercase = true,
             };
-            // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
+            // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the feedEntry
             // You can write your own provider and plug in here.
             manager.RegisterTwoFactorProvider("PhoneCode", new PhoneNumberTokenProvider<ApplicationUser>
             {
