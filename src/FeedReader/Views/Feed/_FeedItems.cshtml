@@ -1,0 +1,18 @@
+﻿@using FeedReader.Models
+@model FeedModel 
+@if (Model.DetailOptions.DisplayItems != null && Model.DetailOptions.DisplayItems.Count > 0)
+{
+    foreach (var item in Model.DetailOptions.DisplayItems)
+    {
+        <h4><a href="@item.Link" target="_blank">@item.Title</a></h4>
+        if (Model.DetailOptions.Mode == ViewMode.All)
+         {
+             <small>Source: @item.Publisher</small>
+         }
+        <p>@Html.Raw(item.Summary)</p>
+    }
+}
+else
+{
+  <p>You have no items to view</p>
+}

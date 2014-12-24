@@ -1,0 +1,57 @@
+﻿img.feedIcon {
+    width: 32px;
+    height: 32px;
+}
+.webGrid { margin: 4px; border-collapse: collapse; width: 800px;  background-color:#B4CFC3;}
+    .webGridHeader { background-color: #C1D4E6; font-weight: bold; color: #000; }
+    .webGrid th, .webGrid td { border: 1px solid #C0C0C0; padding: 5px; }
+    .gridIcon { width: 35px;}
+    .gridName { width: 200px;}
+    .gridDescription { width: 400px;}
+    .gridAction { width: 50px;}
+    .webGridAlt { background-color: #E4E9F5; color: #000; }
+    .gridHead a:hover {text-decoration:underline;}
+    .webGridDescription { width:auto}
+    .webGridSelect{background-color: #71857C}
+    .webGridRemoveAction { }
+.subscription-control-group { height: 130px; }
+section.doublePane {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    padding: 10px;
+}
+div.panelSearch {
+    margin-left: 18%;
+    padding: 5px;
+}
+div.panelSearch .input-group {
+    width: 100%;
+}
+div.panelSearch .form-control {
+    max-width: 800px;
+}
+div.panelLeft {
+    width: 20%;
+    float: left;
+}
+div.panelRight {
+    margin-left: 25%;
+    min-height: 500px;
+}
+.feedSearch {
+position: relative;
+padding: 8px;
+cursor: pointer;
+float: left;
+}
+.feedSearchInput { height: 25px;
+    padding: 1px 6px 0 ;border: 1px solid #BBB;float:left; width: 93%}
+ul.navMenu {
+    list-style-type: none;
+}
+ul.navMenu li {
+    padding: 10px;
+}
+.itemLinkAll {}
+.itemLinkId {}

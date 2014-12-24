@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BB7ECBC2-C14F-49EA-B4E7-A068D301AA94}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FeedService</RootNamespace>
+    <AssemblyName>FeedService</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AccountService.svc" />
+    <Content Include="App_Data\Account.mdf" />
+    <Content Include="App_Data\Account_log.ldf">
+      <DependentUpon>Account.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\Content.mdf" />
+    <Content Include="App_Data\Content_log.ldf">
+      <DependentUpon>Content.mdf</DependentUpon>
+    </Content>
+    <Content Include="ContentService.svc" />
+    <Content Include="SubscriptionService.svc" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountService.svc.cs">
+      <DependentUpon>AccountService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Behavior\Log4NetBehaviorExtensionElement.cs" />
+    <Compile Include="Behavior\Log4NetErrorHandler.cs" />
+    <Compile Include="Behavior\Log4NetServiceBehavior.cs" />
+    <Compile Include="ContentService.svc.cs">
+      <DependentUpon>ContentService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\AccountService\AddOptionResult.cs" />
+    <Compile Include="Contract\AccountService\FindAccountResult.cs" />
+    <Compile Include="Contract\AccountService\RegisterResult.cs" />
+    <Compile Include="Contract\ContentService\AccountFeedItem.cs" />
+    <Compile Include="Contract\ContentService\FeedMode.cs" />
+    <Compile Include="Contract\ContentService\LoadFeedRequest.cs" />
+    <Compile Include="Contract\ContentService\LoadFeedResult.cs" />
+    <Compile Include="Contract\ContentService\SubscriptionSynchronization.cs" />
+    <Compile Include="Contract\Result.cs" />
+    <Compile Include="Contract\ResultCode.cs" />
+    <Compile Include="Contract\SubscriptionService\AccountSubscription.cs" />
+    <Compile Include="Contract\SubscriptionService\NewSubscription.cs" />
+    <Compile Include="Contract\SubscriptionService\LoadSubscriptionsResult.cs" />
+    <Compile Include="Contract\SubscriptionService\UnsubscribeRequest.cs" />
+    <Compile Include="Contract\AccountService\IAccountService.cs" />
+    <Compile Include="Contract\ContentService\IContentService.cs" />
+    <Compile Include="DataAccess\ContentQueryHelper.cs" />
+    <Compile Include="DataAccess\FeedHelper.cs" />
+    <Compile Include="DataAccess\RssXmlReader.cs" />
+    <Compile Include="Model\Account.cs">
+      <DependentUpon>Accounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Accounts.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Accounts.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Accounts.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Accounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Accounts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Accounts.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Content.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Content.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Content.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Content.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Content.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Content.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ServiceOption.cs">
+      <DependentUpon>Accounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Subscription.cs">
+      <DependentUpon>Content.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SubscriptionItem.cs">
+      <DependentUpon>Content.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\usp_SearchFeedItems_Result.cs">
+      <DependentUpon>Content.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubscriptionService.svc.cs">
+      <DependentUpon>SubscriptionService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\SubscriptionService\ISubscriptionService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <EntityDeploy Include="Model\Accounts.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Accounts.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model\Accounts.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Accounts.edmx</DependentUpon>
+      <LastGenOutput>Accounts.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Accounts.edmx.diagram">
+      <DependentUpon>Accounts.edmx</DependentUpon>
+    </Content>
+    <Content Include="Model\Accounts.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Accounts.edmx</DependentUpon>
+      <LastGenOutput>Accounts.cs</LastGenOutput>
+    </Content>
+    <EntityDeploy Include="Model\Content.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Content.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model\Content.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Content.edmx</DependentUpon>
+      <LastGenOutput>Content.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Content.edmx.diagram">
+      <DependentUpon>Content.edmx</DependentUpon>
+    </Content>
+    <Content Include="Model\Content.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Content.edmx</DependentUpon>
+      <LastGenOutput>Content.cs</LastGenOutput>
+    </Content>
+    <Content Include="log4net.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>59553</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:52238/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

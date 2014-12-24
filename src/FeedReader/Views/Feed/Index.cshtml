@@ -1,0 +1,17 @@
+﻿@using FeedReader.Models
+@model FeedModel
+
+@{
+    ViewBag.Title = "Feeds";
+}
+<div id="divfeedIndex">    
+    <section class="doublePane">
+        <div class="panelLeft">@Html.Partial("_FeedNavigation", Model)</div>
+        <div class="panelRight" id="feedItemsPanel">@Html.Partial("_FeedItems", Model)</div>
+    </section>
+</div>
+
+@section Scripts {
+<script src="~/Scripts/app/feed.index.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

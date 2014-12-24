@@ -1,0 +1,47 @@
+﻿@model FeedReader.Models.ManageSubscriptionsModel
+@{
+    ViewBag.Title = "Subscriptions";
+    
+    var grid = new WebGrid(Model.Subscriptions, canPage: false,
+    selectionFieldName: "selectedRow");
+}
+@functions{
+    public string ResolveImage(string imagePath)
+    {
+        return !string.IsNullOrWhiteSpace(imagePath) ? imagePath : Url.Content("~/Images/RSS_Default_32.png");
+    }
+
+}
+<h2>Manage Subscriptions</h2>
+<a href="#" id="buttonNewSubscription" class="btn btn-lg btn-primary"
+   data-toggle="modal"
+   data-target="#divNewSubscription">Add New Subscription</a>
+<h3>Current Subscriptions</h3>
+<div id="divSubscriptionList">
+        @grid.GetHtml(tableStyle: "webGrid",
+                      headerStyle: "webGridHeader",
+                      alternatingRowStyle: "webGridAlt",
+                      selectedRowStyle: "webGridSelect",
+                      columns: grid.Columns(
+                          grid.Column(style: "gridIcon", format: @<text><img src="@ResolveImage(item.ImageUrl)" alt="Image " class="feedIcon"/> </text>),
+                          grid.Column("Name", " Name", style: "gridName", format: @<text><label title="@item.Uri">@item.Name</label></text>),
+                          grid.Column("Description", "Description", style: "gridDescription"),
+                          grid.Column(null, "Action", style: "gridAction", 
+                                      format: @<text><a href="#" id="Remove_@item.SubscriptionId" class="webGridRemoveAction btn btn-danger" 
+                                                data-request-url="@Url.Action("Remove", "Subscription", new {subscriptionId=item.SubscriptionId})">Remove</a></text>)
+                        )
+        )
+    
+    <div class="modal fade" id="divConfirmRemove" tabindex="-1" role="dialog" aria-labelledby="divConfirmRemove" aria-hidden="true">
+        
+        <div id="removeDialog" class="modal-dialog"></div>
+    </div>
+</div>
+<div class="modal fade" id="divNewSubscription" tabindex="-1" role="dialog" aria-labelledby="divNewSubscription" aria-hidden="true">
+    @Html.Partial("_NewSubscriptionPartial")  
+</div>
+
+@section Scripts {
+<script src="~/Scripts/app/subscription.manage.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ContentModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ContentModelStoreContainer">
+          <EntitySet Name="Subscription" EntityType="ContentModel.Store.Subscription" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SubscriptionItem" EntityType="ContentModel.Store.SubscriptionItem" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_SubscriptionItem_Subscription" Association="ContentModel.Store.FK_SubscriptionItem_Subscription">
+            <End Role="Subscription" EntitySet="Subscription" />
+            <End Role="SubscriptionItem" EntitySet="SubscriptionItem" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="subscription_id" />
+          </Key>
+          <Property Name="subscription_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="75" />
+          <Property Name="item_retention_in_days" Type="int" Nullable="false" />
+          <Property Name="resource_uri" Type="nvarchar" Nullable="false" MaxLength="300" />
+          <Property Name="summary" Type="xml" />
+          <Property Name="content_type" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="start_date_utc" Type="datetime2" Nullable="false" />
+          <Property Name="end_date_utc" Type="datetime2" />
+          <Property Name="last_refreshed_utc" Type="datetime2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubscriptionItem">
+          <Key>
+            <PropertyRef Name="subscription_item_id" />
+          </Key>
+          <Property Name="subscription_item_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="subscription_id" Type="int" Nullable="false" />
+          <Property Name="content" Type="xml" Nullable="false" />
+          <Property Name="expiration_date_utc" Type="datetime2" Nullable="false" />
+          <Property Name="item_id" Type="nvarchar" Nullable="false" MaxLength="2000" />
+          <Property Name="published_date_utc" Type="datetime2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SubscriptionItem_Subscription">
+          <End Role="Subscription" Type="ContentModel.Store.Subscription" Multiplicity="1" />
+          <End Role="SubscriptionItem" Type="ContentModel.Store.SubscriptionItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscription">
+              <PropertyRef Name="subscription_id" />
+            </Principal>
+            <Dependent Role="SubscriptionItem">
+              <PropertyRef Name="subscription_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_SearchFeedItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="accountId" Type="int" Mode="In" />
+          <Parameter Name="subscriptionId" Type="int" Mode="In" />
+          <Parameter Name="searchPattern" Type="nvarchar" Mode="In" />
+          <Parameter Name="returnCount" Type="int" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ContentModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ContentEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Subscriptions" EntityType="ContentModel.Subscription" />
+          <EntitySet Name="SubscriptionItems" EntityType="ContentModel.SubscriptionItem" />
+          <AssociationSet Name="FK_SubscriptionItem_Subscription" Association="ContentModel.FK_SubscriptionItem_Subscription">
+            <End Role="Subscription" EntitySet="Subscriptions" />
+            <End Role="SubscriptionItem" EntitySet="SubscriptionItems" />
+          </AssociationSet>
+          <FunctionImport Name="usp_SearchFeedItems" ReturnType="Collection(ContentModel.usp_SearchFeedItems_Result)">
+            <Parameter Name="accountId" Mode="In" Type="Int32" />
+            <Parameter Name="subscriptionId" Mode="In" Type="Int32" />
+            <Parameter Name="searchPattern" Mode="In" Type="String" />
+            <Parameter Name="returnCount" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="SubscriptionId" />
+          </Key>
+          <Property Name="SubscriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="ItemRetentionInDays" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SubscriptionItems" Relationship="ContentModel.FK_SubscriptionItem_Subscription" FromRole="Subscription" ToRole="SubscriptionItem" />
+          <Property Type="DateTime" Name="StartDateUtc" Nullable="false" Precision="7" />
+          <Property Type="DateTime" Name="EndDateUtc" Precision="7" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ResourceUri" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Summary" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ContentType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="LastRefreshedUtc" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="SubscriptionItem">
+          <Key>
+            <PropertyRef Name="SubscriptionItemId" />
+          </Key>
+          <Property Name="SubscriptionItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriptionId" Type="Int32" Nullable="false" />
+          <Property Name="ExpirationDateUtc" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Subscription" Relationship="ContentModel.FK_SubscriptionItem_Subscription" FromRole="SubscriptionItem" ToRole="Subscription" />
+          <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ItemId" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="PublishedDateUtc" Nullable="false" Precision="7" />
+        </EntityType>
+        <Association Name="FK_SubscriptionItem_Subscription">
+          <End Type="ContentModel.Subscription" Role="Subscription" Multiplicity="1" />
+          <End Type="ContentModel.SubscriptionItem" Role="SubscriptionItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscription">
+              <PropertyRef Name="SubscriptionId" />
+            </Principal>
+            <Dependent Role="SubscriptionItem">
+              <PropertyRef Name="SubscriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="usp_SearchFeedItems_Result">
+          <Property Type="Int32" Name="subscription_id" Nullable="false" />
+          <Property Type="Int32" Name="subscription_item_id" Nullable="false" />
+          <Property Type="String" Name="content" Nullable="false" MaxLength="Max" />
+          <Property Type="DateTime" Name="published_date_utc" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ContentModelStoreContainer" CdmEntityContainer="ContentEntities">
+          <EntitySetMapping Name="Subscriptions">
+            <EntityTypeMapping TypeName="ContentModel.Subscription">
+              <MappingFragment StoreEntitySet="Subscription">
+                <ScalarProperty Name="LastRefreshedUtc" ColumnName="last_refreshed_utc" />
+                <ScalarProperty Name="ContentType" ColumnName="content_type" />
+                <ScalarProperty Name="Summary" ColumnName="summary" />
+                <ScalarProperty Name="ResourceUri" ColumnName="resource_uri" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="EndDateUtc" ColumnName="end_date_utc" />
+                <ScalarProperty Name="StartDateUtc" ColumnName="start_date_utc" />
+                <ScalarProperty Name="SubscriptionId" ColumnName="subscription_id" />
+                <ScalarProperty Name="AccountId" ColumnName="account_id" />
+                <ScalarProperty Name="ItemRetentionInDays" ColumnName="item_retention_in_days" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionItems">
+            <EntityTypeMapping TypeName="ContentModel.SubscriptionItem">
+              <MappingFragment StoreEntitySet="SubscriptionItem">
+                <ScalarProperty Name="PublishedDateUtc" ColumnName="published_date_utc" />
+                <ScalarProperty Name="ItemId" ColumnName="item_id" />
+                <ScalarProperty Name="Content" ColumnName="content" />
+                <ScalarProperty Name="SubscriptionItemId" ColumnName="subscription_item_id" />
+                <ScalarProperty Name="SubscriptionId" ColumnName="subscription_id" />
+                <ScalarProperty Name="ExpirationDateUtc" ColumnName="expiration_date_utc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_SearchFeedItems" FunctionName="ContentModel.Store.usp_SearchFeedItems">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ContentModel.usp_SearchFeedItems_Result">
+                <ScalarProperty Name="subscription_id" ColumnName="subscription_id" />
+                <ScalarProperty Name="subscription_item_id" ColumnName="subscription_item_id" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="published_date_utc" ColumnName="published_date_utc" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
