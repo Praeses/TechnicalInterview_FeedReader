@@ -19,7 +19,7 @@ namespace FeedReader.Migrations
                 new UserSubscription
                 {
                     userName = "testName",
-                    rssFeedURL = "testFeedURL",
+                    rssFeedURL = "http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml",
                     rssFeedName = "testFeedName"
                 });
         }

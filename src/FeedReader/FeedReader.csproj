@@ -184,6 +184,14 @@
     <Compile Include="Migrations\201412202137442_rssFeedName.Designer.cs">
       <DependentUpon>201412202137442_rssFeedName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412240439583_rssURL_to_URL.cs" />
+    <Compile Include="Migrations\201412240439583_rssURL_to_URL.Designer.cs">
+      <DependentUpon>201412240439583_rssURL_to_URL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412240444362_required_validation_userSubscriptions.cs" />
+    <Compile Include="Migrations\201412240444362_required_validation_userSubscriptions.Designer.cs">
+      <DependentUpon>201412240444362_required_validation_userSubscriptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -266,6 +274,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412202137442_rssFeedName.resx">
       <DependentUpon>201412202137442_rssFeedName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412240439583_rssURL_to_URL.resx">
+      <DependentUpon>201412240439583_rssURL_to_URL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412240444362_required_validation_userSubscriptions.resx">
+      <DependentUpon>201412240444362_required_validation_userSubscriptions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

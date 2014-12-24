@@ -41,6 +41,7 @@ namespace FeedReader.Controllers
             }
 
             userSubscription = db.UserSubscriptions.Find(id);
+            ViewBag.Title = userSubscription.rssFeedName;
             if (userSubscription == null)
             {
                 return HttpNotFound();
@@ -95,9 +96,10 @@ namespace FeedReader.Controllers
             {
                 if(userSubscription != null)//Check for valid entry
                 {
+                    userSubscription.userName = username;
+                    ModelState["userName"].Errors.Clear();//Clear the error since the userName MUST be valid to be in this state. Probably not the best practice, but I'm short on time and knowledge
                     if (ModelState.IsValid)
                     {
-                        userSubscription.userName = username;
                         db.UserSubscriptions.Add(userSubscription);
                         db.SaveChanges();
                         return RedirectToAction("Index");
@@ -127,7 +129,7 @@ namespace FeedReader.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,userName,rssFeedURL")] UserSubscription userSubscription)
+        public ActionResult Edit([Bind(Include = "ID,rssFeedName,rssFeedURL,userName")] UserSubscription userSubscription)
         {
             if (ModelState.IsValid)
             {
