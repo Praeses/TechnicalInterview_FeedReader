@@ -1,0 +1,49 @@
+﻿@model IEnumerable<FeedReader.Models.Feed>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+    <a href="https://localhost:44300/MyFeedListings/Index">My Feed Listings</a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.siteName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.feedAdress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.updateInterval)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.siteName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.feedAdress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.updateInterval)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

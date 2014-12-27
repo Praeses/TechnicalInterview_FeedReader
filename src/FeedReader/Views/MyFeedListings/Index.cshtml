@@ -1,0 +1,25 @@
+﻿@model IEnumerable<FeedReader.Models.FeedItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Your Feed</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Site Name: @Html.DropDownList("feedTitles", "All")
+        Title: @Html.TextBox("SearchString") <br />
+        <input type="submit" value="Filter" />
+    </p>
+}
+
+<ul>
+   @{foreach (var item in Model)
+     {
+         <li>@item.siteTitle : <a href="@item.address" target="_blank">@item.Title</a></li>
+     }
+         
+         }
+</ul>
