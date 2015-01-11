@@ -1,0 +1,15 @@
+﻿@model FeedReader.Models.FeedViewModel
+              
+
+@using (Ajax.BeginForm("ShowFeed", "Feed", new AjaxOptions { UpdateTargetId="feedViewer", InsertionMode = InsertionMode.Replace, HttpMethod = "GET"}))
+{
+    <div class="input-group input-group-sm" style="margin: auto;">
+        @Html.TextBox("SearchString", Model.SearchString, new { id="feedSearch", @class="form-control", placeholder="Search Everything", style="width: 150px"})
+        <input type="submit" value="Search" class="btn btn-sm btn-default" />
+    </div>
+
+}
+
+
+
+    

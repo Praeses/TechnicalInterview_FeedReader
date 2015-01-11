@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedReader", "FeedReader\FeedReader.csproj", "{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedReader.Domain", "FeedReader.Domain\FeedReader.Domain.csproj", "{34DD1860-2F36-4063-BC8F-04A9E07494B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +15,15 @@ Global
 		{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34DD1860-2F36-4063-BC8F-04A9E07494B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34DD1860-2F36-4063-BC8F-04A9E07494B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34DD1860-2F36-4063-BC8F-04A9E07494B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34DD1860-2F36-4063-BC8F-04A9E07494B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,49 @@
+﻿@model FeedReader.Models.FeedViewModel
+
+@{ ViewBag.Title = "Feeds"; }
+
+@Html.Partial("_SubscriptionsDialog")
+
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 sidebar">
+         
+                @Html.Partial("_SearchFeed")
+
+                <div class="title">Feed List</div>
+
+                <div class="item">
+                    @Ajax.ActionLink("Everything", "ShowFeed", new AjaxOptions {
+                        UpdateTargetId="feedPanel", 
+                        InsertionMode = InsertionMode.Replace, 
+                        HttpMethod = "GET" })
+                </div>
+
+                @foreach (var item in Model.Subscriptions)
+                {
+                    <div class="item">
+                        @Ajax.ActionLink(@item.Name, "ShowFeed", @item,  new AjaxOptions {
+                            UpdateTargetId="feedPanel", 
+                            InsertionMode = InsertionMode.Replace, 
+                            HttpMethod = "GET" })
+                    </div>
+                }
+
+                <!-- Button trigger modal -->
+                <div class="footer">
+                    <button class="btn btn-sm" data-toggle="modal" data-target="#subscriptionsEditor">
+                        Edit subscriptions
+                    </button>
+                </div>
+
+            </div>
+
+            <div id="feedPanel" class="col-md-9">
+                    @Html.Partial("_FeedViewer") 
+            </div>
+
+        </div>
+    </div>
+</div>
+

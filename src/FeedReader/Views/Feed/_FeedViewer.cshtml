@@ -1,0 +1,33 @@
+﻿@using FeedReader.Domain
+@model FeedReader.Models.FeedViewModel
+
+<div id="feedViewer">
+@if (Model.NewsFeed != null)
+{
+    foreach (FeedItem feedItem in Model.NewsFeed)
+    {
+        <div class="feedItem">
+            <div class="source">
+                @feedItem.Source
+            </div>
+            <div class="title">
+                <a href="@feedItem.Link" target="_blank">@feedItem.Title</a> 
+            </div>    
+            <div class="pubDate">
+                @feedItem.PublishDate
+            </div>
+            <div class="description">
+                @Html.Raw(@feedItem.Description)
+            </div>
+        
+        </div>
+    }
+}
+</div>
+
+
+
+
+
+
+    

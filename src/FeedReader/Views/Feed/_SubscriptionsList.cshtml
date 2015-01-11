@@ -1,0 +1,48 @@
+﻿@using FeedReader.Domain
+@model FeedReader.Models.FeedViewModel
+
+@{
+var subIds = (from f in Model.Subscriptions select f.Id).ToList();
+}
+
+<div id="subscriptionsList">
+    <table>
+
+    @foreach (Feed feed  in Model.Feeds)
+    {
+        <tr>
+            <td style="padding-right:40px">@feed.Name</td>
+            @if (subIds.Contains(feed.Id))
+            {
+                <td>
+                     @Ajax.ActionLink("Unsubscribe", "Unsubscribe", feed, new AjaxOptions
+                     {
+                         UpdateTargetId="subscriptionsList", 
+                         InsertionMode = InsertionMode.Replace, 
+                         HttpMethod = "GET"
+                     } )
+
+                </td>    
+            }
+            else
+            {
+                <td>
+                    @Ajax.ActionLink("Subscribe", "Subscribe", feed, new AjaxOptions
+                    {
+                         UpdateTargetId="subscriptionsList", 
+                         InsertionMode = InsertionMode.Replace, 
+                         HttpMethod = "GET"
+                    })
+
+                </td>
+            }
+        </tr>
+    }
+    </table>
+</div>
+
+
+
+
+
+    

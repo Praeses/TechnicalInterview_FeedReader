@@ -1,0 +1,17 @@
+﻿
+@model FeedReader.Models.FeedViewModel
+
+@using (Ajax.BeginForm("AddFeed", "Feed", new AjaxOptions { UpdateTargetId="subscriptionsList", InsertionMode = InsertionMode.Replace, HttpMethod = "GET"}))
+{
+    @Html.TextBox("Name", Model.FeedName, new { @class="form-control", placeholder="Name", style="width: 150px"})
+    @Html.TextBox("Url", Model.FeedUrl, new {@class="form-control", placeholder="Url", style="width: 300px"})
+    <input type="submit" value="Add" class="btn btn-sm btn-default" />
+}
+
+
+ 
+
+
+
+
+    
