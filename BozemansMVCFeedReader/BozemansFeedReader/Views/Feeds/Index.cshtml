@@ -1,0 +1,88 @@
+﻿@model IEnumerable<BozemansFeedReader.Models.Feed>
+@using System.Xml
+@using System.Linq;
+
+@{
+    ViewBag.Title = "Feeds";
+}
+
+<h2>Feeds</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm("Index", "Feeds", FormMethod.Get))
+    {
+        <p>Title of Feed: @Html.TextBox("SearchString") <br /><br /><input type="submit" value="Search" /></p>
+}
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FeedTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FeedURL)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FeedTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FeedURL)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+</table>
+<br />
+
+<!--
+    --------------------------------------------------------------------------------------------------------------
+-->
+
+@foreach (var item in Model)
+{
+    string[] feeds = { item.FeedURL };
+
+    foreach (var f in feeds)
+    {
+        <p>-------------------------------------------------------------------------------------------------</p>
+        XmlDocument xmlDoc = new XmlDocument();
+        string url = f;
+        xmlDoc.Load(url);
+
+        XmlElement rss = xmlDoc.DocumentElement;
+        XmlNode channel = rss.FirstChild;
+        XmlNodeList childnodes = channel.ChildNodes;
+
+        int i = 0;
+        foreach (XmlNode node in childnodes)
+        {
+            if (node.Name == "item")
+            {
+                <p>
+                    <strong><a href="@node["link"].InnerText" target="_blank">@node["title"].InnerText</a></strong><br />
+                    <small>Published: @node["pubDate"].InnerText</small><br />
+                    @node["description"].InnerText<br />
+                </p>
+                if (++i == 8)
+                {
+                    break;
+                }
+            }
+        }
+    }
+}
+
+<!--
+    --------------------------------------------------------------------------------------------------------------
+-->
