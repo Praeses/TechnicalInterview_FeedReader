@@ -28,5 +28,7 @@ namespace FeedReader.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<FeedReader.Models.Feed> Feeds { get; set; }
     }
 }
