@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using FeedReader.Models;
 using Microsoft.AspNet.Identity;
+using System.Xml.Linq;
+using System.ServiceModel.Syndication;
+using System.Xml;
 
 namespace FeedReader.Controllers
 {
@@ -58,6 +61,52 @@ namespace FeedReader.Controllers
             }
 
             return View(feed);
+        }
+
+        public ActionResult showArticles(String url)
+        {
+            return View(getFeedArticles(url));
+        }
+
+        public IEnumerable<FeedArticle> getFeedArticles(String url)
+        {
+            //Make type IEnumerable so we can iterate on front end
+            IEnumerable<FeedArticle> articles = new List<FeedArticle>();
+
+            //try
+            //{
+            //    XDocument doc = XDocument.Load(url);
+            //    // <item> is under the root element of the xml document
+            //    var entries = from item in doc.Root.Descendants().Where(i => i.Name.LocalName == "item")
+            //                  select new FeedArticle
+            //                  {                                  
+            //                      link = item.Elements().First(i => i.Name.LocalName == "link").Value,
+            //                      desc = item.Elements().First(i => i.Name.LocalName == "description").Value,
+            //                      title = item.Elements().First(i => i.Name.LocalName == "title").Value
+            //                  };
+
+            //    articles = entries.ToList();
+            //}
+            try
+            {
+                XmlReader reader = XmlReader.Create(url);
+                SyndicationFeed feed = SyndicationFeed.Load(reader);
+                reader.Close();
+                var entries = from item in feed.Items
+                                select new FeedArticle
+                                {
+                                    title = item.Title.Text,
+                                    desc = item.Summary.Text,
+                                    link = item.Id
+                                };
+                articles = entries.ToList();
+            }
+            catch
+            {
+                //Dont add to the list
+            }
+            
+            return articles;
         }
 
         // GET: Feed/Edit/5

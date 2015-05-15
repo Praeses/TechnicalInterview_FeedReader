@@ -11,15 +11,15 @@
 </p>
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.user_id)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.channel)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.link)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.desc)
         </th>
@@ -28,15 +28,22 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.user_id)
-        </td>
+        </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.channel)
+            @*@Html.ActionLink(item.channel, "showArticles", new { item.link }, null,)*@
+            @Html.ActionLink(
+                linkText: item.channel,
+                actionName: "showArticles",
+                controllerName: "Feed",
+                routeValues: new { url = item.link},
+                htmlAttributes: null
+            )           
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.link)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.desc)
         </td>

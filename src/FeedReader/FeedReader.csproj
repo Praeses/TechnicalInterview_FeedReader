@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -244,6 +245,7 @@
     <Content Include="Views\Feed\Details.cshtml" />
     <Content Include="Views\Feed\Edit.cshtml" />
     <Content Include="Views\Feed\Index.cshtml" />
+    <Content Include="Views\Feed\ShowArticles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
