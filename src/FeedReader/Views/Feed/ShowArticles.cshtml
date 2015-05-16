@@ -7,38 +7,28 @@
 <h2>ShowArticles</h2>
 <table class="table">
     <tr>
-        @*<th>
-                @Html.DisplayNameFor(model => model.user_id)
-            </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.title)
-        </th>
-        <th>
-                @Html.DisplayNameFor(model => model.link)
-            </th>
-        <th>
-            @Html.DisplayNameFor(model => model.desc)
-        </th>
-        <th></th>
+       <th>Article</th>
+       <th>Publish Date</th>
+       <th>Author</th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.user_id)
-                </td>*@
+        <tr title="@item.desc">
             <td>
-                @Html.DisplayFor(modelItem => item.title)
+                <a href=@item.link target="_blank" > @Html.DisplayFor(modelItem => item.title) </a>
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.link)
-                <a href=@item.link target="_blank"><button>Click for Article</button></a>
-                </td>
+                @Html.DisplayFor(modelItem => item.publishDate)
+            </td>
             <td>
+                @(item.authors == null ? "Unavailable" : item.authors)
+
+            </td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.desc)
             </td>
-            @*<td>
+            <td>
                 @Html.ActionLink("Details", "Details", new { id = item.id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.id })
             </td>*@

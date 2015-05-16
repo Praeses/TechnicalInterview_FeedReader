@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using System.Xml.Linq;
 using System.ServiceModel.Syndication;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace FeedReader.Controllers
 {
@@ -73,20 +74,7 @@ namespace FeedReader.Controllers
             //Make type IEnumerable so we can iterate on front end
             IEnumerable<FeedArticle> articles = new List<FeedArticle>();
 
-            //try
-            //{
-            //    XDocument doc = XDocument.Load(url);
-            //    // <item> is under the root element of the xml document
-            //    var entries = from item in doc.Root.Descendants().Where(i => i.Name.LocalName == "item")
-            //                  select new FeedArticle
-            //                  {                                  
-            //                      link = item.Elements().First(i => i.Name.LocalName == "link").Value,
-            //                      desc = item.Elements().First(i => i.Name.LocalName == "description").Value,
-            //                      title = item.Elements().First(i => i.Name.LocalName == "title").Value
-            //                  };
-
-            //    articles = entries.ToList();
-            //}
+           //Switch to SyndicationFeed from XDocument so we can handle Atom feeds as well
             try
             {
                 XmlReader reader = XmlReader.Create(url);
@@ -96,8 +84,10 @@ namespace FeedReader.Controllers
                                 select new FeedArticle
                                 {
                                     title = item.Title.Text,
-                                    desc = item.Summary.Text,
-                                    link = item.Id
+                                    desc = StripHTML(item.Summary.Text),
+                                    link = item.Id,
+                                    authors = (item.Authors.FirstOrDefault() ?? new SyndicationPerson()).Name,
+                                    publishDate = item.PublishDate.Date.ToShortDateString()
                                 };
                 articles = entries.ToList();
             }
@@ -107,6 +97,14 @@ namespace FeedReader.Controllers
             }
             
             return articles;
+        }
+
+        public static string StripHTML(string htmlString)
+        {
+
+            string pattern = @"<(.|\n)*?>";
+
+            return Regex.Replace(htmlString, pattern, string.Empty);
         }
 
         // GET: Feed/Edit/5
