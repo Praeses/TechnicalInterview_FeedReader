@@ -22,7 +22,9 @@ namespace FeedReader.Controllers
         // GET: Feed
         public ActionResult Index()
         {
-            return View(db.Feeds.ToList());
+            String userId = User.Identity.GetUserId();
+            List<Feed> userFeeds = db.Feeds.Where(x => x.user_id == userId).ToList();
+            return View(userFeeds);
         }
 
         // GET: Feed/Details/5
@@ -67,6 +69,26 @@ namespace FeedReader.Controllers
         public ActionResult showArticles(String url)
         {
             return View(getFeedArticles(url));
+        }
+
+        public ActionResult showAllArticles()
+        {
+            String userId = User.Identity.GetUserId();
+            Dictionary<String, IEnumerable<FeedArticle>> channelToArticles = new Dictionary<string, IEnumerable<FeedArticle>>();
+
+            List<Feed> channels = db.Feeds.Where(x => x.user_id == userId).ToList();
+
+            foreach(Feed feed in channels){
+                IEnumerable<FeedArticle> channelArticles = getFeedArticles(feed.link);
+
+                try
+                {
+                    channelToArticles.Add(feed.channel, channelArticles);
+                }
+                catch{/* Do not add item if an exception is thrown*/}
+            }
+
+            return View(channelToArticles);
         }
 
         public IEnumerable<FeedArticle> getFeedArticles(String url)

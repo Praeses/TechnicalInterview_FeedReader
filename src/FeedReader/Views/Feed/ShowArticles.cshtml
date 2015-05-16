@@ -5,34 +5,43 @@
 }
 
 <h2>ShowArticles</h2>
-<table class="table">
-    <tr>
-       <th>Article</th>
-       <th>Publish Date</th>
-       <th>Author</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr title="@item.desc">
-            <td>
-                <a href=@item.link target="_blank" > @Html.DisplayFor(modelItem => item.title) </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.publishDate)
-            </td>
-            <td>
-                @(item.authors == null ? "Unavailable" : item.authors)
-
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.desc)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
-            </td>*@
+<table id="articleTable" class="display" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Article</th>
+            <th>Publish Date</th>
+            <th>Author</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr role="row" title="@item.desc">
+                <td>
+                    <a href=@item.link target="_blank"> @Html.DisplayFor(modelItem => item.title) </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.publishDate)
+                </td>
+                <td>
+                    @(item.authors == null ? "Unavailable" : item.authors)
 
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $('#articleTable').DataTable();
+            });
+    </script>
+    @*<style>
+        .odd{background-color: rgb(241, 241, 241) !important}
+    </style>*@
+
+
+}

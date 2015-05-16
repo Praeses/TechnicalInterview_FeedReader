@@ -246,6 +246,7 @@
     <Content Include="Views\Feed\Edit.cshtml" />
     <Content Include="Views\Feed\Index.cshtml" />
     <Content Include="Views\Feed\ShowArticles.cshtml" />
+    <Content Include="Views\Feed\ShowAllArticles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
