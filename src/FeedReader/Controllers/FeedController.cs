@@ -107,7 +107,7 @@ namespace FeedReader.Controllers
                                 {
                                     title = item.Title.Text,
                                     desc = StripHTML(item.Summary.Text),
-                                    link = item.Id,
+                                    link = (item.Id == null || !Uri.IsWellFormedUriString(item.Id,UriKind.Absolute)) ? item.Links[0].Uri.ToString() : item.Id,
                                     authors = (item.Authors.FirstOrDefault() ?? new SyndicationPerson()).Name,
                                     publishDate = item.PublishDate.Date.ToShortDateString()
                                 };
