@@ -3,3 +3,15 @@
     margin-top: 5%;
     font-size: 30px;
 }
+
+.right{
+    float: right;
+}
+
+.left{
+    float:left;
+}
+
+.indexHeader{
+    width: 40%;
+}

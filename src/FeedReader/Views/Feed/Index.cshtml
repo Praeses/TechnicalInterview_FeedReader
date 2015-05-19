@@ -3,59 +3,64 @@
 @{
     ViewBag.Title = "Index";
 }
+<div class="jumbotron">
+    <h2>Subscribed Channels</h2>
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<p>
-    @Html.ActionLink("Show All Articles", "ShowAllArticles")
-</p>
-<table class="table">
+    <div class="left">
+        
+            @Html.ActionLink("Create New", "Create")
+        
+    </div>
+    <div class="right">
+        
+            @Html.ActionLink("Show All Articles", "ShowAllArticles")
+        
+    </div>
+    <table class="table">
     <tr>
         @*<th>
-            @Html.DisplayNameFor(model => model.user_id)
-        </th>*@
-        <th>
+                @Html.DisplayNameFor(model => model.user_id)
+            </th>*@
+        <th class="indexHeader">
             @Html.DisplayNameFor(model => model.channel)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.link)
-        </th>*@
-        <th>
+                @Html.DisplayNameFor(model => model.link)
+            </th>*@
+        <th class="indexHeader">
             @Html.DisplayNameFor(model => model.desc)
         </th>
-        <th></th>
+        <th class="right"></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.user_id)
-        </td>*@
-        <td>
-            @*@Html.ActionLink(item.channel, "showArticles", new { item.link }, null,)*@
-            @Html.ActionLink(
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.user_id)
+                </td>*@
+            <td>
+                @*@Html.ActionLink(item.channel, "showArticles", new { item.link }, null,)*@
+                @Html.ActionLink(
                 linkText: item.channel,
                 actionName: "showArticles",
                 controllerName: "Feed",
-                routeValues: new { url = item.link},
+                routeValues: new { url = item.link },
                 htmlAttributes: null
-            )           
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.link)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.desc)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
-
-</table>
+            )
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.link)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.desc)
+            </td>
+            <td class="right">
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+ </table>
+</div>

@@ -9,6 +9,7 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/Custom")
     <!-- Import for Datatables-->
     <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" />
@@ -29,13 +30,16 @@
                 </a>
             </div>
             <div class="navbar-header">
-                @Html.ActionLink("The Feed", "Index", "Home", new { area = "" }, new { @class = "navbar-brand logoText" })
+                @Html.ActionLink("The Feed", "Index", "Feed", new { area = "" }, new { @class = "navbar-brand logoText" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Show Feeds", "Index", "Feed")</li>
-                </ul>
+                @if (Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Manage Account", "Manage", "Account")</li>
+                        <li>@Html.ActionLink("Channels", "Index", "Feed")</li>
+                    </ul>
+                }
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
