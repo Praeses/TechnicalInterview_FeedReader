@@ -260,6 +260,7 @@
     <Content Include="Views\Feed\Index.cshtml" />
     <Content Include="Views\Feed\ShowArticles.cshtml" />
     <Content Include="Views\Feed\ShowAllArticles.cshtml" />
+    <Content Include="Views\Feed\ArticleError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

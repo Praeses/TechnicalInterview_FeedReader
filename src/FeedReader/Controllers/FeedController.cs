@@ -64,6 +64,23 @@ namespace FeedReader.Controllers
             if (ModelState.IsValid)
             {
                 feed.user_id = User.Identity.GetUserId();
+
+                // Validate feed
+                try
+                {
+                    var req = (HttpWebRequest)WebRequest.Create(feed.link);
+                    
+                    var rep = req.GetResponse();
+                    var reader = XmlReader.Create(rep.GetResponseStream());
+
+                    SyndicationFeed newFeed = SyndicationFeed.Load(reader);
+                    feed.desc = newFeed.Title.Text;
+                }
+                catch
+                {
+                    
+                }
+
                 db.Feeds.Add(feed);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -71,70 +88,7 @@ namespace FeedReader.Controllers
 
             return View(feed);
         }
-
-        public ActionResult showArticles(String url)
-        {
-            return View(getFeedArticles(url));
-        }
-
-        public ActionResult showAllArticles()
-        {
-            String userId = User.Identity.GetUserId();
-            Dictionary<String, IEnumerable<FeedArticle>> channelToArticles = new Dictionary<string, IEnumerable<FeedArticle>>();
-
-            List<Feed> channels = db.Feeds.Where(x => x.user_id == userId).ToList();
-
-            foreach(Feed feed in channels){
-                IEnumerable<FeedArticle> channelArticles = getFeedArticles(feed.link);
-
-                try
-                {
-                    channelToArticles.Add(feed.channel, channelArticles);
-                }
-                catch{/* Do not add item if an exception is thrown*/}
-            }
-
-            return View(channelToArticles);
-        }
-
-        public IEnumerable<FeedArticle> getFeedArticles(String url)
-        {
-            //Make type IEnumerable so we can iterate on front end
-            IEnumerable<FeedArticle> articles = new List<FeedArticle>();
-
-           //Switch to SyndicationFeed from XDocument so we can handle Atom feeds as well
-            try
-            {
-                XmlReader reader = XmlReader.Create(url);
-                SyndicationFeed feed = SyndicationFeed.Load(reader);
-                reader.Close();
-                var entries = from item in feed.Items
-                                select new FeedArticle
-                                {
-                                    title = item.Title.Text,
-                                    desc = StripHTML(item.Summary.Text),
-                                    link = (item.Id == null || !Uri.IsWellFormedUriString(item.Id,UriKind.Absolute)) ? item.Links[0].Uri.ToString() : item.Id,
-                                    authors = (item.Authors.FirstOrDefault() ?? new SyndicationPerson()).Name,
-                                    publishDate = item.PublishDate.Date.ToShortDateString()
-                                };
-                articles = entries.ToList();
-            }
-            catch
-            {
-                //Dont add to the list
-            }
-            
-            return articles;
-        }
-
-        public static string StripHTML(string htmlString)
-        {
-
-            string pattern = @"<(.|\n)*?>";
-
-            return Regex.Replace(htmlString, pattern, string.Empty);
-        }
-
+        
         // GET: Feed/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -200,6 +154,83 @@ namespace FeedReader.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult showArticles(String url)
+        {
+            IEnumerable<FeedArticle> articles = getFeedArticles(url);
+            if(articles.Any())
+                return View(articles);
+            else
+                return RedirectToAction("articleError");
+        }
+
+        public ActionResult showAllArticles()
+        {
+            String userId = User.Identity.GetUserId();
+            Dictionary<String, IEnumerable<FeedArticle>> channelToArticles = new Dictionary<string, IEnumerable<FeedArticle>>();
+
+            List<Feed> channels = db.Feeds.Where(x => x.user_id == userId).ToList();
+
+            foreach (Feed feed in channels)
+            {
+                IEnumerable<FeedArticle> channelArticles = getFeedArticles(feed.link);
+
+                try
+                {
+                    channelToArticles.Add(feed.channel, channelArticles);
+                }
+                catch {/* Do not add item if an exception is thrown*/}
+            }
+
+            return View(channelToArticles);
+        }
+
+        public IEnumerable<FeedArticle> getFeedArticles(String url)
+        {
+            //Make type IEnumerable so we can iterate on front end
+            IEnumerable<FeedArticle> articles = new List<FeedArticle>();
+
+            //Switch to SyndicationFeed from XDocument so we can handle Atom feeds as well
+            try
+            {
+                var req = (HttpWebRequest)WebRequest.Create(url);
+
+                var rep = req.GetResponse();
+                var reader = XmlReader.Create(rep.GetResponseStream());
+                SyndicationFeed feed = SyndicationFeed.Load(reader);
+                reader.Close();
+                var entries = from item in feed.Items
+                              select new FeedArticle
+                              {
+                                  title = item.Title.Text,
+                                  desc = StripHTML(item.Summary.Text),
+                                  link = (item.Id == null || !Uri.IsWellFormedUriString(item.Id, UriKind.Absolute)) ? item.Links[0].Uri.ToString() : item.Id,
+                                  authors = (item.Authors.FirstOrDefault() ?? new SyndicationPerson()).Name,
+                                  publishDate = item.PublishDate.Date.ToShortDateString()
+                              };
+
+                articles = entries.ToList();
+            }
+            catch
+            {
+                //Dont add to the list
+            }
+
+            return articles;
+        }
+
+        public static string StripHTML(string htmlString)
+        {
+
+            string pattern = @"<(.|\n)*?>";
+
+            return Regex.Replace(htmlString, pattern, string.Empty);
+        }
+
+        public ActionResult articleError()
+        {
+            return View();
         }
     }
 }

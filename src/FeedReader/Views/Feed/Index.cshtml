@@ -33,7 +33,7 @@
                     linkText: item.channel,
                     actionName: "showArticles",
                     controllerName: "Feed",
-                    routeValues: new { url = item.link },
+                    routeValues: new { url = item.link, item.channel },
                     htmlAttributes: null
                 )
             </td>

@@ -1,0 +1,13 @@
+﻿    @{
+        ViewBag.Title = "ArticleError";
+    }
+    <div class="containerDiv">
+        <h2>No Articles Found!</h2>
+        <div class="danger">
+            <p class="text-danger">Unable to retrieve news article for selected channel. Please check the URL (link) value for this channel.</p>
+        </div>
+        <div>
+            @Html.ActionLink("Back to Channel List", "Index")
+        </div>
+        
+    </div>

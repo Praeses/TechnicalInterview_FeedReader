@@ -4,7 +4,7 @@
     ViewBag.Title = "ShowArticles";
 }
 <div class="containerDiv">
-    <h2>ShowArticles</h2>
+    <h2>Channel Articles</h2>
     <table id="articleTable" class="display" cellspacing="0">
         <thead>
             <tr>
@@ -31,6 +31,9 @@
             }
         </tbody>
     </table>
+    <div>
+        @Html.ActionLink("Back to Channel List", "Index")
+    </div>
 </div>
 @section Scripts
     {
@@ -39,9 +42,4 @@
                 $('#articleTable').DataTable()
             });
     </script>
-    @*<style>
-        .odd{background-color: rgb(241, 241, 241) !important}
-    </style>*@
-
-
 }
