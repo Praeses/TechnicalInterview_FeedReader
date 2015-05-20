@@ -159,6 +159,7 @@ namespace FeedReader.Controllers
         {
             if (ModelState.IsValid)
             {
+                feed.user_id = User.Identity.GetUserId();
                 db.Entry(feed).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

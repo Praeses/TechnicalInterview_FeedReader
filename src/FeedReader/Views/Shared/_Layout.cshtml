@@ -9,10 +9,19 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/Custom")
+    @Scripts.Render("~/bundles/custom")
     <!-- Import for Datatables-->
     <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>    
     <link rel="stylesheet" href="~/Content/DataTable.css" />
+    <script>
+        $(document).ready(function () {
+            stopPulseLoading();
+
+            $(window).on('beforeunload', function() { 
+                startPulseLoading();
+            } )
+        })
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,11 +35,11 @@
              </div>
             <div>
                 <a class="navbar-brand" href='@Url.Action("Index", "Feed")'>
-                    <img id="rss" src="~/Content/Images/Top-Menu-RSS.png" alt="RSS Logo" />
+                    <img id="rss" src="~/Content/Images/Top-Menu-RSS.png" alt="RSS Logo" onclick="startPulseLoading();"/>
                 </a>
             </div>
             <div class="navbar-header">
-                @Html.ActionLink("The Pulse", "Index", "Feed", new { area = "" }, new { @class = "navbar-brand logoText" })
+                @Html.ActionLink("The Pulse", "Index", "Feed", new { area = "" }, new { @class = "navbar-brand logoText", @onclick = "startPulseLoading()" })
             </div>
             <div class="navbar-collapse collapse">
                 @if (Request.IsAuthenticated)
@@ -51,7 +60,7 @@
             <p>&copy; @DateTime.Now.Year - The Pulse</p>
         </footer>
     </div>
-    <div class="overlay">
+    <div id="overlay">
         <p class="processing">
             <img src="~/Content/Images/pulse.gif" />
         </p>
