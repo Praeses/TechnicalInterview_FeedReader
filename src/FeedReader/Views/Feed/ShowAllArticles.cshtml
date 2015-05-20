@@ -3,43 +3,43 @@
 @{
     ViewBag.Title = "ShowAllArticles";
 }
-
-<h2>ShowArticles</h2>
-<table id="allArticles" class="display" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-            <th>Article</th>
-            <th>Channel</th>
-            <th>Publish Date</th>
-            <th>Author</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var channel in Model)
-        {
-            foreach (var article in channel.Value)
+<div class="containerDiv">
+    <h2>ShowArticles</h2>
+    <table id="allArticles" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Article</th>
+                <th>Channel</th>
+                <th>Publish Date</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var channel in Model)
             {
-                <tr title="@article.desc">
-                    <td>
-                        <a href=@article.link target="_blank"> @Html.DisplayFor(modelItem => article.title) </a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => channel.Key)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => article.publishDate)
-                    </td>
-                    <td>
-                        @(article.authors == null ? "Unavailable" : article.authors)
+                foreach (var article in channel.Value)
+                {
+                    <tr title="@article.desc">
+                        <td>
+                            <a href=@article.link target="_blank"> @Html.DisplayFor(modelItem => article.title) </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => channel.Key)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => article.publishDate)
+                        </td>
+                        <td>
+                            @(article.authors == null ? "Unavailable" : article.authors)
 
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                }
             }
-        }
 
-    </tbody> 
-</table>
-
+        </tbody> 
+    </table>
+</div>
 @section Scripts
     {
         <script type="text/javascript">

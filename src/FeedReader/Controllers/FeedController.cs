@@ -22,9 +22,15 @@ namespace FeedReader.Controllers
         // GET: Feed
         public ActionResult Index()
         {
-            String userId = User.Identity.GetUserId();
-            List<Feed> userFeeds = db.Feeds.Where(x => x.user_id == userId).ToList();
-            return View(userFeeds);
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else{
+                String userId = User.Identity.GetUserId();
+                List<Feed> userFeeds = db.Feeds.Where(x => x.user_id == userId).ToList();
+                return View(userFeeds);
+            }
         }
 
         // GET: Feed/Details/5

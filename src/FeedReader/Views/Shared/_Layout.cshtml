@@ -11,8 +11,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/Custom")
     <!-- Import for Datatables-->
-    <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" />
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>    
+    <link rel="stylesheet" href="~/Content/DataTable.css" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -25,12 +25,12 @@
                 </button>
              </div>
             <div>
-                <a class="navbar-brand" href='@Url.Action("Index", "Home")'>
+                <a class="navbar-brand" href='@Url.Action("Index", "Feed")'>
                     <img id="rss" src="~/Content/Images/Top-Menu-RSS.png" alt="RSS Logo" />
                 </a>
             </div>
             <div class="navbar-header">
-                @Html.ActionLink("The Feed", "Index", "Feed", new { area = "" }, new { @class = "navbar-brand logoText" })
+                @Html.ActionLink("The Pulse", "Index", "Feed", new { area = "" }, new { @class = "navbar-brand logoText" })
             </div>
             <div class="navbar-collapse collapse">
                 @if (Request.IsAuthenticated)
@@ -48,8 +48,13 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - The Feed</p>
+            <p>&copy; @DateTime.Now.Year - The Pulse</p>
         </footer>
+    </div>
+    <div class="overlay">
+        <p class="processing">
+            <img src="~/Content/Images/pulse.gif" />
+        </p>
     </div>
     @RenderSection("scripts", required: false)
 </body>

@@ -3,39 +3,40 @@
 @{
     ViewBag.Title = "Details";
 }
+<div class="containerDiv">
+    <h2>Channel Details</h2>
 
-<h2>Channel Details</h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.channel)
+            </dt>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.channel)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.channel)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.channel)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.link)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.link)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.link)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.link)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.desc)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.desc)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.desc)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.desc)
-        </dd>
-
-    </dl>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
