@@ -4,6 +4,10 @@
     font-size: 30px;
 }
 
+.center-text{
+    text-align: center;
+}
+
 .right{
     float: right;
 }
@@ -61,4 +65,12 @@ h1 h2 h3 h4 h5 h6{
 
 .indent{
     padding-left:30px;
+}
+
+.logo_min{
+    min-width: 940px;
+}
+
+.pulse_logo{
+    width: 150px;
 }

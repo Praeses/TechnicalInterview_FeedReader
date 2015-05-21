@@ -13,8 +13,8 @@ namespace FeedReader.Migrations
                     {
                         id = c.Int(nullable: false, identity: true),
                         user_id = c.String(),
-                        channel = c.String(),
-                        link = c.String(),
+                        channel = c.String(nullable: false),
+                        link = c.String(nullable: false),
                         desc = c.String(),
                     })
                 .PrimaryKey(t => t.id);
