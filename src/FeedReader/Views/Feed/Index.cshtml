@@ -1,0 +1,53 @@
+﻿@model IEnumerable<FeedReader.Models.Feed>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="containerDiv">
+    <h2>Subscribed Channels</h2>
+
+    <div class="left">        
+       @Html.ActionLink("Create New", "Create")        
+    </div>
+    <div class="right">        
+       @Html.ActionLink("Show All Channel Articles", "ShowAllArticles")        
+    </div>
+    <table class="table">
+    <tr>
+        <th class="indexHeader">
+            Channel
+        </th>
+        <th class="indexHeader">
+            Description
+        </th>
+        <th>
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(
+                    linkText: item.channel,
+                    actionName: "showArticles",
+                    controllerName: "Feed",
+                    routeValues: new { url = item.link, item.channel },
+                    htmlAttributes: null
+                )
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.desc)
+            </td>
+            <td>
+                <span class="right">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </span>
+            </td>
+        </tr>
+    }
+ </table>
+</div>

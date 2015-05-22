@@ -1,4 +1,6 @@
 ﻿body {
+    /*background-image: url("http://images8.alphacoders.com/291/291029.jpg");*/
+    background: url("Images/pulse-background.png");
     padding-top: 50px;
     padding-bottom: 20px;
 }

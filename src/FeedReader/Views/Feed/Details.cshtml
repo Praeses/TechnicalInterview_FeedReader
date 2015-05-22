@@ -1,0 +1,42 @@
+﻿@model FeedReader.Models.Feed
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="containerDiv">
+    <h2>Channel Details</h2>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Channel:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.channel)
+            </dd>
+
+            <dt>
+                Link:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.link)
+            </dd>
+
+            <dt>
+                Description:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.desc)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

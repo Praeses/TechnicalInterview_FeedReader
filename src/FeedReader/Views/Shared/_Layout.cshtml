@@ -5,8 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Custom.css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/custom")
+    <!-- Import for Datatables-->
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>    
+    <link rel="stylesheet" href="~/Content/DataTable.css" />
+    <script>
+        $(document).ready(function () {
+            stopPulseLoading();
 
+            $(window).on('beforeunload', function() { 
+                startPulseLoading();
+            } )
+        })
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -17,14 +32,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+             </div>
+            <div>
+                <a class="navbar-brand" href='@Url.Action("Index", "Feed")'>
+                    <img id="rss" src="~/Content/Images/Top-Menu-RSS.png" alt="RSS Logo" onclick="startPulseLoading();"/>
+                </a>
+            </div>
+            <div class="navbar-header">
+                @Html.ActionLink("The Pulse", "Index", "Feed", new { area = "" }, new { @class = "navbar-brand logoText", @onclick = "startPulseLoading()" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+                @if (Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Manage Account", "Manage", "Account")</li>
+                        <li>@Html.ActionLink("Channels", "Index", "Feed")</li>
+                    </ul>
+                }
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -33,12 +57,14 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - The Pulse: <span class="pulse_text">Keeping your finger on the pulse of what matters to you.</span></p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <div id="overlay">
+        <p class="processing">
+            <img src="~/Content/Images/pulse.gif" />
+        </p>
+    </div>
     @RenderSection("scripts", required: false)
 </body>
 </html>
