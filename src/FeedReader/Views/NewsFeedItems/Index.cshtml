@@ -7,9 +7,12 @@
 <h2>Come Here For All The News That Matters To You</h2>
 <h3 class="tagline">&mdash; We know what matters because we track your every move</h3>
 
+@if(User.IsInRole("Admin"))
+{ 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+}
 
 @using (Html.BeginForm("Index", "NewsFeedItems", FormMethod.Post))
 {
@@ -44,7 +47,10 @@
         <th style="white-space: nowrap;" class="text-center">
             @Html.DisplayNameFor(model => model.CreatedBy)
         </th>
+        @if(User.IsInRole("Admin"))
+        { 
         <th></th>
+        }
     </tr>
 
     @foreach (var item in Model)
@@ -65,11 +71,14 @@
             <td style="white-space: nowrap" class="text-center">
                 @Html.DisplayFor(modelItem => item.CreatedBy)
             </td>
+            @if(User.IsInRole("Admin"))
+            {
             <td style ="white-space: nowrap">
                 @Html.ActionLink("Edit", "Edit", new { id = item.NewsFeedItemID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.NewsFeedItemID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.NewsFeedItemID })
             </td>
+            }
         </tr>
     }
 

@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -52,7 +53,8 @@ namespace FeedReader.Controllers
                 var newsFeedItems = await db.NewsFeedItems.Include(n => n.NewsFeed).ToListAsync();
 
                 var matchingItems = from n in newsFeedItems
-                                    where n.Title.Contains(search) || n.Description.Contains(search)
+                                    where Regex.IsMatch(n.Title, "\\b" + search + "\\b", RegexOptions.IgnoreCase) || 
+                                          Regex.IsMatch(n.Description, "\\b" + search + "\\b", RegexOptions.IgnoreCase)
                                     select n;
                 
                 if (matchingItems == null ||
@@ -124,9 +126,10 @@ namespace FeedReader.Controllers
                 {
                     allItems.AddRange(newsFeed.Items);
                 }
-              
+                             
                 var matchingItems = from n in allItems
-                                    where n.Title.Contains(search) || n.Description.Contains(search)
+                                    where Regex.IsMatch(n.Title, "\\b" + search + "\\b", RegexOptions.IgnoreCase) ||  
+                                          Regex.IsMatch(n.Description, "\\b" + search + "\\b", RegexOptions.IgnoreCase)
                                     select n;
 
                 if (matchingItems == null ||

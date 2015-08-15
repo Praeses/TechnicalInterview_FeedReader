@@ -17,7 +17,7 @@ namespace FeedReader.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: NewsFeeds
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         [Route("Fitzgeralds-Flash/All")]
         public async Task<ActionResult> Index()
         {
@@ -25,7 +25,7 @@ namespace FeedReader.Controllers
         }
 
         // GET: NewsFeeds/Details/5
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         [Route("Fitzgeralds-Flash/{id:int}")]
         public async Task<ActionResult> Details(int? id)
         {
@@ -42,7 +42,7 @@ namespace FeedReader.Controllers
         }
 
         // GET: NewsFeeds/Create
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         [Route("Fitzgeralds-Flash/Create")]
         public ActionResult Create()
         {
@@ -53,7 +53,7 @@ namespace FeedReader.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         [Route("Fitzgeralds-Flash/Create")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "NewsFeedID,Category")] NewsFeed newsFeed)
@@ -73,7 +73,7 @@ namespace FeedReader.Controllers
         }
 
         // GET: NewsFeeds/Edit/5
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         [Route("Fitzgeralds-Flash/Edit/{id:int}")]
         public async Task<ActionResult> Edit(int? id)
         {
@@ -93,7 +93,7 @@ namespace FeedReader.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         [Route("Fitzgeralds-Flash/Edit/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "NewsFeedID,Category")] NewsFeed newsFeed)
@@ -108,6 +108,7 @@ namespace FeedReader.Controllers
         }
 
         // GET: NewsFeeds/Delete/5
+        [Authorize(Roles = "Admin")]
         [Route("Fitzgeralds-Flash/Delete/{id:int}")]
         public async Task<ActionResult> Delete(int? id)
         {
@@ -125,6 +126,7 @@ namespace FeedReader.Controllers
 
         // POST: NewsFeeds/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [Route("Fitzgeralds-Flash/Delete/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
