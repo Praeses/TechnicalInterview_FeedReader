@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -7,10 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using FeedReader.Models;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Owin;
-using FeedReader.Models;
 
 namespace FeedReader.Controllers
 {
@@ -21,6 +21,7 @@ namespace FeedReader.Controllers
 
         public AccountController()
         {
+            
         }
 
         public AccountController(ApplicationUserManager userManager)
@@ -102,7 +103,7 @@ namespace FeedReader.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "NewsFeedItems");
                 }
                 else
                 {
@@ -252,6 +253,62 @@ namespace FeedReader.Controllers
             return RedirectToAction("Manage", new { Message = message });
         }
 
+        [Authorize]
+        public async Task<ActionResult> ManageNewsFeeds()
+        {
+            ManageNewsFeedsViewModel model = new ManageNewsFeedsViewModel();
+            
+            model.UserID = User.Identity.GetUserId();
+
+            var user = await UserManager.FindByIdAsync(model.UserID);
+            
+            model.NewsFeeds = user.NewsFeeds.ToList();       
+                 
+            model.SelectedIDs.Clear();
+
+            foreach (NewsFeed newsFeed in user.NewsFeeds)
+            {
+                model.SelectedIDs.Add(newsFeed.NewsFeedID);
+            }
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ManageNewsFeeds(string userID, IEnumerable<int> selectedIDs)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {                 
+                ICollection<NewsFeed> newsFeeds = new List<NewsFeed>();
+                ApplicationUser user = context.Users.Where(u => u.Id == userID).SingleOrDefault();
+                user.NewsFeeds.Clear();
+
+                if (selectedIDs != null)
+                {
+                    foreach (int newsFeedId in selectedIDs)
+                    {                        
+                        var daNewsFeeds = await context.NewsFeed.ToListAsync();
+
+                        var daNewsFeed = daNewsFeeds.Where(n => n.NewsFeedID == newsFeedId).SingleOrDefault();
+
+                        newsFeeds.Add(daNewsFeed);
+                    }
+                }                
+
+                user.NewsFeeds = newsFeeds;
+                await context.SaveChangesAsync();
+
+                ManageNewsFeedsViewModel model = new ManageNewsFeedsViewModel();
+
+                model.UserID = user.Id;
+                model.NewsFeeds = user.NewsFeeds;
+
+                return View(model);
+            }        
+        }
+
         //
         // GET: /Account/Manage
         public ActionResult Manage(ManageMessageId? message)
@@ -262,9 +319,21 @@ namespace FeedReader.Controllers
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
+
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
-            return View();
+
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var model = new ManageUserViewModel
+            {           
+                userInfoVM = new ManageUserInfoViewModel
+                {
+                    Email = user.Email,
+                    Alias = user.Alias
+                }   
+            };
+            
+            return View(model);
         }
 
         //
@@ -276,49 +345,104 @@ namespace FeedReader.Controllers
             bool hasPassword = HasPassword();
             ViewBag.HasLocalPassword = hasPassword;
             ViewBag.ReturnUrl = Url.Action("Manage");
-            if (hasPassword)
-            {
-                if (ModelState.IsValid)
-                {
-                    IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-                    if (result.Succeeded)
-                    {
-                        var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                        await SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
-                    }
-                    else
-                    {
-                        AddErrors(result);
-                    }
-                }
-            }
-            else
-            {
-                // User does not have a password so remove any validation errors caused by a missing OldPassword field
-                ModelState state = ModelState["OldPassword"];
-                if (state != null)
-                {
-                    state.Errors.Clear();
-                }
+            ViewBag.DisplayPasswordModal = false;
 
+            if (model.userInfoVM != null)
+            {
                 if (ModelState.IsValid)
                 {
-                    IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-                    if (result.Succeeded)
+                    using (ApplicationDbContext context = new ApplicationDbContext())
                     {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
-                    }
-                    else
-                    {
-                        AddErrors(result);
+                        ICollection<NewsFeed> newsFeeds = new List<NewsFeed>();
+                        ApplicationUser user = context.Users.Where(u => u.Email == model.userInfoVM.Email).SingleOrDefault();
+
+                        user.Email = model.userInfoVM.Email;
+                        user.Alias = model.userInfoVM.Alias;
+
+                        ViewBag.StatusMessage = "Info successfully updated!";
+
+                        await context.SaveChangesAsync();
                     }
                 }
             }
+
+            if (model.userPasswordVM != null)
+            {
+                if (hasPassword)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        if (model.userPasswordVM.OldPassword != null && model.userPasswordVM.OldPassword != String.Empty)
+                        {
+                            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.userPasswordVM.OldPassword, model.userPasswordVM.NewPassword);
+                            if (result.Succeeded)
+                            {
+                                ViewBag.DisplayPasswordModal = false;
+
+                                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                                await SignInAsync(user, isPersistent: false);
+                                return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                            }
+                            else
+                            {
+                                ViewBag.DisplayPasswordModal = true;
+                                AddErrors(result);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // User does not have a password so remove any validation errors caused by a missing OldPassword field
+                    ModelState state = ModelState["OldPassword"];
+                    if (state != null)
+                    {
+                        state.Errors.Clear();
+                    }
+
+                    if (ModelState.IsValid)
+                    {
+                        IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.userPasswordVM.NewPassword);
+                        if (result.Succeeded)
+                        {
+                            ViewBag.DisplayPasswordModal = false;
+                            return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+                        }
+                        else
+                        {
+                            ViewBag.DisplayPasswordModal = true;
+                            AddErrors(result);
+                        }
+                    }
+                }
+            }              
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }   
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult RoleCreate()
+        {
+            return View();
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RoleCreate(string RoleName)
+        {
+            
+            ////Roles.CreateRole(Request.Form["RoleName"]);
+           
+            return RedirectToAction("RoleIndex", "Account");
+        
+        }
+
+        public ActionResult RoleList()
+        {            
+            return View();
+        } 
 
         //
         // POST: /Account/ExternalLogin
@@ -437,7 +561,7 @@ namespace FeedReader.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "NewsFeedItems");
         }
 
         //
@@ -455,7 +579,7 @@ namespace FeedReader.Controllers
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
         }
-
+       
         protected override void Dispose(bool disposing)
         {
             if (disposing && UserManager != null)
@@ -523,7 +647,7 @@ namespace FeedReader.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "NewsFeedItems");
             }
         }
 

@@ -1,29 +1,72 @@
 ﻿@using FeedReader.Models;
 @using Microsoft.AspNet.Identity;
+@model FeedReader.Models.ManageUserViewModel
 @{
     ViewBag.Title = "Manage Account";
 }
 
 <h2>@ViewBag.Title.</h2>
 
+<p>You're logged in as <strong>@User.Identity.GetUserName()</strong>.</p>
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
     <div class="col-md-12">
-        @if (ViewBag.HasLocalPassword)
+        @Html.Partial("_ChangeUserInfoPartial")
+        <hr />
+        @using (Html.BeginForm("Manage", "Account", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
         {
-            @Html.Partial("_ChangePasswordPartial")
+            <div class="form-group">
+                @Html.Label("Security", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    <button id="btnChangePassword" class="btn btn-default" data-toggle="modal" data-target="#managePasswordModal" type="submit">Change Password</button>
+                </div>
+            </div>
         }
-        else
-        {
-            @Html.Partial("_SetPasswordPartial")
-        }
-
+        <hr />
         <section id="externalLogins">
             @Html.Action("RemoveAccountList")
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
         </section>
     </div>
 </div>
+<!-- managePasswordModal -->
+<div id="managePasswordModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Change Password</h3>
+            </div>
+            <div class="modal-body">
+                @if (ViewBag.HasLocalPassword)
+                {
+                    @Html.Partial("_ChangePasswordPartial")
+                }
+                else
+                {
+                    @Html.Partial("_SetPasswordPartial")
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(function () { //Same as $(document).ready()
+            @if (ViewBag.DisplayPasswordModal == true)
+            {
+                <text>
+                $("#btnChangePassword").click();
+                </text>
+            }
+        });
+
+    </script>
 }
