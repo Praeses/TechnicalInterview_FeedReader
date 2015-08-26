@@ -15,3 +15,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+h3.tagline {
+    font-size:18px;
+    margin-top:10px;
+    text-indent:20px;
+}

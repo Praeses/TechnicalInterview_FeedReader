@@ -1,0 +1,85 @@
+﻿@model IEnumerable<FeedReader.Models.NewsFeedItem>
+
+@{
+    ViewBag.Title = "Fitzgerald's Flash";
+}
+
+<h2>Fitzgerald's Flash Subscriptions</h2>
+<h3 class="tagline">&mdash; Click <a href="/Account/ManageNewsFeeds">here</a> to manage subscriptions</h3>
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+@using (Html.BeginForm("My", "NewsFeedItems", FormMethod.Post))
+{
+    <br />
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="input-group">
+                @Html.TextBox("Search", "", new { @class = "form-control", placeholder = "Flash Search Here" })
+                <span class="input-group-btn">                 
+                    <button id="btnSearch" class="btn btn-primary" type="submit">Fitzgerald Find</button>
+                </span>
+            </div> 
+        </div>  
+    </div>  
+    <br />
+}
+
+<table class="table">
+    <tr>        
+        <th style="white-space: nowrap">
+            @Html.DisplayNameFor(model => model.NewsFeed.Category)
+        </th>
+        <th style="white-space: nowrap">
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th style="white-space: nowrap">
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th style="white-space: nowrap" class="text-center">
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </th>
+        <th style="white-space: nowrap;" class="text-center">
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        @if (User.IsInRole("Admin"))
+        {
+            <th></th>
+        }
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>            
+            <td style="white-space: nowrap">
+                @Html.DisplayFor(modelItem => item.NewsFeed.Category)
+            </td>
+            <td style="white-space: nowrap">
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td style="white-space: nowrap" class="text-center">
+                @Html.DisplayFor(modelItem => item.DateAdded)
+            </td>
+            <td style="white-space: nowrap" class="text-center">
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            @if (User.IsInRole("Admin"))
+            {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.NewsFeedItemID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.NewsFeedItemID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.NewsFeedItemID })
+            </td>
+            }
+        </tr>
+    }
+
+</table>

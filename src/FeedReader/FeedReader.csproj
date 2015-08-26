@@ -39,16 +39,41 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid.SmtpApi, Version=1.3.1.0, Culture=neutral, PublicKeyToken=2ae73662c35d80e4, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.SmtpApi.1.3.1\lib\net40\SendGrid.SmtpApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGridMail, Version=6.1.0.0, Culture=neutral, PublicKeyToken=2ae73662c35d80e4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.6.1.0\lib\SendGridMail.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Providers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.2.0.0\lib\net40\System.Web.Providers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -103,9 +128,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -162,23 +184,215 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationData.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\NewsFeedItemsController.cs" />
+    <Compile Include="Controllers\NewsFeedsController.cs" />
+    <Compile Include="Migrations\201508120654521_ChangeToNewsFeelModel.cs" />
+    <Compile Include="Migrations\201508120654521_ChangeToNewsFeelModel.Designer.cs">
+      <DependentUpon>201508120654521_ChangeToNewsFeelModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120656210_MyFeedItem.cs" />
+    <Compile Include="Migrations\201508120656210_MyFeedItem.Designer.cs">
+      <DependentUpon>201508120656210_MyFeedItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120717093_JustBecause.cs" />
+    <Compile Include="Migrations\201508120717093_JustBecause.Designer.cs">
+      <DependentUpon>201508120717093_JustBecause.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120720012_ChangedItems.cs" />
+    <Compile Include="Migrations\201508120720012_ChangedItems.Designer.cs">
+      <DependentUpon>201508120720012_ChangedItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120726077_NewsFeedMyFeedItemsRequired.cs" />
+    <Compile Include="Migrations\201508120726077_NewsFeedMyFeedItemsRequired.Designer.cs">
+      <DependentUpon>201508120726077_NewsFeedMyFeedItemsRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120739410_ChangedName.cs" />
+    <Compile Include="Migrations\201508120739410_ChangedName.Designer.cs">
+      <DependentUpon>201508120739410_ChangedName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120807239_LotsOChanges.cs" />
+    <Compile Include="Migrations\201508120807239_LotsOChanges.Designer.cs">
+      <DependentUpon>201508120807239_LotsOChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120810463_LinkChange.cs" />
+    <Compile Include="Migrations\201508120810463_LinkChange.Designer.cs">
+      <DependentUpon>201508120810463_LinkChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120818193_DisplayNames.cs" />
+    <Compile Include="Migrations\201508120818193_DisplayNames.Designer.cs">
+      <DependentUpon>201508120818193_DisplayNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120902347_NewsFeedTweak.cs" />
+    <Compile Include="Migrations\201508120902347_NewsFeedTweak.Designer.cs">
+      <DependentUpon>201508120902347_NewsFeedTweak.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120926027_AhHa.cs" />
+    <Compile Include="Migrations\201508120926027_AhHa.Designer.cs">
+      <DependentUpon>201508120926027_AhHa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120930141_NewRoutes.cs" />
+    <Compile Include="Migrations\201508120930141_NewRoutes.Designer.cs">
+      <DependentUpon>201508120930141_NewRoutes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508121750329_FK.cs" />
+    <Compile Include="Migrations\201508121750329_FK.Designer.cs">
+      <DependentUpon>201508121750329_FK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508121815204_Category.cs" />
+    <Compile Include="Migrations\201508121815204_Category.Designer.cs">
+      <DependentUpon>201508121815204_Category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508121817163_FD.cs" />
+    <Compile Include="Migrations\201508121817163_FD.Designer.cs">
+      <DependentUpon>201508121817163_FD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508121945219_Date.cs" />
+    <Compile Include="Migrations\201508121945219_Date.Designer.cs">
+      <DependentUpon>201508121945219_Date.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508120247081_InitialCreate.cs" />
+    <Compile Include="Migrations\201508120247081_InitialCreate.Designer.cs">
+      <DependentUpon>201508120247081_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120454454_AddedInitialRoutes.cs" />
+    <Compile Include="Migrations\201508120454454_AddedInitialRoutes.Designer.cs">
+      <DependentUpon>201508120454454_AddedInitialRoutes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508120516315_FitzgeralsFlashNameChange.cs" />
+    <Compile Include="Migrations\201508120516315_FitzgeralsFlashNameChange.Designer.cs">
+      <DependentUpon>201508120516315_FitzgeralsFlashNameChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508122145092_Profile.cs" />
+    <Compile Include="Migrations\201508122145092_Profile.Designer.cs">
+      <DependentUpon>201508122145092_Profile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508122223401_Profile1.cs" />
+    <Compile Include="Migrations\201508122223401_Profile1.Designer.cs">
+      <DependentUpon>201508122223401_Profile1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508122224000_Profile2.cs" />
+    <Compile Include="Migrations\201508122224000_Profile2.Designer.cs">
+      <DependentUpon>201508122224000_Profile2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508122227547_Profile3.cs" />
+    <Compile Include="Migrations\201508122227547_Profile3.Designer.cs">
+      <DependentUpon>201508122227547_Profile3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508130148245_Profile4.cs" />
+    <Compile Include="Migrations\201508130148245_Profile4.Designer.cs">
+      <DependentUpon>201508130148245_Profile4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508130218252_UserProfile.cs" />
+    <Compile Include="Migrations\201508130218252_UserProfile.Designer.cs">
+      <DependentUpon>201508130218252_UserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508130232259_NewsFeedSubs.cs" />
+    <Compile Include="Migrations\201508130232259_NewsFeedSubs.Designer.cs">
+      <DependentUpon>201508130232259_NewsFeedSubs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508130240305_UserStuff.cs" />
+    <Compile Include="Migrations\201508130240305_UserStuff.Designer.cs">
+      <DependentUpon>201508130240305_UserStuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508132112488_Testing.cs" />
+    <Compile Include="Migrations\201508132112488_Testing.Designer.cs">
+      <DependentUpon>201508132112488_Testing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508132123324_MovingMigration.cs" />
+    <Compile Include="Migrations\201508132123324_MovingMigration.Designer.cs">
+      <DependentUpon>201508132123324_MovingMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508132133357_Columns.cs" />
+    <Compile Include="Migrations\201508132133357_Columns.Designer.cs">
+      <DependentUpon>201508132133357_Columns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508140432239_Oops.cs" />
+    <Compile Include="Migrations\201508140432239_Oops.Designer.cs">
+      <DependentUpon>201508140432239_Oops.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508140505424_Hmm.cs" />
+    <Compile Include="Migrations\201508140505424_Hmm.Designer.cs">
+      <DependentUpon>201508140505424_Hmm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508140634320_MaybeNow.cs" />
+    <Compile Include="Migrations\201508140634320_MaybeNow.Designer.cs">
+      <DependentUpon>201508140634320_MaybeNow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508140654358_Bye.cs" />
+    <Compile Include="Migrations\201508140654358_Bye.Designer.cs">
+      <DependentUpon>201508140654358_Bye.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508140658232_Now.cs" />
+    <Compile Include="Migrations\201508140658232_Now.Designer.cs">
+      <DependentUpon>201508140658232_Now.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508141914400_StillGoing.cs" />
+    <Compile Include="Migrations\201508141914400_StillGoing.Designer.cs">
+      <DependentUpon>201508141914400_StillGoing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508141916238_StillGoing2.cs" />
+    <Compile Include="Migrations\201508141916238_StillGoing2.Designer.cs">
+      <DependentUpon>201508141916238_StillGoing2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508142119013_Multi.cs" />
+    <Compile Include="Migrations\201508142119013_Multi.Designer.cs">
+      <DependentUpon>201508142119013_Multi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508150441146_ChangeIdentModel.cs" />
+    <Compile Include="Migrations\201508150441146_ChangeIdentModel.Designer.cs">
+      <DependentUpon>201508150441146_ChangeIdentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508150531544_SelectedIDs.cs" />
+    <Compile Include="Migrations\201508150531544_SelectedIDs.Designer.cs">
+      <DependentUpon>201508150531544_SelectedIDs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508150626421_SelectedIDs2.cs" />
+    <Compile Include="Migrations\201508150626421_SelectedIDs2.Designer.cs">
+      <DependentUpon>201508150626421_SelectedIDs2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508150729245_Role.cs" />
+    <Compile Include="Migrations\201508150729245_Role.Designer.cs">
+      <DependentUpon>201508150729245_Role.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508150808225_Initials.cs" />
+    <Compile Include="Migrations\201508150808225_Initials.Designer.cs">
+      <DependentUpon>201508150808225_Initials.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508150809199_Alias.cs" />
+    <Compile Include="Migrations\201508150809199_Alias.Designer.cs">
+      <DependentUpon>201508150809199_Alias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508150812077_Alias2.cs" />
+    <Compile Include="Migrations\201508150812077_Alias2.Designer.cs">
+      <DependentUpon>201508150812077_Alias2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508150825568_Email.cs" />
+    <Compile Include="Migrations\201508150825568_Email.Designer.cs">
+      <DependentUpon>201508150825568_Email.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\NewsFeedModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-FeedReader-20140605010741.mdf" />
+    <Content Include="App_Data\aspnet-FeedReader-20140605010741_log.ldf" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -191,6 +405,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -212,10 +428,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\NewsFeedItems\Create.cshtml" />
+    <Content Include="Views\NewsFeedItems\Delete.cshtml" />
+    <Content Include="Views\NewsFeedItems\Details.cshtml" />
+    <Content Include="Views\NewsFeedItems\Edit.cshtml" />
+    <Content Include="Views\NewsFeedItems\Index.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
@@ -226,10 +445,161 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\NewsFeeds\Create.cshtml" />
+    <Content Include="Views\NewsFeeds\Delete.cshtml" />
+    <Content Include="Views\NewsFeeds\Details.cshtml" />
+    <Content Include="Views\NewsFeeds\Edit.cshtml" />
+    <Content Include="Views\NewsFeeds\Index.cshtml" />
+    <Content Include="Views\Account\ManageNewsFeeds.cshtml" />
+    <Content Include="Views\NewsFeedItems\My.cshtml" />
+    <Content Include="Views\Account\RoleCreate.cshtml" />
+    <Content Include="Views\Account\RoleList.cshtml" />
+    <Content Include="Views\Account\_ChangeUserInfoPartial.cshtml" />
+    <Content Include="Scripts\manage.user.1.0.0.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <EmbeddedResource Include="Migrations\201508120247081_InitialCreate.resx">
+      <DependentUpon>201508120247081_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120454454_AddedInitialRoutes.resx">
+      <DependentUpon>201508120454454_AddedInitialRoutes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120516315_FitzgeralsFlashNameChange.resx">
+      <DependentUpon>201508120516315_FitzgeralsFlashNameChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120654521_ChangeToNewsFeelModel.resx">
+      <DependentUpon>201508120654521_ChangeToNewsFeelModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120656210_MyFeedItem.resx">
+      <DependentUpon>201508120656210_MyFeedItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120717093_JustBecause.resx">
+      <DependentUpon>201508120717093_JustBecause.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120720012_ChangedItems.resx">
+      <DependentUpon>201508120720012_ChangedItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120726077_NewsFeedMyFeedItemsRequired.resx">
+      <DependentUpon>201508120726077_NewsFeedMyFeedItemsRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120739410_ChangedName.resx">
+      <DependentUpon>201508120739410_ChangedName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120807239_LotsOChanges.resx">
+      <DependentUpon>201508120807239_LotsOChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120810463_LinkChange.resx">
+      <DependentUpon>201508120810463_LinkChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120818193_DisplayNames.resx">
+      <DependentUpon>201508120818193_DisplayNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120902347_NewsFeedTweak.resx">
+      <DependentUpon>201508120902347_NewsFeedTweak.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120926027_AhHa.resx">
+      <DependentUpon>201508120926027_AhHa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508120930141_NewRoutes.resx">
+      <DependentUpon>201508120930141_NewRoutes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508121750329_FK.resx">
+      <DependentUpon>201508121750329_FK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508121815204_Category.resx">
+      <DependentUpon>201508121815204_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508121817163_FD.resx">
+      <DependentUpon>201508121817163_FD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508121945219_Date.resx">
+      <DependentUpon>201508121945219_Date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508122145092_Profile.resx">
+      <DependentUpon>201508122145092_Profile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508122223401_Profile1.resx">
+      <DependentUpon>201508122223401_Profile1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508122224000_Profile2.resx">
+      <DependentUpon>201508122224000_Profile2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508122227547_Profile3.resx">
+      <DependentUpon>201508122227547_Profile3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508130148245_Profile4.resx">
+      <DependentUpon>201508130148245_Profile4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508130218252_UserProfile.resx">
+      <DependentUpon>201508130218252_UserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508130232259_NewsFeedSubs.resx">
+      <DependentUpon>201508130232259_NewsFeedSubs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508130240305_UserStuff.resx">
+      <DependentUpon>201508130240305_UserStuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508132112488_Testing.resx">
+      <DependentUpon>201508132112488_Testing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508132123324_MovingMigration.resx">
+      <DependentUpon>201508132123324_MovingMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508132133357_Columns.resx">
+      <DependentUpon>201508132133357_Columns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508140432239_Oops.resx">
+      <DependentUpon>201508140432239_Oops.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508140505424_Hmm.resx">
+      <DependentUpon>201508140505424_Hmm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508140634320_MaybeNow.resx">
+      <DependentUpon>201508140634320_MaybeNow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508140654358_Bye.resx">
+      <DependentUpon>201508140654358_Bye.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508140658232_Now.resx">
+      <DependentUpon>201508140658232_Now.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508141914400_StillGoing.resx">
+      <DependentUpon>201508141914400_StillGoing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508141916238_StillGoing2.resx">
+      <DependentUpon>201508141916238_StillGoing2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508142119013_Multi.resx">
+      <DependentUpon>201508142119013_Multi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508150441146_ChangeIdentModel.resx">
+      <DependentUpon>201508150441146_ChangeIdentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508150531544_SelectedIDs.resx">
+      <DependentUpon>201508150531544_SelectedIDs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508150626421_SelectedIDs2.resx">
+      <DependentUpon>201508150626421_SelectedIDs2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508150729245_Role.resx">
+      <DependentUpon>201508150729245_Role.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508150808225_Initials.resx">
+      <DependentUpon>201508150808225_Initials.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508150809199_Alias.resx">
+      <DependentUpon>201508150809199_Alias.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508150812077_Alias2.resx">
+      <DependentUpon>201508150812077_Alias2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508150825568_Email.resx">
+      <DependentUpon>201508150825568_Email.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

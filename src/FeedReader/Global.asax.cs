@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using FeedReader.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace FeedReader
 {
@@ -18,6 +21,13 @@ namespace FeedReader
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ApplicationData.AllNewsFeeds = db.NewsFeed.ToList();
+
+                ApplicationData.AllNewsFeeds.Sort();
+            }
         }
     }
 }

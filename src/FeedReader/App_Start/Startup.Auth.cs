@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
+using System.Configuration;
 using FeedReader.Models;
 
 namespace FeedReader
@@ -47,8 +48,8 @@ namespace FeedReader
             //   consumerSecret: "");
 
             //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            //    appId: ConfigurationManager.AppSettings["FacebookAppId"],
+            //    appSecret: ConfigurationManager.AppSettings["FacebookSecret"]);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

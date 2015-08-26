@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNet.Identity
+@model FeedReader.Models.ManageUserViewModel
+
+@using (Html.BeginForm("Manage", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Update Info</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    
+    @Html.HiddenFor(m => m.userInfoVM.Email)
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.userInfoVM.Alias, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.userInfoVM.Alias, new { @class = "form-control" })
+        </div>
+    </div>    
+    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Update Info" class="btn btn-primary" />
+        </div>
+    </div>
+}
