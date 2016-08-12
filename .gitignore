@@ -53,7 +53,7 @@ TestResults/
 *.log
 *.sqlite
 *.mdf
-src/App_Data/*
+src/FeedReader/App_Data/*
 # OS generated files #
 ######################
 .DS_Store?
