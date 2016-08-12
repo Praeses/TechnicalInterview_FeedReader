@@ -47,12 +47,13 @@ TestResults/
 *.rar
 *.tar
 *.zip
-*.mdf
 ######################
 # Logs and databases #
 ######################
 *.log
 *.sqlite
+*.mdf
+src/App_Data/*
 # OS generated files #
 ######################
 .DS_Store?
