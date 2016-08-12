@@ -47,6 +47,7 @@ TestResults/
 *.rar
 *.tar
 *.zip
+*.mdf
 ######################
 # Logs and databases #
 ######################
