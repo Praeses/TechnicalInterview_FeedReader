@@ -29,6 +29,11 @@ namespace FeedReader.Models
         [Required]
         [Url(ErrorMessage = "The url does not appear to be valid")]
         public string URL { get; set; }
+        
+        [Url(ErrorMessage = "The url does not appear to be valid")]
+        public string Image { get; set; }
+
+        public string Title { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

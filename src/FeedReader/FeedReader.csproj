@@ -48,6 +48,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FeedAggreagator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FeedAggregator.1.2.8\lib\FeedAggreagator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="HigLabo.Net, Version=1.3.7.0, Culture=neutral, PublicKeyToken=20abaee7662647f3, processorArchitecture=MSIL">
       <HintPath>..\packages\HigLabo.Net.1.0.0.4\lib\net45\HigLabo.Net.dll</HintPath>
       <Private>True</Private>
@@ -59,6 +63,14 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FeedAggregator.1.2.8\lib\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Suyati.XmlExtractor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FeedAggregator.1.2.8\lib\Suyati.XmlExtractor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -181,6 +193,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Migrations\201608130241052_AddImageToFeed.cs" />
+    <Compile Include="Migrations\201608130241052_AddImageToFeed.Designer.cs">
+      <DependentUpon>201608130241052_AddImageToFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608130243253_AddTitleToFeeds.cs" />
+    <Compile Include="Migrations\201608130243253_AddTitleToFeeds.Designer.cs">
+      <DependentUpon>201608130243253_AddTitleToFeeds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CachingRssClient.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -207,13 +228,33 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="App_Readme\Handlebarsjs_README.md" />
+    <Content Include="App_Readme\Handlebarsjs_LICENSE" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\handlebars.amd.js" />
+    <Content Include="Scripts\handlebars.amd.min.js" />
+    <Content Include="Scripts\handlebars.js" />
+    <Content Include="Scripts\handlebars.min.js" />
+    <Content Include="Scripts\handlebars.runtime.amd.js" />
+    <Content Include="Scripts\handlebars.runtime.amd.min.js" />
+    <Content Include="Scripts\handlebars.runtime.js" />
+    <Content Include="Scripts\handlebars.runtime.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -224,6 +265,10 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -258,6 +303,9 @@
     <Content Include="Views\Feeds\Details.cshtml" />
     <Content Include="Views\Feeds\Edit.cshtml" />
     <Content Include="Views\Feeds\Index.cshtml" />
+    <Content Include="Views\Shared\_Title.cshtml" />
+    <Content Include="Views\Feeds\_CreateFeedForm.cshtml" />
+    <Content Include="Views\Shared\_MissingImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -278,6 +326,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608120202017_MakeUserIdNotRequired.resx">
       <DependentUpon>201608120202017_MakeUserIdNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608130241052_AddImageToFeed.resx">
+      <DependentUpon>201608130241052_AddImageToFeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608130243253_AddTitleToFeeds.resx">
+      <DependentUpon>201608130243253_AddTitleToFeeds.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,34 +1,45 @@
-﻿@model FeedReader.Models.Feed
+﻿@model  Suyati.FeedAggreagator.IFeed
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
 }
 
-<h2>Details</h2>
+@Html.Partial("_Title")
 
-<div>
-    <h4>Feed</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.URL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.URL)
-        </dd>
-
-    </dl>
+<div class="rss-channel">
+    <div class="image">
+        @if (!String.IsNullOrWhiteSpace(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="@Model.Title" />
+        }
+    </div>
+    <div class="articles">
+        @foreach (Suyati.FeedAggreagator.IFeedItem item in Model.Items)
+        {
+            <article class="article row">
+                <div class="row col-md-12">
+                    <div class="title col-md-12">
+                        <a href="@item.Url">@item.Title</a>
+                    </div>
+                    <div class="pub-date col-md-12">
+                        @item.PublishedDate
+                    </div>
+                    @if (!String.IsNullOrWhiteSpace(item.ImageUrl ?? Model.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl ?? Model.ImageUrl" alt="@item.Title Image" class="img-responsive col-md-4" />
+                    }
+                    else
+                    {
+                        <div class="missing-image col-md-4"></div>
+                    }
+                </div>
+                <div class="description col-md-12">
+                    @Html.Raw(item.Description)
+                </div>
+            </article>
+        }
+    </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.FeedId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

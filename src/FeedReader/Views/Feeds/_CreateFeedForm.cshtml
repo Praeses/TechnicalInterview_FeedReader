@@ -1,0 +1,10 @@
+﻿@model FeedReader.Models.Feed
+
+@using (Html.BeginForm("Create", "Feeds"))
+{
+    @Html.AntiForgeryToken()
+    @Html.EditorFor(x => x.URL, new { htmlAttributes = new { @class = "form-control typeahead", placeholder = "Search For New Feeds or Enter a URL" } })
+    @*<input type="text" name="URL" placeholder="Search For New Feeds or Enter a URL" class="typeahead form-control" />*@
+    <button type="submit" class="btn btn-md btn-success">Add <span class="fa fa-plus"></span></button>
+    @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
+}

@@ -1,36 +1,125 @@
 ﻿@model IEnumerable<FeedReader.Models.Feed>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Your RSS Feeds";
 }
 
-<h2>Index</h2>
+@Html.Partial("_Title")
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.URL)
-        </th>
-        <th></th>
-    </tr>
+<div class="action-bar add-feed-form col-md-12 row">
+    @Html.Partial("_CreateFeedForm", new FeedReader.Models.Feed())
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.URL)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FeedId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FeedId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.FeedId })
-        </td>
-    </tr>
+<div class="table feed-list">
+
+    @foreach (var item in Model)
+    {
+
+        <div class="feed-row row">
+            <div class="row col-md-8 ">
+                <div class="title col-md-12">
+                    @Html.ActionLink(item.Title ?? item.URL, "Details", new { id = item.FeedId })
+                </div>
+                <div class="image col-md-12">
+                    @if (!String.IsNullOrWhiteSpace(item.Image))
+                    {
+                        <div class="feed-image" style="background-image: url(@item.Image)">
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.Partial("_MissingImage")
+                    }
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-1 text-right">
+                <a class="btn btn-lg btn-primary show-button" href="@Url.Action("Details", new { id = item.FeedId })">
+                    <span class="fa fa-list"></span>
+                    <span>Show</span>
+                </a>
+                <a class="delete-button btn btn-lg btn-danger" href="@Url.Action("Delete", new { id = item.FeedId })">
+                    <span class="fa fa-trash"></span>
+                    <span>Delete</span>
+                </a>
+            </div>
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        (function () {
+            'use strict';
+            var RSS_SEARCH_URL = "/feeds/search";
+            var SEARCH_THROTTLING_TIMEOUT = 250;
+            var MAX_SEARCH_RESULTS = 3;
+            var currentSearch = null;
+            var searchTimeout = null;
+            var $searchBox = $('.typeahead');
+
+            Handlebars.registerHelper('strip', function (str, strToStrip) {
+                return str.replace(strToStrip, '');
+            });
+
+            Handlebars.registerHelper('truncate', function (str, len) {
+                return str.substring(0, len);
+            });
+
+            $searchBox.typeahead({
+                minLength: 1,
+                highlight: true
+            }, {
+                name: "feeds",
+                limit: 5,
+                source: function (query, syncResults, asyncResults) {
+                    cancelSearchRequest();
+                    if (isValidQuery(query)) {
+                        executeSearchAfterTimeout(query, asyncResults);
+                        $searchBox.removeClass("is-url");
+                    } else {
+                        console.debug("Assuming input is URL.");
+                        $searchBox.addClass("is-url");
+                    }
+                },
+                templates: {
+                    suggestion: Handlebars.compile(`
+                        <div class='suggestion row'>
+                            <div class ='image left col-md-2'>
+                                <img src='{{ iconUrl }}' />
+                            </div>
+                            <div class='info right col-md-10'>
+                                <span class ='suggestion-title'>{{ truncate title 40 }}</span>
+                                <span class ='suggestion-url'>{{ strip feedId 'feed/' }}</span>
+                            </div>
+                        </div>`)
+                }
+            });
+
+            $searchBox.on("typeahead:select", function (evt, site) {
+                $searchBox.typeahead('val', site.feedId.replace('feed/', ''));
+            });
+
+            function cancelSearchRequest() {
+                if (currentSearch && currentSearch.abort) currentSearch.abort();
+                if (searchTimeout) clearTimeout(searchTimeout);
+            }
+
+            function executeSearchAfterTimeout(query, callback) {
+                searchTimeout = setTimeout(function (q, cb) {
+                    console.debug("Executing search");
+                    currentSearch = $.getJSON(RSS_SEARCH_URL, { query: q, sites: MAX_SEARCH_RESULTS })
+                        .then(function (data) {
+                            var sites = data.sites;
+                            cb(sites);
+                        });
+                }.bind(this, query, callback), SEARCH_THROTTLING_TIMEOUT);
+            }
+
+            // If it's a string that contains 'http' or 'www' or a '.' then we'll assume it's not a valid query
+            function isValidQuery(query) {
+                return (typeof query === 'string') && query.length && !/\.|http|www/.test(query)
+            }
+        })();
+    </script>
 }
-
-</table>
