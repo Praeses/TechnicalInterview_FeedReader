@@ -172,3 +172,8 @@ input.form-control {
 .twitter-typeahead .form-control {
     max-width: initial;
 }
+
+.search-existing-feeds-button {
+    position: relative;
+    left: 20px;
+}

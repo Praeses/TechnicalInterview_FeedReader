@@ -8,6 +8,11 @@
 
 <div class="action-bar add-feed-form col-md-12 row">
     @Html.Partial("_CreateFeedForm", new FeedReader.Models.Feed())
+    <div class="col-md-6 text-right view-all-feed-items-button">
+        <a href="@Url.Action("Index", "FeedItems")" class="btn btn-md btn-primary">
+            <span class="fa fa-rss"></span> View Combined Feed
+        </a>
+    </div>
 </div>
 
 <div class="table feed-list">
