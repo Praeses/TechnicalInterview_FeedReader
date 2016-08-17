@@ -1,0 +1,36 @@
+﻿@model IEnumerable<FeedReader.Models.FeedItem>
+
+@{
+    ViewBag.Title = "All Your Feeds";
+}
+
+@Html.Partial("_Title")
+
+<div class="search-container action-bar">
+    @using (Html.BeginForm("Index", "FeedItems", FormMethod.Get, new { @class = "form" }))
+    {
+        <div class="form-group form-inline">
+            <input type="text" name="query" value="" class="form-control" placeholder="Search Your Feed Items" />
+            <button type="submit" class="btn btn-primary">
+                <span class="fa fa-search"></span>
+                <span>Search</span>
+            </button>
+        </div>
+    }
+</div>
+
+@Html.Partial("_FeedItemList", Model)
+
+<ul class="pagination">
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        if (ViewBag.CurrentPage == i)
+        {
+            <li class="active"><a href="@Url.Action("Index", new { query = ViewBag.Query, page = i })">@i</a></li>
+        }
+        else
+        {
+            <li><a href="@Url.Action("Index", new { query = ViewBag.Query, page = i })">@i</a></li>
+        }
+    }
+</ul>

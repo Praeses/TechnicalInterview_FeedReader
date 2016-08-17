@@ -3,11 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Praeses Feed Reader</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/fontawesome")
+    @Styles.Render("~/Content/sweet-alert")
     @Scripts.Render("~/bundles/modernizr")
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700,800" rel="stylesheet" />
+    @RenderSection("Head", required: false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -18,7 +20,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Praeses Feed Reader", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                    <span class="fa fa-bomb"></span>
+                    <span>Bomb Digity Feed Reader</span>
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 @if (Request.IsAuthenticated)
@@ -33,9 +38,8 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - <span class="fa fa-bomb"></span>Bomb Digity Feed Reader</p>
         </footer>
     </div>
 
@@ -43,6 +47,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/typeahead")
     @Scripts.Render("~/bundles/handlebars")
+    @Scripts.Render("~/bundles/sweetalert")
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -19,15 +19,18 @@ html, body {
     background-color: #222;
     height: 100%;
     min-height: 100%;
+    font-family: 'Open Sans';
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans';
 }
 
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
 }
 
 .navbar {
-    background-color: #393EB2;
+    background-color: #848AFF;
 }
 
 .navbar * {
@@ -43,9 +46,11 @@ body {
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    padding-top: 50px;
     padding-left: 15px;
     padding-right: 15px;
     background-color: white;
+    box-shadow: inset 0 0px 5px black;
 }
 
 /* Override the rounded borders for bootstrap because that ish isn't hot anymore man! */
@@ -55,16 +60,23 @@ body {
 
 .btn-default {
     background-color: #393EB2;
+    color: white;
 }
 
-.btn-primary {
+.btn-primary, .sweet-alert .sa-button-container button.cancel {
     background-color: #848AFF;
+    color: white;
+    transition-property: color, background-color;
+    transition-duration: 150ms;
 }
 
+.sweet-alert .sa-button-container button.cancel:hover, 
 .btn-primary:hover, 
 .btn-primary:active,
 .btn-primary:focus {
     background-color: #393EB2;
+    color: #FFEC9D;
+    text-decoration: underline;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -72,6 +84,27 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.feed-list {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: flex-start;    
+}
+
+.feed-row {
+    position: relative;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    margin-right: 2.2%;
+    width: 31%;
+    outline: solid 1px lightgrey;
+    margin-bottom: 30px;
+}
+
+.feed-row:hover {
+    background-color: rgba(100, 100, 100, 0.2);
 }
 
 .feed-row > * {
@@ -92,17 +125,44 @@ textarea {
     padding: 0 5px 0 0;
 }
 
-.feed-row {
-    padding: 15px 0;
-}
-
-.feed-row:hover {
-    background-color: rgba(100, 100, 100, 0.2);
-}
-
 .feed-row .title {
-    font-weight: bolder;
     font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.feed-row .feed-title {
+    padding: 10px;
+    background-color: #848AFF;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition-property: color, background-color;
+    transition-duration: 150ms;
+}
+
+.feed-row:hover * {
+    text-decoration: none !important;
+}
+
+.feed-row:hover .feed-title {
+    background-color: #393EB2;
+}
+
+.feed-row .feed-title {
+    color: white;
+}
+
+.feed-row .feed-title a:hover {
+    color: #FFEC9D;
+}
+
+.feed-row .feed-actions {
+    display: flex;
+    align-items: stretch;
+}
+
+.feed-row .feed-actions > * {
+    flex: 1;
+    padding: 10px;
 }
 
 .action-bar .suggestion {
@@ -134,10 +194,31 @@ input.form-control {
     border-radius: 0;
 }
 
-.action-bar.add-feed-form .btn-md {
+.search-container.action-bar .btn {
+    bottom: 0;
+}
+
+.search-container {
+    margin: 25px 0;
+}
+
+.action-bar form .btn {
     height: 34px;
     position: relative;
-    left: -5px;
+    right: 5px;
+    bottom: 1px;
+}
+
+.action-bar .form-control {
+    display: inline-block;
+}
+
+.action-bar form {
+    padding-left: 0;
+}
+
+.view-all-feed-items-button {
+    padding-right: 0;
 }
 
 .article {
@@ -153,7 +234,6 @@ input.form-control {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: #B29E4A;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -161,19 +241,176 @@ input.form-control {
     color: #FFEC9D;
 }
 
+.feed-image.missing-image {
+    background-color: #B29E4A;
+}
+
+.feed-row .feed-image {
+    height: 200px;
+    width: 100%;
+}
+
 .add-feed-form {
     margin-bottom: 20px;
 }
 
 .twitter-typeahead {
-    width: 40%;
+    width: 60%;
 }
 
 .twitter-typeahead .form-control {
     max-width: initial;
+    vertical-align: initial !important;
 }
 
 .search-existing-feeds-button {
     position: relative;
     left: 20px;
+}
+
+.container .jumbotron {
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.container .jumbotron > * {
+    padding: 10px 60px;
+}
+
+.banner-title {
+    font-weight: 300;
+    background-color: #FFEC9D;
+    display: inline-block;
+    color: #222 !important;
+    opacity: 0.9;
+}
+
+.lead {
+    background-color: #FFEC9D;
+    display: inline-block;
+    color: #222 !important;
+    opacity: 0.9;
+}
+
+footer {
+    padding: 20px;
+    border-top-color: #848AFF;
+    border-top-width: 2px;
+    border-top-style: solid;
+}
+
+.usage-steps {
+    display: flex;
+    justify-content: space-around;
+}
+
+.usage-steps .step {
+    width: 200px;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: solid 1px #FFEC9D;
+    color: #FFEC9D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-transform: uppercase;
+}
+
+.usage-steps .step > * {
+    margin: 10px;   
+}
+
+.feed-items .feed-item img {
+    height: 100px;
+}
+
+.feed-items .feed-item {
+    max-height: 300px;
+    min-height: 200px;
+    overflow: hidden;
+    margin: 0 0 30px 0;
+    font-size: 1.2em;
+    position: relative;
+}
+
+.feed-item .lead-info {
+    padding: 0;
+    margin-top: 15px;
+}
+
+.feed-item .lead-info > * {
+    margin-bottom: 10px;
+}
+
+.feed-item .description {
+    position: relative;
+}
+
+.feed-item .description::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 210px;
+    left: 0;
+    right: 0;
+    height: 55px;
+    background: linear-gradient(to top,#fff 50%,transparent);
+}
+
+.go-to-article-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+}
+
+.feed-item .title {
+    background-color: #848AFF;
+    font-weight: 300;
+    color: white;
+    transition-property: color, background-color;
+    transition-duration: 150ms;
+    padding: 10px 0;
+}
+
+.feed-item .title:hover {
+    background-color: #393EB2;
+    color: #FFEC9D;
+}
+
+.feed-item a:hover {
+    color: white;
+    background-color: #848AFF !important;
+    text-decoration-color: #848AFF;
+}
+
+.covered-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.feed-item-image {
+    width: 250px;
+    height: 140px;
+}
+
+.feed-item .description {
+    margin-top: 10px;
+}
+
+.tt-menu {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.missing-image {
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+li.active a {
+    background-color: #848AFF !important;
+    color: #FFEC9D !important;
 }

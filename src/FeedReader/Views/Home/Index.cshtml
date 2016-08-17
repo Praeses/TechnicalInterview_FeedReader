@@ -2,30 +2,51 @@
     ViewBag.Title = "Home Page";
 }
 
+@section Head {
+    <style>
+        .body-content {
+            padding: 50px 0 0 0;
+            height: 100%;
+            background-color: initial;
+            background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url('/Content/home-banner.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+        }
+
+        .jumbotron {
+            background: transparent;
+        }
+
+        footer {
+            display: none;
+        }
+    </style>    
+}
+
 <div class="jumbotron">
-    <h1>Feed Reader</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1 class="banner-title"><span class="fa fa-bomb"></span> Bomb Digity Feed Reader</h1>
+    <p class="lead">Finally, a bomb-ass way to read RSS feeds.</p>
+    <p><a href="@Url.Action("Register", "Account")" class="btn btn-primary btn-lg">Sign Up Now &raquo;</a></p>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="usage-steps">
+    <div class="step">
+        <div>Sign Up</div>
+        <div class="fa fa-5x fa-user-plus">
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="step">
+        <div>
+            Subscribe
+        </div>
+        <div class="fa fa-5x fa-rss-square"></div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="step">
+        <div>
+            Get Your Read On
+        </div>
+        <div class="fa fa-5x fa-book"></div>
     </div>
 </div>

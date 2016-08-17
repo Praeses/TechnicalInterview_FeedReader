@@ -193,6 +193,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FeedItemsController.cs" />
+    <Compile Include="Controllers\SweetController.cs" />
     <Compile Include="Migrations\201608130241052_AddImageToFeed.cs" />
     <Compile Include="Migrations\201608130241052_AddImageToFeed.Designer.cs">
       <DependentUpon>201608130241052_AddImageToFeed.cs</DependentUpon>
@@ -200,6 +202,10 @@
     <Compile Include="Migrations\201608130243253_AddTitleToFeeds.cs" />
     <Compile Include="Migrations\201608130243253_AddTitleToFeeds.Designer.cs">
       <DependentUpon>201608130243253_AddTitleToFeeds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608150253145_AddFeedItem.cs" />
+    <Compile Include="Migrations\201608150253145_AddFeedItem.Designer.cs">
+      <DependentUpon>201608150253145_AddFeedItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\CachingRssClient.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
@@ -230,11 +236,16 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\sweetalert\bootstrap-sweetalert.png" />
+    <Content Include="Content\sweetalert\docs.css" />
+    <Content Include="Content\sweetalert\sweet-alert.css" />
+    <Content Include="Content\sweetalert\thumbs-up.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\antiforgery.js" />
     <Content Include="Scripts\bloodhound.js" />
     <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -246,6 +257,11 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="App_Readme\Handlebarsjs_README.md" />
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
+    <Content Include="Content\sweetalert\sweet-alert.less" />
+    <Content Include="Content\sweetalert\sweet-alert-combine.less" />
+    <Content Include="Content\sweetalert\sweet-alert-animations.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\bootstrap\mixins.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
@@ -265,11 +281,14 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sweetalert-dev.js" />
+    <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Scripts\typeahead.bundle.js" />
     <Content Include="Scripts\typeahead.bundle.min.js" />
     <Content Include="Scripts\typeahead.jquery.js" />
     <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Styles\sweetalert.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -306,6 +325,9 @@
     <Content Include="Views\Shared\_Title.cshtml" />
     <Content Include="Views\Feeds\_CreateFeedForm.cshtml" />
     <Content Include="Views\Shared\_MissingImage.cshtml" />
+    <Content Include="Views\Sweet\Alert.cshtml" />
+    <Content Include="Views\FeedItems\Index.cshtml" />
+    <Content Include="Views\Shared\_FeedItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -332,6 +354,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608130243253_AddTitleToFeeds.resx">
       <DependentUpon>201608130243253_AddTitleToFeeds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608150253145_AddFeedItem.resx">
+      <DependentUpon>201608150253145_AddFeedItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

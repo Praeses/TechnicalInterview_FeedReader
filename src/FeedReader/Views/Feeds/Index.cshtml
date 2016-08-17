@@ -14,20 +14,22 @@
         </a>
     </div>
 </div>
-
-<div class="table feed-list">
+<hr />
+<div class="feed-list">
 
     @foreach (var item in Model)
     {
 
-        <div class="feed-row row">
-            <div class="row col-md-8 ">
-                <div class="title col-md-12">
-                    @Html.ActionLink(item.Title ?? item.URL, "Details", new { id = item.FeedId })
+        <div class="feed-row">
+            <a href="@Url.Action("Details", new { id = item.FeedId })">
+
+                <div class="feed-title text-center">
+                    <span>@(item.Title ?? item.URL)</span>
+                    <span>- (@item.FeedItems.Count() items)</span>
                 </div>
-                <div class="image col-md-12">
+                <div class="feed-image image">
                     @if (!String.IsNullOrWhiteSpace(item.Image))
-                    {
+                {
                         <div class="feed-image" style="background-image: url(@item.Image)">
                         </div>
                     }
@@ -36,13 +38,14 @@
                         @Html.Partial("_MissingImage")
                     }
                 </div>
-            </div>
-            <div class="col-md-3 col-md-offset-1 text-right">
-                <a class="btn btn-lg btn-primary show-button" href="@Url.Action("Details", new { id = item.FeedId })">
+            </a>
+
+            <div class="feed-actions">
+                <a class="btn btn-md btn-primary show-button" href="@Url.Action("Details", new { id = item.FeedId })">
                     <span class="fa fa-list"></span>
                     <span>Show</span>
                 </a>
-                <a class="delete-button btn btn-lg btn-danger" href="@Url.Action("Delete", new { id = item.FeedId })">
+                <a class="delete-button btn btn-md btn-danger" href="@Url.Action("Delete", new { id = item.FeedId })" data-feed-title="@item.Title">
                     <span class="fa fa-trash"></span>
                     <span>Delete</span>
                 </a>
@@ -51,8 +54,11 @@
     }
 
 </div>
+@Html.AntiForgeryToken()
+
 
 @section Scripts {
+    <script src="~/Scripts/antiforgery.js"></script>
     <script type="text/javascript">
         (function () {
             'use strict';
@@ -103,6 +109,28 @@
 
             $searchBox.on("typeahead:select", function (evt, site) {
                 $searchBox.typeahead('val', site.feedId.replace('feed/', ''));
+            });
+
+            $('.delete-button').on('click', function (evt) {
+                evt.preventDefault();
+                var deleteUrl = $(this).attr('href');
+                swal({
+                    title: 'Are you sure?',
+                    text: 'You will have to resubscribe to "' + $(this).attr('data-feed-title') + '" if you want to receive updates from them.',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete It!',
+                    closeOnConfirm: false,
+                    confirmButtonColor: '#d9534f'
+                }, function (url) {
+                    $.post(url).then(function () {
+                        swal({
+                            title: 'Deleted!',
+                            text: 'You successfully deleted this feed.'
+                        }, function () {
+                            location.reload(true);
+                        });
+                    });
+                }.bind(this, deleteUrl));
             });
 
             function cancelSearchRequest() {

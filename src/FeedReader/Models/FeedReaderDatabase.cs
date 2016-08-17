@@ -4,6 +4,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace FeedReader.Models
 {
@@ -34,6 +37,28 @@ namespace FeedReader.Models
         public string Image { get; set; }
 
         public string Title { get; set; }
+
+        public virtual ICollection<FeedItem> FeedItems { get; set; }
+    }
+
+    public class FeedItem
+    {
+        [Required]
+        public int FeedId { get; set; }
+
+        [Required]
+        public virtual Feed Feed { get; set; }
+
+        public int FeedItemId { get; set; }
+
+        [Url]
+        public string Image { get; set; }
+        public string Description { get; set; }
+        public string Title { get; set; }
+        public DateTime? PublishedDate { get; set; }
+
+        [Url]
+        public string URL { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -49,5 +74,6 @@ namespace FeedReader.Models
         }
 
         public DbSet<Feed> Feeds { get; set; }
+        public DbSet<FeedItem> FeedItems { get; set; }
     }
 }

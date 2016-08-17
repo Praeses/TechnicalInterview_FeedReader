@@ -13,6 +13,7 @@ using FeedReader.Services;
 using System.IO;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using Suyati.FeedAggreagator;
 
 namespace FeedReader.Controllers
 {
@@ -26,7 +27,8 @@ namespace FeedReader.Controllers
         private const int DefaultSearchSitesToRetrieve = 5;
         private const int MaxSitesToRetrieve = 20;
 
-        public string CurrentUserId {
+        public string CurrentUserId
+        {
             get
             {
                 return User.Identity.GetUserId();
@@ -36,7 +38,12 @@ namespace FeedReader.Controllers
         // GET: Feeds
         public ActionResult Index()
         {
-            return View(db.Feeds.ToList());
+            return View(GetFeeds().ToList());
+        }
+
+        private IEnumerable<Feed> GetFeeds()
+        {
+            return db.Feeds.Where(x => x.UserId == CurrentUserId);
         }
 
         // GET: Feeds/Details/5
@@ -46,19 +53,12 @@ namespace FeedReader.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Feed feed = db.Feeds.Find(id);
+            Feed feed = GetFeeds().FirstOrDefault(x => x.FeedId == id);
             if (feed == null)
             {
                 return HttpNotFound();
             }
-            var rssFeed = rssClient.GetRssFeed(feed.URL);
-            return View(rssFeed);
-        }
-
-        // GET: Feeds/Create
-        public ActionResult Create()
-        {
-            return View();
+            return View(feed);
         }
 
         // POST: Feeds/Create
@@ -68,15 +68,45 @@ namespace FeedReader.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "FeedId,URL")] Feed feed)
         {
-            if (ModelState.IsValid && IsValidRssEndpoint(feed.URL))
+            if (!ModelState.IsValid || !IsValidRssEndpoint(feed.URL))
             {
-                feed.UserId = CurrentUserId;
-                var rssFeed = rssClient.GetRssFeed(feed.URL);
-                feed.Image = rssFeed.ImageUrl;
-                feed.Title = rssFeed.Title;
-                db.Feeds.Add(feed);
-                db.SaveChanges();
+                return RedirectToAction("Index");
             }
+            feed.UserId = CurrentUserId;
+
+            // We want to see if we already have this feed. If so, we know it's good to add, just duplicate it for this user and return.
+            var existingFeed = db.Feeds
+                .Where(x => x.URL.Equals(feed.URL, StringComparison.OrdinalIgnoreCase))
+                .FirstOrDefault();
+
+            if (existingFeed != null)
+            {
+                feed.Image = existingFeed.Image;
+                feed.Title = existingFeed.Title;
+                db.Feeds.Add(feed);
+                return RedirectToAction("Index");
+            }
+
+            // We didn't have this feed already so let's make sure we can get it and cache the image and title.
+            //FIXME: Right now this doesn't ever update feed items after initially retrieving it. 
+            // Maybe there needs to be a background job or service that handles this.
+            var rssFeed = rssClient.GetRssFeed(feed.URL);
+            feed.Image = rssFeed.ImageUrl;
+            feed.Title = rssFeed.Title;
+            db.Feeds.Add(feed);
+
+            var feedItems = rssFeed.Items.Select(item => new FeedItem
+            {
+                Feed = feed,
+                Description = item.Description,
+                Image = item.ImageUrl,
+                PublishedDate = item.PublishedDate,
+                Title = item.Title,
+                URL = item.Url
+            });
+            db.FeedItems.AddRange(feedItems);
+
+            db.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -145,7 +175,7 @@ namespace FeedReader.Controllers
             {
                 rssClient.GetRssFeed(url);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
