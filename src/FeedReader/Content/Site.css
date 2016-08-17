@@ -87,7 +87,7 @@ textarea {
 }
 
 .feed-list {
-    display: flex;
+    display: inline-flex;
     flex-flow: wrap;
     justify-content: flex-start;    
 }
