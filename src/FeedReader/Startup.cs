@@ -1,5 +1,4 @@
-﻿using FeedReader.Migrations;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
 using System.Data.Entity;
 

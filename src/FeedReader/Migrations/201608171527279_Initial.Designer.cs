@@ -13,7 +13,7 @@ namespace FeedReader.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201608171433220_Initial"; }
+            get { return "201608171527279_Initial"; }
         }
         
         string IMigrationMetadata.Source

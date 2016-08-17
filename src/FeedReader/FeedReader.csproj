@@ -210,17 +210,17 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedItemsController.cs" />
     <Compile Include="Controllers\SweetController.cs" />
-    <Compile Include="Migrations\201608171433220_Initial.cs" />
-    <Compile Include="Migrations\201608171433220_Initial.Designer.cs">
-      <DependentUpon>201608171433220_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201608171527279_Initial.cs" />
+    <Compile Include="Migrations\201608171527279_Initial.Designer.cs">
+      <DependentUpon>201608171527279_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Services\CachingRssClient.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FeedReaderDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -349,8 +349,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608171433220_Initial.resx">
-      <DependentUpon>201608171433220_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201608171527279_Initial.resx">
+      <DependentUpon>201608171527279_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

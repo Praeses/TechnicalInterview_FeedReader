@@ -89,6 +89,7 @@ textarea {
 .feed-list {
     display: inline-flex;
     flex-flow: wrap;
+        min-width: 100%;
     justify-content: flex-start;    
 }
 
