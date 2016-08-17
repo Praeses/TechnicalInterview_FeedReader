@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FeedReader.Migrations;
 
 namespace FeedReader.Models
 {
@@ -43,10 +44,7 @@ namespace FeedReader.Models
 
     public class FeedItem
     {
-        [Required]
         public int FeedId { get; set; }
-
-        [Required]
         public virtual Feed Feed { get; set; }
 
         public int FeedItemId { get; set; }
@@ -66,6 +64,9 @@ namespace FeedReader.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer(new DropCreateDatabaseAlways<ApplicationDbContext>());
+            Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
         }
 
         public static ApplicationDbContext Create()

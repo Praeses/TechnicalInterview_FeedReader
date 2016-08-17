@@ -1,5 +1,7 @@
-﻿using Microsoft.Owin;
+﻿using FeedReader.Migrations;
+using Microsoft.Owin;
 using Owin;
+using System.Data.Entity;
 
 [assembly: OwinStartupAttribute(typeof(FeedReader.Startup))]
 namespace FeedReader

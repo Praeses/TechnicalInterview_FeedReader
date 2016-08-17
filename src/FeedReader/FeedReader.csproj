@@ -210,35 +210,15 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedItemsController.cs" />
     <Compile Include="Controllers\SweetController.cs" />
-    <Compile Include="Migrations\201608130241052_AddImageToFeed.cs" />
-    <Compile Include="Migrations\201608130241052_AddImageToFeed.Designer.cs">
-      <DependentUpon>201608130241052_AddImageToFeed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608130243253_AddTitleToFeeds.cs" />
-    <Compile Include="Migrations\201608130243253_AddTitleToFeeds.Designer.cs">
-      <DependentUpon>201608130243253_AddTitleToFeeds.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608150253145_AddFeedItem.cs" />
-    <Compile Include="Migrations\201608150253145_AddFeedItem.Designer.cs">
-      <DependentUpon>201608150253145_AddFeedItem.cs</DependentUpon>
+    <Compile Include="Migrations\201608171433220_Initial.cs" />
+    <Compile Include="Migrations\201608171433220_Initial.Designer.cs">
+      <DependentUpon>201608171433220_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\CachingRssClient.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608100142364_InitialCreate.cs" />
-    <Compile Include="Migrations\201608100142364_InitialCreate.Designer.cs">
-      <DependentUpon>201608100142364_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608120145035_ChangeFeedIdToString.cs" />
-    <Compile Include="Migrations\201608120145035_ChangeFeedIdToString.Designer.cs">
-      <DependentUpon>201608120145035_ChangeFeedIdToString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608120202017_MakeUserIdNotRequired.cs" />
-    <Compile Include="Migrations\201608120202017_MakeUserIdNotRequired.Designer.cs">
-      <DependentUpon>201608120202017_MakeUserIdNotRequired.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -369,23 +349,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608100142364_InitialCreate.resx">
-      <DependentUpon>201608100142364_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608120145035_ChangeFeedIdToString.resx">
-      <DependentUpon>201608120145035_ChangeFeedIdToString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608120202017_MakeUserIdNotRequired.resx">
-      <DependentUpon>201608120202017_MakeUserIdNotRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608130241052_AddImageToFeed.resx">
-      <DependentUpon>201608130241052_AddImageToFeed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608130243253_AddTitleToFeeds.resx">
-      <DependentUpon>201608130243253_AddTitleToFeeds.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608150253145_AddFeedItem.resx">
-      <DependentUpon>201608150253145_AddFeedItem.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201608171433220_Initial.resx">
+      <DependentUpon>201608171433220_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
