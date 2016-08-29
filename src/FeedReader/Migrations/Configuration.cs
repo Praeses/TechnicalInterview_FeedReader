@@ -9,8 +9,7 @@ namespace FeedReader.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            ContextKey = "FeedReader.Models.ApplicationDbContext";
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(FeedReader.Models.ApplicationDbContext context)

@@ -3,10 +3,38 @@ namespace FeedReader.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.FeedItems",
+                c => new
+                    {
+                        FeedItemId = c.Int(nullable: false, identity: true),
+                        FeedId = c.Int(nullable: false),
+                        Image = c.String(),
+                        Description = c.String(),
+                        Title = c.String(),
+                        PublishedDate = c.DateTime(),
+                        URL = c.String(),
+                    })
+                .PrimaryKey(t => t.FeedItemId)
+                .ForeignKey("dbo.Feeds", t => t.FeedId, cascadeDelete: true)
+                .Index(t => t.FeedId);
+            
+            CreateTable(
+                "dbo.Feeds",
+                c => new
+                    {
+                        FeedId = c.Int(nullable: false, identity: true),
+                        UserId = c.String(),
+                        URL = c.String(nullable: false),
+                        Image = c.String(),
+                        Title = c.String(),
+                    })
+                .PrimaryKey(t => t.FeedId);
+            
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -83,17 +111,21 @@ namespace FeedReader.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.FeedItems", "FeedId", "dbo.Feeds");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.FeedItems", new[] { "FeedId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Feeds");
+            DropTable("dbo.FeedItems");
         }
     }
 }

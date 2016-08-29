@@ -43,10 +43,7 @@ namespace FeedReader.Models
 
     public class FeedItem
     {
-        [Required]
         public int FeedId { get; set; }
-
-        [Required]
         public virtual Feed Feed { get; set; }
 
         public int FeedItemId { get; set; }
