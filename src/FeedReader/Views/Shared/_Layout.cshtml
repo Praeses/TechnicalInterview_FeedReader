@@ -37,6 +37,13 @@
         </div>
     </div>
     <div class="container body-content">
+        @if (!String.IsNullOrWhiteSpace((string)TempData["Error"]))
+        {
+            <div class="last-error error alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>@TempData["Error"]</strong>
+            </div>
+        }
         @RenderBody()
         <footer>
             <p>&copy; @DateTime.Now.Year - <span class="fa fa-bomb"></span>Bomb Digity Feed Reader</p>

@@ -64,6 +64,7 @@ namespace FeedReader.Controllers
         {
             if (!ModelState.IsValid || !IsValidRssEndpoint(feed.URL))
             {
+                TempData["Error"] = "The RSS Feed you are trying to add (" + feed.URL + ") is not valid.";
                 return RedirectToAction("Index");
             }
             feed.UserId = CurrentUserId;
