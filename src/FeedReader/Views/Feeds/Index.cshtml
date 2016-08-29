@@ -1,0 +1,158 @@
+﻿@model IEnumerable<FeedReader.Models.Feed>
+
+@{
+    ViewBag.Title = "Your RSS Feeds";
+}
+
+@Html.Partial("_Title")
+
+<div class="action-bar add-feed-form col-md-12 row">
+    @Html.Partial("_CreateFeedForm", new FeedReader.Models.Feed())
+    <div class="col-md-6 text-right view-all-feed-items-button">
+        <a href="@Url.Action("Index", "FeedItems")" class="btn btn-md btn-primary">
+            <span class="fa fa-rss"></span> View Combined Feed
+        </a>
+    </div>
+</div>
+<hr />
+<div class="feed-list">
+
+    @foreach (var item in Model)
+    {
+
+        <div class="feed-row">
+            <a href="@Url.Action("Details", new { id = item.FeedId })">
+
+                <div class="feed-title text-center">
+                    <span>@(item.Title ?? item.URL)</span>
+                    <span>- (@item.FeedItems.Count() items)</span>
+                </div>
+                <div class="feed-image image">
+                    @if (!String.IsNullOrWhiteSpace(item.Image))
+                {
+                        <div class="feed-image" style="background-image: url(@item.Image)">
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.Partial("_MissingImage")
+                    }
+                </div>
+            </a>
+
+            <div class="feed-actions">
+                <a class="btn btn-md btn-primary show-button" href="@Url.Action("Details", new { id = item.FeedId })">
+                    <span class="fa fa-list"></span>
+                    <span>Show</span>
+                </a>
+                <a class="delete-button btn btn-md btn-danger" href="@Url.Action("Delete", new { id = item.FeedId })" data-feed-title="@item.Title">
+                    <span class="fa fa-trash"></span>
+                    <span>Delete</span>
+                </a>
+            </div>
+        </div>
+    }
+
+</div>
+@Html.AntiForgeryToken()
+
+
+@section Scripts {
+    <script src="~/Scripts/antiforgery.js"></script>
+    <script type="text/javascript">
+        (function () {
+            'use strict';
+            var RSS_SEARCH_URL = "/feeds/search";
+            var SEARCH_THROTTLING_TIMEOUT = 250;
+            var MAX_SEARCH_RESULTS = 3;
+            var currentSearch = null;
+            var searchTimeout = null;
+            var $searchBox = $('.typeahead');
+
+            Handlebars.registerHelper('strip', function (str, strToStrip) {
+                return str.replace(strToStrip, '');
+            });
+
+            Handlebars.registerHelper('truncate', function (str, len) {
+                return str.substring(0, len);
+            });
+
+            $searchBox.typeahead({
+                minLength: 1,
+                highlight: true
+            }, {
+                name: "feeds",
+                limit: 5,
+                source: function (query, syncResults, asyncResults) {
+                    cancelSearchRequest();
+                    if (isValidQuery(query)) {
+                        executeSearchAfterTimeout(query, asyncResults);
+                        $searchBox.removeClass("is-url");
+                    } else {
+                        console.debug("Assuming input is URL.");
+                        $searchBox.addClass("is-url");
+                    }
+                },
+                templates: {
+                    suggestion: Handlebars.compile(`
+                        <div class='suggestion row'>
+                            <div class ='image left col-md-2'>
+                                <img src='{{ iconUrl }}' />
+                            </div>
+                            <div class='info right col-md-10'>
+                                <span class ='suggestion-title'>{{ truncate title 40 }}</span>
+                                <span class ='suggestion-url'>{{ strip feedId 'feed/' }}</span>
+                            </div>
+                        </div>`)
+                }
+            });
+
+            $searchBox.on("typeahead:select", function (evt, site) {
+                $searchBox.typeahead('val', site.feedId.replace('feed/', ''));
+            });
+
+            $('.delete-button').on('click', function (evt) {
+                evt.preventDefault();
+                var deleteUrl = $(this).attr('href');
+                swal({
+                    title: 'Are you sure?',
+                    text: 'You will have to resubscribe to "' + $(this).attr('data-feed-title') + '" if you want to receive updates from them.',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete It!',
+                    closeOnConfirm: false,
+                    confirmButtonColor: '#d9534f'
+                }, function (url) {
+                    $.post(url).then(function () {
+                        swal({
+                            title: 'Deleted!',
+                            text: 'You successfully deleted this feed.'
+                        }, function () {
+                            location.reload(true);
+                        });
+                    });
+                }.bind(this, deleteUrl));
+            });
+
+            function cancelSearchRequest() {
+                if (currentSearch && currentSearch.abort) currentSearch.abort();
+                if (searchTimeout) clearTimeout(searchTimeout);
+            }
+
+            function executeSearchAfterTimeout(query, callback) {
+                searchTimeout = setTimeout(function (q, cb) {
+                    console.debug("Executing search");
+                    currentSearch = $.getJSON(RSS_SEARCH_URL, { query: q, sites: MAX_SEARCH_RESULTS })
+                        .then(function (data) {
+                            var sites = data.sites;
+                            cb(sites);
+                        });
+                }.bind(this, query, callback), SEARCH_THROTTLING_TIMEOUT);
+            }
+
+            // If it's a string that contains 'http' or 'www' or a '.' then we'll assume it's not a valid query
+            function isValidQuery(query) {
+                return (typeof query === 'string') && query.length && !/\.|http|www/.test(query)
+            }
+        })();
+    </script>
+}

@@ -1,0 +1,24 @@
+﻿@model  FeedReader.Models.Feed
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+@Html.Partial("_Title")
+
+<div class="rss-channel">
+    <div class="image">
+        @if (!String.IsNullOrWhiteSpace(Model.Image))
+        {
+            <img src="@Model.Image" alt="@Model.Title" />
+        }
+    </div>
+
+    @Html.Partial("_FeedItemList", Model.FeedItems.ToList())
+</div>
+<p>
+    <a href="@Url.Action("Index")" class="btn btn-primary">
+        <span class="fa fa-backward"></span>
+        <span>Your Feeds</span>
+    </a>
+</p>

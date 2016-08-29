@@ -1,0 +1,37 @@
+﻿@model IEnumerable<FeedReader.Models.FeedItem>
+
+<div class="feed-items">
+    @foreach (var item in Model)
+    {
+        <article class="feed-item row">
+            <a href="@item.URL" target="_blank" title="Go to original article">
+                <div class="col-md-12 title text-center">
+                    @item.Title
+                    @if (item.PublishedDate.HasValue)
+                    {
+                        <em>(@(item.PublishedDate.Value.ToShortDateString()) <span> at </span> @(item.PublishedDate.Value.ToShortTimeString()))</em>
+                    }
+                </div>
+            </a>
+
+            <div class="col-md-3 lead-info">
+                @if (!String.IsNullOrWhiteSpace(item.Image ?? item.Feed.Image))
+                {
+                    <div class="covered-bg feed-item-image" style="background-image: url(@(item.Image ?? item.Feed.Image))"></div>
+                }
+                else
+                {
+                    @Html.Partial("_MissingImage")
+                }
+                <a href="@item.URL" target="_blank" class="btn btn-primary">
+                    <span class="fa fa-globe"></span>
+                    <span>Read Full Article</span>
+                </a>
+            </div>
+            <div class="col-md-7 description">
+                @Html.Raw(item.Description)
+            </div>
+        </article>
+    }
+</div>
+

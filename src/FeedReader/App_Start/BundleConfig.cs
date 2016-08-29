@@ -14,6 +14,10 @@ namespace FeedReader
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/typeahead").Include(
+                        "~/Scripts/bloodhound*",
+                        "~/Scripts/typeahead*"));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -26,6 +30,19 @@ namespace FeedReader
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/fontawesome").Include(
+                      "~/Content/font-awesome.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/handlebars").Include(
+                      "~/Scripts/handlebars.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/sweetalert").Include(
+                        "~/Scripts/sweetalert.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/sweet-alert").Include(
+                "~/Content/sweetalert/sweet-alert.css",
+                "~/Styles/sweetalert.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
