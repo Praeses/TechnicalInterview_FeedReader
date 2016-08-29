@@ -14,12 +14,18 @@ namespace FeedReader.Controllers
     [Authorize]
     public class FeedsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private CachingRssClient rssClient = new CachingRssClient();
+        private ApplicationDbContext db;
+        private CachingRssClient rssClient;
         private const string RssFeedSearchUrl = "https://feedly.com/v3/search/auto-complete";
         private const int SearchRequestTimeout = 5000;
         private const int DefaultSearchSitesToRetrieve = 5;
         private const int MaxSitesToRetrieve = 20;
+
+        public FeedsController(ApplicationDbContext db, CachingRssClient rssClient)
+        {
+            this.db = db;
+            this.rssClient = rssClient;
+        }
 
         public string CurrentUserId
         {
