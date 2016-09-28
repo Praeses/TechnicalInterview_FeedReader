@@ -176,11 +176,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\RssChannel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\RssItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\IRssUpdater.cs" />
+    <Compile Include="Providers\RssUpdater.cs" />
+    <Compile Include="Providers\SyndicationFeedXmlReader.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -232,7 +236,9 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Rss\Index.cshtml" />
+    <Content Include="Views\Rss\ViewFeed.cshtml" />
+    <Content Include="Views\Rss\ListFeeds.cshtml" />
+    <Content Include="Views\Rss\AddFeed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

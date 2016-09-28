@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "ListFeeds";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<FeedReader.Models.RssChannel>
+
+<h2>ListFeeds</h2>
+
+@foreach (FeedReader.Models.RssChannel channel in Model)
+{
+    @Html.ActionLink(channel.Title, "ViewFeed", new {id=channel.RssChannelId }) <br />
+}
+<br />
+@Html.ActionLink("Add Feed", "AddFeed")

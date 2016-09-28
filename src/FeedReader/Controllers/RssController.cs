@@ -6,7 +6,13 @@ using System.Web.Mvc;
 using System.Xml;
 using System.Xml.XPath;
 using System.ServiceModel.Syndication;
+using System.Data.Entity.Validation;
+
 using FeedReader.Models;
+using FeedReader.Providers;
+using FeedReader.DBContexts;
+
+
 using System.Text.RegularExpressions;
 
 namespace FeedReader.Controllers
@@ -14,78 +20,72 @@ namespace FeedReader.Controllers
     public class RssController : Controller
     {
         // GET: Rss
-        public ActionResult Index(Dictionary<String, Object> model)
+        public ActionResult Index(string feedUrl, Dictionary<String, Object> model)
         {
-            try
-            {
-                XmlReader reader = XmlReader.Create("http://rss.cnn.com/rss/cnn_topstories.rss");
-                SyndicationFeed feed = SyndicationFeed.Load(reader);
+            IRssUpdater updater = new RssUpdater();
+            RssChannel channel = updater.retrieveChannel(feedUrl);
 
-                reader.Close();
+            model["channel"] = channel;
 
-                RssChannel channel = new RssChannel();
-
-                channel.Link = feed.Links.FirstOrDefault().Uri.ToString();
-                channel.Title = feed.Title.Text;
-                channel.Description = feed.Description != null ? scrubHtml(feed.Description.Text) : String.Empty;
-                channel.ImageUrl = feed.ImageUrl != null ? feed.ImageUrl.ToString() : String.Empty;
-
-                foreach (SyndicationItem item in feed.Items)
-                {
-                    RssItem rssItem = new RssItem();
-                    rssItem.Link = item.Links.FirstOrDefault().Uri.ToString();
-                    rssItem.Title = item.Title.Text;
-                    rssItem.Description = item.Summary != null ? scrubHtml(item.Summary.Text) : String.Empty;
-
-                    SyndicationElementExtension extension = item.ElementExtensions.Where<SyndicationElementExtension>(x => x.OuterNamespace == "http://search.yahoo.com/mrss/" && x.OuterName == "media").FirstOrDefault();
-
-                    if (extension != null)
-                    {
-                        XPathNavigator navigator = new XPathDocument(extension.GetReader()).CreateNavigator();
-                        XmlNamespaceManager resolver = new XmlNamespaceManager(navigator.NameTable);
-                        resolver.AddNamespace("media", "http://search.yahoo.com/mrss/");
-
-                        string thumbnailUri = navigator.SelectSingleNode("media:thumbnail", resolver).GetAttribute("url", "");
-                        rssItem.ImageUrl = thumbnailUri;
-                
-                    }
-
-                    extension = item.ElementExtensions.Where<SyndicationElementExtension>(x => x.OuterNamespace == "http://search.yahoo.com/mrss/" && x.OuterName == "group").FirstOrDefault();
-
-                    if (extension != null)
-                    {
-                        XPathNavigator navigator = new XPathDocument(extension.GetReader()).CreateNavigator();
-                        XmlNamespaceManager resolver = new XmlNamespaceManager(navigator.NameTable);
-                        resolver.AddNamespace("media", "http://search.yahoo.com/mrss/");
-
-                        string thumbnailUri = navigator.SelectSingleNode("//media:content", resolver).GetAttribute("url", "");
-                        rssItem.ImageUrl = thumbnailUri;
-
-
-                    }
-
-                    channel.Items.Add(rssItem);
-
-                }
-                model.Add("channel", channel);
-            }
-            catch (System.Net.WebException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-           
             return View(model);
         }
 
-        private string scrubHtml(String html)
+        public ActionResult ListFeeds()
         {
-            string noHtml = Regex.Replace(html, @"<[^>]+>|&nbsp;", "").Trim();
+            RssContext context = new RssContext();
 
-            return Regex.Replace(noHtml, @"\s{2,}", " ");
+            List<RssChannel> feeds = context.RssChannels.ToList();
+
+            return View(feeds);
         }
+
+        public ActionResult ViewFeed(int id)
+        {
+            RssContext context = new RssContext();
+            RssChannel channel = context.RssChannels.Include("Items").Where(itemId => itemId.RssChannelId == id).FirstOrDefault();
+
+            IRssUpdater updater = new RssUpdater();
+            channel = updater.retrieveChannel(channel.FeedUrl);
+
+            return View(channel);
+        }
+
         public ActionResult AddFeed()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddFeed(RssChannel channel)
+        {
+            String link = channel.Link;
+            RssUpdater updater = new RssUpdater();
+            
+            RssChannel retrievedChannel = updater.retrieveChannel(link);
+
+            RssContext context = new RssContext();
+            context.RssChannels.Add(retrievedChannel);
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+
+
+            return RedirectToAction("ListFeeds");
         }
 
         public ActionResult RemoveFeed()

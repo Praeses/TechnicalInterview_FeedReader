@@ -10,6 +10,10 @@ namespace FeedReader.Models
         public RssChannel(){
             Items = new List<RssItem>();
         }
+
+        public int RssChannelId { get; set; }
+        public string FeedUrl { get; set; }
+
         //required fields
         public string Title { get; set; }
         public string Description { get; set; }

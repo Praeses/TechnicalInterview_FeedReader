@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@model FeedReader.Models.RssChannel
+
+<style>
+    .rssItemHolder {
+        white-space: nowrap;
+        overflow: hidden;
+        margin: 10px;
+    }
+
+    .rssItemHolder > :first-child {
+        float: left;
+        display: inline-block;
+    }
+
+    .rssItemHolder > * {
+        display: block;
+    }
+
+    .rssItemMainImage {
+        max-height:100px; 
+        margin-right: 5px;
+    }
+    
+    .rssItemTextHolder {
+        white-space: normal
+    }   
+
+    .rssItemTitle a{
+        color: black;
+        font-size: 1.5em;
+    }
+
+    .rssItemDate {
+        color: grey;
+        font-size: .9em;
+    }
+</style>
+<h3><img src="@(Model.ImageUrl)" /><a href="@Html.DisplayFor(modelItem => Model.Link)" target="_blank">@Html.DisplayFor(modelItem => Model.Title)</a></h3>
+<br />
+@foreach (FeedReader.Models.RssItem item in Model.Items)
+{
+    <div class="rssItemHolder">
+        <img class="rssItemMainImage" src="@Html.ValueFor(modelItem => item.ImageUrl)" />
+        <div class="rssItemTextHolder">
+            <span class="rssItemTitle"><a href="@Html.ValueFor(modelItem => item.Link)" target="_blank">@Html.DisplayFor(modelItem => item.Title)</a></span>
+            <br />
+            <span class="rssItemDate">@Html.DisplayFor(modelItem => item.PubDate, "ShortDateTime")</span><br />
+            @Html.DisplayFor(modelItem => item.Description)
+        </div>
+    </div>
+    
+
+}

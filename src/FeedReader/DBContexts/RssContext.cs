@@ -10,5 +10,5 @@ namespace FeedReader.DBContexts
     public class RssContext : DbContext
     {
         public DbSet<RssChannel> RssChannels { get; set; }
-    }
+    } 
 }
