@@ -34,18 +34,53 @@ namespace FeedReader.Controllers
         {
             RssContext context = new RssContext();
 
-            List<RssChannel> feeds = context.RssChannels.ToList();
-
-            return View(feeds);
-        }
-
-        public ActionResult ViewFeed(int id)
-        {
-            RssContext context = new RssContext();
-            RssChannel channel = context.RssChannels.Include("Items").Where(itemId => itemId.RssChannelId == id).FirstOrDefault();
+            List<RssChannel> feeds = context.RssChannels.Include("Items").ToList();
 
             IRssUpdater updater = new RssUpdater();
-            channel = updater.retrieveChannel(channel.FeedUrl);
+
+            foreach (RssChannel channel in feeds)
+            {
+                RssChannel updatedChannel = updater.retrieveChannel(channel.FeedUrl);
+                context.Entry(channel).CurrentValues.SetValues(updatedChannel);
+
+                List<RssItem> itemsToBeAdded = new List<RssItem>();
+                foreach (RssItem updatedItem in updatedChannel.Items)
+                {
+                    RssItem existingItem = channel.Items.Find(item => item.Title == updatedItem.Title);
+                    if (existingItem == null)
+                    {
+                        itemsToBeAdded.Add(updatedItem);
+                    }
+                    else {
+                         //update existing or leave?
+                    }
+
+                    channel.Items.AddRange(itemsToBeAdded);
+                }  
+            }
+            context.SaveChanges();
+
+            List<RssItem> items = new List<RssItem>();
+
+            foreach(RssChannel feed in feeds){
+                items.AddRange(feed.Items);
+            }
+
+            items.Sort((a, b) => b.PubDate.CompareTo(a.PubDate));
+
+            ViewData["feeds"] = feeds;
+            ViewData["items"] = items;
+
+            return View();
+        }
+
+        public ActionResult ViewFeed(string feedUrl)
+        {
+            RssContext context = new RssContext();
+            RssChannel channel = context.RssChannels.Include("Items").Where(itemId => itemId.FeedUrl == feedUrl).FirstOrDefault();
+
+            IRssUpdater updater = new RssUpdater();
+            channel = updater.retrieveChannel(feedUrl);
 
             return View(channel);
         }
@@ -65,6 +100,8 @@ namespace FeedReader.Controllers
 
             RssContext context = new RssContext();
             context.RssChannels.Add(retrievedChannel);
+
+            List<RssItem> items = retrievedChannel.Items.FindAll(item => item.Title == null);
             try
             {
                 context.SaveChanges();

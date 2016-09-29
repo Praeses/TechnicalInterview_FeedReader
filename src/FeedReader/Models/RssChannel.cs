@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace FeedReader.Models
 {
     public class RssChannel
@@ -11,7 +12,8 @@ namespace FeedReader.Models
             Items = new List<RssItem>();
         }
 
-        public int RssChannelId { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string FeedUrl { get; set; }
 
         //required fields

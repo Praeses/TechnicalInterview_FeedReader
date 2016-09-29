@@ -51,6 +51,7 @@
             <br />
             <span class="rssItemDate">@Html.DisplayFor(modelItem => item.PubDate, "ShortDateTime")</span><br />
             @Html.DisplayFor(modelItem => item.Description)
+            @*@Html.Raw(item.Description)*@
         </div>
     </div>
     

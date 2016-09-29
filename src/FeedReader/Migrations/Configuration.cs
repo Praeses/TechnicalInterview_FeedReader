@@ -10,6 +10,7 @@ namespace FeedReader.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            ContextKey = "FeedReader.DBContexts.RssContext";
         }
 
         protected override void Seed(FeedReader.DBContexts.RssContext context)
