@@ -12,8 +12,8 @@ namespace FeedReader.Models
             Items = new List<RssItem>();
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int RssChannelId { get; set; }
+
         public string FeedUrl { get; set; }
 
         //required fields

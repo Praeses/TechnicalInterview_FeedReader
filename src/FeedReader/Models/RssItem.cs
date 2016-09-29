@@ -11,16 +11,9 @@ namespace FeedReader.Models
     {
         public RssChannel Channel { get; set; }
 
-        public int RssChannelId { get; set; }
-
-        [Key]
-        [MaxLength(400)]
+        public int RssItemId { get; set; }
         public string Title { get; set; }
-
-        [MaxLength(2083)] //max length of url in ie
         public string Link { get; set; }
-
-        [MaxLength]
         public string Description { get; set; }
         public DateTimeOffset PubDate { get; set; }
         public string ImageUrl { get; set; }

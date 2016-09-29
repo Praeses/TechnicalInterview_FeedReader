@@ -41,6 +41,8 @@ namespace FeedReader.Controllers
             foreach (RssChannel channel in feeds)
             {
                 RssChannel updatedChannel = updater.retrieveChannel(channel.FeedUrl);
+                updatedChannel.RssChannelId = channel.RssChannelId;
+
                 context.Entry(channel).CurrentValues.SetValues(updatedChannel);
 
                 List<RssItem> itemsToBeAdded = new List<RssItem>();
@@ -55,8 +57,9 @@ namespace FeedReader.Controllers
                          //update existing or leave?
                     }
 
-                    channel.Items.AddRange(itemsToBeAdded);
-                }  
+                    
+                }
+                channel.Items.AddRange(itemsToBeAdded);
             }
             context.SaveChanges();
 

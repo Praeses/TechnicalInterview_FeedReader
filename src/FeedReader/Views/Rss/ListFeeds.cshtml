@@ -59,9 +59,9 @@
 <h2>ListFeeds</h2>
 
 <div id="feedHolder">
-    @foreach (RssChannel channel in (List<RssChannel>)ViewData["feeds"])
-    {
-        @Html.ActionLink(channel.Title, "ViewFeed", new { id = channel.FeedUrl }) <br />
+        @foreach (RssChannel channel in (List<RssChannel>)ViewData["feeds"])
+        {
+            <a href="ViewFeed?feedUrl=@Url.Encode(channel.FeedUrl)">@Html.DisplayFor(item => channel.Title)</a><br />
     }
 </div>
 <div id="feedItemHolder">
