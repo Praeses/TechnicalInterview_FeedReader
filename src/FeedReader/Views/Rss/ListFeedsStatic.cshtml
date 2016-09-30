@@ -1,0 +1,92 @@
+﻿@using FeedReader.Models;
+
+@{
+    ViewBag.Title = "ListFeeds";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+
+    <script>
+        $(document).ready(function () {
+            $('#feedItemsTable').DataTable({
+               
+            });
+        });
+    </script>
+}
+
+@section css {
+    @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
+
+    <style>
+        #feedHolder {
+            display: inline-block;
+            float: left;
+        }
+
+        #feedItemHolder {
+            display: block;
+        }
+
+        #feedItemsTable td {
+            white-space: nowrap;
+        }
+
+        #feedItemsTable td {
+            padding: 0;
+            padding-left: 10px;
+            margin: 0;
+            overflow: hidden; /* this is what fixes the expansion */
+            text-overflow: ellipsis; /* not supported in all browsers, but I accepted the tradeoff */
+        }
+
+            #feedItemsTable td:nth-child(1) {
+                max-width: 150px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+        .feedLink {
+            color: inherit;
+        }
+    </style>
+}
+
+<h2>ListFeeds</h2>
+
+<div id="feedHolder">
+    @*@foreach (RssChannel channel in (List<RssChannel>)ViewData["feeds"])
+        {
+            <a href="ViewFeed?feedUrl=@Url.Encode(channel.FeedUrl)">@Html.DisplayFor(item => channel.Title)</a><br />
+        }*@
+    <br />
+    @Html.ActionLink("Add Feed", "AddFeed")
+
+
+</div>
+
+
+<div id="feedItemHolder">
+    <table id="feedItemsTable">
+        <thead>
+            <tr>
+                <th>Feed</th>
+                <th>Title</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (RssItem rssItem in (List<RssItem>)ViewData["items"])
+            {
+                    <tr>
+                        <td><a class="feedLink" href="ViewFeed?feedUrl=@Url.Encode(rssItem.Channel.FeedUrl)">@Html.DisplayFor(item => rssItem.Channel.Title)</a></td>
+                        <td>@Html.DisplayFor(item => rssItem.Title)</td>
+                        <td>@Html.DisplayFor(item => rssItem.PubDate)</td>
+                    </tr>
+             }
+        </tbody>
+    </table>
+</div>

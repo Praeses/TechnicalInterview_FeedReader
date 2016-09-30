@@ -172,15 +172,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RssController.cs" />
-    <Compile Include="DBContexts\RssContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\RssChannel.cs" />
+    <Compile Include="Models\DataTables.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\RssItem.cs" />
+    <Compile Include="Models\RssModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IRssUpdater.cs" />
     <Compile Include="Providers\RssUpdater.cs" />
@@ -335,6 +334,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\navbar-fixed-side.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -461,6 +461,7 @@
     <Content Include="Views\Rss\ViewFeed.cshtml" />
     <Content Include="Views\Rss\ListFeeds.cshtml" />
     <Content Include="Views\Rss\AddFeed.cshtml" />
+    <Content Include="Views\Rss\ListFeedsStatic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

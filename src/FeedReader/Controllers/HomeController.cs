@@ -6,7 +6,15 @@ namespace FeedReader.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("ListFeeds", "Rss");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            //return View();
         }
     }
 }

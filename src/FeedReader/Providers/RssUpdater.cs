@@ -73,7 +73,7 @@ namespace FeedReader.Providers
                 }
 
                 //channel.Items = channel.Items.OrderByDescending(o =>o.PubDate).ToList();
-                channel.Items.Sort((a, b) => b.PubDate.CompareTo(a.PubDate));
+                channel.Items.OrderByDescending(a=>a.PubDate);
             }
             catch (System.Net.WebException e)
             {

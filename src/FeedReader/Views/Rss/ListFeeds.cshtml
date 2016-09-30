@@ -7,13 +7,49 @@
 
 @section scripts {
     @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
-    @Scripts.Render("https://cdn.datatables.net/scroller/1.4.2/js/dataTables.scroller.min.js")
+    @Scripts.Render("https://cdn.datatables.net/scroller/1.4.2/js/dataTables.scroller.js")
     
     
     <script>
         $(document).ready(function () {
             $('#feedItemsTable').DataTable({
-                scroller: true
+                serverSide: true,
+                processing: true,
+                ajax: function(data, callback, settings){
+                    $.post("@Url.Action("FeedJson", new { refresh="false" })", data, function(result){
+                        callback({
+                            draw: data.draw,
+                            data: result.data,
+                            recordsTotal: result.recordsTotal,
+                            recordsFiltered: result.recordsFiltered
+                        });
+                    }, 'json');
+                },
+                "columnDefs" : [{
+                    targets: 0,
+                    data: "wrapper",
+                    render: function (data, type, full, meta) {
+                        return '<a class="feedLink" href="ViewFeed?feedUrl=' + encodeURIComponent(data.channel.feedUrl) + '">' + data.channel.title + '</a>';
+                    }
+                },
+                {
+                    targets: 1,
+                    data: "wrapper",
+                    render: function (data, type, full, meta) {
+                        return '<a href="' + data.link + '">' + data.title + '</a>';
+                    }
+                },
+                {
+                    targets: 2,
+                    data: "wrapper",
+                    render: function (data, type, full, meta) {
+                        return "";
+                    }
+                }],
+                scrollY: 200,
+                scroller: {
+                    loadingIndicator: true
+                }
             });
         });
     </script>
@@ -59,11 +95,17 @@
 <h2>ListFeeds</h2>
 
 <div id="feedHolder">
-        @foreach (RssChannel channel in (List<RssChannel>)ViewData["feeds"])
-        {
-            <a href="ViewFeed?feedUrl=@Url.Encode(channel.FeedUrl)">@Html.DisplayFor(item => channel.Title)</a><br />
-    }
+@*@foreach (RssChannel channel in (List<RssChannel>)ViewData["feeds"])
+{
+    <a href="ViewFeed?feedUrl=@Url.Encode(channel.FeedUrl)">@Html.DisplayFor(item => channel.Title)</a><br />
+}*@
+<br />
+@Html.ActionLink("Add Feed", "AddFeed")
+
+
 </div>
+
+
 <div id="feedItemHolder">
     <table id="feedItemsTable">
         <thead>
@@ -74,16 +116,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (RssItem rssItem in (List<RssItem>)ViewData["items"])
+           @* @foreach (RssItem rssItem in (List<RssItem>)ViewData["items"])
             {
                 <tr>
                     <td><a class="feedLink" href="ViewFeed?feedUrl=@Url.Encode(rssItem.Channel.FeedUrl)">@Html.DisplayFor(item => rssItem.Channel.Title)</a></td>
                     <td>@Html.DisplayFor(item => rssItem.Title)</td>
                     <td>@Html.DisplayFor(item => rssItem.PubDate)</td>
                 </tr>
-            }
+            } *@
         </tbody>
     </table>
 </div>
-<br />
-@Html.ActionLink("Add Feed", "AddFeed")

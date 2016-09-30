@@ -5,14 +5,14 @@ namespace FeedReader.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<FeedReader.DBContexts.RssContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<FeedReader.Models.RssContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(FeedReader.DBContexts.RssContext context)
+        protected override void Seed(FeedReader.Models.RssContext context)
         {
             //  This method will be called after migrating to the latest version.
 
