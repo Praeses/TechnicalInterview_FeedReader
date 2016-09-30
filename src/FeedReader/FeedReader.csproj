@@ -181,7 +181,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\RssModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\IRssUpdater.cs" />
+    <Compile Include="Providers\RssSearchProvider.cs" />
     <Compile Include="Providers\RssUpdater.cs" />
     <Compile Include="Providers\SyndicationFeedXmlReader.cs" />
     <Compile Include="Startup.cs" />

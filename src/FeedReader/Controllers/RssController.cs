@@ -19,6 +19,7 @@ using System.Data.Entity;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace FeedReader.Controllers
 {
@@ -100,7 +101,7 @@ namespace FeedReader.Controllers
         public virtual JsonResult FeedJson(DTableRequest dTableRequest, bool refresh = false)
         {
             RssContext dbContext = new RssContext();
-
+            dbContext.Database.Log = s => Debug.WriteLine(s);
             string userId = User.Identity.GetUserId();
             
             ICollection<RssSubscription> subscriptions = dbContext.RssSubscriptions.Where(a => a.UserId == userId).Include(a => a.Feed).ToList();
@@ -229,6 +230,12 @@ namespace FeedReader.Controllers
         public ActionResult AddFeed()
         {
             return View();
+        }
+
+        public ActionResult SearchRssFeeds(string query)
+        {
+            IRssSearchProvider rssSearch = new FeedlyRssProvider();
+            return Content(rssSearch.search(query));
         }
 
         [HttpPost]

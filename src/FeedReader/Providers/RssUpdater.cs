@@ -12,6 +12,11 @@ using System.ServiceModel.Syndication;
 
 namespace FeedReader.Providers
 {
+    public interface IRssUpdater
+    {
+        RssChannel retrieveChannel(String url);
+    }
+
     public class RssUpdater : IRssUpdater
     {
         public RssChannel retrieveChannel(string url)

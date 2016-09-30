@@ -41,7 +41,7 @@
     }
 </style>
 <h3><img src="@(Model.ImageUrl)" /><a href="@Html.DisplayFor(modelItem => Model.Link)" target="_blank">@Html.DisplayFor(modelItem => Model.Title)</a></h3>
-<br />
+<div>@Html.ActionLink("Return To Feed List", "ListFeeds")</div>
 @foreach (FeedReader.Models.RssItem item in Model.Items)
 {
     <div class="rssItemHolder">
