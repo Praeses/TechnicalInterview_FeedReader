@@ -188,9 +188,9 @@ namespace FeedReader.Controllers
 
             int totalCount = entries.Count();
 
-            entries.Skip(dTableRequest.Start).Take(dTableRequest.Length).ToList();
-            
-            IEnumerable<Object> data = entries.Select(e => new
+            var entrySlice = entries.Skip(dTableRequest.Start).Take(dTableRequest.Length).ToList();
+
+            IEnumerable<Object> data = entrySlice.Select(e => new
             {
                 wrapper = new {
                     title = e.rssItem.Title,
@@ -208,7 +208,7 @@ namespace FeedReader.Controllers
             }).ToList();
 
             DTableResponse<Object> dTableResponse = new DTableResponse<Object>(new Collection<Object>(data.ToList()));
-            dTableResponse.recordsFiltered = data.Count();
+            dTableResponse.recordsFiltered = totalCount;
             dTableResponse.recordsTotal = totalCount;
             dTableResponse.draw = dTableRequest.Draw;
 
