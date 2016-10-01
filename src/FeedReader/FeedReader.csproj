@@ -334,6 +334,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\Images\app_icon.png" />
     <Content Include="Content\navbar-fixed-side.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
