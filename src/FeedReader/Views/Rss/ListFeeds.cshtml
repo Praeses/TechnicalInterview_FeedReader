@@ -11,13 +11,16 @@
     
     
     <script>
+        var dTable;
         $(document).ready(function () {
-            var table = $('#feedItemsTable').DataTable({
+            dTable = $('#feedItemsTable').DataTable({
                 serverSide: true,
                 fixedColumns: true,
                 stateSave: true,
                 ordering: false,
                 select: true,
+                displayBuffer: 100,
+                searchDelay: 1000,
                 ajax: function(data, callback, settings){
                     $.post("@Url.Action("FeedJson", new { refresh="false" })", data, function(result){
                         callback({
@@ -60,13 +63,23 @@
             });
 
             $('#feedItemsTable tbody').on('click', 'tr', function () {
-                var data = table.row(this).data();
+                var data = dTable.row(this).data();
                 
                 var rssId = data.wrapper.rssItemId;
                 $('#myModal .modal-content').load("ViewFeedItem?feedItemId=" + encodeURIComponent(rssId));
                 $('#myModal').modal('show');
             });
+
+            updateFeeds();
+           
         });
+
+        function updateFeeds() {
+            $.post("@Url.Action("UpdateFeeds", "Rss")", function () {
+                dTable.row(0).scrollTo();
+                dTable.ajax.reload();
+            });
+        }
     </script>
 }
 
@@ -161,8 +174,8 @@
 }*@
 <br />
 @Html.ActionLink("Add Feed", "AddFeed")
-
-
+<br />
+<a href="#" onclick="updateFeeds()">Update Feeds</a>
 </div>
 
 

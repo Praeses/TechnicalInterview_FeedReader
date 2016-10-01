@@ -38,7 +38,6 @@ namespace FeedReader.Providers
                 channel.Description = feed.Description != null ? scrubHtml(feed.Description.Text) : String.Empty;
                 channel.ImageUrl = feed.ImageUrl != null ? feed.ImageUrl.ToString() : String.Empty;
                 channel.FeedUrl = url;
-
                 foreach (SyndicationItem item in feed.Items)
                 {
                     RssItem rssItem = new RssItem();

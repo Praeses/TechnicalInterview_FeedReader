@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 
 namespace FeedReader.Models
@@ -15,8 +18,10 @@ namespace FeedReader.Models
         }
 
         public int RssChannelId { get; set; }
-
         public string FeedUrl { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; } //handle locking for rss channel updates
 
         //required fields
         public string Title { get; set; }
@@ -44,13 +49,42 @@ namespace FeedReader.Models
         public RssChannel Channel { get; set; }
 
         public int RssItemId { get; set; }
+
         public string Title { get; set; }
         public string Link { get; set; }
         public string Description { get; set; }
         public DateTimeOffset PubDate { get; set; }
         public string ImageUrl { get; set; }
 
-        public UserRssAttributes UserAttributes { get; set; }
+        [Index("IX_RssHash", 1, IsUnique = true)]
+        [MaxLength(40)]
+        public string Hash
+        {
+            get
+            {
+                return GetHashString(Title + " " + PubDate);
+            }
+
+            set
+            {
+
+            }
+        }
+
+        private static byte[] GetHash(string input)
+        {
+            HashAlgorithm hashAlg = SHA1.Create();
+            return hashAlg.ComputeHash(Encoding.UTF8.GetBytes(input));
+        }
+        private static string GetHashString(string inputString)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach(byte b in GetHash(inputString)){
+                sb.Append(b.ToString("X2"));
+            }
+            return sb.ToString();
+        }
+        /*public UserRssAttributes UserAttributes { get; set; } */
     }
 
     public class UserRssAttributes
@@ -93,6 +127,9 @@ namespace FeedReader.Models
           /*  modelBuilder.Entity<ApplicationUser>().HasMany(a => a.RssSubscriptions);
             modelBuilder.Entity<RssSubscription>().HasRequired(a => a.Feed);
             modelBuilder.Entity<RssChannel>().HasMany(a => a.Items); */
+
+            modelBuilder.Entity<RssChannel>().Property(p => p.RowVersion).IsConcurrencyToken();
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -20,6 +20,7 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Data.Entity.Infrastructure;
 
 namespace FeedReader.Controllers
 {
@@ -40,9 +41,11 @@ namespace FeedReader.Controllers
         public ActionResult ListFeedsStatic()
         {
             RssContext dbContext = new RssContext();
+            RssProvider provider = new RssProvider(dbContext);
+
             string userId = User.Identity.GetUserId();
 
-            ICollection<RssSubscription> subscriptions = dbContext.RssSubscriptions.Where(a=>a.UserId == userId).Include(a=>a.Feed).Include("Feed.Items").ToList();
+            ICollection<RssSubscription> subscriptions = provider.retrieveSubscriptions(userId);
 
             List<RssChannel> feeds = new List<RssChannel>();
             
@@ -98,13 +101,13 @@ namespace FeedReader.Controllers
         }
 
         [HttpPost]
-        public virtual JsonResult FeedJson(DTableRequest dTableRequest, bool refresh = false)
+        public JsonResult UpdateFeeds()
         {
             RssContext dbContext = new RssContext();
-            dbContext.Database.Log = s => Debug.WriteLine(s);
+            RssProvider provider = new RssProvider(dbContext);
+
             string userId = User.Identity.GetUserId();
-            
-            ICollection<RssSubscription> subscriptions = dbContext.RssSubscriptions.Where(a => a.UserId == userId).Include(a => a.Feed).ToList();
+            ICollection<RssSubscription> subscriptions = provider.retrieveSubscriptions(userId);
 
             List<RssChannel> feeds = new List<RssChannel>();
 
@@ -113,116 +116,57 @@ namespace FeedReader.Controllers
                 feeds.Add(sub.Feed);
             }
 
-            if (refresh)
-            {
-                IRssUpdater updater = new RssUpdater();
+            IRssUpdater updater = new RssUpdater();
 
-                foreach (RssChannel channel in feeds)
+            foreach (RssChannel channel in feeds)
+            {
+                byte[] rowVersion = channel.RowVersion;
+                RssChannel updatedChannel = updater.retrieveChannel(channel.FeedUrl);
+                updatedChannel.RssChannelId = channel.RssChannelId;
+
+                dbContext.Entry(channel).CurrentValues.SetValues(updatedChannel);
+                dbContext.Entry(channel).OriginalValues["RowVersion"] = rowVersion;
+
+                ICollection<RssItem> itemsToBeAdded = new List<RssItem>();
+                foreach (RssItem updatedItem in updatedChannel.Items)
                 {
-                    RssChannel updatedChannel = updater.retrieveChannel(channel.FeedUrl);
-                    updatedChannel.RssChannelId = channel.RssChannelId;
-
-                    dbContext.Entry(channel).CurrentValues.SetValues(updatedChannel);
-
-                    ICollection<RssItem> itemsToBeAdded = new List<RssItem>();
-                    foreach (RssItem updatedItem in updatedChannel.Items)
+                    RssItem existingItem = dbContext.RssItems.Where(a=>a.Hash == updatedItem.Hash).FirstOrDefault();
+                    if (existingItem == null)
                     {
-                        RssItem existingItem = dbContext.RssItems.Where(a => a.RssChannelId == channel.RssChannelId).Where(a => a.Title == updatedItem.Title).FirstOrDefault();
-                        if (existingItem == null)
-                        {
-                            itemsToBeAdded.Add(updatedItem);
-                        }
-                        else
-                        {
-                            //update existing or leave?
-                        }
+                        itemsToBeAdded.Add(updatedItem);
                     }
-                    foreach (RssItem itemToBeAdded in itemsToBeAdded)
+                    else
                     {
-                        channel.Items.Add(itemToBeAdded);
-                    }
-
-                }
-                dbContext.SaveChanges();
-            }
-
-
-            var entries = dbContext.RssItems
-                .Join(
-                dbContext.RssChannels,
-                rssItem => rssItem.RssChannelId,
-                rssChannel => rssChannel.RssChannelId,
-                (rssItem, rssChannel) => new { rssItem, rssChannel })
-                .Join(
-                    dbContext.RssSubscriptions,
-                    combinedEntry => combinedEntry.rssChannel.RssChannelId,
-                    rssSubscription => rssSubscription.RssChannelId,
-                    (combinedEntry, rssSubscription) => new
-                    {
-                        rssChannel = combinedEntry.rssChannel,
-                        rssItem = combinedEntry.rssItem,
-                        rssSubscription = rssSubscription
-                    })
-                .Join(
-                    dbContext.Users,
-                    combined => combined.rssSubscription.UserId,
-                    user => user.Id,
-                    (combinedEntry, user) => new
-                    {
-                        rssChannel = combinedEntry.rssChannel,
-                        rssItem = combinedEntry.rssItem,
-                        rssSubscription = combinedEntry.rssSubscription,
-                        user = user
-                    })
-                  .Where(fullEntry => fullEntry.user.Id == userId)
-                  .OrderBy(fullEntry => fullEntry.rssItem.PubDate)
-                  .Select(result => new
-                  {
-                      result.rssItem,
-                      filteredChannel = new
-                      {
-                          Title = result.rssChannel.Title,
-                          FeedUrl = result.rssChannel.FeedUrl,
-                          Link = result.rssChannel.Link
-                      },
-                  });
-
-            int totalCount = entries.Count();
-
-            int filteredCount = totalCount;
-
-            string search = Request.Params["search[value]"];
-            if (search != null)
-            {
-                entries = entries.Where(a => a.rssItem.Title.Contains(search) || a.rssItem.Description.Contains(search));
-
-                filteredCount = entries.Count();
-            }
-
-            var entrySlice = entries.Skip(dTableRequest.start).Take(dTableRequest.length).ToList();
-
-            IEnumerable<Object> data = entrySlice.Select(e => new
-            {
-                wrapper = new {
-                    title = e.rssItem.Title,
-                    pubDate = e.rssItem.PubDate,
-                    link = e.rssItem.Link,
-                    rssItemId = e.rssItem.RssItemId,
-                    description = (e.rssItem.Description.Length > 100) ? e.rssItem.Description.Substring(0, 99) + "..." : e.rssItem.Description,
-                    channel = new
-                    {
-                        feedUrl = e.filteredChannel.FeedUrl,
-                        title = e.filteredChannel.Title,
-                        link = e.filteredChannel.Link
+                        //update existing or leave?
                     }
                 }
-               
-            }).ToList();
+                foreach (RssItem itemToBeAdded in itemsToBeAdded)
+                {
+                    channel.Items.Add(itemToBeAdded);
+                }
 
-            DTableResponse<Object> dTableResponse = new DTableResponse<Object>(new Collection<Object>(data.ToList()));
-            dTableResponse.recordsFiltered = filteredCount;
-            dTableResponse.recordsTotal = totalCount;
-            dTableResponse.draw = dTableRequest.draw;
+                try
+                {
+                    dbContext.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    Debug.WriteLine("RssChannel Update was attempted on an updating channel. Skip as it has been updated");
+                }
+            }
+          
+
+            return Json("success");
+        }
+        [HttpPost]
+        public virtual JsonResult FeedJson(DTableRequest dTableRequest, bool refresh = false)
+        {
+            RssProvider provider = new RssProvider(new RssContext());   
+            string userId = User.Identity.GetUserId();
+
+            dTableRequest.search.value = Request.Params["search[value]"]; //TO-DO: find out why second level objects are not parsed by mvc
+
+            DTableResponse<Object> dTableResponse = provider.retrieveDataTableRssItems(userId, dTableRequest);
 
             return Json(dTableResponse, JsonRequestBehavior.AllowGet);
         }
