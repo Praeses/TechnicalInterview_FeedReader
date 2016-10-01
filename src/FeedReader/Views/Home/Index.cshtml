@@ -5,17 +5,16 @@
 <div class="jumbotron">
     <h1>Feed Reader</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p>
+        <input type="text" id="rssFeedUrl" size="300" placeholder="https://bestRssFeeds.com/" />
+        <input type="button" value="Add Feed" class="btn btn-primary btn-lg" onclick="addRssFeed($('#rssFeedUrl').val());"/>
+    </p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
+       
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
@@ -29,3 +28,22 @@
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function(){
+            alert('hey fam');
+        })
+
+        function addRssFeed(rssFeedUrl) {
+            $.ajax({
+                url: '/home/addRssFeed',
+                type: 'POST',
+                data: { 'rssFeedUrl': rssFeedUrl },
+                success: function (result) {
+                    alert(result.message);
+                }
+            });
+        }
+    </script>
+}
