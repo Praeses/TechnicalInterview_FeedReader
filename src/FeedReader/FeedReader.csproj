@@ -463,6 +463,7 @@
     <Content Include="Views\Rss\ListFeeds.cshtml" />
     <Content Include="Views\Rss\AddFeed.cshtml" />
     <Content Include="Views\Rss\ListFeedsStatic.cshtml" />
+    <Content Include="Views\Rss\Partial\ViewFeedItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

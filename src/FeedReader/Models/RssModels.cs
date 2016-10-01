@@ -49,6 +49,23 @@ namespace FeedReader.Models
         public string Description { get; set; }
         public DateTimeOffset PubDate { get; set; }
         public string ImageUrl { get; set; }
+
+        public UserRssAttributes UserAttributes { get; set; }
+    }
+
+    public class UserRssAttributes
+    {
+        public int UserRssAttributesId { get; set; }
+        public int RssItemId { get; set; }
+
+        [ForeignKey("RssItemId")]
+        public RssItem RssItem { get; set; }
+
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
+
+        public bool Read { get; set; }
     }
 
     public class RssSubscription
@@ -69,5 +86,16 @@ namespace FeedReader.Models
         public DbSet<RssChannel> RssChannels { get; set; }
         public DbSet<RssItem> RssItems { get; set; }
         public DbSet<RssSubscription> RssSubscriptions { get; set; }
+        public DbSet<UserRssAttributes> UserRssAttributes { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+          /*  modelBuilder.Entity<ApplicationUser>().HasMany(a => a.RssSubscriptions);
+            modelBuilder.Entity<RssSubscription>().HasRequired(a => a.Feed);
+            modelBuilder.Entity<RssChannel>().HasMany(a => a.Items); */
+            base.OnModelCreating(modelBuilder);
+        }
     }
+
+
 }

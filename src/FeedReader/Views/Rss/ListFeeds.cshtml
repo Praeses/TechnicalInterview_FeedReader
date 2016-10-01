@@ -12,9 +12,12 @@
     
     <script>
         $(document).ready(function () {
-            $('#feedItemsTable').DataTable({
+            var table = $('#feedItemsTable').DataTable({
                 serverSide: true,
-                processing: true,
+                fixedColumns: true,
+                stateSave: true,
+                ordering: false,
+                select: true,
                 ajax: function(data, callback, settings){
                     $.post("@Url.Action("FeedJson", new { refresh="false" })", data, function(result){
                         callback({
@@ -27,6 +30,7 @@
                 },
                 "columnDefs" : [{
                     targets: 0,
+                    width: "10%",
                     data: "wrapper",
                     render: function (data, type, full, meta) {
                         return '<a class="feedLink" href="ViewFeed?feedUrl=' + encodeURIComponent(data.channel.feedUrl) + '">' + data.channel.title + '</a>';
@@ -34,29 +38,40 @@
                 },
                 {
                     targets: 1,
+                    width : "50%",
                     data: "wrapper",
                     render: function (data, type, full, meta) {
-                        return '<a href="' + data.link + '">' + data.title + '</a>';
+                        return '<a class="tableFeedTitleDesc" href="' + data.link + '"><span class="tableFeedTitle">' + data.title + '</span><span class="tableFeedDescription">' + data.description + '</span></a>';
                     }
                 },
                 {
+                    width: "10%",
                     targets: 2,
                     data: "wrapper",
                     render: function (data, type, full, meta) {
-                        return "";
+                        return "10/1/2016";
                     }
                 }],
+                scrollX : false,
                 scrollY: 400,
                 scroller: {
                     loadingIndicator: true
                 }
+            });
+
+            $('#feedItemsTable tbody').on('click', 'tr', function () {
+                var data = table.row(this).data();
+                
+                var rssId = data.wrapper.rssItemId;
+                $('#myModal .modal-content').load("ViewFeedItem?feedItemId=" + encodeURIComponent(rssId));
+                $('#myModal').modal('show');
             });
         });
     </script>
 }
 
 @section css {
-    @Styles.Render("https://cdn.datatables.net/scroller/1.4.2/css/scroller.dataTables.min.css");
+    @Styles.Render("https://cdn.datatables.net/scroller/1.4.2/css/scroller.dataTables.bootstrap.min.css");
     @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
 
     <style>
@@ -69,10 +84,13 @@
         }
 
         #feedItemsTable td {
-            white-space: nowrap;
+            
         }
         #feedItemsTable td{
+            white-space: nowrap;
             padding: 0;
+            padding-top: 1px;
+            padding-bottom: 1px;
             padding-left: 10px;
             margin: 0;
             overflow: hidden; /* this is what fixes the expansion */
@@ -82,12 +100,54 @@
         #feedItemsTable td:nth-child(1){
             max-width: 150px;
             overflow: hidden;
+            padding-left: 0;
             text-overflow: ellipsis;
-            white-space: nowrap;
+        }
+
+        .dataTables_scrollBody {
+
         }
 
         .feedLink {
             color: inherit;
+        }
+
+        .tableFeedTitle {
+            font-weight: bold;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .tableFeedDescription {
+            color: grey;
+        }
+
+        a.tableFeedTitleDesc{
+            color: black;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            display: block;
+            width: 800px;
+        }
+
+        .modal {
+          text-align: center;
+          padding: 0!important;
+          padding: 10px;
+        }
+
+        .modal:before {
+          content: '';
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle;
+          margin-right: -4px;
+        }
+
+        .modal-dialog {
+          display: inline-block;
+          text-align: left;
+          vertical-align: middle;
         }
     </style>
 }
@@ -126,4 +186,23 @@
             } *@
         </tbody>
     </table>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>

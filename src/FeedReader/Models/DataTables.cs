@@ -7,12 +7,12 @@ namespace FeedReader.Models
 {
     public class DTableRequest
     {
-        public int Draw { get; set; }
-        public int Start { get; set; }
-        public int Length { get; set; }
-        public Search Search { get; set; }
-        public ICollection<Column> Columns { get; set; }
-        public ICollection<Order> Order { get; set; }  
+        public int draw { get; set; }
+        public int start { get; set; }
+        public int length { get; set; }
+        public Search search { get; set; }
+        public ICollection<Column> columns { get; set; }
+        public ICollection<Order> order { get; set; }  
     }
 
     public class DTableResponse<T>
@@ -30,20 +30,20 @@ namespace FeedReader.Models
 
     public class Search
     {
-        public bool Regex { get; set; }
-        public string Value { get; set; }
+        public bool regex { get; set; }
+        public string value { get; set; }
     }
     public class Column
     {
-        public string Data { get; set; }
-        public string Name { get; set; }
-        public bool Orderable { get; set; }
-        public Search Search { get; set; }
-        public bool Searchable { get; set; }
+        public string data { get; set; }
+        public string name { get; set; }
+        public bool orderable { get; set; }
+        public Search search { get; set; }
+        public bool searchable { get; set; }
     }
     public class Order
     {
-        public int Column { get; set; }
-        public string Dir { get; set; }
+        public int column { get; set; }
+        public string dir { get; set; }
     }
 }

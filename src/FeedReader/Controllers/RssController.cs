@@ -189,7 +189,17 @@ namespace FeedReader.Controllers
 
             int totalCount = entries.Count();
 
-            var entrySlice = entries.Skip(dTableRequest.Start).Take(dTableRequest.Length).ToList();
+            int filteredCount = totalCount;
+
+            string search = Request.Params["search[value]"];
+            if (search != null)
+            {
+                entries = entries.Where(a => a.rssItem.Title.Contains(search) || a.rssItem.Description.Contains(search));
+
+                filteredCount = entries.Count();
+            }
+
+            var entrySlice = entries.Skip(dTableRequest.start).Take(dTableRequest.length).ToList();
 
             IEnumerable<Object> data = entrySlice.Select(e => new
             {
@@ -198,6 +208,7 @@ namespace FeedReader.Controllers
                     pubDate = e.rssItem.PubDate,
                     link = e.rssItem.Link,
                     rssItemId = e.rssItem.RssItemId,
+                    description = (e.rssItem.Description.Length > 100) ? e.rssItem.Description.Substring(0, 99) + "..." : e.rssItem.Description,
                     channel = new
                     {
                         feedUrl = e.filteredChannel.FeedUrl,
@@ -209,9 +220,9 @@ namespace FeedReader.Controllers
             }).ToList();
 
             DTableResponse<Object> dTableResponse = new DTableResponse<Object>(new Collection<Object>(data.ToList()));
-            dTableResponse.recordsFiltered = totalCount;
+            dTableResponse.recordsFiltered = filteredCount;
             dTableResponse.recordsTotal = totalCount;
-            dTableResponse.draw = dTableRequest.Draw;
+            dTableResponse.draw = dTableRequest.draw;
 
             return Json(dTableResponse, JsonRequestBehavior.AllowGet);
         }
@@ -225,6 +236,14 @@ namespace FeedReader.Controllers
             channel = updater.retrieveChannel(feedUrl);
 
             return View(channel);
+        }
+
+        public ActionResult ViewFeedItem(int feedItemId)
+        {
+            RssContext context = new RssContext();
+            RssItem rssItem = context.RssItems.FirstOrDefault(a=> a.RssItemId == feedItemId);
+
+            return PartialView("~/Views/Rss/Partial/ViewFeedItem.cshtml", rssItem);
         }
 
         public ActionResult AddFeed()
