@@ -20,7 +20,8 @@
                 ordering: false,
                 select: true,
                 displayBuffer: 100,
-                searchDelay: 1000,
+                searchDelay: 500,
+                dom: "ft",
                 ajax: function(data, callback, settings){
                     $.post("@Url.Action("FeedJson", new { refresh="false" })", data, function(result){
                         callback({
@@ -33,7 +34,6 @@
                 },
                 "columnDefs" : [{
                     targets: 0,
-                    width: "10%",
                     data: "wrapper",
                     render: function (data, type, full, meta) {
                         return '<a class="feedLink" href="ViewFeed?feedUrl=' + encodeURIComponent(data.channel.feedUrl) + '">' + data.channel.title + '</a>';
@@ -41,27 +41,42 @@
                 },
                 {
                     targets: 1,
-                    width : "50%",
                     data: "wrapper",
                     render: function (data, type, full, meta) {
                         var extraClasses = '';
                         if (data.read) {
-                            debugger;
                             extraClasses += 'readArticle'
                         }
                         return '<span class="' + extraClasses + '"><a class="tableFeedTitleDesc" href="' + data.link + '"><span class="tableFeedTitle">' + data.title + '</span><span class="tableFeedDescription">' + data.description + '</span></a>';
                     }
                 },
                 {
-                    width: "10%",
                     targets: 2,
                     data: "wrapper",
                     render: function (data, type, full, meta) {
-                        return "10/1/2016";
+                        var pubDate = new Date(parseInt(data.pubDate.substr(6)));
+                        var now = new Date();
+                        var elapsed = now - pubDate;
+
+                        var dateHtml = '<span class="rssDateHolder">';
+                        if (elapsed < 1000 * 60) { //within last minute
+                            dateHtml += Math.floor(elapsed / 1000) + " s";
+                        }
+                        else if (elapsed < 60 * 60 * 1000) { //within last hour
+                            dateHtml += Math.floor(elapsed / 1000 / 60) + " m";
+                        }
+                        else if (elapsed < 24 * 60 * 60 * 1000) { //within last day
+                            dateHtml += Math.floor(elapsed / 1000 / 60 / 60) + " h";
+                        }
+                        else {
+                            dateHtml += (pubDate.getUTCMonth() + 1) + "/" + pubDate.getUTCDate() + "/" + pubDate.getUTCFullYear();
+                        };
+
+                        return dateHtml + "</span>";
                     }
                 }],
                 scrollX : false,
-                scrollY: 400,
+                scrollY: $(window).height() - 280,
                 scroller: {
                     loadingIndicator: true
                 }
@@ -74,7 +89,7 @@
                 $('#myModal .modal-content').load("ViewFeedItem?feedItemId=" + encodeURIComponent(rssId));
                 $('#myModal').modal('show');
 
-                $.get("@Url.Action("UpdateFeedItem", "Rss")?rssItemId=" + encodeURIComponent(rssId));
+                $.post("@Url.Action("UpdateFeedItem", "Rss")?rssItemId=" + encodeURIComponent(rssId));
             });
 
             @if ((bool)ViewData["refreshFeed"] == true)
@@ -82,20 +97,29 @@
                 @Html.Raw("updateFeeds()");
             }
             
-           
+            $(window).resize(function () {
+                $('.dataTables_scrollBody').height($(window).height() - 280);
+            });
+
+            $(window).resize();
         });
 
         function updateFeeds() {
+            $('#loadingIcon').show();
+            $('#refreshIcon').hide();
+
             $.post("@Url.Action("UpdateFeeds", "Rss")", function () {
                 dTable.row(0).scrollTo();
                 dTable.ajax.reload();
+
+                $('#loadingIcon').hide();
+                $('#refreshIcon').show();
             });
         }
     </script>
 }
 
 @section css {
-    @Styles.Render("https://cdn.datatables.net/scroller/1.4.2/css/scroller.dataTables.bootstrap.min.css");
     @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
 
     <style>
@@ -115,15 +139,16 @@
             padding: 0;
             padding-top: 1px;
             padding-bottom: 1px;
+            width: 0px; /*prevents table row from overlapping to the side of the page*/
+            max-width: 500px; /*prevent table from overlapping page*/
             padding-left: 10px;
             margin: 0;
-            overflow: hidden; /* this is what fixes the expansion */
-            text-overflow: ellipsis; /* not supported in all browsers, but I accepted the tradeoff */
         }
 
-        #feedItemsTable td:nth-child(1){
+        #feedItemsTable td:nth-child(1), #feedItemsTable th:nth-child(1){
             max-width: 150px;
             overflow: hidden;
+            width: 20px !important;
             padding-left: 0;
             text-overflow: ellipsis;
         }
@@ -153,10 +178,13 @@
 
         a.tableFeedTitleDesc{
             color: black;
-            text-overflow: ellipsis;
             overflow: hidden;
             display: block;
-            width: 800px;
+        }
+
+        .rssDateHolder{
+            float:right;
+            padding-right: 5px;
         }
 
         .modal {
@@ -178,10 +206,22 @@
           text-align: left;
           vertical-align: middle;
         }
+
+        #loadingIcon{
+            display: none;
+            height: 30px;
+        }
+
+        #refreshIcon {
+            padding: 5px;
+            margin-right: -3px;
+        }
+
+        #feedActions{
+            text-align: center;
+        }
     </style>
 }
-
-<h2>ListFeeds</h2>
 
 <div id="feedHolder">
 @*@foreach (RssChannel channel in (List<RssChannel>)ViewData["feeds"])
@@ -189,13 +229,18 @@
     <a href="ViewFeed?feedUrl=@Url.Encode(channel.FeedUrl)">@Html.DisplayFor(item => channel.Title)</a><br />
 }*@
 <br />
-@Html.ActionLink("Add Feed", "AddFeed")
-<br />
-<a href="#" onclick="updateFeeds()">Update Feeds</a>
 </div>
 
 
 <div id="feedItemHolder">
+    <div id="feedActions">
+
+        <br />
+        <a href="@Url.Action("AddFeed", "Rss")" title="Add Feed"><img id="addIcon" src="@Url.Content("~/Content/Images/add.png")" /></a>
+        <img id="loadingIcon" src="@Url.Content("~/Content/Images/loading.gif")" />
+        <a href="#" title="Refresh Feeds" onclick="updateFeeds()"><img id="refreshIcon" src="@Url.Content("~/Content/Images/refresh.png")" /></a>
+        
+    </div>
     <table id="feedItemsTable">
         <thead>
             <tr>
@@ -215,6 +260,7 @@
             } *@
         </tbody>
     </table>
+    
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">

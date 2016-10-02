@@ -30,12 +30,7 @@ namespace FeedReader.Controllers
         // GET: Rss
         public ActionResult Index(string feedUrl, Dictionary<String, Object> model)
         {
-            IRssUpdater updater = new RssUpdater();
-            RssChannel channel = updater.retrieveChannel(feedUrl);
-
-            model["channel"] = channel;
-
-            return View(model);
+            return RedirectToAction("ListFeeds");
         }
 
         public ActionResult ListFeeds(bool refreshFeed = true)
@@ -47,93 +42,38 @@ namespace FeedReader.Controllers
         [HttpPost]
         public JsonResult UpdateFeeds()
         {
-            RssContext dbContext = new RssContext();
-            RssProvider provider = new RssProvider(dbContext);
-
-            string userId = User.Identity.GetUserId();
-            ICollection<RssSubscription> subscriptions = provider.retrieveSubscriptions(userId);
-
-            List<RssChannel> feeds = new List<RssChannel>();
-
-            foreach (RssSubscription sub in subscriptions)
-            {
-                feeds.Add(sub.Feed);
-            }
-
-            IRssUpdater updater = new RssUpdater();
-
-            foreach (RssChannel channel in feeds)
-            {
-                byte[] rowVersion = channel.RowVersion;
-                RssChannel updatedChannel = updater.retrieveChannel(channel.FeedUrl);
-                updatedChannel.RssChannelId = channel.RssChannelId;
-
-                dbContext.Entry(channel).CurrentValues.SetValues(updatedChannel);
-                dbContext.Entry(channel).OriginalValues["RowVersion"] = rowVersion;
-
-                ICollection<RssItem> itemsToBeAdded = new List<RssItem>();
-                foreach (RssItem updatedItem in updatedChannel.Items)
-                {
-                    RssItem existingItem = dbContext.RssItems.Where(a=>a.Hash == updatedItem.Hash).FirstOrDefault();
-                    if (existingItem == null)
-                    {
-                        itemsToBeAdded.Add(updatedItem);
-                    }
-                    else
-                    {
-                        //update existing or leave?
-                    }
-                }
-                foreach (RssItem itemToBeAdded in itemsToBeAdded)
-                {
-                    channel.Items.Add(itemToBeAdded);
-                }
-
-                try
-                {
-                    dbContext.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException ex)
-                {
-                    Debug.WriteLine("RssChannel Update was attempted on an updating channel. Skip as it has been updated");
-                }
-            }
-          
+            RssManager manager = new RssManager(User.Identity.GetUserId());
+            manager.RequestChannelUpdate();
 
             return Json("success");
         }
 
+        public ActionResult RemoveSubscription(int rssChannelId)
+        {
+            RssManager manager = new RssManager(User.Identity.GetUserId());
+            manager.RemoveSubscription(rssChannelId);
+            return RedirectToAction("ListFeeds");
+        }
+
         [HttpPost]
-        public JsonResult UpdateFeedItem(int rssItemId)
+        public JsonResult UpdateFeedItem(int rssItemId, bool hide = false)
         {
             string userId = User.Identity.GetUserId();
-            RssContext dbContext = new RssContext();
-            UserRssAttributes rssAttributes = dbContext.UserRssAttributes.Where(a => a.UserId == userId && a.RssItemId == rssItemId).FirstOrDefault();
-
-            if (rssAttributes == null)
-            {
-                rssAttributes = new UserRssAttributes();
-                rssAttributes.UserId = userId;
-                rssAttributes.RssItemId = rssItemId;
-                rssAttributes.Read = true;
-
-                dbContext.UserRssAttributes.Add(rssAttributes);
-
-                dbContext.SaveChanges();
-            }
-
+            RssManager manager = new RssManager(userId);
+            manager.UpdateRssItem(rssItemId, hide,true);
+          
             return Json("success");
         }
 
         [HttpPost]
         public virtual JsonResult FeedJson(DTableRequest dTableRequest, bool refresh = false)
         {
-            RssProvider provider = new RssProvider(new RssContext());   
+            RssManager manager = new RssManager(User.Identity.GetUserId());   
             string userId = User.Identity.GetUserId();
 
             dTableRequest.search.value = Request.Params["search[value]"]; //TO-DO: find out why second level objects are not parsed by mvc
 
-            DTableResponse<Object> dTableResponse = provider.retrieveDataTableRssItems(userId, dTableRequest);
+            DTableResponse<Object> dTableResponse = manager.RetrieveDataTableRssItems(dTableRequest);
 
             return Json(dTableResponse, JsonRequestBehavior.AllowGet);
         }
@@ -142,9 +82,7 @@ namespace FeedReader.Controllers
         {
             RssContext context = new RssContext();
             RssChannel channel = context.RssChannels.Include("Items").Where(itemId => itemId.FeedUrl == feedUrl).FirstOrDefault();
-
-            IRssUpdater updater = new RssUpdater();
-            channel = updater.retrieveChannel(feedUrl);
+            channel.Items = new List<RssItem>(channel.Items.OrderByDescending(a => a.PubDate));
 
             return View(channel);
         }
@@ -172,45 +110,11 @@ namespace FeedReader.Controllers
         public ActionResult AddFeed(RssChannel channel)
         {
             String link = channel.Link;
-            RssUpdater updater = new RssUpdater();
-            
-            RssChannel retrievedChannel = updater.retrieveChannel(link);
 
-            try
-            {
-                ApplicationDbContext dbContext = new ApplicationDbContext();
-                ApplicationUser appUser = dbContext.Users.Find(User.Identity.GetUserId());
-
-                RssSubscription subscription = new RssSubscription();
-                subscription.Feed = retrievedChannel;
-
-                appUser.RssSubscriptions.Add(subscription);
-                dbContext.SaveChanges();
-
-            }
-            catch (DbEntityValidationException e)
-            {
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
-                    }
-                }
-                throw;
-            }
-
+            RssManager manager = new RssManager(User.Identity.GetUserId());
+            RssSubscription subscription = manager.AddSubscription(link);
 
             return RedirectToAction("ListFeeds");
         }
-
-        public ActionResult RemoveFeed()
-        {
-            return View();
-        }
-
     }
 }

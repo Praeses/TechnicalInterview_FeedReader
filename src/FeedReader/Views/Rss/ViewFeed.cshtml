@@ -22,7 +22,7 @@
     }
 
     .rssItemMainImage {
-        max-height:100px; 
+        max-height:125px; 
         margin-right: 5px;
     }
     
@@ -39,8 +39,14 @@
         color: grey;
         font-size: .9em;
     }
+    
+    .unsubscribeLink {
+        display: inline-block;
+        padding-left: 5px;
+        font-size: .5em;
+    }
 </style>
-<h3><img src="@(Model.ImageUrl)" /><a href="@Html.DisplayFor(modelItem => Model.Link)" target="_blank">@Html.DisplayFor(modelItem => Model.Title)</a></h3>
+<h3><img src="@(Model.ImageUrl)" /><a href="@Html.DisplayFor(modelItem => Model.Link)" target="_blank">@Html.DisplayFor(modelItem => Model.Title)</a><span class="unsubscribeLink"><a href="@Url.Action("RemoveSubscription", "Rss", new { rssChannelId = Model.RssChannelId })">Unsubscribe</a></span></h3>
 <div>@Html.ActionLink("Return To Feed List", "ListFeeds", new { refreshFeed = "false"})</div>
 @foreach (FeedReader.Models.RssItem item in Model.Items)
 {
@@ -49,8 +55,12 @@
         <div class="rssItemTextHolder">
             <span class="rssItemTitle"><a href="@Html.ValueFor(modelItem => item.Link)" target="_blank">@Html.DisplayFor(modelItem => item.Title)</a></span>
             <br />
-            <span class="rssItemDate">@Html.DisplayFor(modelItem => item.PubDate, "ShortDateTime")</span><br />
-            @Html.DisplayFor(modelItem => item.Description)
+            <span class="rssItemDate">@item.PubDate.ToLocalTime().ToString("g")</span><br />
+            @{
+                string scrubbed = FeedReader.Utils.FeedReaderUtils.ScrubHtml(item.Description);
+                @Html.DisplayFor(modelItem => scrubbed);
+}
+            
             @*@Html.Raw(item.Description)*@
         </div>
     </div>

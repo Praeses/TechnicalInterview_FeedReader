@@ -5,6 +5,7 @@ using System.Web;
 
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace FeedReader.Utils
 {
@@ -23,6 +24,14 @@ namespace FeedReader.Utils
                 sb.Append(b.ToString("X2"));
             }
             return sb.ToString();
+        }
+
+
+        public static string ScrubHtml(String html)
+        {
+            string noHtml = Regex.Replace(html, @"<[^>]+>|&nbsp;", "").Trim();
+
+            return Regex.Replace(noHtml, @"\s{2,}", " ");
         }
     }
 }

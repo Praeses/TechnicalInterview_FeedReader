@@ -62,7 +62,7 @@ namespace FeedReader.Models
         {
             get
             {
-                return FeedReaderUtils.GetHashString(Title + " " + PubDate); //basic hashing on title and pub date to determine uniqueness. This would be better suited later as a check in the database itself rather than code
+                return FeedReaderUtils.GetHashString(RssChannelId + " " + Title); //basic hashing on title and pub date to determine uniqueness. This would be better suited later as a check in the database itself rather than code
             }
 
             set
@@ -88,6 +88,7 @@ namespace FeedReader.Models
         public ApplicationUser User { get; set; }
 
         public bool Read { get; set; }
+        public bool Hidden { get; set; }
     }
 
     public class RssSubscription

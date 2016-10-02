@@ -43,7 +43,7 @@
     <div class="rssItemTextHolder">
         <span class="rssItemTitle"><a href="@Html.ValueFor(modelItem => modelItem.Link)" target="_blank">@Html.DisplayFor(modelItem => modelItem.Title)</a></span>
         <br />
-        <span class="rssItemDate">@Html.DisplayFor(modelItem => modelItem.PubDate, "ShortDateTime")</span><br />
+        <span class="rssItemDate">@Model.PubDate.ToLocalTime().ToString("g")</span><br />
         @Html.DisplayFor(modelItem => modelItem.Description)
         @*@Html.Raw(item.Description)*@
     </div>
