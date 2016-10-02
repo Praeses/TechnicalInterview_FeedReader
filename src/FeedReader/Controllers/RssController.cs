@@ -38,65 +38,9 @@ namespace FeedReader.Controllers
             return View(model);
         }
 
-        public ActionResult ListFeedsStatic()
+        public ActionResult ListFeeds(bool refreshFeed = true)
         {
-            RssContext dbContext = new RssContext();
-            RssProvider provider = new RssProvider(dbContext);
-
-            string userId = User.Identity.GetUserId();
-
-            ICollection<RssSubscription> subscriptions = provider.retrieveSubscriptions(userId);
-
-            List<RssChannel> feeds = new List<RssChannel>();
-            
-            foreach(RssSubscription sub in subscriptions){
-                feeds.Add(sub.Feed);
-            }
-
-            IRssUpdater updater = new RssUpdater();
-
-            foreach (RssChannel channel in feeds)
-            {
-                RssChannel updatedChannel = updater.retrieveChannel(channel.FeedUrl);
-                updatedChannel.RssChannelId = channel.RssChannelId;
-
-                dbContext.Entry(channel).CurrentValues.SetValues(updatedChannel);
-
-                ICollection<RssItem> itemsToBeAdded = new List<RssItem>();
-                foreach (RssItem updatedItem in updatedChannel.Items)
-                {
-                    RssItem existingItem = channel.Items.FirstOrDefault(item => item.Title == updatedItem.Title);
-                    if (existingItem == null)
-                    {
-                        itemsToBeAdded.Add(updatedItem);
-                    }
-                    else {
-                         //update existing or leave?
-                    }
-                }
-                foreach(RssItem itemToBeAdded in itemsToBeAdded){
-                    channel.Items.Add(itemToBeAdded);
-                }
-                
-            }
-            dbContext.SaveChanges();
-
-            List<RssItem> items = new List<RssItem>();
-
-            foreach(RssChannel feed in feeds){
-                items.AddRange(feed.Items);
-            }
-
-            items.Sort((a, b) => b.PubDate.CompareTo(a.PubDate));
-
-            ViewData["feeds"] = feeds;
-            ViewData["items"] = items;
-            
-            return View();
-        }
-
-        public ActionResult ListFeeds()
-        {
+            ViewData["refreshFeed"] = refreshFeed;
             return View();
         }
 
@@ -158,6 +102,29 @@ namespace FeedReader.Controllers
 
             return Json("success");
         }
+
+        [HttpPost]
+        public JsonResult UpdateFeedItem(int rssItemId)
+        {
+            string userId = User.Identity.GetUserId();
+            RssContext dbContext = new RssContext();
+            UserRssAttributes rssAttributes = dbContext.UserRssAttributes.Where(a => a.UserId == userId && a.RssItemId == rssItemId).FirstOrDefault();
+
+            if (rssAttributes == null)
+            {
+                rssAttributes = new UserRssAttributes();
+                rssAttributes.UserId = userId;
+                rssAttributes.RssItemId = rssItemId;
+                rssAttributes.Read = true;
+
+                dbContext.UserRssAttributes.Add(rssAttributes);
+
+                dbContext.SaveChanges();
+            }
+
+            return Json("success");
+        }
+
         [HttpPost]
         public virtual JsonResult FeedJson(DTableRequest dTableRequest, bool refresh = false)
         {

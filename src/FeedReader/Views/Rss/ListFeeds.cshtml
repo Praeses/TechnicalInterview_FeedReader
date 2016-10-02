@@ -44,7 +44,12 @@
                     width : "50%",
                     data: "wrapper",
                     render: function (data, type, full, meta) {
-                        return '<a class="tableFeedTitleDesc" href="' + data.link + '"><span class="tableFeedTitle">' + data.title + '</span><span class="tableFeedDescription">' + data.description + '</span></a>';
+                        var extraClasses = '';
+                        if (data.read) {
+                            debugger;
+                            extraClasses += 'readArticle'
+                        }
+                        return '<span class="' + extraClasses + '"><a class="tableFeedTitleDesc" href="' + data.link + '"><span class="tableFeedTitle">' + data.title + '</span><span class="tableFeedDescription">' + data.description + '</span></a>';
                     }
                 },
                 {
@@ -68,9 +73,15 @@
                 var rssId = data.wrapper.rssItemId;
                 $('#myModal .modal-content').load("ViewFeedItem?feedItemId=" + encodeURIComponent(rssId));
                 $('#myModal').modal('show');
+
+                $.get("@Url.Action("UpdateFeedItem", "Rss")?rssItemId=" + encodeURIComponent(rssId));
             });
 
-            updateFeeds();
+            @if ((bool)ViewData["refreshFeed"] == true)
+            {
+                @Html.Raw("updateFeeds()");
+            }
+            
            
         });
 
@@ -133,6 +144,11 @@
 
         .tableFeedDescription {
             color: grey;
+        }
+
+        .readArticle *{
+            color: grey;
+
         }
 
         a.tableFeedTitleDesc{

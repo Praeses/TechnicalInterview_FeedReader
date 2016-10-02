@@ -186,6 +186,7 @@
     <Compile Include="Providers\RssUpdater.cs" />
     <Compile Include="Providers\SyndicationFeedXmlReader.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\FeedReaderUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

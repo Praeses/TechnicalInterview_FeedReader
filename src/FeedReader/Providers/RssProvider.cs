@@ -26,46 +26,29 @@ namespace FeedReader.Providers
 
         public DTableResponse<Object> retrieveDataTableRssItems(string userId, DTableRequest dTableRequest)
         {
-            var entries = dbContext.RssItems
-                .Join(
-                dbContext.RssChannels,
-                rssItem => rssItem.RssChannelId,
-                rssChannel => rssChannel.RssChannelId,
-                (rssItem, rssChannel) => new { rssItem, rssChannel })
-                .Join(
-                    dbContext.RssSubscriptions,
-                    combinedEntry => combinedEntry.rssChannel.RssChannelId,
-                    rssSubscription => rssSubscription.RssChannelId,
-                    (combinedEntry, rssSubscription) => new
-                    {
-                        rssChannel = combinedEntry.rssChannel,
-                        rssItem = combinedEntry.rssItem,
-                        rssSubscription = rssSubscription
-                    })
-                .Join(
-                    dbContext.Users,
-                    combined => combined.rssSubscription.UserId,
-                    user => user.Id,
-                    (combinedEntry, user) => new
-                    {
-                        rssChannel = combinedEntry.rssChannel,
-                        rssItem = combinedEntry.rssItem,
-                        rssSubscription = combinedEntry.rssSubscription,
-                        user = user
-                    })
-                  .Where(fullEntry => fullEntry.user.Id == userId)
-                  .OrderBy(fullEntry => fullEntry.rssItem.PubDate)
-                  .Select(result => new
-                  {
-                      result.rssItem,
-                      filteredChannel = new
-                      {
-                          Title = result.rssChannel.Title,
-                          FeedUrl = result.rssChannel.FeedUrl,
-                          Link = result.rssChannel.Link
-                      },
-                  });
+            var entriesFirst = from rssItem in dbContext.RssItems
+                               join rssChannel in dbContext.RssChannels on rssItem.RssChannelId equals rssChannel.RssChannelId
+                               join rssSubscription in dbContext.RssSubscriptions on rssChannel.RssChannelId equals rssSubscription.RssChannelId
+                               join user in dbContext.Users on rssSubscription.UserId equals user.Id
+                               join userRssAttributes in dbContext.UserRssAttributes on new { p1 = user.Id, p2 = rssItem.RssItemId } equals new { p1 = userRssAttributes.UserId, p2 = userRssAttributes.RssItemId } into gj
+                               from userRssAttributes in gj.DefaultIfEmpty()
+                               select new { rssItem, rssChannel, rssSubscription, user, userRssAttributes };
 
+            var entries = from entry in entriesFirst
+                      where entry.user.Id == userId
+                      orderby entry.rssItem.PubDate descending
+                      select new
+                      {
+                          entry.rssItem,
+                          entry.userRssAttributes,
+                          filteredChannel = new
+                          {
+                              Title = entry.rssChannel.Title,
+                              FeedUrl = entry.rssChannel.FeedUrl,
+                              Link = entry.rssChannel.Link
+                          }
+                      };
+                           
             int totalCount = entries.Count();
 
             int filteredCount = totalCount;
@@ -89,6 +72,7 @@ namespace FeedReader.Providers
                     link = e.rssItem.Link,
                     rssItemId = e.rssItem.RssItemId,
                     description = (e.rssItem.Description.Length > 100) ? e.rssItem.Description.Substring(0, 99) + "..." : e.rssItem.Description,
+                    read = e.userRssAttributes != null ? e.userRssAttributes.Read : false,
                     channel = new
                     {
                         feedUrl = e.filteredChannel.FeedUrl,

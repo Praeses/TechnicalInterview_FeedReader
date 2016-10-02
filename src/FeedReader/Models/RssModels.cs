@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Web;
+
+
+using FeedReader.Utils;
 
 namespace FeedReader.Models
 {
@@ -62,7 +62,7 @@ namespace FeedReader.Models
         {
             get
             {
-                return GetHashString(Title + " " + PubDate);
+                return FeedReaderUtils.GetHashString(Title + " " + PubDate); //basic hashing on title and pub date to determine uniqueness. This would be better suited later as a check in the database itself rather than code
             }
 
             set
@@ -71,19 +71,7 @@ namespace FeedReader.Models
             }
         }
 
-        private static byte[] GetHash(string input)
-        {
-            HashAlgorithm hashAlg = SHA1.Create();
-            return hashAlg.ComputeHash(Encoding.UTF8.GetBytes(input));
-        }
-        private static string GetHashString(string inputString)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach(byte b in GetHash(inputString)){
-                sb.Append(b.ToString("X2"));
-            }
-            return sb.ToString();
-        }
+        
         /*public UserRssAttributes UserAttributes { get; set; } */
     }
 
