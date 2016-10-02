@@ -38,6 +38,7 @@ namespace FeedReader.Models
         public string Description { get; set; }
         public string PublishDate { get; set; }
         public string Content { get; set; }
+        public string ImageUrl { get; set; }
 
         public RssFeed RssFeed { get; set; }
     }

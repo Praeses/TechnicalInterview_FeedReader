@@ -2,38 +2,79 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>Feed Reader</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p>
+
         <input type="text" id="rssFeedUrl" size="300" placeholder="https://bestRssFeeds.com/" />
         <input type="button" value="Add Feed" class="btn btn-primary btn-lg" onclick="addRssFeed($('#rssFeedUrl').val());"/>
-    </p>
+
+        <div>
+            <input type="text" id="searchText" size="300" placeholder="Search..." />
+        </div>
+        <div>
+            <input type="button" value="Refresh Feeds" class="btn btn-primary btn-lg" onclick="resetContent(); " />
+        </div>
+
+
+
+<div id="feedHolder"class="row">
+    <ul id="feedList">
+        
+    </ul>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-       
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<li id="template" class="hidden">
+    <div class="title" style="font-weight:bold;"></div>
+    <div class="content"></div>
+    <div class="publishDate"></div>
+</li>
 
 @section Scripts{
     <script type="text/javascript">
-        $(document).ready(function(){
-            alert('hey fam');
+        var currentPage = 1;
+        var searchTimeout;
+
+        $(document).ready(function () {
+            var win = $(window);
+
+            win.scroll(function () {
+                if ($(document).height() - win.height() == win.scrollTop()) {
+                    currentPage++;
+                    getUserFeeds($('#searchText').val(), currentPage);
+                }
+            });
+
+            $('#searchText').on('keyup', function () {
+                window.clearTimeout(searchTimeout);
+
+                searchTimeout = setTimeout(function () {
+                    resetContent();
+                }, 500);
+            });
+
+            updateUserFeed();
+            getUserFeeds('', currentPage);
         })
+
+        function updateUserFeed() {
+            $.ajax({
+                url: '/home/UpdateUserFeeds',
+                type: 'POST',
+                data: {},
+                success: function (result) {
+
+                }
+            });
+        }
+
+        function getUserFeeds(search, page) {
+            $.ajax({
+                url: '/home/GetUserRssFeeds',
+                type: 'POST',
+                data: { 'search' : search, 'page' : page},
+                success: function (result) {
+                    buildFeedItems(result);
+                }
+            });
+        }
 
         function addRssFeed(rssFeedUrl) {
             $.ajax({
@@ -42,8 +83,31 @@
                 data: { 'rssFeedUrl': rssFeedUrl },
                 success: function (result) {
                     alert(result.message);
+                    if (result.error == false)
+                        resetContent();
                 }
             });
+        }
+
+        function buildFeedItems(feedItems) {
+            var template;
+
+            $.each(feedItems, function (index, element) {
+                template = $('#template').clone();
+                template.removeClass('hidden');
+                template.find('.title').text(element.Title);
+                template.find('.content').text(element.Description);
+                template.find('.publishDate').text(element.PublishDate);
+
+                template.appendTo('#feedList');
+            });
+        }
+
+        function resetContent() {
+            currentPage = 1;
+            $('#feedList').empty();
+            updateUserFeed();
+            getUserFeeds($('#searchText').val(), currentPage);
         }
     </script>
 }

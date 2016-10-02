@@ -21,12 +21,22 @@ namespace FeedReader.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult GetUserRssFeeds()
+        [HttpPost]
+        public ActionResult GetUserRssFeeds(string search, int page)
         {
+            RssFeedDataHelper feedDataHelper = new RssFeedDataHelper();
+            List<RssFeedItem> rssFeedItems = feedDataHelper.retrieveRssFeedItemsForUser(User.Identity.GetUserId(), search, page);            
 
+            return Json(rssFeedItems);
+        }
 
-            return null;
+        [HttpPost]
+        public ActionResult UpdateUserFeeds()
+        {
+            RssFeedDataHelper feedDataHelper = new RssFeedDataHelper();
+            feedDataHelper.updateRssFeedsForUser(User.Identity.GetUserId());
+
+            return Json("");
         }
 
         [HttpPost]

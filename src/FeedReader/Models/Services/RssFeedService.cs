@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace FeedReader.Models.Services
@@ -15,6 +18,8 @@ namespace FeedReader.Models.Services
 
     public class RssFeedService : IRssFeedService
     {
+        public const int MaxDescriptionLength = 400;
+
         public RssFeed RetrieveRssFeed(string rssFeedUrl)
         {
             List<RssFeedItem> rssFeedItems = new List<RssFeedItem>();
@@ -37,14 +42,33 @@ namespace FeedReader.Models.Services
             //Loop through items and create new RssFeedItem for each
             foreach (XElement item in document.Descendants("item"))
             {
-                rssFeedItem = new RssFeedItem
+                rssFeedItem = new RssFeedItem();
+            
+                rssFeedItem.Title = (string)item.Element("title") ?? "";
+                rssFeedItem.Link = (string)item.Element("link") ?? "";
+                rssFeedItem.Content = (string)item.Element(content + "encoded") ?? "";
+                String description = (string)item.Element("description") ?? "";
+                String date = (string)item.Element("pubDate") ?? "";
+
+                //Remove all html elements
+                description = Regex.Replace(description, "<.*?>", String.Empty);
+
+                //Shorten to max length
+                if (description.Length > MaxDescriptionLength)
                 {
-                    Title = (string)item.Element("title") ?? "",
-                    Link = (string)item.Element("link") ?? "",
-                    PublishDate = (string)item.Element("pubDate") ?? "",
-                    Description = (string)item.Element("description") ?? "",
-                    Content = (string)item.Element(content + "encoded") ?? ""
-                };
+                    description = description.Substring(0, MaxDescriptionLength);
+                    description += "...";
+                }
+                rssFeedItem.Description = description;
+
+                if (date == "")
+                    date = DateTime.Now.ToString();
+                
+                rssFeedItem.PublishDate = date;
+
+                //XNamespace asdf = "http://search.yahoo.com/mrss/";
+                //XElement imageElement = item.Element(asdf + "content");
+                //var imageUrl = imageElement.Descendants("url");
 
                 rssFeedItems.Add(rssFeedItem);
             }
