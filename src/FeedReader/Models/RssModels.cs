@@ -23,6 +23,21 @@ namespace FeedReader.Models
         [Timestamp]
         public byte[] RowVersion { get; set; } //handle locking for rss channel updates
 
+        [Index("IX_RssChanHash", 1, IsUnique = true)]
+        [MaxLength(40)]
+        public string Hash
+        {
+            get
+            {
+                //basic hashing on title and pub date to determine uniqueness. This would be better suited later as a check in the database itself rather than code
+                return FeedReaderUtils.GetHashString(FeedUrl != null ? FeedUrl : String.Empty);
+            }
+            set
+            {
+
+            }
+        }
+
         //required fields
         public string Title { get; set; }
         public string Description { get; set; }
@@ -58,19 +73,14 @@ namespace FeedReader.Models
 
         [Index("IX_RssHash", 1, IsUnique = true)]
         [MaxLength(40)]
-        public string Hash
+        public string Hash { get; set; }
+
+        public void GenerateHash(RssChannel channel)
         {
-            get
-            {
-                return FeedReaderUtils.GetHashString(RssChannelId + " " + Title); //basic hashing on title and pub date to determine uniqueness. This would be better suited later as a check in the database itself rather than code
-            }
+            //basic hashing on title and pub date to determine uniqueness. This would be better suited later as a check in the database itself rather than code
+            Hash = FeedReaderUtils.GetHashString(channel.Title + " " + Title); 
 
-            set
-            {
-
-            }
         }
-
         
         /*public UserRssAttributes UserAttributes { get; set; } */
     }
@@ -95,10 +105,12 @@ namespace FeedReader.Models
     {
         public int RssSubscriptionId { get; set; }
 
+        [Index("IX_RssSub", 1, IsUnique = true)]
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
 
+        [Index("IX_RssSub", 2, IsUnique = true)]
         public int RssChannelId { get; set; }
         [ForeignKey("RssChannelId")]
         public RssChannel Feed { get; set; }

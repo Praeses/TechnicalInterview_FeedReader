@@ -31,11 +31,16 @@
         .rssItemTitle a{
             color: black;
             font-size: 1.5em;
+            text-decoration: underline;
         }
 
         .rssItemDate {
             color: grey;
             font-size: .9em;
+        }
+
+        .viewFeedLink {
+            font-size: smaller;
         }
     </style>
 <div class="rssItemHolder">
@@ -43,8 +48,17 @@
     <div class="rssItemTextHolder">
         <span class="rssItemTitle"><a href="@Html.ValueFor(modelItem => modelItem.Link)" target="_blank">@Html.DisplayFor(modelItem => modelItem.Title)</a></span>
         <br />
+        <div class="feedLinks">
+            <a href="ViewFeed?feedUrl=@Html.ValueFor(a => a.Channel.FeedUrl)">View Feed</a>
+        </div>
         <span class="rssItemDate">@Model.PubDate.ToLocalTime().ToString("g")</span><br />
-        @Html.DisplayFor(modelItem => modelItem.Description)
+        <p>
+        @{
+            string scrubbed = FeedReader.Utils.FeedReaderUtils.ScrubHtml(Model.Description);
+            @Html.DisplayFor(a => scrubbed);
+        }
+        </p>
+        
         @*@Html.Raw(item.Description)*@
     </div>
 </div>

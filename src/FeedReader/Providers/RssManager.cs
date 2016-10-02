@@ -24,6 +24,15 @@ namespace FeedReader.Providers
             //dbContext.Database.Log = s => Debug.WriteLine(s);
         }
 
+        public RssSubscription FindSubscription(string url)
+        {
+            var subs = dbContext.RssSubscriptions.Include("Feed").Where(a => a.Feed.FeedUrl == url && a.UserId == appUserId);
+
+            RssSubscription subscription = subs.FirstOrDefault();
+            
+            return subscription;
+        }
+
         public RssSubscription AddSubscription(string feedUrl)
         {
             RssChannel retrievedChannel = FindChannel(feedUrl);
@@ -73,6 +82,9 @@ namespace FeedReader.Providers
             {
                 IRssUpdater updater = new XDocumentRssReader();
                 channel = updater.RetrieveChannel(feedUrl);
+
+                channel = dbContext.RssChannels.Add(channel);
+                dbContext.SaveChanges();
             }
 
             return channel;
@@ -187,7 +199,7 @@ namespace FeedReader.Providers
             string search = dTableRequest.search.value;
             if (search != null)
             {
-                entries = entries.Where(a => a.rssItem.Title.Contains(search) || a.rssItem.Description.Contains(search));
+                entries = entries.Where(a => a.rssItem.Title.Contains(search) || a.rssItem.Description.Contains(search) || a.filteredChannel.Title.Contains(search));
 
                 filteredCount = entries.Count();
             }

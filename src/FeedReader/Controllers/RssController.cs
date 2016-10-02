@@ -90,7 +90,7 @@ namespace FeedReader.Controllers
         public ActionResult ViewFeedItem(int feedItemId)
         {
             RssContext context = new RssContext();
-            RssItem rssItem = context.RssItems.FirstOrDefault(a=> a.RssItemId == feedItemId);
+            RssItem rssItem = context.RssItems.Include(a=>a.Channel).FirstOrDefault(a=> a.RssItemId == feedItemId);
 
             return PartialView("~/Views/Rss/Partial/ViewFeedItem.cshtml", rssItem);
         }
@@ -112,9 +112,19 @@ namespace FeedReader.Controllers
             String link = channel.Link;
 
             RssManager manager = new RssManager(User.Identity.GetUserId());
-            RssSubscription subscription = manager.AddSubscription(link);
+            RssSubscription existingSubscription = manager.FindSubscription(link);
 
-            return RedirectToAction("ListFeeds");
+            if (existingSubscription != null)
+            {
+                ModelState.AddModelError("", "You are already subscribed to this feed");
+                return View();
+            }
+            else
+            {
+                manager.AddSubscription(link);
+                return RedirectToAction("ListFeeds");
+            }
+
         }
     }
 }

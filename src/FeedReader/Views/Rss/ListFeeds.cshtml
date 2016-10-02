@@ -21,7 +21,7 @@
                 select: true,
                 displayBuffer: 100,
                 searchDelay: 500,
-                dom: "ft",
+                dom: "fti",
                 ajax: function(data, callback, settings){
                     $.post("@Url.Action("FeedJson", new { refresh="false" })", data, function(result){
                         callback({
@@ -47,7 +47,7 @@
                         if (data.read) {
                             extraClasses += 'readArticle'
                         }
-                        return '<span class="' + extraClasses + '"><a class="tableFeedTitleDesc" href="' + data.link + '"><span class="tableFeedTitle">' + data.title + '</span><span class="tableFeedDescription">' + data.description + '</span></a>';
+                        return '<span class="' + extraClasses + '"><span class="tableFeedTitleDesc"><span class="tableFeedTitle">' + data.title + '</span><span class="tableFeedDescription">' + data.description + '</span></span>';
                     }
                 },
                 {
@@ -84,6 +84,8 @@
 
             $('#feedItemsTable tbody').on('click', 'tr', function () {
                 var data = dTable.row(this).data();
+
+                $(this).addClass('readArticle');
                 
                 var rssId = data.wrapper.rssItemId;
                 $('#myModal .modal-content').load("ViewFeedItem?feedItemId=" + encodeURIComponent(rssId));
@@ -98,7 +100,7 @@
             }
             
             $(window).resize(function () {
-                $('.dataTables_scrollBody').height($(window).height() - 280);
+                $('.dataTables_scrollBody').height($(window).height() - 330);
             });
 
             $(window).resize();
@@ -131,8 +133,11 @@
             display: block;
         }
 
-        #feedItemsTable td {
-            
+        #feedItemsTable tr {
+            cursor: pointer;
+        }
+        #feedItemsTable tr:hover {
+            background-color: rgb(226, 226, 226);
         }
         #feedItemsTable td{
             white-space: nowrap;
@@ -143,6 +148,7 @@
             max-width: 500px; /*prevent table from overlapping page*/
             padding-left: 10px;
             margin: 0;
+            overflow: hidden;
         }
 
         #feedItemsTable td:nth-child(1), #feedItemsTable th:nth-child(1){
@@ -220,6 +226,10 @@
         #feedActions{
             text-align: center;
         }
+
+        .modal-lg {
+            width: 80%;
+        }
     </style>
 }
 
@@ -263,19 +273,9 @@
     
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog  modal-lg">
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Some text in the modal.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
             </div>
 
         </div>
