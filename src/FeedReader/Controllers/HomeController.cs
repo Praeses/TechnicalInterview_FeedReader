@@ -21,22 +21,33 @@ namespace FeedReader.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult GetUserRssFeeds(string search, int page)
+        [HttpGet]
+        public ActionResult GetUserRssFeeds(bool update, string search, string filter, int page)
         {
-            RssFeedDataHelper feedDataHelper = new RssFeedDataHelper();
-            List<RssFeedItem> rssFeedItems = feedDataHelper.retrieveRssFeedItemsForUser(User.Identity.GetUserId(), search, page);            
+            string userId = User.Identity.GetUserId();
 
-            return Json(rssFeedItems);
+            if (update)
+                UpdateUserFeeds(userId);
+
+            RssFeedDataHelper feedDataHelper = new RssFeedDataHelper();
+            List<RssFeedItem> rssFeedItems = feedDataHelper.retrieveRssFeedItemsForUser(userId, search, filter, page);            
+
+            return Json(rssFeedItems, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public ActionResult UpdateUserFeeds()
+        public void UpdateUserFeeds(string userId)
         {
             RssFeedDataHelper feedDataHelper = new RssFeedDataHelper();
-            feedDataHelper.updateRssFeedsForUser(User.Identity.GetUserId());
+            feedDataHelper.updateRssFeedsForUser(userId);
+        }
 
-            return Json("");
+        [HttpGet]
+        public ActionResult RetrieveFilterFeeds()
+        {
+            RssFeedDataHelper feedDataHelper = new RssFeedDataHelper();
+            List<RssFeed> rssFeeds = feedDataHelper.retrieveRssFeedsForUser(User.Identity.GetUserId());
+
+            return Json(rssFeeds, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -72,13 +83,25 @@ namespace FeedReader.Controllers
                 };
                 feedDataHelper.saveUserRssFeed(userRssFeed);
 
-                message = String.Format("Successfully added Rss Feed: \"{0}\".", rssFeed.Title);
+                message = String.Format("Successfully added RSS Feed: \"{0}\".", rssFeed.Title);
             }
             else //This means they have already added the Rss Feed
             {
                 error = true;
-                message = String.Format("You have already added Rss Feed: \"{0}\".", rssFeed.Title);
+                message = String.Format("You have already added RSS Feed: \"{0}\".", rssFeed.Title);
             }                
+
+            return Json(new {error=error, message=message});
+        }
+
+        [HttpPost]
+        public ActionResult RemoveRssFeed(string rssFeedId)
+        {
+            RssFeedDataHelper feedDataHelper = new RssFeedDataHelper();
+            String message = "Successfully removed RSS Feed";
+            bool error = false;
+
+            feedDataHelper.removeUserRssFeed(User.Identity.GetUserId(), rssFeedId);                  
 
             return Json(new {error=error, message=message});
         }

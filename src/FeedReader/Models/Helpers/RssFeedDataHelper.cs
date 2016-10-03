@@ -63,7 +63,7 @@ namespace FeedReader.Models.Helpers
             }
         }
 
-        public List<RssFeedItem> retrieveRssFeedItemsForUser(string userId, string search, int page)
+        public List<RssFeedItem> retrieveRssFeedItemsForUser(string userId, string search, string filter, int page)
         {
             List<RssFeedItem> rssFeedItems = null;
 
@@ -71,9 +71,15 @@ namespace FeedReader.Models.Helpers
             {
                 var rssFeedItemQuery = from rssFeedItemT in db.RssFeedItems
                                        join userRssFeedsT in db.UserRssFeeds on rssFeedItemT.RssFeedId equals userRssFeedsT.RssFeedId
-                                       where userRssFeedsT.UserId == userId && (rssFeedItemT.Title.Contains(search) || rssFeedItemT.Description.Contains(search))
+                                       where userRssFeedsT.UserId == userId &&
+                                             (rssFeedItemT.Title.Contains(search) || rssFeedItemT.Description.Contains(search))
                                        orderby rssFeedItemT.PublishDate descending
                                        select rssFeedItemT;
+
+                if (filter != "")
+                {
+                    rssFeedItemQuery = rssFeedItemQuery.Where(x => x.RssFeedId.ToString() == filter);
+                }
 
                 rssFeedItemQuery = rssFeedItemQuery.Skip((page - 1) * 15).Take(15);
 
@@ -112,6 +118,40 @@ namespace FeedReader.Models.Helpers
             }
 
             return existingUserRssFeed;
+        }
+
+        public List<RssFeed> retrieveRssFeedsForUser(string userId)
+        {
+            List<RssFeed> rssFeeds = null;
+            using (var db = new FeedReaderContext())
+            {
+                var rssFeedQuery = from rssFeedT in db.RssFeeds
+                                       join userRssFeedT in db.UserRssFeeds on rssFeedT.RssFeedId equals userRssFeedT.RssFeedId
+                                       where userRssFeedT.UserId == userId
+                                       orderby rssFeedT.Title
+                                       select rssFeedT;
+
+                rssFeeds = rssFeedQuery.ToList();
+            }
+
+            return rssFeeds;
+        }
+
+        public void removeUserRssFeed(string userId, string rssFeedId)
+        {
+            UserRssFeed existingUserRssFeed = null;
+            using (var db = new FeedReaderContext())
+            {
+                existingUserRssFeed = db.UserRssFeeds.SingleOrDefault(a => a.RssFeedId.ToString() == rssFeedId &&
+                                                                           a.UserId == userId
+                                                                      );
+
+                if (existingUserRssFeed != null)
+                {
+                    db.UserRssFeeds.Remove(existingUserRssFeed);
+                    db.SaveChanges();
+                }
+            }
         }
     }
 }

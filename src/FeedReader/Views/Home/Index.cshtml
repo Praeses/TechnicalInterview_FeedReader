@@ -1,31 +1,79 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-}
+}        
 
-
-        <input type="text" id="rssFeedUrl" size="300" placeholder="https://bestRssFeeds.com/" />
-        <input type="button" value="Add Feed" class="btn btn-primary btn-lg" onclick="addRssFeed($('#rssFeedUrl').val());"/>
-
-        <div>
-            <input type="text" id="searchText" size="300" placeholder="Search..." />
+<div style="padding-top:20px;">
+    <div style="float:right;">
+        <input type="text" id="searchText" size="50" placeholder="Search" />
+    </div>
+    <div>        
+        <span>
+            Now Viewing:
+            <select id="feedSelectFilter" class="selectpicker" onchange="clearContent();getUserFeeds(false);">
+                <option value="">All Feeds</option>
+            </select>
+        </span>
+        <div class="dropdown" style="display:inline;">
+            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-cog" style="padding-right:2px;"></span><span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#" data-toggle="modal" data-target="#addModal" onclick="$('#rssFeedUrl').val('');">Add</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#removeModal" onclick="populateRemoveFeeds(); $('#feedRemoveSelect').val('default');">Remove</a></li>
+                <li><a href="#" onclick="clearContent();getUserFeeds(true);">Refresh</a></li>
+            </ul>
         </div>
-        <div>
-            <input type="button" value="Refresh Feeds" class="btn btn-primary btn-lg" onclick="resetContent(); " />
-        </div>
-
-
-
-<div id="feedHolder"class="row">
-    <ul id="feedList">
-        
+    </div>
+</div>
+<div id="feedHolder" class="row" style="padding:10px;">
+    <ul id="feedList">        
     </ul>
 </div>
 
-<li id="template" class="hidden">
-    <div class="title" style="font-weight:bold;"></div>
+<li id="template" class="hidden" style="cursor:pointer;list-style:none;">
+    <div class="title" style="font-weight:bold;padding-bottom:2px;"></div>
     <div class="content"></div>
-    <div class="publishDate"></div>
+    <div class="publishDate" style="padding-top:2px;"></div>
+    <div style="border-top: 1px solid #d9d9d9;margin:20px;"></div>
 </li>
+
+<div id="addModal" class="modal fade" rold="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Feed</h4>
+            </div>
+            <div class="modal-body">
+                Feed URL: <input type="text" id="rssFeedUrl" size="100" placeholder="https://bestRssFeeds.com/" />
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Add Feed" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="addRssFeed($('#rssFeedUrl').val());" />
+                <button type="button" class="btn btn-defaul btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="removeModal" class="modal fade" rold="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Remove Feed</h4>
+            </div>
+            <div class="modal-body">
+                <select id="feedRemoveSelect" class="selectpicker">
+                    <option disabled selected value="default"> -- select a feed -- </option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Remove Feed" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="removeRssFeed($('#feedRemoveSelect').val());" />
+                <button type="button" class="btn btn-defaul btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
     <script type="text/javascript">
@@ -38,7 +86,7 @@
             win.scroll(function () {
                 if ($(document).height() - win.height() == win.scrollTop()) {
                     currentPage++;
-                    getUserFeeds($('#searchText').val(), currentPage);
+                    getUserFeeds(false);
                 }
             });
 
@@ -46,30 +94,25 @@
                 window.clearTimeout(searchTimeout);
 
                 searchTimeout = setTimeout(function () {
-                    resetContent();
+                    clearContent();
+                    getUserFeeds(false);
                 }, 500);
             });
 
-            updateUserFeed();
-            getUserFeeds('', currentPage);
+            populateFilterFeeds('feedSelectFilter');
+            getUserFeeds(true);
         })
 
-        function updateUserFeed() {
-            $.ajax({
-                url: '/home/UpdateUserFeeds',
-                type: 'POST',
-                data: {},
-                success: function (result) {
-
-                }
-            });
-        }
-
-        function getUserFeeds(search, page) {
+        function getUserFeeds(update) {
             $.ajax({
                 url: '/home/GetUserRssFeeds',
-                type: 'POST',
-                data: { 'search' : search, 'page' : page},
+                type: 'GET',
+                data: { 
+                    'update' : update,
+                    'search' : $('#searchText').val(),
+                    'filter' : $('#feedSelectFilter').val(),
+                    'page' : currentPage
+                },
                 success: function (result) {
                     buildFeedItems(result);
                 }
@@ -83,13 +126,58 @@
                 data: { 'rssFeedUrl': rssFeedUrl },
                 success: function (result) {
                     alert(result.message);
-                    if (result.error == false)
-                        resetContent();
+                    if (result.error == false) {
+                        clearContent();
+                        populateFilterFeeds();
+                        getUserFeeds(false);
+                    }                        
                 }
             });
         }
 
+        function removeRssFeed(rssFeedId) {
+            $.ajax({
+                url: '/home/removeRssFeed',
+                type: 'POST',
+                data: { 'rssFeedId': rssFeedId },
+                success: function (result) {
+                    alert(result.message);
+                    if (result.error == false) {
+                        clearContent();
+                        populateFilterFeeds();
+                        getUserFeeds(false);
+                    }
+                }
+            });
+        }
+
+        function populateSelectFeeds(selectElementId) {
+            $.ajax({
+                url: '/home/RetrieveFilterFeeds',
+                type: 'GET',
+                success: function (result) {
+                    $.each(result, function (index, element) {             
+                        $('#' + selectElementId).append($('<option>', {
+                            value: element.RssFeedId,
+                            text: element.Title
+                        }));
+                    });
+                }
+            });
+        }
+
+        function populateRemoveFeeds() {
+            $('#feedRemoveSelect').find("option:gt(0)").remove();
+            populateSelectFeeds('feedRemoveSelect');
+        }
+
+        function populateFilterFeeds() {
+            $('#feedSelectFilter').find("option:gt(0)").remove();
+            populateSelectFeeds('feedSelectFilter');
+        }
+
         function buildFeedItems(feedItems) {
+
             var template;
 
             $.each(feedItems, function (index, element) {
@@ -99,15 +187,21 @@
                 template.find('.content').text(element.Description);
                 template.find('.publishDate').text(element.PublishDate);
 
+                template.click(function () {
+                    openFeed(element.Link);
+                });
+
                 template.appendTo('#feedList');
             });
         }
 
-        function resetContent() {
+        function clearContent() {
             currentPage = 1;
             $('#feedList').empty();
-            updateUserFeed();
-            getUserFeeds($('#searchText').val(), currentPage);
+        }
+
+        function openFeed(url) {
+            window.open(url, '_blank');
         }
     </script>
 }

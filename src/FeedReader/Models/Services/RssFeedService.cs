@@ -35,7 +35,7 @@ namespace FeedReader.Models.Services
             rssFeed = new RssFeed
             {
                 Title = (string)channel.Element("title") ?? "",
-                Url = (string)channel.Element("link") ?? "",
+                Url = rssFeedUrl,
                 Description = (string)channel.Element("description") ?? ""
             };
 
