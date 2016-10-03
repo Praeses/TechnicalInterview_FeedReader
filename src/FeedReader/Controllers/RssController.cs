@@ -34,17 +34,27 @@ namespace FeedReader.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            return RedirectToAction("ListFeeds");
+            return RedirectToAction("ListAllItems");
         }
 
+        public ActionResult ListAllFeeds()
+        {
+            RssManager manager = new RssManager(User.Identity.GetUserId());
+            var query = from sub in manager.RetrieveSubscriptions()
+                        orderby sub.Feed.Title.Trim()
+                        select sub.Feed;
+      
+            return View(query.ToList());
+        }
         /// <summary>
         /// Takes user to the non static feed list that is updated with JSON
         /// </summary>
         /// <param name="refreshFeed">Tells the front end to make a call to the UpdateFeeds method on load</param>
         /// <returns></returns>
-        public ActionResult ListFeeds(bool refreshFeed = true)
+        public ActionResult ListAllItems(bool refreshFeed = true)
         {
             ViewData["refreshFeed"] = refreshFeed;
+
             return View();
         }
 
@@ -69,7 +79,7 @@ namespace FeedReader.Controllers
         {
             RssManager manager = new RssManager(User.Identity.GetUserId());
             manager.RemoveSubscription(rssChannelId);
-            return RedirectToAction("ListFeeds");
+            return RedirectToAction("ListAllItems");
         }
 
         /// <summary>
@@ -183,8 +193,8 @@ namespace FeedReader.Controllers
                     ModelState.AddModelError("", "Unable to reach the requested feed");
                     return View();
                 }
-               
-                return RedirectToAction("ListFeeds");
+
+                return RedirectToAction("ListAllItems");
             }
 
         }

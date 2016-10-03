@@ -1,7 +1,7 @@
 ﻿@using FeedReader.Models;
 
 @{
-    ViewBag.Title = "ListFeeds";
+    ViewBag.Title = "All Feed Items";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -37,8 +37,9 @@
                             recordsFiltered: result.recordsFiltered
                         });
                     },
-                    error: function () {
-                        alert("Unable to retrieve feeds. Please try again later");
+                    error: function (xhr, textStatus, errorThrown) {    
+                        if (xhr.status == 0)
+                            alert("Unable to retrieve feeds. Please try again later");
                     },
                     cache: false
                 });   
@@ -70,7 +71,10 @@
                     var elapsed = now - pubDate;
 
                     var dateHtml = '<span class="rssDateHolder">';
-                    if (elapsed < 1000 * 60) { //within last minute
+                    if (elapsed < 0) {
+                        dateHtml += dateHtml += (pubDate.getUTCMonth() + 1) + "/" + pubDate.getUTCDate() + "/" + pubDate.getUTCFullYear();
+                    }
+                    else if (elapsed < 1000 * 60) { //within last minute
                         dateHtml += Math.floor(elapsed / 1000) + " s";
                     }
                     else if (elapsed < 60 * 60 * 1000) { //within last hour
@@ -137,10 +141,15 @@
                 $('#loadingIcon').hide();
                 $('#refreshIcon').show();
             },
+            error: function (xhr, textStatus, errorThrown) {
+                if (xhr.status == 0) {
+                    alert("Unable to update feeds at this time. Please try again later");
+                    $('#loadingIcon').hide();
+                    $('#refreshIcon').show();
+                }
+            },
             error: function () {
-                alert("Unable to update feeds at this time. Please try again later");
-                $('#loadingIcon').hide();
-                $('#refreshIcon').show();
+                
             },
             cache: false
         });
@@ -276,7 +285,7 @@
         <a href="@Url.Action("AddFeed", "Rss")" title="Add Feed"><img id="addIcon" src="@Url.Content("~/Content/Images/add.png")" /></a>
         <img id="loadingIcon" src="@Url.Content("~/Content/Images/loading.gif")" />
         <a href="#" title="Refresh Feeds" onclick="updateFeeds()"><img id="refreshIcon" src="@Url.Content("~/Content/Images/refresh.png")" /></a>
-        
+        <a href="@Url.Action("ListAllFeeds", "Rss")" title="Feed List"><img id="feedListIcon" src="@Url.Content("~/Content/Images/feed_list.png")" /></a>
     </div>
     <table id="feedItemsTable">
         <thead>

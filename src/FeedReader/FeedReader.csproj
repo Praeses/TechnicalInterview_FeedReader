@@ -466,10 +466,10 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Rss\ViewFeed.cshtml" />
-    <Content Include="Views\Rss\ListFeeds.cshtml" />
+    <Content Include="Views\Rss\ListAllItems.cshtml" />
     <Content Include="Views\Rss\AddFeed.cshtml" />
-    <Content Include="Views\Rss\ListFeedsStatic.cshtml" />
     <Content Include="Views\Rss\Partial\ViewFeedItem.cshtml" />
+    <Content Include="Views\Rss\ListAllFeeds.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

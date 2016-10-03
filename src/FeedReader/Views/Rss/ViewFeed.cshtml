@@ -45,9 +45,13 @@
         padding-left: 5px;
         font-size: .5em;
     }
+
+    #channelImage {
+        margin-right: 8px;
+    }
 </style>
-<h3><img src="@(Model.ImageUrl)" /><a href="@Html.DisplayFor(modelItem => Model.Link)" target="_blank">@Html.DisplayFor(modelItem => Model.Title)</a><span class="unsubscribeLink"><a href="@Url.Action("RemoveSubscription", "Rss", new { rssChannelId = Model.RssChannelId })">Unsubscribe</a></span></h3>
-<div>@Html.ActionLink("Return To Feed List", "ListFeeds", new { refreshFeed = "false"})</div>
+<h3><img id="channelImage" src="@(Model.ImageUrl)" /><a href="@Html.DisplayFor(modelItem => Model.Link)" target="_blank">@Html.DisplayFor(modelItem => Model.Title)</a><span class="unsubscribeLink"><a href="@Url.Action("RemoveSubscription", "Rss", new { rssChannelId = Model.RssChannelId })">Unsubscribe</a></span></h3>
+<div>@Html.ActionLink("Return To Feed List", "ListAllItems", new { refreshFeed = "false" })</div>
 @foreach (FeedReader.Models.RssItem item in Model.Items)
 {
     <div class="rssItemHolder">
@@ -64,6 +68,6 @@
             @*@Html.Raw(item.Description)*@
         </div>
     </div>
-    
+    <hr />
 
 }
