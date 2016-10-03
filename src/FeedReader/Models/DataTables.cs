@@ -5,6 +5,10 @@ using System.Web;
 
 namespace FeedReader.Models
 {
+    /// <summary>
+    /// Object representation to bind to the request coming in from the front end from the Datatables plugin.
+    /// Field names are lowercase for correct binding to occur.
+    /// </summary>
     public class DTableRequest
     {
         public int draw { get; set; }
@@ -15,6 +19,10 @@ namespace FeedReader.Models
         public ICollection<Order> order { get; set; }  
     }
 
+    /// <summary>
+    /// Object representation of the response to the Datatables request on the front end. A generic is used so that different datatypes can be used with the request
+    /// </summary>
+    /// <typeparam name="T">Object type of the data element in the response</typeparam>
     public class DTableResponse<T>
     {
         public DTableResponse(ICollection<T> data)
@@ -28,11 +36,17 @@ namespace FeedReader.Models
         public string error { get; set; }
     }
 
+    /// <summary>
+    /// DataTables internal search representation
+    /// </summary>
     public class Search
     {
         public bool regex { get; set; }
         public string value { get; set; }
     }
+    /// <summary>
+    /// Datatables internal column representation
+    /// </summary>
     public class Column
     {
         public string data { get; set; }
@@ -41,6 +55,9 @@ namespace FeedReader.Models
         public Search search { get; set; }
         public bool searchable { get; set; }
     }
+    /// <summary>
+    /// Datatables internal Order representation
+    /// </summary>
     public class Order
     {
         public int column { get; set; }

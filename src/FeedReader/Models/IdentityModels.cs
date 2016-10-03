@@ -10,6 +10,9 @@ namespace FeedReader.Models
     public class ApplicationUser : IdentityUser
     {
 
+        /// <summary>
+        /// Feeds the user is subscribed to
+        /// </summary>
         public virtual ICollection<RssSubscription> RssSubscriptions { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

@@ -14,41 +14,69 @@ using System.Diagnostics;
 using System.Xml.Linq;
 using System.Globalization;
 using System.Reflection;
+using FeedReader.Utils;
 
 namespace FeedReader.Providers
 {
+    /// <summary>
+    /// Interface describing the methods that allow for retrieving an Rss feed from an external source
+    /// </summary>
     public interface IRssUpdater
     {
+        /// <summary>
+        /// Retrieves a channel from a requested url
+        /// </summary>
+        /// <param name="url">Requsted feed url</param>
+        /// <returns>RssChannel from the requested Url</returns>
         RssChannel RetrieveChannel(String url);
     }
 
+    /// <summary>
+    /// Manual parser for rss and atoms feed. Used in case the internal SyndicationFeed reader is unable to process the feed. 
+    /// </summary>
     public class XDocumentRssReader : IRssUpdater
     {
+        /// <summary>
+        /// Retrieves a channel from a requested url
+        /// </summary>
+        /// <param name="url">Requsted feed url</param>
+        /// <returns>RssChannel from the requested Url</returns>
         public RssChannel RetrieveChannel(string url)
         {
-            XDocument doc = XDocument.Load(url);
-
-            string rootName = doc.Root.Name.LocalName;
-
             RssChannel rssChannel = null;
-            switch (rootName)
+            try 
             {
-                case "feed":
-                    rssChannel = parseAtom(doc);
-                    break; 
-                case "rss":
-                    rssChannel = parseRss(doc);
-                    break;
-            }
+                WebClient client = new RssWebClient();
+                XDocument doc = XDocument.Load(client.OpenRead(url));
 
-            if (rssChannel != null)
+                string rootName = doc.Root.Name.LocalName;
+                switch (rootName)
+                {
+                    case "feed":
+                        rssChannel = parseAtom(doc);
+                        break; 
+                    case "rss":
+                        rssChannel = parseRss(doc);
+                        break;
+                }
+
+                if (rssChannel != null)
+                {
+                    rssChannel.FeedUrl = url;
+                }
+            }
+            catch(Exception e)
             {
-                rssChannel.FeedUrl = url;
+                throw new RssUpdateException(e.Message, e);
             }
-
             return rssChannel;
         }
 
+        /// <summary>
+        /// Parses an atom based feed
+        /// </summary>
+        /// <param name="doc">XML root of the atom feed</param>
+        /// <returns>RssChannel from the document</returns>
         public RssChannel parseAtom(XDocument doc)
         {
             RssChannel rssChannel = new RssChannel();
@@ -78,6 +106,11 @@ namespace FeedReader.Providers
             return rssChannel;
         }
 
+        /// <summary>
+        /// Parses an rss based feed
+        /// </summary>
+        /// <param name="doc">XML root of the rss feed</param>
+        /// <returns>RssChannel from the document</returns>
         public RssChannel parseRss(XDocument doc)
         {
             string version = GetAttributeValue("version", doc.Root);
@@ -133,15 +166,20 @@ namespace FeedReader.Providers
             return rssChannel;
         }
 
+        /// <summary>
+        /// Parses string dates from the feeds and sets them to the current time if it cannot.
+        /// </summary>
+        /// <param name="dateVal">String representation of the date</param>
+        /// <returns>DateTimeOffset represetnation of the date or now if parsing fails</returns>
         private DateTimeOffset ConvertToDateTimeOffset(string dateVal)
         {
-
             DateTime dateTime;
+
             try
             {
                 dateTime = DateTime.Parse(dateVal);
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 Debug.WriteLine("Unable to parse date because of bad format " + dateVal);
                 dateTime = DateTime.Now;
@@ -150,6 +188,12 @@ namespace FeedReader.Providers
             return DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
         }
 
+        /// <summary>
+        /// Helper method to return a tag's attribute value by name regardless of namespace
+        /// </summary>
+        /// <param name="name">Name of the attribute</param>
+        /// <param name="element">The element to look for the attribute in</param>
+        /// <returns>string representation of the value</returns>
         private string GetAttributeValue(string name, XElement element)
         {
             string value = null;
@@ -165,7 +209,12 @@ namespace FeedReader.Providers
             }
             return value;
         }
-
+        /// <summary>
+        /// Helper method to return a sub element by name regardless of namespace
+        /// </summary>
+        /// <param name="name">Name of the local tag</param>
+        /// <param name="element">The element to look for the tag in</param>
+        /// <returns>XElement if it exists or null</returns>
         private XElement GetSubElement(string name, XElement element)
         {
             XElement returnElement = null;
@@ -177,6 +226,12 @@ namespace FeedReader.Providers
             return returnElement;
         }
 
+        /// <summary>
+        /// Helper method to return a tag's value by name regardless of namespace
+        /// </summary>
+        /// <param name="name">Name of the element</param>
+        /// <param name="element">The element to look for the local name in</param>
+        /// <returns>string representation of the value</returns>
         private string GetValue(string name, XElement element)
         {
             string value = null;
@@ -194,15 +249,25 @@ namespace FeedReader.Providers
         }
     }
 
+    /// <summary>
+    /// RssUpdater the uses the .net internal SyndicationFeedReader to parse a feed
+    /// </summary>
     public class SyndicationRssUpdater : IRssUpdater
     {
+
+        /// <summary>
+        /// Retrieves a channel from a requested url
+        /// </summary>
+        /// <param name="url">Requsted feed url</param>
+        /// <returns>RssChannel from the requested Url</returns>
         public RssChannel RetrieveChannel(string url)
         {
             RssChannel channel = null;
             try
             {
-                WebClient client = new WebClient();
+                WebClient client = new RssWebClient();
 
+                //use a customer xml reader to handle non standard dates
                 XmlReader reader = new SyndicationFeedXmlReader(client.OpenRead(url));
                 SyndicationFeed feed = SyndicationFeed.Load(reader);
 
@@ -259,11 +324,45 @@ namespace FeedReader.Providers
             }
             catch (System.Net.WebException e)
             {
-                Console.WriteLine(e.Message);
+                throw new RssUpdateException(e.Message, e);
             }
 
             return channel;
         }
     }
-    
+
+    /// <summary>
+    /// Exception to signal when an Rss feed could not be retrieved
+    /// </summary>
+    public class RssUpdateException : Exception
+    {
+
+        /// <summary>
+        /// No arg constructor
+        /// </summary>
+        public RssUpdateException()
+        {
+
+        }
+        /// <summary>
+        /// Accepts a message for the exception
+        /// </summary>
+        /// <param name="message">Message to be set</param>
+        public RssUpdateException(string message)
+            : base(message)
+        {
+
+        }
+
+        /// <summary>
+        /// Accepts a message and anexeption object
+        /// </summary>
+        /// <param name="message">Message to be set</param>
+        /// <param name="inner">The causing exception</param>
+        public RssUpdateException(string message, Exception inner)
+            : base(message, inner)
+        {
+
+        }
+    }
 }

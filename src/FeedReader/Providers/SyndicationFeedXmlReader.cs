@@ -11,8 +11,13 @@ using System.IO;
 
 namespace FeedReader.Providers
 {
-    //There are some feeds that do not conform to the date standard for RSS that are not handled by the standard xmlReader. Ex. http://feeds.foxnews.com/foxnews/latest 
-    //This has been pulled and reviewed from the stackoverflow post http://stackoverflow.com/questions/210375/problems-reading-rss-with-c-sharp-and-net-3-5 and https://gist.github.com/jaminto/495843
+    //T
+
+    /// <summary>
+    /// There are some feeds that do not conform to the date standard for RSS that are not handled by the standard xmlReader. Ex. http://feeds.foxnews.com/foxnews/latest 
+    /// This has been pulled and reviewed from the stackoverflow post http://stackoverflow.com/questions/210375/problems-reading-rss-with-c-sharp-and-net-3-5 and https://gist.github.com/jaminto/495843
+    /// as well as the official msdna site describing the issue.
+    /// </summary>
     public class SyndicationFeedXmlReader : XmlTextReader
     {
         readonly string[] Rss20DateTimeHints = { "pubDate" };

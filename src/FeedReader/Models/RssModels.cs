@@ -10,6 +10,10 @@ using FeedReader.Utils;
 
 namespace FeedReader.Models
 {
+    /// <summary>
+    /// Model object presentating the database structure of the "RssChannel" element.
+    /// A Hash column has been added as the unique item FeedUrl is too long to be used as a key.
+    /// </summary>
     public class RssChannel
     {
         public RssChannel()
@@ -56,6 +60,10 @@ namespace FeedReader.Models
 
     }
 
+    /// <summary>
+    /// Object representation of an RssFeedItem. 
+    /// An interna Hash Property is used as the unqiue identifiers consist of a string whose length makes it too long to be used as a key
+    /// </summary>
     public class RssItem
     {
         public int RssChannelId {get; set;}
@@ -85,6 +93,10 @@ namespace FeedReader.Models
         /*public UserRssAttributes UserAttributes { get; set; } */
     }
 
+    /// <summary>
+    /// Object representation of attributes that apply to an RssItem for a particiular user. This is to keep the channels/items which do not change separate from the user
+    /// with a subscription object tieing them together. This allows customer attributes to be added with duplicate rows for rssChannels and rssItems
+    /// </summary>
     public class UserRssAttributes
     {
         public int UserRssAttributesId { get; set; }
@@ -101,6 +113,10 @@ namespace FeedReader.Models
         public bool Hidden { get; set; }
     }
 
+    /// <summary>
+    /// Object representation of a user's subscription to an rss feed. 
+    /// Prevents coupling of an RssChannel to a particular user allowing them to be reused across all user's that request them
+    /// </summary>
     public class RssSubscription
     {
         public int RssSubscriptionId { get; set; }
@@ -116,6 +132,10 @@ namespace FeedReader.Models
         public RssChannel Feed { get; set; }
     }
 
+    /// <summary>
+    /// Application database context that holds the elements related to the RSS functionality of the application. Extends the existing ApplicationDbContext so the items 
+    /// will be present in the same database
+    /// </summary>
     public class RssContext : ApplicationDbContext
     {
         public DbSet<RssChannel> RssChannels { get; set; }
@@ -125,10 +145,6 @@ namespace FeedReader.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-          /*  modelBuilder.Entity<ApplicationUser>().HasMany(a => a.RssSubscriptions);
-            modelBuilder.Entity<RssSubscription>().HasRequired(a => a.Feed);
-            modelBuilder.Entity<RssChannel>().HasMany(a => a.Items); */
-
             modelBuilder.Entity<RssChannel>().Property(p => p.RowVersion).IsConcurrencyToken();
 
             base.OnModelCreating(modelBuilder);

@@ -14,7 +14,6 @@ namespace FeedReader.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            //return View();
         }
     }
 }
