@@ -91,7 +91,7 @@ namespace FeedReader.Providers
 
             if (channel == null)
             {
-                IRssUpdater updater = new XDocumentRssReader();
+                IRssUpdater updater = new ChainingRssReader();
                 channel = updater.RetrieveChannel(feedUrl);
 
                 channel = dbContext.RssChannels.Add(channel);
@@ -293,7 +293,7 @@ namespace FeedReader.Providers
             {
                 RssContext dbContext = new RssContext();
 
-                IRssUpdater updater = new XDocumentRssReader();
+                IRssUpdater updater = new ChainingRssReader();
                 try
                 {
                     channel = dbContext.RssChannels.Where(a => a.RssChannelId == channel.RssChannelId).FirstOrDefault();//replace with one in this context

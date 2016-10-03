@@ -28,9 +28,50 @@ namespace FeedReader.Providers
         /// </summary>
         /// <param name="url">Requsted feed url</param>
         /// <returns>RssChannel from the requested Url</returns>
-        RssChannel RetrieveChannel(String url);
+        RssChannel RetrieveChannel(string url);
     }
 
+    public class ChainingRssReader : IRssUpdater
+    {
+        private ICollection<IRssUpdater> _parseChain = new List<IRssUpdater>();
+
+        public ChainingRssReader()
+        {
+            addToRssParseChain(new SyndicationRssUpdater());
+            addToRssParseChain(new XDocumentRssReader());
+        }
+        public RssChannel RetrieveChannel(string url)
+        {
+            RssChannel channel = null;
+
+            foreach(IRssUpdater updater in _parseChain)
+            {
+                try
+                {
+                    channel = updater.RetrieveChannel(url);
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Unable to parse feed " + url + " with parser: " + updater.ToString());
+                }                
+
+                if(channel != null){
+                    break;
+                }
+            }
+
+            if (channel == null)
+            {
+                throw new RssUpdateException();
+            }
+            return channel;
+        }
+
+        public void addToRssParseChain(IRssUpdater updater)
+        {
+            _parseChain.Add(updater);
+        }
+    }
     /// <summary>
     /// Manual parser for rss and atoms feed. Used in case the internal SyndicationFeed reader is unable to process the feed. 
     /// </summary>
