@@ -86,7 +86,7 @@
                 <div id="messageDiv"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="messageButton" data-toggle="modal" class="btn btn-primary btn-sm" data-dismiss="modal" data-target="">Close</button>
+                <button type="button" id="messageButton" data-toggle="modal" class="btn btn-primary btn-sm" data-dismiss="modal" data-target="">Ok</button>
             </div>
         </div>
     </div>
@@ -178,7 +178,10 @@
                 data: { 'rssFeedId': rssFeedId },
                 cache: false,
                 success: function (result) {
-                    alert(result.message);
+                    $('#messageButton').attr('data-target', '');                    
+                    $('#messageDiv').text(result.message);
+                    $('#messageModal').modal();
+
                     if (result.error == false) {
                         clearContent();
                         populateFilterFeeds();
