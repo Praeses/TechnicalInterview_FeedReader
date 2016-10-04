@@ -58,38 +58,51 @@ namespace FeedReader.Controllers
             String message = "";
             bool error = false;
 
-            ApplicationUser applicationUser = userDataHelper.retireveUserFromDb(User.Identity.GetUserId());
-            RssFeed rssFeed = feedDataHelper.retrieveRssFeedFromDb(rssFeedUrl);            
-
-            //If null it means this is a feed we haven't saved before
-            if (rssFeed == null)
-            {   
-                //Retrieve rss feed from url and save to database
-                RssFeedService rssFeedService = new RssFeedService();
-                rssFeed = rssFeedService.RetrieveRssFeed(rssFeedUrl);
-                feedDataHelper.saveRssFeed(rssFeed);
-            }
-
-            UserRssFeed userRssFeed = feedDataHelper.retireveUserRssFeedFromDb(rssFeed, applicationUser);
-
-            //If UserRssFeed is null we need to create a new one and save to database
-            if (userRssFeed == null)
+            try
             {
-                //save userRssFeed to database           
-                userRssFeed = new UserRssFeed
-                {
-                    UserId = applicationUser.Id,
-                    RssFeedId = rssFeed.RssFeedId
-                };
-                feedDataHelper.saveUserRssFeed(userRssFeed);
+                ApplicationUser applicationUser = userDataHelper.retireveUserFromDb(User.Identity.GetUserId());
+                RssFeed rssFeed = feedDataHelper.retrieveRssFeedFromDb(rssFeedUrl);
 
-                message = String.Format("Successfully added RSS Feed: \"{0}\".", rssFeed.Title);
+                //If null it means this is a feed we haven't saved before
+                if (rssFeed == null)
+                {
+                    //Retrieve rss feed from url and save to database
+                    RssFeedService rssFeedService = new RssFeedService();
+                    rssFeed = rssFeedService.RetrieveRssFeed(rssFeedUrl);
+                    feedDataHelper.saveRssFeed(rssFeed);
+                }
+
+                UserRssFeed userRssFeed = feedDataHelper.retireveUserRssFeedFromDb(rssFeed, applicationUser);
+
+                //If UserRssFeed is null we need to create a new one and save to database
+                if (userRssFeed == null)
+                {
+                    //save userRssFeed to database           
+                    userRssFeed = new UserRssFeed
+                    {
+                        UserId = applicationUser.Id,
+                        RssFeedId = rssFeed.RssFeedId
+                    };
+                    feedDataHelper.saveUserRssFeed(userRssFeed);
+
+                    message = String.Format("Successfully added RSS Feed: \"{0}\".", rssFeed.Title);
+                }
+                else //This means they have already added the Rss Feed
+                {
+                    error = true;
+                    message = String.Format("You have already added RSS Feed: \"{0}\".", rssFeed.Title);
+                }                
             }
-            else //This means they have already added the Rss Feed
+            catch (System.IO.FileNotFoundException)
             {
                 error = true;
-                message = String.Format("You have already added RSS Feed: \"{0}\".", rssFeed.Title);
-            }                
+                message = String.Format("Unable to locate URL: \"{0}\".  Make sure this is a valid URL.", rssFeedUrl);
+            }
+            catch
+            {
+                error = true;
+                message = String.Format("Unable to parse feed for URL: \"{0}\".  Make sure this is a valid RSS feed.", rssFeedUrl);
+            }
 
             return Json(new {error=error, message=message});
         }

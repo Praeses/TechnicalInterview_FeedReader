@@ -19,7 +19,7 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a href="#" data-toggle="modal" data-target="#addModal" onclick="$('#rssFeedUrl').val('');">Add</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#removeModal" onclick="populateRemoveFeeds(); $('#feedRemoveSelect').val('default');">Remove</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#removeModal" onclick="populateRemoveFeeds(); $('#feedRemoveSelect').val('default'); $('#removeFeedButton').prop('disabled', true);">Remove</a></li>
                 <li><a href="#" onclick="clearContent();getUserFeeds(true);">Refresh</a></li>
             </ul>
         </div>
@@ -63,13 +63,30 @@
                 <h4 class="modal-title">Remove Feed</h4>
             </div>
             <div class="modal-body">
-                <select id="feedRemoveSelect" class="selectpicker">
+                <select id="feedRemoveSelect" class="selectpicker" onchange="$('#removeFeedButton').prop('disabled', false);">
                     <option disabled selected value="default"> -- select a feed -- </option>
                 </select>
             </div>
             <div class="modal-footer">
-                <input type="button" value="Remove Feed" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="removeRssFeed($('#feedRemoveSelect').val());" />
+                <input type="button" id="removeFeedButton" value="Remove Feed" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="removeRssFeed($('#feedRemoveSelect').val());" />
                 <button type="button" class="btn btn-defaul btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="messageModal" class="modal fade" rold="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">RSS Central</h4>
+            </div>
+            <div class="modal-body">
+                <div id="messageDiv"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="messageButton" data-toggle="modal" class="btn btn-primary btn-sm" data-dismiss="modal" data-target="">Close</button>
             </div>
         </div>
     </div>
@@ -99,6 +116,10 @@
                 }, 500);
             });
 
+            $("#addModal").on('shown.bs.modal', function () {
+                $('#rssFeedUrl').focus();
+            });
+
             populateFilterFeeds('feedSelectFilter');
             getUserFeeds(true);
         })
@@ -121,20 +142,33 @@
         }
 
         function addRssFeed(rssFeedUrl) {
-            $.ajax({
-                url: '/home/addRssFeed',
-                type: 'POST',
-                data: { 'rssFeedUrl': rssFeedUrl },
-                cache: false,
-                success: function (result) {
-                    alert(result.message);
-                    if (result.error == false) {
-                        clearContent();
-                        populateFilterFeeds();
-                        getUserFeeds(false);
-                    }                        
-                }
-            });
+            rssFeedUrl = $.trim(rssFeedUrl);
+            $('#messageButton').attr('data-target', '');
+
+            if (rssFeedUrl != "") {
+                $.ajax({
+                    url: '/home/addRssFeed',
+                    type: 'POST',
+                    data: { 'rssFeedUrl': rssFeedUrl },
+                    cache: false,
+                    success: function (result) {
+                        $('#messageDiv').text(result.message);
+                        $('#messageModal').modal();
+
+                        if (result.error == false) {
+                            clearContent();
+                            populateFilterFeeds();
+                            getUserFeeds(false);
+                        } else {
+                            $('#messageButton').attr('data-target', '#addModal');
+                        }
+                    }
+                });
+            } else {
+                $('#messageDiv').text('Please enter a URL.');
+                $('#messageButton').attr('data-target', '#addModal');
+                $('#messageModal').modal();
+            }
         }
 
         function removeRssFeed(rssFeedId) {
