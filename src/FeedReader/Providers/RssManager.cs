@@ -319,6 +319,14 @@ namespace FeedReader.Providers
                         RssItem existingItem = dbContext.RssItems.Where(a => a.Hash == updatedItem.Hash).FirstOrDefault();
                         if (existingItem == null)
                         {
+                            //check list that just came back for the hash
+                            //TO-DO: figure out how to handle a feed with duplicate items and also be able to differentiated between it and existing items in the database
+                            RssItem existingListItem = updatedChannel.Items.Where(a => a.Hash == updatedItem.Hash && a != updatedItem).FirstOrDefault();
+                            if (existingListItem != null)
+                            {
+                                continue;
+                            }
+
                             itemsToBeAdded.Add(updatedItem);
                         }
                         else

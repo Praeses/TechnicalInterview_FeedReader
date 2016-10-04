@@ -84,6 +84,7 @@ var EasyAutocomplete = (function(scope){
 				/* Events */
 				onClickEvent: function() {},
 				onSelectItemEvent: function() {},
+				onBeforeLoadEvent: function() {},
 				onLoadEvent: function() {},
 				onChooseEvent: function() {},
 				onKeyEnterEvent: function() {},
@@ -1095,6 +1096,9 @@ var EasyAutocomplete = (function(scope) {
 
 							config.get("list").onSelectItemEvent();
 						})
+						.on("beforeLoadElements.eac", function(event, listBuilders){
+							config.get("list").onBeforeLoadEvent(listBuilders[0].data);
+						})
 						.on("loadElements.eac", function(event, listBuilders, phrase) {
 			
 
@@ -1509,6 +1513,7 @@ var EasyAutocomplete = (function(scope) {
 		}
 
 		function loadElements(list, phrase) {
+			$container.trigger("beforeLoadElements.eac", [list]);
 			$container.trigger("loadElements.eac", [list, phrase]);
 		}
 
