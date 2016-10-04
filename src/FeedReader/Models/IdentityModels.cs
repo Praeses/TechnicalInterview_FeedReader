@@ -14,6 +14,7 @@ namespace FeedReader.Models
         /// Feeds the user is subscribed to
         /// </summary>
         public virtual ICollection<RssSubscription> RssSubscriptions { get; set; }
+        public virtual ICollection<UserRssAttributes> UserRssAttributes { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
