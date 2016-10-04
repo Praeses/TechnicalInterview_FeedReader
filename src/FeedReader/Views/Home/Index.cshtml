@@ -113,6 +113,7 @@
                     'filter' : $('#feedSelectFilter').val(),
                     'page' : currentPage
                 },
+                cache:false,
                 success: function (result) {
                     buildFeedItems(result);
                 }
@@ -124,6 +125,7 @@
                 url: '/home/addRssFeed',
                 type: 'POST',
                 data: { 'rssFeedUrl': rssFeedUrl },
+                cache: false,
                 success: function (result) {
                     alert(result.message);
                     if (result.error == false) {
@@ -140,6 +142,7 @@
                 url: '/home/removeRssFeed',
                 type: 'POST',
                 data: { 'rssFeedId': rssFeedId },
+                cache: false,
                 success: function (result) {
                     alert(result.message);
                     if (result.error == false) {
@@ -155,6 +158,7 @@
             $.ajax({
                 url: '/home/RetrieveFilterFeeds',
                 type: 'GET',
+                cache: false,
                 success: function (result) {
                     $.each(result, function (index, element) {             
                         $('#' + selectElementId).append($('<option>', {
