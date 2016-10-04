@@ -60,7 +60,7 @@ namespace FeedReader.Controllers
 
             try
             {
-                ApplicationUser applicationUser = userDataHelper.retireveUserFromDb(User.Identity.GetUserId());
+                string userId = User.Identity.GetUserId();
                 RssFeed rssFeed = feedDataHelper.retrieveRssFeedFromDb(rssFeedUrl);
 
                 //If null it means this is a feed we haven't saved before
@@ -72,7 +72,7 @@ namespace FeedReader.Controllers
                     feedDataHelper.saveRssFeed(rssFeed);
                 }
 
-                UserRssFeed userRssFeed = feedDataHelper.retireveUserRssFeedFromDb(rssFeed, applicationUser);
+                UserRssFeed userRssFeed = feedDataHelper.retireveUserRssFeedFromDb(rssFeed.RssFeedId, userId);
 
                 //If UserRssFeed is null we need to create a new one and save to database
                 if (userRssFeed == null)
@@ -80,7 +80,7 @@ namespace FeedReader.Controllers
                     //save userRssFeed to database           
                     userRssFeed = new UserRssFeed
                     {
-                        UserId = applicationUser.Id,
+                        UserId = userId,
                         RssFeedId = rssFeed.RssFeedId
                     };
                     feedDataHelper.saveUserRssFeed(userRssFeed);

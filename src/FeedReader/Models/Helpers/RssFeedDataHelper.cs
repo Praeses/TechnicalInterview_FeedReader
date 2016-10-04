@@ -107,13 +107,13 @@ namespace FeedReader.Models.Helpers
             }
         }
 
-        public UserRssFeed retireveUserRssFeedFromDb(RssFeed rssFeed, ApplicationUser applicationUser)
+        public UserRssFeed retireveUserRssFeedFromDb(int rssFeedId, string userId)
         {
             UserRssFeed existingUserRssFeed = null;
             using (var db = new FeedReaderContext())
             {
-                existingUserRssFeed = db.UserRssFeeds.SingleOrDefault(a => a.RssFeedId == rssFeed.RssFeedId &&
-                                                                           a.UserId == applicationUser.Id
+                existingUserRssFeed = db.UserRssFeeds.SingleOrDefault(a => a.RssFeedId == rssFeedId &&
+                                                                           a.UserId == userId
                                                                       );
             }
 
