@@ -46,7 +46,6 @@ namespace FeedReader.Models.Services
             
                 rssFeedItem.Title = (string)item.Element("title") ?? "";
                 rssFeedItem.Link = (string)item.Element("link") ?? "";
-                rssFeedItem.Content = (string)item.Element(content + "encoded") ?? "";
                 String description = (string)item.Element("description") ?? "";
                 String dateString = (string)item.Element("pubDate") ?? "";
 
@@ -77,7 +76,7 @@ namespace FeedReader.Models.Services
                     }
                 }
                 rssFeedItem.PublishDate = date;
-                rssFeedItem.PublishDateString = date.ToString();
+                rssFeedItem.PublishDateString = date.DayOfWeek + " " + date.ToString();
 
                 rssFeedItems.Add(rssFeedItem);
             }
