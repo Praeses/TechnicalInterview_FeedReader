@@ -50,7 +50,9 @@
 <ul id="channelListHolder">
     @foreach (RssChannel channel in Model)
     {
-        <li><a href="ViewFeed?feedUrl=@Html.ValueFor(a=>channel.FeedUrl)">@Html.DisplayFor(a => channel.Title)</a><a class="unsubscribeLink" title="Unsubscribe" href="@Url.Action("RemoveSubscription", "Rss", new { rssChannelId = channel.RssChannelId })"><img src="@Url.Content("~/Content/Images/unsubscribe.png")" /></a></li>
+
+         var url = Uri.EscapeDataString(channel.FeedUrl);
+        <li><a href="ViewFeed?feedUrl=@Html.ValueFor(a=> url)">@Html.DisplayFor(a => channel.Title)</a><a class="unsubscribeLink" title="Unsubscribe" href="@Url.Action("RemoveSubscription", "Rss", new { rssChannelId = channel.RssChannelId })"><img src="@Url.Content("~/Content/Images/unsubscribe.png")" /></a></li>
     }
 </ul>
 

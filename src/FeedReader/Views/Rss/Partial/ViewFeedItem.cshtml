@@ -49,7 +49,10 @@
         <span class="rssItemTitle"><a href="@Html.ValueFor(modelItem => modelItem.Link)" target="_blank">@Html.DisplayFor(modelItem => modelItem.Title)</a></span>
         <br />
         <div class="feedLinks">
-            <a href="ViewFeed?feedUrl=@Html.ValueFor(a => a.Channel.FeedUrl)">View Feed</a>
+            @{
+                var url = Uri.EscapeDataString(Model.Channel.FeedUrl);
+            }
+            <a href="ViewFeed?feedUrl=@Html.ValueFor(a => url)">View Feed</a>
         </div>
         <span class="rssItemDate">@Model.PubDate.ToLocalTime().ToString("g")</span><br />
         <p>
