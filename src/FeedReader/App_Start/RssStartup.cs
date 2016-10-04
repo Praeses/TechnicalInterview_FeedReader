@@ -14,6 +14,7 @@ namespace FeedReader.App_Start
         public static void Init()
         {
             
+            //testing mechanism to load feeds from a desktop application called rssowl
             /*if (false)
             {
                 XDocument document = XDocument.Load(new StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/rssowl.opml")));
