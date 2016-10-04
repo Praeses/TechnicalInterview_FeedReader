@@ -88,7 +88,7 @@ namespace FeedReader.Providers
         /// </summary>
         /// <param name="query">String to be searched</param>
         /// <returns>RssSearchResponse of query results</returns>
-        public override RssSearchResponse Search(string query)
+        public RssSearchResponse Search(string query)
         {
             WebClient client = new WebClient();
             string jsonResponse = client.DownloadString(_baseUrl + "/" + "find" + "?" + "v=1.0&q=" + HttpUtility.UrlEncode(query));
