@@ -125,6 +125,7 @@
         })
 
         function getUserFeeds(update) {
+            $('#loadingIcon').show();
             $.ajax({
                 url: '/home/GetUserRssFeeds',
                 type: 'GET',
@@ -137,6 +138,7 @@
                 cache:false,
                 success: function (result) {
                     buildFeedItems(result);
+                    $('#loadingIcon').hide();
                 }
             });
         }
