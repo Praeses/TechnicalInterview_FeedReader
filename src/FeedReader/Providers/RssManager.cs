@@ -94,7 +94,14 @@ namespace FeedReader.Providers
                 IRssUpdater updater = new ChainingRssReader();
                 channel = updater.RetrieveChannel(feedUrl);
 
+                //workaround for issue where the channel id is needed for the hash for the rssitems but the id is 0
+                //save the channel without the items first to get an id and then save the channel items so the hash is computed correctly
+                ICollection<RssItem> items = channel.Items;
+                channel.Items = null;
                 channel = dbContext.RssChannels.Add(channel);
+                dbContext.SaveChanges();
+
+                channel.Items = items;
                 dbContext.SaveChanges();
             }
 

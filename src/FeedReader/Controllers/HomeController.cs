@@ -8,7 +8,7 @@ namespace FeedReader.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("ListAllItems", "Rss");
+                return RedirectToAction("Index", "Rss");
             }
             else
             {

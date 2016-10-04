@@ -140,7 +140,6 @@ namespace FeedReader.Providers
 
                 //pull date
                 rssItem.PubDate = ConvertToDateTimeOffset(GetValue("published", entry));
-                rssItem.GenerateHash(rssChannel);
                 rssChannel.Items.Add(rssItem);
             }
 
@@ -197,8 +196,6 @@ namespace FeedReader.Providers
                         rssItem.ImageUrl = url;
                         //pull date
                         rssItem.PubDate = ConvertToDateTimeOffset(GetValue("pubDate", item));
-
-                        rssItem.GenerateHash(rssChannel);
                         rssChannel.Items.Add(rssItem);
                     }
                 }
@@ -356,7 +353,6 @@ namespace FeedReader.Providers
                         string thumbnailUri = navigator.SelectSingleNode("//media:content", resolver).GetAttribute("url", "");
                         rssItem.ImageUrl = thumbnailUri;
                     }
-                    rssItem.GenerateHash(channel);
                     channel.Items.Add(rssItem);
                 }
 

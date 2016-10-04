@@ -177,9 +177,9 @@
         }
         #feedItemsTable td{
             white-space: nowrap;
-            padding: 0;
+           /* padding: 0;
             padding-top: 1px;
-            padding-bottom: 1px;
+            padding-bottom: 1px; */
             width: 0px; /*prevents table row from overlapping to the side of the page*/
             max-width: 500px; /*prevent table from overlapping page*/
             padding-left: 10px;
@@ -287,7 +287,7 @@
         <a href="#" title="Refresh Feeds" onclick="updateFeeds()"><img id="refreshIcon" src="@Url.Content("~/Content/Images/refresh.png")" /></a>
         <a href="@Url.Action("ListAllFeeds", "Rss")" title="Feed List"><img id="feedListIcon" src="@Url.Content("~/Content/Images/feed_list.png")" /></a>
     </div>
-    <table id="feedItemsTable">
+    <table id="feedItemsTable" class="row-border">
         <thead>
             <tr>
                 <th>Feed</th>

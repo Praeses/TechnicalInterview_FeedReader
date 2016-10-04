@@ -34,7 +34,18 @@ namespace FeedReader.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            return RedirectToAction("ListAllItems");
+            RssManager manager = new RssManager(User.Identity.GetUserId());
+
+            ICollection<RssSubscription> subscriptions = manager.RetrieveSubscriptions();
+
+            if (subscriptions.Count() == 0)
+            {
+                return RedirectToAction("AddFeed");
+            }
+            else
+            {
+                return RedirectToAction("ListAllItems");
+            }
         }
 
         public ActionResult ListAllFeeds()
@@ -149,10 +160,10 @@ namespace FeedReader.Controllers
         /// </summary>
         /// <param name="query">query string of the search</param>
         /// <returns>View representing the search result</returns>
-        public ActionResult SearchRssFeeds(string query)
+        public JsonResult SearchRssFeeds(string query)
         {
-            IRssSearchProvider rssSearch = new FeedlyRssProvider();
-            return Content(rssSearch.search(query));
+            IRssSearchProvider rssSearch = new GoogleRssProvider();
+            return Json(rssSearch.Search(query), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -184,9 +195,10 @@ namespace FeedReader.Controllers
             }
             else
             {
+                RssSubscription subscription = null;
                 try
                 {
-                    manager.AddSubscription(link);
+                    subscription = manager.AddSubscription(link);
                 }
                 catch (RssUpdateException e)
                 {
@@ -194,7 +206,7 @@ namespace FeedReader.Controllers
                     return View();
                 }
 
-                return RedirectToAction("ListAllItems");
+                return RedirectToAction("ViewFeed", new {feedUrl = subscription.Feed.FeedUrl });
             }
 
         }

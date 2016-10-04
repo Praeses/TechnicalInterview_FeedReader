@@ -81,15 +81,18 @@ namespace FeedReader.Models
 
         [Index("IX_RssHash", 1, IsUnique = true)]
         [MaxLength(40)]
-        public string Hash { get; set; }
-
-        public void GenerateHash(RssChannel channel)
+        public string Hash
         {
-            //basic hashing on title and pub date to determine uniqueness. This would be better suited later as a check in the database itself rather than code
-            Hash = FeedReaderUtils.GetHashString(channel.Title + " " + Title); 
+            get
+            {
+                //basic hashing on title and pub date to determine uniqueness. This would be better suited later as a check in the database itself rather than code
+                return FeedReaderUtils.GetHashString(RssChannelId + Title + PubDate + "");
+            }
+            set
+            {
 
+            }
         }
-        
         /*public UserRssAttributes UserAttributes { get; set; } */
     }
 

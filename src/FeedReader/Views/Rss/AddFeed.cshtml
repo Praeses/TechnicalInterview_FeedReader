@@ -5,20 +5,49 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>AddFeed</h2>
+<h2>Add a Feed</h2>
 
+@section css {
+    @Styles.Render("~/Scripts/EasyAutocomplete-1.3.5/easy-autocomplete.min.css")
+}
+
+@section scripts {
+    @Scripts.Render("~/Scripts/EasyAutocomplete-1.3.5/jquery.easy-autocomplete.min.js")
+
+    <script>
+        $(document).ready(function () {
+            $('#linkHolder').easyAutocomplete({
+                url: function (phrase) {
+                    return "@Url.Action("SearchRssFeeds", "Rss")?query=" + encodeURIComponent(phrase);
+                },
+                getValue: function(element){
+                    return element.title;
+                },
+                requestDelay: 500,
+                listLocation: "results",
+                list: {
+                    onChooseEvent: function () {
+                        var select = $('#linkHolder');
+                        var data = select.getSelectedItemData();
+
+                        select.val(data.url);
+                    }
+                }
+            });
+        });
+    </script>
+}
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>RssChannel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control", @id="linkHolder"} })
                 @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
             </div>
         </div>

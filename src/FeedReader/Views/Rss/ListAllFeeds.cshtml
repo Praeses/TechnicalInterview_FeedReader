@@ -10,7 +10,9 @@
 <style>
     #channelListHolder {
         display: block;
-        padding: 15px;
+        margin: 0;
+        padding: 0;
+        padding-top: 5px;
     }
      #channelListHolder a{
         color: black;
@@ -26,6 +28,10 @@
     #channelListHolder li {
         list-style: none;
     }
+
+    #returnLinkHolder{
+        margin-left: -10px;
+    }
 </style>
 
 @section scripts {
@@ -39,7 +45,8 @@
     });
 </script>
 }
-
+<br />
+<div id="returnLinkHolder">@Html.ActionLink("Return To Feed List", "ListAllItems", new { refreshFeed = "false" })</div>
 <ul id="channelListHolder">
     @foreach (RssChannel channel in Model)
     {
