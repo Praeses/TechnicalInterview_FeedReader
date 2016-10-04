@@ -48,7 +48,7 @@ namespace FeedReader.Models.Services
                 rssFeedItem.Link = (string)item.Element("link") ?? "";
                 rssFeedItem.Content = (string)item.Element(content + "encoded") ?? "";
                 String description = (string)item.Element("description") ?? "";
-                String date = (string)item.Element("pubDate") ?? "";
+                String dateString = (string)item.Element("pubDate") ?? "";
 
                 //Remove all html elements
                 description = Regex.Replace(description, "<.*?>", String.Empty);
@@ -56,19 +56,28 @@ namespace FeedReader.Models.Services
                 //Shorten to max length
                 if (description.Length > MaxDescriptionLength)
                 {
-                    description = description.Substring(0, MaxDescriptionLength);
-                    description += "...";
+                    description = description.Substring(0, MaxDescriptionLength) + "...";
                 }
                 rssFeedItem.Description = description;
 
-                if (date == "")
-                    date = DateTime.Now.ToString();
-                
-                rssFeedItem.PublishDate = date;
+                //Try to parse date for feed item
+                string dateFormatFirst = "ddd, dd MMM yyyy HH:mm:ss zzz";
+                string dateFormatSecond = "ddd, dd MMM yyyy HH:mm:ss Z";
+                DateTime date;
 
-                //XNamespace asdf = "http://search.yahoo.com/mrss/";
-                //XElement imageElement = item.Element(asdf + "content");
-                //var imageUrl = imageElement.Descendants("url");
+                //Attempt parse with zzz
+                if (!DateTime.TryParseExact(dateString, dateFormatFirst, CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                {
+                    //Attempt parse with Z
+                    if (!DateTime.TryParseExact(dateString, dateFormatSecond, CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                    {
+                        //If we get here just use the current time in zzz format
+                        dateString = DateTime.Now.ToString(dateFormatFirst);
+                        date = DateTime.ParseExact(dateString, dateFormatFirst, CultureInfo.InvariantCulture);
+                    }
+                }
+                rssFeedItem.PublishDate = date;
+                rssFeedItem.PublishDateString = date.ToString();
 
                 rssFeedItems.Add(rssFeedItem);
             }
