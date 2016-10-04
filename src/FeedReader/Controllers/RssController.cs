@@ -52,7 +52,7 @@ namespace FeedReader.Controllers
         {
             RssManager manager = new RssManager(User.Identity.GetUserId());
             var query = from sub in manager.RetrieveSubscriptions()
-                        orderby sub.Feed.Title.Trim()
+                        orderby sub.Feed.Title
                         select sub.Feed;
       
             return View(query.ToList());
