@@ -10,23 +10,25 @@ using System.Xml.Linq;
 
 namespace FeedReader.Models.Services
 {
+    // Interface class for retrieving rss feeds by url
     interface IRssFeedService
     {
         RssFeed RetrieveRssFeed(string rssFeedUrl);
-        List<RssFeed> RetrieveAllRssFeeds(List<string> rssFeedUrlList);
     }
 
     public class RssFeedService : IRssFeedService
     {
+        // Decides the max length of a description we'll store in the database
         public const int MaxDescriptionLength = 400;
 
+        // Method returns the rss feed object for the given rss url
         public RssFeed RetrieveRssFeed(string rssFeedUrl)
         {
             List<RssFeedItem> rssFeedItems = new List<RssFeedItem>();
             RssFeed rssFeed;
             RssFeedItem rssFeedItem;
 
-            //Convert rssfeed into xml document
+            // Convert rssfeed into xml document
             XNamespace content = XNamespace.Get(rssFeedUrl);
             XDocument document = XDocument.Load(rssFeedUrl);
 
@@ -80,17 +82,11 @@ namespace FeedReader.Models.Services
 
                 rssFeedItems.Add(rssFeedItem);
             }
+
             //Add items to RssFeed
             rssFeed.RssFeedItems = rssFeedItems;
 
             return rssFeed;
-        }
-
-        public List<RssFeed> RetrieveAllRssFeeds(List<string> rssFeedUrlList)
-        {
-            List<RssFeed> rssFeedList = new List<RssFeed>();
-
-            return rssFeedList;
         }
     }
 }

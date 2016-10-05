@@ -8,6 +8,7 @@ using System.Web;
 
 namespace FeedReader.Models
 {
+    // Class for rss feed
     public class RssFeed
     {
         [Key]
@@ -21,9 +22,11 @@ namespace FeedReader.Models
         public string Title { get; set; }
         public string Description { get; set; }
 
+        // Holds reference to rss feed item children
         public List<RssFeedItem> RssFeedItems { get; set; }
     }
 
+    // Class for rss feed item
     public class RssFeedItem
     {
         [Key]
@@ -40,9 +43,11 @@ namespace FeedReader.Models
         public string PublishDateString { get; set; }
         public string ImageUrl { get; set; }
 
+        // Holds reference to owning rss feed
         public RssFeed RssFeed { get; set; }
     }
 
+    // Class for a user rss feed, connects user to their rss feed
     public class UserRssFeed
     {
         [Key]
@@ -55,10 +60,13 @@ namespace FeedReader.Models
         [Column(Order = 2)]
         public string UserId { get; set; }
 
+        // Reference to rss feed
         public RssFeed RssFeed { get; set; }       
+        // Reference to user
         public ApplicationUser ApplicationUser { get; set; }
     }
 
+    // New context for rss feed classes
     public class FeedReaderContext : ApplicationDbContext
     {
         public DbSet<UserRssFeed> UserRssFeeds { get; set; }

@@ -16,8 +16,10 @@ textarea {
     max-width: 280px;
 }
 
+/* Loading icon styles */
 .loadingIcon {
     position: fixed;
     top: 50%;
     left: 50%;
+    display: none;
 }

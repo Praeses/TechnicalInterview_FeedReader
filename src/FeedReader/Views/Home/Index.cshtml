@@ -9,18 +9,19 @@
     <div>        
         <span>
             Now Viewing:
-            <select id="feedSelectFilter" class="selectpicker" onchange="clearContent();getUserFeeds(false);">
+            <select id="feedSelectFilter" class="selectpicker" onchange="feedSelectFilterChange()">
                 <option value="">All Feeds</option>
             </select>
         </span>
         <div class="dropdown" style="display:inline;">
             <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                <span class="glyphicon glyphicon-cog" style="padding-right:2px;"></span><span class="caret"></span>
+                <span class="glyphicon glyphicon-cog" style="padding-right:2px;"></span>
+                <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="#" data-toggle="modal" data-target="#addModal" onclick="$('#rssFeedUrl').val('');">Add</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#removeModal" onclick="populateRemoveFeeds(); $('#feedRemoveSelect').val('default'); $('#removeFeedButton').prop('disabled', true);">Remove</a></li>
-                <li><a href="#" onclick="clearContent();getUserFeeds(true);">Refresh</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#addModal" onclick="$('#rssFeedUrl').val('')">Add</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#removeModal" onclick="removeFeedClick()">Remove</a></li>
+                <li><a href="#" onclick="refreshFeedsClick()">Refresh</a></li>
             </ul>
         </div>
     </div>
@@ -30,11 +31,11 @@
     </ul>
 </div>
 
-<li id="template" class="hidden" style="cursor:pointer;list-style:none;">
-    <div class="title" style="font-weight:bold;padding-bottom:2px;"></div>
+<li id="template" class="hidden template">
+    <div class="title"></div>
     <div class="content"></div>
-    <div class="publishDate" style="padding-top:2px;"></div>
-    <div style="border-top: 1px solid #d9d9d9;margin:20px;"></div>
+    <div class="publishDate"></div>
+    <div class="separator"></div>
 </li>
 
 <div id="addModal" class="modal fade" rold="dialog">
@@ -92,14 +93,40 @@
     </div>
 </div>
 
+@section Styles{
+    <style>
+        /* Styles for template/template items */
+        .template {
+            cursor:pointer;
+            list-style:none;
+        }
+
+        .template .title {
+            font-weight:bold;
+            padding-bottom:2px;
+        }
+
+        .template .publishDate {
+            padding-top:2px;
+        }
+
+        .template .separator {
+            border-top: 1px solid #d9d9d9;
+            margin:20px;
+        }
+    </style>
+}
+
 @section Scripts{
     <script type="text/javascript">
-        var currentPage = 1;
-        var searchTimeout;
+        var currentPage = 1; // Hold current page we're on for infinite scrolling
+        var searchTimeout; // Timeout for when typing in search
+        var keyupTimeout = 500; // Time in ms we wait before firing off the search 
 
         $(document).ready(function () {
             var win = $(window);
 
+            // Function to calculate when user reaches the bottom of the page and makes a call to backend to get next content
             win.scroll(function () {
                 if ($(document).height() - win.height() == win.scrollTop()) {
                     currentPage++;
@@ -107,15 +134,17 @@
                 }
             });
 
+            // On key up bind for delay when typing
             $('#searchText').on('keyup', function () {
                 window.clearTimeout(searchTimeout);
 
                 searchTimeout = setTimeout(function () {
                     clearContent();
                     getUserFeeds(false);
-                }, 500);
+                }, keyupTimeout);
             });
 
+            // Putting focus on text box when add feed modal is shown
             $("#addModal").on('shown.bs.modal', function () {
                 $('#rssFeedUrl').focus();
             });
@@ -124,8 +153,9 @@
             getUserFeeds(true);
         })
 
+        // Gets the feeds for a user by passing search, filter, and pagination
         function getUserFeeds(update) {
-            $('#loadingIcon').show();
+            startLoadingIcon();
             $.ajax({
                 url: '/home/GetUserRssFeeds',
                 type: 'GET',
@@ -138,11 +168,12 @@
                 cache:false,
                 success: function (result) {
                     buildFeedItems(result);
-                    $('#loadingIcon').hide();
+                    stopLoadingIcon();
                 }
             });
         }
 
+        // Adds the new rss feed for this user
         function addRssFeed(rssFeedUrl) {
             rssFeedUrl = $.trim(rssFeedUrl);
             $('#messageButton').attr('data-target', '');
@@ -154,9 +185,11 @@
                     data: { 'rssFeedUrl': rssFeedUrl },
                     cache: false,
                     success: function (result) {
+                        // Show message modal with result from server
                         $('#messageDiv').text(result.message);
                         $('#messageModal').modal();
 
+                        // If it is successful clear content and get repopulate feeds
                         if (result.error == false) {
                             clearContent();
                             populateFilterFeeds();
@@ -167,12 +200,14 @@
                     }
                 });
             } else {
+                // Show message modal and bind add modal to show again when they click ok
                 $('#messageDiv').text('Please enter a URL.');
                 $('#messageButton').attr('data-target', '#addModal');
                 $('#messageModal').modal();
             }
         }
 
+        // Removes the selected rss feed for this user
         function removeRssFeed(rssFeedId) {
             $.ajax({
                 url: '/home/removeRssFeed',
@@ -193,9 +228,10 @@
             });
         }
 
+        // Gets user feeds and populates them into given select element
         function populateSelectFeeds(selectElementId) {
             $.ajax({
-                url: '/home/RetrieveFilterFeeds',
+                url: '/home/RetrieveFeeds',
                 type: 'GET',
                 cache: false,
                 success: function (result) {
@@ -209,18 +245,20 @@
             });
         }
 
+        // Populates select dropdown on remove feed popup
         function populateRemoveFeeds() {
             $('#feedRemoveSelect').find("option:gt(0)").remove();
             populateSelectFeeds('feedRemoveSelect');
         }
 
+        // Populates filter dropdown on main page
         function populateFilterFeeds() {
             $('#feedSelectFilter').find("option:gt(0)").remove();
             populateSelectFeeds('feedSelectFilter');
         }
 
+        // Builds the feed items on the page with our ul template
         function buildFeedItems(feedItems) {
-
             var template;
 
             $.each(feedItems, function (index, element) {
@@ -238,13 +276,34 @@
             });
         }
 
+        // Clears all the feeds off the page resets page to 1
         function clearContent() {
             currentPage = 1;
             $('#feedList').empty();
         }
 
+        // Launches the clicked feed in another tab
         function openFeed(url) {
             window.open(url, '_blank');
+        }
+
+        // Functionality for when the feed filter changes
+        function feedSelectFilterChange() {
+            clearContent();
+            getUserFeeds(false);
+        }
+
+        // Functionality for remove feed click
+        function removeFeedClick() {
+            populateRemoveFeeds();
+            $('#feedRemoveSelect').val('default');
+            $('#removeFeedButton').prop('disabled', true);
+        }
+
+        // Functionality for refresh click
+        function refreshFeedsClick() {
+            clearContent();
+            getUserFeeds(true);
         }
     </script>
 }

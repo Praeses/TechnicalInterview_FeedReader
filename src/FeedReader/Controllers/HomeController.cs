@@ -21,11 +21,13 @@ namespace FeedReader.Controllers
             return View();
         }
 
+        // Method retrieves the users rss feeds
         [HttpGet]
         public ActionResult GetUserRssFeeds(bool update, string search, string filter, int page)
         {
             string userId = User.Identity.GetUserId();
 
+            // Called if we need to update the rss feeds for this user from the url
             if (update)
                 UpdateUserFeeds(userId);
 
@@ -35,14 +37,16 @@ namespace FeedReader.Controllers
             return Json(rssFeedItems, JsonRequestBehavior.AllowGet);
         }
 
+        // Method updates the users rss feeds
         public void UpdateUserFeeds(string userId)
         {
             RssFeedDataHelper feedDataHelper = new RssFeedDataHelper();
             feedDataHelper.updateRssFeedsForUser(userId);
         }
 
+        // Method retrieves the feeds for the user
         [HttpGet]
-        public ActionResult RetrieveFilterFeeds()
+        public ActionResult RetrieveFeeds()
         {
             RssFeedDataHelper feedDataHelper = new RssFeedDataHelper();
             List<RssFeed> rssFeeds = feedDataHelper.retrieveRssFeedsForUser(User.Identity.GetUserId());
@@ -50,34 +54,35 @@ namespace FeedReader.Controllers
             return Json(rssFeeds, JsonRequestBehavior.AllowGet);
         }
 
+        // Method adds new/existing rss feeds to user
         [HttpPost]
         public ActionResult AddRssFeed(string rssFeedUrl)
         {
             RssFeedDataHelper feedDataHelper = new RssFeedDataHelper();
-            UserDataHelper userDataHelper = new UserDataHelper();
+
             String message = "";
             bool error = false;
 
             try
             {
                 string userId = User.Identity.GetUserId();
-                RssFeed rssFeed = feedDataHelper.retrieveRssFeedFromDb(rssFeedUrl);
+                RssFeed rssFeed = feedDataHelper.retrieveRssFeed(rssFeedUrl);
 
-                //If null it means this is a feed we haven't saved before
+                // If null it means this is a feed we haven't saved before in the application
                 if (rssFeed == null)
                 {
-                    //Retrieve rss feed from url and save to database
+                    // Retrieve rss feed from url and save to database
                     RssFeedService rssFeedService = new RssFeedService();
                     rssFeed = rssFeedService.RetrieveRssFeed(rssFeedUrl);
                     feedDataHelper.saveRssFeed(rssFeed);
                 }
 
-                UserRssFeed userRssFeed = feedDataHelper.retireveUserRssFeedFromDb(rssFeed.RssFeedId, userId);
+                UserRssFeed userRssFeed = feedDataHelper.retireveUserRssFeed(rssFeed.RssFeedId, userId);
 
-                //If UserRssFeed is null we need to create a new one and save to database
+                // If UserRssFeed is null we need to create a new one and save to database
                 if (userRssFeed == null)
                 {
-                    //save userRssFeed to database           
+                    // save userRssFeed to database           
                     userRssFeed = new UserRssFeed
                     {
                         UserId = userId,
@@ -107,6 +112,7 @@ namespace FeedReader.Controllers
             return Json(new {error=error, message=message});
         }
 
+        // Method removes the rss feed from the user
         [HttpPost]
         public ActionResult RemoveRssFeed(string rssFeedId)
         {
