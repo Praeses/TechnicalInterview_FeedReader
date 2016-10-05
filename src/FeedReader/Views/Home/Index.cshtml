@@ -26,8 +26,13 @@
         </div>
     </div>
 </div>
+
+<div id="noFeedsDiv">
+    Looks like you don't have any feeds, click the gear icon to get started!
+</div>
+
 <div id="feedHolder" class="row" style="padding:10px;">
-    <ul id="feedList">        
+    <ul id="feedList">      
     </ul>
 </div>
 
@@ -113,6 +118,12 @@
         .template .separator {
             border-top: 1px solid #d9d9d9;
             margin:20px;
+        }
+
+        #noFeedsDiv {
+            display:none;
+            padding-top:30px;
+            font-weight:bold;
         }
     </style>
 }
@@ -235,6 +246,12 @@
                 type: 'GET',
                 cache: false,
                 success: function (result) {
+                    if (result.length > 0) {
+                        $('#noFeedsDiv').hide();
+                    } else {
+                        $('#noFeedsDiv').show();
+                    }
+
                     $.each(result, function (index, element) {             
                         $('#' + selectElementId).append($('<option>', {
                             value: element.RssFeedId,
