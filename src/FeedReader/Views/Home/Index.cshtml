@@ -1,31 +1,326 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+}        
+
+<div style="padding-top:20px;">
+    <div style="float:right;">
+        <input type="text" id="searchText" size="50" placeholder="Search" />
+    </div>
+    <div>        
+        <span>
+            Now Viewing:
+            <select id="feedSelectFilter" class="selectpicker" onchange="feedSelectFilterChange()">
+                <option value="">All Feeds</option>
+            </select>
+        </span>
+        <div class="dropdown" style="display:inline;">
+            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-cog" style="padding-right:2px;"></span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#" data-toggle="modal" data-target="#addModal" onclick="$('#rssFeedUrl').val('')">Add</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#removeModal" onclick="removeFeedClick()">Remove</a></li>
+                <li><a href="#" onclick="refreshFeedsClick()">Refresh</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="noFeedsDiv">
+    Looks like you don't have any feeds, click the gear icon to get started!
+</div>
+
+<div id="feedHolder" class="row" style="padding:10px;">
+    <ul id="feedList">      
+    </ul>
+</div>
+
+<li id="template" class="hidden template">
+    <div class="title"></div>
+    <div class="content"></div>
+    <div class="publishDate"></div>
+    <div class="separator"></div>
+</li>
+
+<div id="addModal" class="modal fade" rold="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Feed</h4>
+            </div>
+            <div class="modal-body">
+                Feed URL: <input type="text" id="rssFeedUrl" size="100" placeholder="https://bestRssFeeds.com/" />
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Add Feed" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="addRssFeed($('#rssFeedUrl').val());" />
+                <button type="button" class="btn btn-defaul btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="removeModal" class="modal fade" rold="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Remove Feed</h4>
+            </div>
+            <div class="modal-body">
+                <select id="feedRemoveSelect" class="selectpicker" onchange="$('#removeFeedButton').prop('disabled', false);">
+                    <option disabled selected value="default"> -- select a feed -- </option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <input type="button" id="removeFeedButton" value="Remove Feed" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="removeRssFeed($('#feedRemoveSelect').val());" />
+                <button type="button" class="btn btn-defaul btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="messageModal" class="modal fade" rold="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">RSS Central</h4>
+            </div>
+            <div class="modal-body">
+                <div id="messageDiv"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="messageButton" data-toggle="modal" class="btn btn-primary btn-sm" data-dismiss="modal" data-target="">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <style>
+        /* Styles for template/template items */
+        .template {
+            cursor:pointer;
+            list-style:none;
+        }
+
+        .template .title {
+            font-weight:bold;
+            padding-bottom:2px;
+        }
+
+        .template .publishDate {
+            padding-top:2px;
+        }
+
+        .template .separator {
+            border-top: 1px solid #d9d9d9;
+            margin:20px;
+        }
+
+        #noFeedsDiv {
+            display:none;
+            padding-top:30px;
+            font-weight:bold;
+        }
+    </style>
 }
 
-<div class="jumbotron">
-    <h1>Feed Reader</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@section Scripts{
+    <script type="text/javascript">
+        var currentPage = 1; // Hold current page we're on for infinite scrolling
+        var searchTimeout; // Timeout for when typing in search
+        var keyupTimeout = 500; // Time in ms we wait before firing off the search 
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+        $(document).ready(function () {
+            var win = $(window);
+
+            // Function to calculate when user reaches the bottom of the page and makes a call to backend to get next content
+            win.scroll(function () {
+                if ($(document).height() - win.height() == win.scrollTop()) {
+                    currentPage++;
+                    getUserFeeds(false);
+                }
+            });
+
+            // On key up bind for delay when typing
+            $('#searchText').on('keyup', function () {
+                window.clearTimeout(searchTimeout);
+
+                searchTimeout = setTimeout(function () {
+                    clearContent();
+                    getUserFeeds(false);
+                }, keyupTimeout);
+            });
+
+            // Putting focus on text box when add feed modal is shown
+            $("#addModal").on('shown.bs.modal', function () {
+                $('#rssFeedUrl').focus();
+            });
+
+            populateFilterFeeds('feedSelectFilter');
+            getUserFeeds(true);
+        })
+
+        // Gets the feeds for a user by passing search, filter, and pagination
+        function getUserFeeds(update) {
+            startLoadingIcon();
+            $.ajax({
+                url: '/home/GetUserRssFeeds',
+                type: 'GET',
+                data: { 
+                    'update' : update,
+                    'search' : $('#searchText').val(),
+                    'filter' : $('#feedSelectFilter').val(),
+                    'page' : currentPage
+                },
+                cache:false,
+                success: function (result) {
+                    buildFeedItems(result);
+                    stopLoadingIcon();
+                }
+            });
+        }
+
+        // Adds the new rss feed for this user
+        function addRssFeed(rssFeedUrl) {
+            rssFeedUrl = $.trim(rssFeedUrl);
+            $('#messageButton').attr('data-target', '');
+
+            if (rssFeedUrl != "") {
+                $.ajax({
+                    url: '/home/addRssFeed',
+                    type: 'POST',
+                    data: { 'rssFeedUrl': rssFeedUrl },
+                    cache: false,
+                    success: function (result) {
+                        // Show message modal with result from server
+                        $('#messageDiv').text(result.message);
+                        $('#messageModal').modal();
+
+                        // If it is successful clear content and get repopulate feeds
+                        if (result.error == false) {
+                            clearContent();
+                            populateFilterFeeds();
+                            getUserFeeds(false);
+                        } else {
+                            $('#messageButton').attr('data-target', '#addModal');
+                        }
+                    }
+                });
+            } else {
+                // Show message modal and bind add modal to show again when they click ok
+                $('#messageDiv').text('Please enter a URL.');
+                $('#messageButton').attr('data-target', '#addModal');
+                $('#messageModal').modal();
+            }
+        }
+
+        // Removes the selected rss feed for this user
+        function removeRssFeed(rssFeedId) {
+            $.ajax({
+                url: '/home/removeRssFeed',
+                type: 'POST',
+                data: { 'rssFeedId': rssFeedId },
+                cache: false,
+                success: function (result) {
+                    $('#messageButton').attr('data-target', '');                    
+                    $('#messageDiv').text(result.message);
+                    $('#messageModal').modal();
+
+                    if (result.error == false) {
+                        clearContent();
+                        populateFilterFeeds();
+                        getUserFeeds(false);
+                    }
+                }
+            });
+        }
+
+        // Gets user feeds and populates them into given select element
+        function populateSelectFeeds(selectElementId) {
+            $.ajax({
+                url: '/home/RetrieveFeeds',
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    if (result.length > 0) {
+                        $('#noFeedsDiv').hide();
+                    } else {
+                        $('#noFeedsDiv').show();
+                    }
+
+                    $.each(result, function (index, element) {             
+                        $('#' + selectElementId).append($('<option>', {
+                            value: element.RssFeedId,
+                            text: element.Title
+                        }));
+                    });
+                }
+            });
+        }
+
+        // Populates select dropdown on remove feed popup
+        function populateRemoveFeeds() {
+            $('#feedRemoveSelect').find("option:gt(0)").remove();
+            populateSelectFeeds('feedRemoveSelect');
+        }
+
+        // Populates filter dropdown on main page
+        function populateFilterFeeds() {
+            $('#feedSelectFilter').find("option:gt(0)").remove();
+            populateSelectFeeds('feedSelectFilter');
+        }
+
+        // Builds the feed items on the page with our ul template
+        function buildFeedItems(feedItems) {
+            var template;
+
+            $.each(feedItems, function (index, element) {
+                template = $('#template').clone();
+                template.removeClass('hidden');
+                template.find('.title').text(element.Title);
+                template.find('.content').text(element.Description);
+                template.find('.publishDate').text(element.PublishDateString);
+
+                template.click(function () {
+                    openFeed(element.Link);
+                });
+
+                template.appendTo('#feedList');
+            });
+        }
+
+        // Clears all the feeds off the page resets page to 1
+        function clearContent() {
+            currentPage = 1;
+            $('#feedList').empty();
+        }
+
+        // Launches the clicked feed in another tab
+        function openFeed(url) {
+            window.open(url, '_blank');
+        }
+
+        // Functionality for when the feed filter changes
+        function feedSelectFilterChange() {
+            clearContent();
+            getUserFeeds(false);
+        }
+
+        // Functionality for remove feed click
+        function removeFeedClick() {
+            populateRemoveFeeds();
+            $('#feedRemoveSelect').val('default');
+            $('#removeFeedButton').prop('disabled', true);
+        }
+
+        // Functionality for refresh click
+        function refreshFeedsClick() {
+            clearContent();
+            getUserFeeds(true);
+        }
+    </script>
+}
