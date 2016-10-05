@@ -14,7 +14,7 @@ namespace FeedReader.Models.Helpers
         {
             RssFeed existingRssFeed = null;
 
-            using (var db = new FeedReaderContext())
+            using (var db = new ApplicationDbContext())
             {
                 existingRssFeed = db.RssFeeds.SingleOrDefault(a => a.Url == rssFeedUrl);          
             }
@@ -27,7 +27,7 @@ namespace FeedReader.Models.Helpers
         {
             RssFeedService rssFeedService = new RssFeedService();
 
-            using (var db = new FeedReaderContext())
+            using (var db = new ApplicationDbContext())
             {
                 // Returns us the rss feeds for the user
                 var rssFeedQuery = from rssFeedT in db.RssFeeds
@@ -75,7 +75,7 @@ namespace FeedReader.Models.Helpers
         {
             List<RssFeedItem> rssFeedItems = null;
 
-            using (var db = new FeedReaderContext())
+            using (var db = new ApplicationDbContext())
             {
                 // Query gets feed items for user and search criteria
                 var rssFeedItemQuery = from rssFeedItemT in db.RssFeedItems
@@ -103,7 +103,7 @@ namespace FeedReader.Models.Helpers
         // Method saves the rss feed to the database
         public void saveRssFeed(RssFeed rssFeed)
         {
-            using (var db = new FeedReaderContext())
+            using (var db = new ApplicationDbContext())
             {
                 db.RssFeeds.Add(rssFeed);
                 db.SaveChanges();
@@ -113,7 +113,7 @@ namespace FeedReader.Models.Helpers
         // Method saves the user rss feed to the database
         public void saveUserRssFeed(UserRssFeed userRssFeed)
         {
-            using (var db = new FeedReaderContext())
+            using (var db = new ApplicationDbContext())
             {
                 db.UserRssFeeds.Add(userRssFeed);
                 db.SaveChanges();
@@ -124,7 +124,7 @@ namespace FeedReader.Models.Helpers
         public UserRssFeed retireveUserRssFeed(int rssFeedId, string userId)
         {
             UserRssFeed existingUserRssFeed = null;
-            using (var db = new FeedReaderContext())
+            using (var db = new ApplicationDbContext())
             {
                 existingUserRssFeed = db.UserRssFeeds.SingleOrDefault(a => a.RssFeedId == rssFeedId &&
                                                                            a.UserId == userId
@@ -138,7 +138,7 @@ namespace FeedReader.Models.Helpers
         public List<RssFeed> retrieveRssFeedsForUser(string userId)
         {
             List<RssFeed> rssFeeds = null;
-            using (var db = new FeedReaderContext())
+            using (var db = new ApplicationDbContext())
             {
                 var rssFeedQuery = from rssFeedT in db.RssFeeds
                                        join userRssFeedT in db.UserRssFeeds on rssFeedT.RssFeedId equals userRssFeedT.RssFeedId
@@ -156,7 +156,7 @@ namespace FeedReader.Models.Helpers
         public void removeUserRssFeed(string userId, string rssFeedId)
         {
             UserRssFeed existingUserRssFeed = null;
-            using (var db = new FeedReaderContext())
+            using (var db = new ApplicationDbContext())
             {
                 existingUserRssFeed = db.UserRssFeeds.SingleOrDefault(a => a.RssFeedId.ToString() == rssFeedId &&
                                                                            a.UserId == userId

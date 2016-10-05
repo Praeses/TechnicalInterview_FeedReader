@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace FeedReader.Models
 {
@@ -28,5 +30,9 @@ namespace FeedReader.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<UserRssFeed> UserRssFeeds { get; set; }
+        public DbSet<RssFeed> RssFeeds { get; set; }
+        public DbSet<RssFeedItem> RssFeedItems { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -64,13 +65,5 @@ namespace FeedReader.Models
         public RssFeed RssFeed { get; set; }       
         // Reference to user
         public ApplicationUser ApplicationUser { get; set; }
-    }
-
-    // New context for rss feed classes
-    public class FeedReaderContext : ApplicationDbContext
-    {
-        public DbSet<UserRssFeed> UserRssFeeds { get; set; }
-        public DbSet<RssFeed> RssFeeds { get; set; }
-        public DbSet<RssFeedItem> RssFeedItems { get; set; }
     }
 }
