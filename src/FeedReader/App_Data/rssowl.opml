@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml xmlns:rssowl="http://www.rssowl.org" version="1.1">
+  <head>
+    <title>RSSOwl Subscriptions</title>
+    <dateModified>Sun, 02 Oct 2016 06:15:47 CDT</dateModified>
+  </head>
+  <body>
+    <outline text="My Feeds" rssowl:isSet="true" rssowl:id="7">
+      <outline text="Business" rssowl:isSet="false" rssowl:id="303">
+        <outline text="Fast Company" xmlUrl="http://www.fastcompany.com/rss.xml" rssowl:id="304">
+          <rssowl:pref id="org.rssowl.pref.NMSelectedNews" value="1827" type="3" />
+        </outline>
+        <outline text="I Will Teach You To Be Rich" xmlUrl="http://www.iwillteachyoutoberich.com/atom.xml" rssowl:id="305" />
+        <outline text="Inc.com" xmlUrl="http://www.inc.com/rss.xml" rssowl:id="306" />
+        <outline text="Law.com - Newswire" xmlUrl="http://www.law.com/rss/rss_newswire.xml" rssowl:id="307" />
+        <outline text="Legal Blog Watch" xmlUrl="http://legalblogwatch.typepad.com/legal_blog_watch/atom.xml" rssowl:id="308" />
+        <outline text="Moneycontrol Top Headlines" xmlUrl="http://moneycontrol.com/rss/latestnews.xml" rssowl:id="309" />
+        <outline text="NYT &gt; Business" xmlUrl="http://www.nytimes.com/services/xml/rss/nyt/Business.xml" rssowl:id="310" />
+        <outline text="Smartmoney.com" xmlUrl="http://www.smartmoney.com/rss/smheadlines.cfm?feed=1&amp;format=rss091" rssowl:id="311">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="The Motley Fool" xmlUrl="http://www.fool.com/xml/foolnews_rss091.xml" rssowl:id="312" />
+        <outline text="TheStreet.com" xmlUrl="http://www.thestreet.com/feeds/rss/index.xml" rssowl:id="313">
+          <rssowl:pref id="org.rssowl.pref.NMSelectedNews" value="3927" type="3" />
+        </outline>
+        <outline text="WSJ.com: US Business" xmlUrl="http://online.wsj.com/xml/rss/0,,3_7014,00.xml" rssowl:id="314" />
+        <outline text="CNN.com - RSS Channel - Mobile App Manual" xmlUrl="http://rss.cnn.com/rss/cnn_topstories.rss" rssowl:id="21847">
+          <rssowl:pref id="org.rssowl.pref.NMSelectedNews" value="32256" type="3" />
+        </outline>
+        <outline text="FOXNews.com" xmlUrl="http://feeds.foxnews.com/foxnews/latest" rssowl:id="22868">
+          <rssowl:pref id="org.rssowl.pref.NMSelectedNews" value="22896" type="3" />
+        </outline>
+        <outline text="Lifehacker" xmlUrl="http://feeds.gawker.com/lifehacker/vip" rssowl:id="32676">
+          <rssowl:pref id="org.rssowl.pref.NMSelectedNews" value="32677" type="3" />
+        </outline>
+      </outline>
+      <outline text="Computers" rssowl:isSet="false" rssowl:id="315">
+        <outline text="Windows" rssowl:isSet="false" rssowl:id="316">
+          <outline text="Ed Bott's Microsoft Report" xmlUrl="http://blogs.zdnet.com/Bott/wp-rss2.php" rssowl:id="317" />
+          <outline text="SearchWindowsServer" xmlUrl="http://rss.techtarget.com/43.xml" rssowl:id="318">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="Softpedia - Microsoft" xmlUrl="http://news.softpedia.com/newsRSS/Microsoft-6.xml" rssowl:id="319" />
+          <outline text="Windows Connected" xmlUrl="http://feeds.feedburner.com/WindowsConnected" rssowl:id="320" />
+          <outline text="Windows Experience Blog" xmlUrl="http://windowsvistablog.com/blogs/windowsexperience/rss.aspx" rssowl:id="321">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Unable to Connect" type="5" />
+          </outline>
+          <outline text="Windows Server Division WebLog" xmlUrl="http://blogs.technet.com/windowsserver/rss.xml" rssowl:id="322">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+          </outline>
+          <outline text="Windows Vista Weblog" xmlUrl="http://www.windowsvistaweblog.com/feed/" rssowl:id="323">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="WindowsNetworking.com" xmlUrl="http://rss.windowsnetworking.com/allnews.xml" rssowl:id="324" />
+        </outline>
+        <outline text="Linux" rssowl:isSet="false" rssowl:id="325">
+          <outline text="DesktopLinux.com" xmlUrl="http://www.desktoplinux.com/backend/headlines.rss" rssowl:id="326">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Unable to Resolve the Host" type="5" />
+          </outline>
+          <outline text="DistroWatch.com: News" xmlUrl="http://distrowatch.com/news/dw.xml" rssowl:id="327" />
+          <outline text="Linux Journal" xmlUrl="http://www.linuxjournal.com/news.rss" rssowl:id="328" />
+          <outline text="Linux Today" xmlUrl="http://linuxtoday.com/backend/biglt.rss" rssowl:id="329" />
+          <outline text="Linux Weekly News" xmlUrl="http://lwn.net/headlines/rss" rssowl:id="330" />
+          <outline text="LinuxInsider" xmlUrl="http://www.linuxinsider.com/perl/syndication/rssfull.pl" rssowl:id="331" />
+          <outline text="Slashdot: Linux" xmlUrl="http://rss.slashdot.org/Slashdot/slashdotLinux" rssowl:id="332" />
+          <outline text="Ubuntu Geek" xmlUrl="http://www.ubuntugeek.com/feed/" rssowl:id="333" />
+        </outline>
+        <outline text="Mac" rssowl:isSet="false" rssowl:id="334">
+          <outline text="Apple Hot News" xmlUrl="http://www.apple.com/main/rss/hotnews/hotnews.rss" rssowl:id="335" />
+          <outline text="AppleInsider" xmlUrl="http://www.appleinsider.com/appleinsider.rss" rssowl:id="336" />
+          <outline text="digg - tech news / apple / dig" xmlUrl="http://digg.com/rss/indexappledig.xml" rssowl:id="337">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="Google Mac Blog" xmlUrl="http://googlemac.blogspot.com/atom.xml" rssowl:id="338" />
+          <outline text="Mac Help Forums" xmlUrl="http://www.mac-help.com/forums/external.php?type=rss2" rssowl:id="339">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="Mac OS X Knowledge Base" xmlUrl="http://docs.info.apple.com/rss/macosx.rss" rssowl:id="340">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+          </outline>
+          <outline text="MACnn News" xmlUrl="http://macnn.com/macnn.rss" rssowl:id="341" />
+          <outline text="macosxhints" xmlUrl="http://www.macosxhints.com/backend/geeklog.rdf" rssowl:id="342">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+          </outline>
+          <outline text="MacRumors" xmlUrl="http://www.macrumors.com/macrumors.xml" rssowl:id="343" />
+          <outline text="Macworld" xmlUrl="http://www.macworld.com/rss.xml" rssowl:id="344" />
+          <outline text="Softpedia - Apple" xmlUrl="http://news.softpedia.com/newsRSS/Apple-8.xml" rssowl:id="345" />
+          <outline text="The Unofficial Apple Weblog" xmlUrl="http://www.tuaw.com/rss.xml" rssowl:id="346" />
+          <outline text="VersionTracker: Mac OS X" xmlUrl="http://download.cnet.com/1912-20_4-0.xml?platform=Mac&amp;tag=rssSub" rssowl:id="347" />
+        </outline>
+        <outline text="PDA" rssowl:isSet="false" rssowl:id="348">
+          <outline text="Brighthand.com" xmlUrl="http://www.brighthand.com/rss.xml" rssowl:id="349" />
+          <outline text="Geekzone" xmlUrl="http://www.geekzone.co.nz/geekzone_rss.asp" rssowl:id="350" />
+          <outline text="Pocket PC Addict" xmlUrl="http://www.pocketpcaddict.com/backend.php" rssowl:id="351">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 400 (Bad Request)" type="5" />
+          </outline>
+          <outline text="Pocket PC Thoughts" xmlUrl="http://www.pocketpcthoughts.com/xml" rssowl:id="352" />
+          <outline text="pocketnow.com" xmlUrl="http://feeds.feedburner.com/pocketnow" rssowl:id="353" />
+        </outline>
+        <outline text="OS News" xmlUrl="http://www.osnews.com/files/recent.rdf" rssowl:id="354" />
+        <outline text="Softpedia - Drivers" xmlUrl="http://drivers.softpedia.com/backend.xml" rssowl:id="355" />
+      </outline>
+      <outline text="Entertainment" rssowl:isSet="false" rssowl:id="356">
+        <outline text="Art" rssowl:isSet="false" rssowl:id="357">
+          <outline text="Art News Blog" xmlUrl="http://www.artnewsblog.com/atom.xml" rssowl:id="358">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="BibliOdyssey" xmlUrl="http://bibliodyssey.blogspot.com/feeds/posts/default" rssowl:id="359" />
+          <outline text="Drawn!" xmlUrl="http://drawn.ca/feed/" rssowl:id="360">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+          </outline>
+          <outline text="lines and colors" xmlUrl="http://www.linesandcolors.com/feed/" rssowl:id="361" />
+          <outline text="Modern Art Notes" xmlUrl="http://www.artsjournal.com/artsjournal1/atom.xml" rssowl:id="362" />
+          <outline text="Rhizome Inclusive" xmlUrl="http://rhizome.org/syndicate/fp.rss" rssowl:id="363">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="VVORK" xmlUrl="http://www.vvork.com/?feed=rss2" rssowl:id="364" />
+          <outline text="we make money not art" xmlUrl="http://feeds.we-make-money-not-art.com/wmmna" rssowl:id="365" />
+          <outline text="Wooster Collective" xmlUrl="http://www.woostercollective.com/atom.xml" rssowl:id="366">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Unable to Connect" type="5" />
+          </outline>
+        </outline>
+        <outline text="Books" rssowl:isSet="false" rssowl:id="367">
+          <outline text="Books News and Reviews" xmlUrl="http://www.guardian.co.uk/rssfeed/0,,10,00.xml" rssowl:id="368" />
+          <outline text="London Review of Books" xmlUrl="http://www.lrb.co.uk/homerss.xml" rssowl:id="369" />
+          <outline text="NPR Topics: Books" xmlUrl="http://www.npr.org/rss/rss.php?id=1032" rssowl:id="370" />
+          <outline text="Paper Cuts" xmlUrl="http://papercuts.blogs.nytimes.com/rss2.xml" rssowl:id="371" />
+          <outline text="Salon: Books" xmlUrl="http://feeds.salon.com/salon/books" rssowl:id="372">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+          </outline>
+          <outline text="The Literary Saloon" xmlUrl="http://www.complete-review.com/saloon/rss.xml" rssowl:id="373" />
+          <outline text="The New York Review of Books" xmlUrl="http://feeds.feedburner.com/nybooks" rssowl:id="374" />
+        </outline>
+        <outline text="Cars" rssowl:isSet="false" rssowl:id="375">
+          <outline text="Autoblog" xmlUrl="http://www.autoblog.com/rss.xml" rssowl:id="376" />
+          <outline text="autoevolution" xmlUrl="http://www.autoevolution.com/rss/backend.xml" rssowl:id="377" />
+          <outline text="Car and Driver Blog" xmlUrl="http://www.caranddriver.com/rssfeed.asp?rss_feed_id=38" rssowl:id="378">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="Jalopnik" xmlUrl="http://feeds.gawker.com/jalopnik/full" rssowl:id="379" />
+          <outline text="Leftlane" xmlUrl="http://www.leftlanenews.com/wp-rss2.php" rssowl:id="380" />
+          <outline text="PopularMechanics.com" xmlUrl="http://feeds.popularmechanics.com/pm/blogs/automotive_news" rssowl:id="381" />
+        </outline>
+        <outline text="Comics" rssowl:isSet="false" rssowl:id="382">
+          <outline text="Dilbert Daily Strip" xmlUrl="http://feeds.dilbert.com/DilbertDailyStrip" rssowl:id="383" />
+          <outline text="Dinosaur Comics" xmlUrl="http://www.rsspect.com/rss/qwantz.xml" rssowl:id="384" />
+          <outline text="PHD Comics" xmlUrl="http://www.phdcomics.com/gradfeed.php" rssowl:id="385" />
+          <outline text="PvPonline" xmlUrl="http://www.pvponline.com/rss/?section=article" rssowl:id="386">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="xkcd.com" xmlUrl="http://xkcd.com/rss.xml" rssowl:id="387" />
+        </outline>
+        <outline text="Games" rssowl:isSet="false" rssowl:id="388">
+          <outline text="GamersCircle" xmlUrl="http://www.gamerscircle.net/b2rss2.php" rssowl:id="389">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="IGN Complete" xmlUrl="http://scripts.ign.com/rss/ign.all.2.0.xml" rssowl:id="390">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="Joystiq" xmlUrl="http://www.joystiq.com/rss.xml" rssowl:id="391">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+          </outline>
+          <outline text="Joystiq [Nintendo]" xmlUrl="http://www.nintendowiifanboy.com/rss.xml" rssowl:id="392">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+          </outline>
+          <outline text="Joystiq [Xbox]" xmlUrl="http://www.xbox360fanboy.com/rss.xml" rssowl:id="393">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+          </outline>
+          <outline text="Kotaku" xmlUrl="http://www.kotaku.com/index.xml" rssowl:id="394" />
+          <outline text="Slashdot: Games" xmlUrl="http://slashdot.org/games.rss" rssowl:id="395">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" type="5" />
+          </outline>
+          <outline text="Softpedia - Games" xmlUrl="http://games.softpedia.com/backend.xml" rssowl:id="396" />
+          <outline text="Xbox Live's Major Nelson" xmlUrl="http://feeds.feedburner.com/MajorNelson" rssowl:id="397" />
+        </outline>
+        <outline text="Humor" rssowl:isSet="false" rssowl:id="398">
+          <outline text="BBspot" xmlUrl="http://www.bbspot.com/bbspot.rss" rssowl:id="399" />
+          <outline text="Best of Craigslist" xmlUrl="http://www.craigslist.org/about/best/all/index.rss" rssowl:id="400" />
+          <outline text="CollegeHumor" xmlUrl="http://feeds.collegehumor.com/collegehumor/articles" rssowl:id="401" />
+          <outline text="Darkgate Comic Slurper" xmlUrl="http://darkgate.net/comic/feed.php?foxtrot&amp;dilbert&amp;doonesbury&amp;sherman&amp;userf&amp;stonesoup" rssowl:id="402" />
+          <outline text="Overheard in the Office" xmlUrl="http://www.overheardintheoffice.com/index.xml" rssowl:id="403">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+        </outline>
+        <outline text="Quotes" rssowl:isSet="false" rssowl:id="404">
+          <outline text="Famous Quotes" xmlUrl="http://quotes.wordpress.com/feed/" rssowl:id="405" />
+          <outline text="Motivational Quote" xmlUrl="http://www.quotationspage.com/data/mqotd.rss" rssowl:id="406" />
+          <outline text="Quotes of the Day" xmlUrl="http://feeds.feedburner.com/qotd" rssowl:id="407" />
+          <outline text="Wisdom Quotes" xmlUrl="http://www.wisdomquotes.com/atom.xml" rssowl:id="408" />
+        </outline>
+        <outline text="SciFi" rssowl:isSet="false" rssowl:id="409">
+          <outline text="GateWorld News" xmlUrl="http://www.gateworld.net/news/rss_gateworld.xml" rssowl:id="410" />
+          <outline text="Locus Online News" xmlUrl="http://www.mobileread.com/feeds/locus.xml" rssowl:id="411">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 403 (Forbidden)" type="5" />
+          </outline>
+          <outline text="SF Signal" xmlUrl="http://www.sfsignal.com/index.rdf" rssowl:id="412" />
+          <outline text="Slice of SciFi" xmlUrl="http://feeds.feedburner.com/sliceofscifinews" rssowl:id="413">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="TrekMovie.com" xmlUrl="http://trekmovie.com/feed/" rssowl:id="414" />
+          <outline text="TrekToday" xmlUrl="http://www.trektoday.com/headlines/rss.xml" rssowl:id="415" />
+        </outline>
+        <outline text="Cinematical" xmlUrl="http://www.cinematical.com/rss.xml" rssowl:id="416">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="E! Online (US) - Top Stories" xmlUrl="http://www.eonline.com/syndication/feeds/rssfeeds/topstories.xml" rssowl:id="417" />
+        <outline text="Gawker" xmlUrl="http://www.gawker.com/index.xml" rssowl:id="418">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="Latest Movie Trailers" xmlUrl="http://trailers.apple.com/trailers/home/rss/newtrailers.rss" rssowl:id="419" />
+        <outline text="People.com Latest News" xmlUrl="http://rss.people.com/web/people/rss/topheadlines/index.xml" rssowl:id="420" />
+        <outline text="The Movie Blog" xmlUrl="http://feeds.feedburner.com/themovieblog/Zeos" rssowl:id="421" />
+        <outline text="TV Squad" xmlUrl="http://www.tvsquad.com/rss.xml" rssowl:id="422">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="Variety.com - Front Page" xmlUrl="http://www.variety.com/rss.asp?categoryid=10" rssowl:id="423">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="Yahoo! Entertainment News" xmlUrl="http://rss.news.yahoo.com/rss/entertainment" rssowl:id="424" />
+      </outline>
+      <outline text="Food" rssowl:isSet="false" rssowl:id="425">
+        <outline text="101 Cookbooks" xmlUrl="http://www.101cookbooks.com/index.rdf" rssowl:id="426" />
+        <outline text="Bay Area Bites" xmlUrl="http://www.kqed.org/weblog/food/atom.xml" rssowl:id="427">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="Becks &amp; Posh" xmlUrl="http://becksposhnosh.blogspot.com/feeds/posts/default" rssowl:id="428" />
+        <outline text="Chocolate &amp; Zucchini" xmlUrl="http://chocolateandzucchini.com/index.rdf" rssowl:id="429" />
+        <outline text="Cook &amp; Eat" xmlUrl="http://cookandeat.com/feed/" rssowl:id="430" />
+        <outline text="Cooking For Engineers" xmlUrl="http://www.cookingforengineers.com/atom.xml" rssowl:id="431" />
+        <outline text="foodbeam" xmlUrl="http://www.foodbeam.com/feed/" rssowl:id="432" />
+        <outline text="Purple Liquid" xmlUrl="http://feeds.feedburner.com/PurpleLiquidAWineAndFoodDiary" rssowl:id="433" />
+        <outline text="Serious Eats" xmlUrl="http://feeds.seriouseats.com/seriouseatsfeaturesvideos" rssowl:id="434" />
+        <outline text="Simply Recipes" xmlUrl="http://www.elise.com/recipes/index.rdf" rssowl:id="435" />
+        <outline text="Slashfood" xmlUrl="http://www.slashfood.com/rss.xml" rssowl:id="436">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="smitten kitchen" xmlUrl="http://feeds.feedburner.com/smittenkitchen" rssowl:id="437" />
+        <outline text="The Amateur Gourmet" xmlUrl="http://www.amateurgourmet.com/the_amateur_gourmet/atom.xml" rssowl:id="438" />
+        <outline text="The Food Section" xmlUrl="http://www.thefoodsection.com/foodsection/index.rdf" rssowl:id="439" />
+        <outline text="The Traveler's Lunchbox" xmlUrl="http://www.travelerslunchbox.com/journal/atom.xml" rssowl:id="440">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" type="5" />
+        </outline>
+      </outline>
+      <outline text="Health" rssowl:isSet="false" rssowl:id="441">
+        <outline text="Alwyn Cosgrove" xmlUrl="http://alwyncosgrove.blogspot.com/atom.xml" rssowl:id="442" />
+        <outline text="ArthurDeVany.com" xmlUrl="http://www.arthurdevany.com/feed.rdf" rssowl:id="443">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="BBC News | Health" xmlUrl="http://news.bbc.co.uk/rss/newsonline_world_edition/health/rss091.xml" rssowl:id="444" />
+        <outline text="CNN.com - Health" xmlUrl="http://rss.cnn.com/rss/cnn_health.rss" rssowl:id="445" />
+        <outline text="Kevin, M.D. - Medical Weblog" xmlUrl="http://www.kevinmd.com/blog/atom.xml" rssowl:id="446" />
+        <outline text="MedicineNet Daily News" xmlUrl="http://www.medicinenet.com/rss/dailyhealth.xml" rssowl:id="447" />
+        <outline text="Pharyngula" xmlUrl="http://feeds.feedburner.com/ScienceblogsCombinedFeed" rssowl:id="448" />
+        <outline text="RossTraining.com Blog" xmlUrl="http://rosstraining.com/blog/?feed=rss2" rssowl:id="449" />
+        <outline text="StrongLifts.com" xmlUrl="http://feeds.feedburner.com/stronglifts" rssowl:id="450" />
+        <outline text="That's Fit" xmlUrl="http://www.thatsfit.com/rss.xml" rssowl:id="451">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="USATODAY.com Health" xmlUrl="http://rssfeeds.usatoday.com/UsatodaycomHealth-TopStories" rssowl:id="452" />
+      </outline>
+      <outline text="Internet" rssowl:isSet="false" rssowl:id="453">
+        <rssowl:pref id="org.rssowl.pref.NMSelectedNews" value="31431" type="3" />
+        <outline text="456 Berea Street" xmlUrl="http://www.456bereastreet.com/feed.xml" rssowl:id="454" />
+        <outline text="CSS Beauty News Feed" xmlUrl="http://www.cssbeauty.com/rss/news/" rssowl:id="455" />
+        <outline text="internetnews.com" xmlUrl="http://headlines.internet.com/internetnews/top-news/news.rss" rssowl:id="456">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="ReadWriteWeb" xmlUrl="http://www.readwriteweb.com/rss.xml" rssowl:id="457" />
+        <outline text="SimpleBits" xmlUrl="http://www.simplebits.com/xml/rss.xml" rssowl:id="458">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="Softpedia - Webmaster" xmlUrl="http://news.softpedia.com/newsRSS/Webmaster-4.xml" rssowl:id="459" />
+        <outline text="WebDeveloper.com" xmlUrl="http://www.webdeveloper.com/webdeveloper.rdf" rssowl:id="460">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="WebReference News" xmlUrl="http://www.webreference.com/webreference.rdf" rssowl:id="461" />
+        <outline text="Webware.com" xmlUrl="http://www.webware.com/8300-1_109-2-0.xml" rssowl:id="462" />
+      </outline>
+      <outline text="Music" rssowl:isSet="false" rssowl:id="463">
+        <outline text="CMT News" xmlUrl="http://www.cmt.com/rss/news/latest.jhtml" rssowl:id="464" />
+        <outline text="gorillavsbear.net" xmlUrl="http://gorillavsbear.blogspot.com/atom.xml" rssowl:id="465" />
+        <outline text="Idolator" xmlUrl="http://www.idolator.com/index.xml" rssowl:id="466">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="iTunes 25 Just Added Albums" xmlUrl="http://phobos.apple.com/WebObjects/MZStore.woa/wpa/MRSS/justadded/limit=25/rss.xml" rssowl:id="467" />
+        <outline text="iTunes Top 25 Songs" xmlUrl="http://phobos.apple.com/WebObjects/MZStore.woa/wpa/MRSS/topsongs/limit=25/rss.xml" rssowl:id="468" />
+        <outline text="MTV News" xmlUrl="http://www.mtv.com/rss/news/news_full.jhtml" rssowl:id="469" />
+        <outline text="NME News" xmlUrl="http://www.nme.com/rss/news.xml" rssowl:id="470" />
+        <outline text="RollingStone.com Music News" xmlUrl="http://www.rollingstone.com/rssxml/music_news.xml" rssowl:id="471" />
+        <outline text="Stereogum" xmlUrl="http://feeds.feedburner.com/stereogum/cBYa" rssowl:id="472" />
+        <outline text="VH1 News" xmlUrl="http://www.vh1.com/rss/news/latest.jhtml" rssowl:id="473">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+      </outline>
+      <outline text="News" rssowl:isSet="false" rssowl:id="474">
+        <outline text="HuffingtonPost.com" xmlUrl="http://feeds.huffingtonpost.com/huffingtonpost/raw_feed" rssowl:id="475">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Unable to Resolve the Host" type="5" />
+        </outline>
+        <outline text="TIME Magazine Online" xmlUrl="http://www.time.com/time/rss/top/0,20326,,00.xml" rssowl:id="476" />
+        <outline text="Top Stories - Google News" xmlUrl="http://news.google.com/?topic=h&amp;num=3&amp;output=rss" rssowl:id="477" />
+        <outline text="Yahoo! News" xmlUrl="http://rss.news.yahoo.com/rss/topstories" rssowl:id="478" />
+      </outline>
+      <outline text="Podcast" rssowl:isSet="false" rssowl:id="479">
+        <outline text="Buzz Out Loud" xmlUrl="http://www.cnet.com/i/pod/cnet_buzz.xml" rssowl:id="480" />
+        <outline text="Cranky Geeks" xmlUrl="http://www.crankygeeks.com/atom.xml" rssowl:id="481">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="Diggnation (MP3)" xmlUrl="http://feeds.feedburner.com/diggnation" rssowl:id="482" />
+        <outline text="Geek News Central Podcast" xmlUrl="http://www.geeknewscentral.com/podcast.xml" rssowl:id="483" />
+        <outline text="NPR: Science Friday Podcast" xmlUrl="http://www.sciencefriday.com/audio/scifriaudio.xml" rssowl:id="484" />
+        <outline text="The Chris Pirillo Show" xmlUrl="http://feeds.pirillo.com/ChrisPirilloShow" rssowl:id="485" />
+        <outline text="this WEEK in TECH" xmlUrl="http://leoville.tv/podcasts/twit.xml" rssowl:id="486" />
+        <outline text="Tracks Up The Tree" xmlUrl="http://tracks.upthetree.com/index.xml" rssowl:id="487" />
+      </outline>
+      <outline text="Politics" rssowl:isSet="false" rssowl:id="488">
+        <outline text="Daily Kos" xmlUrl="http://feeds.dailykos.com/dailykos/index.xml" rssowl:id="489" />
+        <outline text="GrokLaw" xmlUrl="http://www.groklaw.net/backend/groklaw.rdf" rssowl:id="490" />
+        <outline text="POLITICO.com: Politics" xmlUrl="http://www.politico.com/rss/politics08.xml" rssowl:id="491" />
+        <outline text="Talking Points Memo" xmlUrl="http://www.talkingpointsmemo.com/index.xml" rssowl:id="492">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="The Agitator" xmlUrl="http://theagitator.com/index.xml" rssowl:id="493" />
+        <outline text="Think Progress" xmlUrl="http://thinkprogress.org/feed/" rssowl:id="494" />
+        <outline text="Wonkette" xmlUrl="http://www.wonkette.com/index.xml" rssowl:id="495">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 403 (Forbidden)" type="5" />
+        </outline>
+      </outline>
+      <outline text="Science" rssowl:isSet="false" rssowl:id="496">
+        <outline text="Cognitive Daily" xmlUrl="http://scienceblogs.com/cognitivedaily/atom.xml" rssowl:id="497">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="Cosmic Variance" xmlUrl="http://cosmicvariance.com/feed/" rssowl:id="498" />
+        <outline text="Forrester Research" xmlUrl="http://www.forrester.com/rss/custom/0,,1193712,00.xml" rssowl:id="499">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="LifeSciencesWorld" xmlUrl="http://www.lifesciencesworld.com/newsletter.xml" rssowl:id="500" />
+        <outline text="Minding the Planet" xmlUrl="http://novaspivack.typepad.com/nova_spivacks_weblog/atom.xml" rssowl:id="501" />
+        <outline text="National Geographic News" xmlUrl="http://news.nationalgeographic.com/index.rss" rssowl:id="502" />
+        <outline text="NatureNews" xmlUrl="http://www.nature.com/news/rss.rdf" rssowl:id="503" />
+        <outline text="New Scientist" xmlUrl="http://www.newscientist.com/feed.ns?index=online-news" rssowl:id="504" />
+        <outline text="RealClimate" xmlUrl="http://www.realclimate.org/index.php/feed/atom/" rssowl:id="505">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="Science: Current Issue" xmlUrl="http://www.sciencemag.org/rss/current.xml" rssowl:id="506" />
+        <outline text="Scientific American" xmlUrl="http://www.sciam.com/xml/sciam.xml" rssowl:id="507" />
+        <outline text="SPACE.com" xmlUrl="http://www.space.com/syn/space.xml" rssowl:id="508" />
+        <outline text="Tom's Astronomy Blog" xmlUrl="http://tomsastroblog.com/?feed=atom" rssowl:id="509" />
+        <outline text="Yahoo! News: Science News" xmlUrl="http://rss.news.yahoo.com/rss/science" rssowl:id="510" />
+      </outline>
+      <outline text="Software" rssowl:isSet="false" rssowl:id="511">
+        <outline text="BetaNews.Com" xmlUrl="http://www.betanews.com/mnn.php3" rssowl:id="512" />
+        <outline text="CNET Download" xmlUrl="http://www.download.com/3409-2001-0-10.xml?tag=lr_rss" rssowl:id="513" />
+        <outline text="FileHippo.com" xmlUrl="http://feeds.feedburner.com/filehippo" rssowl:id="514" />
+        <outline text="FilePlaza" xmlUrl="http://www.fileplaza.com/lastaddedsoftware.rss" rssowl:id="515">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="Free Vista Files" xmlUrl="http://www.freevistafiles.com/rss/new_software.xml" rssowl:id="516" />
+        <outline text="Giveaway of the Day" xmlUrl="http://www.giveawayoftheday.com/feed/" rssowl:id="517" />
+        <outline text="MajorGeeks.com" xmlUrl="http://www.majorgeeks.com/backend.php?id=120" rssowl:id="518" />
+        <outline text="PortableApps.com" xmlUrl="http://portableapps.com/feeds/general" rssowl:id="519" />
+        <outline text="Slashdot" xmlUrl="http://slashdot.org/slashdot.rss" rssowl:id="520">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" type="5" />
+        </outline>
+        <outline text="SnapFiles latest software" xmlUrl="http://www.webattack.com/webattack.xml" rssowl:id="521" />
+        <outline text="Softpedia - Linux" xmlUrl="http://linux.softpedia.com/backend.xml" rssowl:id="522" />
+        <outline text="Softpedia - Mac OS" xmlUrl="http://mac.softpedia.com/backend.xml" rssowl:id="523" />
+        <outline text="Softpedia - Webscripts" xmlUrl="http://webscripts.softpedia.com/backend.xml" rssowl:id="524" />
+        <outline text="Softpedia - Windows" xmlUrl="http://www.softpedia.com/backend.xml" rssowl:id="525" />
+      </outline>
+      <outline text="Sports" rssowl:isSet="false" rssowl:id="526">
+        <outline text="AP Sports" xmlUrl="http://xml.newsisfree.com/feeds/71/1471.xml" rssowl:id="527" />
+        <outline text="BBC Sport" xmlUrl="http://newsrss.bbc.co.uk/rss/sportonline_world_edition/front_page/rss.xml" rssowl:id="528" />
+        <outline text="Deadspin" xmlUrl="http://feeds.gawker.com/deadspin/full" rssowl:id="529" />
+        <outline text="ESPN.com" xmlUrl="http://sports.espn.go.com/espn/rss/news" rssowl:id="530" />
+        <outline text="Fanblogs.com" xmlUrl="http://www.fanblogs.com/site.xml" rssowl:id="531">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="New York Times: Sports" xmlUrl="http://partners.userland.com/nytrss/sports.xml" rssowl:id="532" />
+        <outline text="Off Wing Opinion" xmlUrl="http://www.ericmcerlain.com/offwingopinion/index.rdf" rssowl:id="533">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="PR Web Sports" xmlUrl="http://www.prweb.com/xml/sports.xml" rssowl:id="534" />
+        <outline text="Sportsfrog.com" xmlUrl="http://www.sportsfrog.com/index.rdf" rssowl:id="535">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="Yahoo! News - Sports" xmlUrl="http://rss.news.yahoo.com/rss/sports" rssowl:id="536" />
+      </outline>
+      <outline text="Technology" rssowl:isSet="false" rssowl:id="537">
+        <outline text="Mobile" rssowl:isSet="false" rssowl:id="538">
+          <outline text="All About Symbian - News" xmlUrl="http://rss.allaboutsymbian.com/news/rss2all.xml" rssowl:id="539" />
+          <outline text="Engadget Mobile" xmlUrl="http://www.engadgetmobile.com/rss.xml" rssowl:id="540" />
+          <outline text="iPodlounge" xmlUrl="http://www.ipodlounge.com/index.xml" rssowl:id="541">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Circular redirect to 'http://www.ipodlounge.com:80/index.xml'" type="5" />
+          </outline>
+          <outline text="Mobile Opportunity" xmlUrl="http://mobileopportunity.blogspot.com/feeds/posts/default" rssowl:id="542" />
+          <outline text="MobileBurn.com" xmlUrl="http://www.mobileburn.com/xml/rss2.jsp" rssowl:id="543" />
+          <outline text="MobileCrunch" xmlUrl="http://feeds.feedburner.com/Mobilecrunch" rssowl:id="544" />
+          <outline text="mocoNews" xmlUrl="http://feeds.moconews.net/moconews/" rssowl:id="545">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Unsupported Format 'html'" type="5" />
+          </outline>
+          <outline text="Phone Scoop - Latest News" xmlUrl="http://www.phonescoop.com/rss/news.php" rssowl:id="546" />
+          <outline text="Softpedia - Handheld Devices" xmlUrl="http://handheld.softpedia.com/backend.xml" rssowl:id="547">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Unable to Resolve the Host" type="5" />
+          </outline>
+          <outline text="Softpedia - Mobile" xmlUrl="http://mobile.softpedia.com/backend.xml" rssowl:id="548" />
+          <outline text="Softpedia - Telecoms" xmlUrl="http://news.softpedia.com/newsRSS/Telecoms-10.xml" rssowl:id="549" />
+        </outline>
+        <outline text="Programming Languages" rssowl:isSet="false" rssowl:id="550">
+          <outline text="About.com Focus on JavaScript" xmlUrl="http://z.about.com/6/g/javascript/b/rss2.xml" rssowl:id="551" />
+          <outline text="CodeBetter.Com" xmlUrl="http://codebetter.com/blogs/MainFeed.aspx" rssowl:id="552" />
+          <outline text="Coding Horror" xmlUrl="http://www.codinghorror.com/blog/index.xml" rssowl:id="553" />
+          <outline text="dzone.com" xmlUrl="http://www.dzone.com/feed/frontpage/rss.xml" rssowl:id="554">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 410" type="5" />
+          </outline>
+          <outline text="Java" xmlUrl="http://developers.sun.com/rss/sdn.xml" rssowl:id="555">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+          </outline>
+          <outline text="JavaScript Tips" xmlUrl="http://www.webreference.com/js/tips/channels/last1515.rdf" rssowl:id="556" />
+          <outline text="jQuery Blog" xmlUrl="http://jquery.com/blog/feed/" rssowl:id="557" />
+          <outline text="PHP News" xmlUrl="http://www.php.net/news.rss" rssowl:id="558" />
+          <outline text="PHPBuilder.com" xmlUrl="http://phpbuilder.com/rss_feed.php?type=articles&amp;limit=20" rssowl:id="559" />
+          <outline text="Planet JDK" xmlUrl="http://planetjdk.org/feed.atom-1.0" rssowl:id="560" />
+          <outline text="programming" xmlUrl="http://programming.reddit.com/.rss" rssowl:id="561" />
+          <outline text="Python News" xmlUrl="http://www.python.org/channews.rdf" rssowl:id="562">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="QuirksBlog" xmlUrl="http://www.quirksmode.org/blog/atom.xml" rssowl:id="563" />
+          <outline text="Servlets.com" xmlUrl="http://www.servlets.com/blog/index.rss" rssowl:id="564" />
+        </outline>
+        <outline text="Security" rssowl:isSet="false" rssowl:id="565">
+          <outline text="Computer World Security Knowledge Center" xmlUrl="http://www.computerworld.com/news/xml/0,5000,73,00.xml" rssowl:id="566">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="Darknet - The Darkside" xmlUrl="http://feeds.feedburner.com/darknethackers" rssowl:id="567" />
+          <outline text="F-Secure Antivirus Research Weblog" xmlUrl="http://www.f-secure.com/weblog/weblog.rdf" rssowl:id="568" />
+          <outline text="ha.ckers.org web application security lab" xmlUrl="http://ha.ckers.org/blog/feed/" rssowl:id="569">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Unable to Connect" type="5" />
+          </outline>
+          <outline text="Schneier on Security" xmlUrl="http://www.schneier.com/blog/index.rdf" rssowl:id="570" />
+          <outline text="SecurityFocus News" xmlUrl="http://www.securityfocus.com/rss/news.xml" rssowl:id="571" />
+          <outline text="TaoSecurity" xmlUrl="http://taosecurity.blogspot.com/atom.xml" rssowl:id="572" />
+        </outline>
+        <outline text="Wireless" rssowl:isSet="false" rssowl:id="573">
+          <outline text="Computer World Mobile" xmlUrl="http://www.computerworld.com/news/xml/0,5000,68,00.xml" rssowl:id="574">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="FierceWireless" xmlUrl="http://www.fiercewireless.com/rss.xml" rssowl:id="575">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="InfoWorld: Wireless" xmlUrl="http://www.infoworld.com/rss/wireless.rdf" rssowl:id="576">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="MobileTechNews" xmlUrl="http://www.mobiletechnews.com/headlines.rdf" rssowl:id="577" />
+          <outline text="MuniWireless" xmlUrl="http://feeds.feedburner.com/muniwireless/" rssowl:id="578" />
+          <outline text="Network World on Wireless and Mobile" xmlUrl="http://www.networkworld.com/rss/wireless.xml" rssowl:id="579">
+            <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+          </outline>
+          <outline text="Wi-Fi Networking News" xmlUrl="http://wifinetnews.com/rss2.xml" rssowl:id="580" />
+          <outline text="WiFi Planet" xmlUrl="http://www.wi-fiplanet.com/icom_includes/feeds/80211/xml_front-news-10.xml" rssowl:id="581" />
+          <outline text="Yahoo! News: Wireless and Mobile Technology" xmlUrl="http://rss.news.yahoo.com/rss/wireless" rssowl:id="582" />
+        </outline>
+        <outline text="Anand Tech" xmlUrl="http://www.anandtech.com/rss/articlefeed.aspx" rssowl:id="583" />
+        <outline text="Ars Technica" xmlUrl="http://arstechnica.com/index.ars/rss" rssowl:id="584" />
+        <outline text="BBC News | Technology | World Edition" xmlUrl="http://news.bbc.co.uk/rss/newsonline_world_edition/technology/rss091.xml" rssowl:id="585" />
+        <outline text="CNET News" xmlUrl="http://rss.com.com/2547-12-0-20.xml" rssowl:id="586">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="Computer World" xmlUrl="http://www.computerworld.com/news/xml/10/0,5009,,00.xml" rssowl:id="587">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="digg - tech news" xmlUrl="http://digg.com/rss/index.xml" rssowl:id="588" />
+        <outline text="Digital Photography Review" xmlUrl="http://www.dpreview.com/news/dpr.rdf" rssowl:id="589">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="eWEEK Technology News" xmlUrl="http://rssnewsapps.ziffdavis.com/tech.xml" rssowl:id="590" />
+        <outline text="IRC-Junkie.org - IRC News" xmlUrl="http://www.irc-junkie.org/feed/" rssowl:id="591">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Unable to Resolve the Host" type="5" />
+        </outline>
+        <outline text="Joel on Software" xmlUrl="http://www.joelonsoftware.com/rss.xml" rssowl:id="592" />
+        <outline text="MAKE: Blog" xmlUrl="http://www.makezine.com/blog/index.rdf" rssowl:id="593">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+        <outline text="Planet Eclipse" xmlUrl="http://www.planeteclipse.org/planet/atom.xml" rssowl:id="594" />
+        <outline text="Shacknews" xmlUrl="http://www.shacknews.com/rss?recent_articles=1" rssowl:id="595" />
+        <outline text="Softpedia Gadgets News" xmlUrl="http://gadgets.softpedia.com/newsRSS/Global-0.xml" rssowl:id="596">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Unable to Resolve the Host" type="5" />
+        </outline>
+        <outline text="Softpedia News" xmlUrl="http://news.softpedia.com/newsRSS/Global-0.xml" rssowl:id="597" />
+        <outline text="Wired News" xmlUrl="http://www.wired.com/news_drop/netcenter/netcenter.rdf" rssowl:id="598" />
+        <outline text="ZDNet News - Front Door" xmlUrl="http://news.zdnet.com/2509-1_22-0-20.xml" rssowl:id="599">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+        </outline>
+      </outline>
+      <outline text="Weblogs" rssowl:isSet="false" rssowl:id="600">
+        <outline text="A List Apart" xmlUrl="http://www.alistapart.com/site/rss" rssowl:id="601" />
+        <outline text="Anil Dash" xmlUrl="http://www.dashes.com/anil/index.rdf" rssowl:id="602">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="Boing Boing" xmlUrl="http://www.boingboing.net/index.rdf" rssowl:id="603" />
+        <outline text="Celebrity Gossip" xmlUrl="http://www.tmz.com/rss.xml" rssowl:id="604" />
+        <outline text="Google Blogoscoped" xmlUrl="http://blog.outer-court.com/rss.xml" rssowl:id="605" />
+        <outline text="Google Sightseeing" xmlUrl="http://googlesightseeing.com/feed" rssowl:id="606" />
+        <outline text="HorsePigCow" xmlUrl="http://feeds.feedburner.com/horsepigcowLifeUncommon" rssowl:id="607">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="Lifehacker" xmlUrl="http://www.lifehacker.com/index.xml" rssowl:id="608" />
+        <outline text="Mashable!" xmlUrl="http://feeds2.feedburner.com/Mashable" rssowl:id="609" />
+        <outline text="Mini-Microsoft" xmlUrl="http://minimsft.blogspot.com/atom.xml" rssowl:id="610" />
+        <outline text="Pandagon" xmlUrl="http://pandagon.net/index.php/site/rss_2.0/" rssowl:id="611">
+          <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Invalid or Malformed Feed" type="5" />
+        </outline>
+        <outline text="The Official Google Blog" xmlUrl="http://feeds.feedburner.com/blogspot/MKuf" rssowl:id="612" />
+        <outline text="Wizbang" xmlUrl="http://wizbangblog.com/index.rdf" rssowl:id="613" />
+      </outline>
+      <outline text="RSSOwl News" xmlUrl="http://www.rssowl.org/newsfeed" rssowl:id="614">
+        <rssowl:pref id="org.rssowl.ui.internal.LoadErrorKey" value="Server returned HTTP Status 404 (Not Found)" type="5" />
+      </outline>
+      <outline text="BBC News" xmlUrl="http://news.bbc.co.uk/rss/newsonline_world_edition/front_page/rss091.xml" rssowl:id="615" />
+      <outline text="CNN" xmlUrl="http://xml.newsisfree.com/feeds/15/2315.xml" rssowl:id="616" />
+      <outline text="Guardian Unlimited" xmlUrl="http://www.guardian.co.uk/rss/1,,,00.xml" rssowl:id="617" />
+      <outline text="New York Times" xmlUrl="http://feeds.nytimes.com/nyt/rss/HomePage" rssowl:id="618" />
+      <outline text="Reuters News" xmlUrl="http://www.microsite.reuters.com/rss/topnews" rssowl:id="619" />
+      <outline text="Google News" xmlUrl="http://news.google.com/news?pz=1&amp;cf=all&amp;output=rss" rssowl:id="620" />
+      <outline text="Engadget" xmlUrl="http://www.engadget.com/rss.xml" rssowl:id="621" />
+      <outline text="Gizmodo" xmlUrl="http://www.gizmodo.com/index.xml" rssowl:id="622" />
+      <outline text="MarketWatch" xmlUrl="http://feeds.marketwatch.com/marketwatch/topstories" rssowl:id="623" />
+      <outline text="TechCrunch" xmlUrl="http://feedproxy.google.com/Techcrunch" rssowl:id="624" />
+      <outline text="Wired Top Stories" xmlUrl="http://feeds.wired.com/wired/index" rssowl:id="625" />
+      <rssowl:savedsearch name="Unread News" matchAllConditions="true" rssowl:id="626">
+        <rssowl:searchcondition>
+          <rssowl:searchspecifier id="0" />
+          <rssowl:searchvalue type="7">
+            <rssowl:newsstate value="0" />
+            <rssowl:newsstate value="2" />
+            <rssowl:newsstate value="3" />
+          </rssowl:searchvalue>
+          <rssowl:searchfield id="14" entity="org.rssowl.core.persist.INews" />
+        </rssowl:searchcondition>
+      </rssowl:savedsearch>
+      <rssowl:savedsearch name="Todays News" matchAllConditions="true" rssowl:id="628">
+        <rssowl:searchcondition>
+          <rssowl:searchspecifier id="9" />
+          <rssowl:searchvalue type="4" value="1" />
+          <rssowl:searchfield id="18" entity="org.rssowl.core.persist.INews" />
+        </rssowl:searchcondition>
+      </rssowl:savedsearch>
+      <rssowl:savedsearch name="News with Attachments" matchAllConditions="true" rssowl:id="630">
+        <rssowl:searchcondition>
+          <rssowl:searchspecifier id="0" />
+          <rssowl:searchvalue type="6" value="true" />
+          <rssowl:searchfield id="10" entity="org.rssowl.core.persist.INews" />
+        </rssowl:searchcondition>
+      </rssowl:savedsearch>
+      <rssowl:savedsearch name="Sticky News" matchAllConditions="true" rssowl:id="632">
+        <rssowl:searchcondition>
+          <rssowl:searchspecifier id="0" />
+          <rssowl:searchvalue type="6" value="true" />
+          <rssowl:searchfield id="13" entity="org.rssowl.core.persist.INews" />
+        </rssowl:searchcondition>
+      </rssowl:savedsearch>
+      <rssowl:savedsearch name="Labeled News" matchAllConditions="false" rssowl:id="634">
+        <rssowl:searchcondition>
+          <rssowl:searchspecifier id="0" />
+          <rssowl:searchvalue type="7" value="*" />
+          <rssowl:searchfield id="15" entity="org.rssowl.core.persist.INews" />
+        </rssowl:searchcondition>
+        <rssowl:pref id="org.rssowl.pref.BMNewsGrouping" value="7" type="1" />
+      </rssowl:savedsearch>
+    </outline>
+    <rssowl:label id="1" name="Important" order="0" color="163,21,2" />
+    <rssowl:label id="2" name="Work" order="1" color="200,118,10" />
+    <rssowl:label id="3" name="Personal" order="2" color="82,92,58" />
+    <rssowl:label id="4" name="To Do" order="3" color="92,101,126" />
+    <rssowl:label id="5" name="Later" order="4" color="82,16,0" />
+    <rssowl:pref id="org.rssowl.ui.FirstStartToken" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.UseMasterPassword" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.UseOSPassword" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.RememberPassword" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.MarkNewsReadOnMinimize" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.MarkNewsReadOnScrolling" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.MarkFeedReadOnChange" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.MarkNewsReadOnTabClose" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.MarkDuplicateNewsRead" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.DisableJavaScript" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.UseExternalBrowser" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.UseCustomExternalBrowser" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.ReopenBrowserTabs" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.UseSystemTray" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.TrayOnExit" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.TrayOnStart" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.RestoreTrayDoubleclick" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.MarkReadState" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.MarkReadInMillis" value="0" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.DelNewsByCountState" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.DelNewsByCountValue" value="200" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.DelNewsByAgeState" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.DelNewsByAgeValue" value="30" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.DelReadNewsState" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.NeverDelUnreadNewsState" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.NeverDelLabeledNewsState" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMNewsColumns" value="0,1,5,6,9" type="2" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMNewsSortColumn" value="1" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMNewsSortAscending" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMUpdateInterval" value="1800" type="3" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMUpdateIntervalState" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMOpenOnStartup" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMReloadOnStartup" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.editors.feed.SearchTarget" value="1" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.editors.feed.GroupType" value="0" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.editors.feed.FilterType" value="0" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.editors.feed.SashFormWeights" value="50,50" type="2" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.editors.feed.Layout" value="0" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.editors.feed.HighlightSearchResults" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.editors.feed.FeedToolBarHidden" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.editors.feed.BrowserToolBarHidden" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.views.explorer.BeginSearchOnTyping" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.views.explorer.AlwaysShowSearch" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.views.explorer.SortByName" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.views.explorer.FilterType" value="0" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.views.explorer.GroupingType" value="0" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.views.explorer.EnableLinking" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.ui.internal.views.explorer.DisableFavicons" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMNewsFiltering" value="-1" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMNewsGrouping" value="-1" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMLoadImages" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.EnableImages" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.EnableMedia" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMOpenSiteForNews" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.OpenSiteForEmptyNews" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.UseTransformer" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.TransformerIdentifier" value="org.rssowl.ui.InstapaperTransformer" type="5" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.ShowNotificationPoup" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.ShowNotificationPoupOnlyWhenMinimized" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.StickyNotificationPoup" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.AutoCloseNotificationPoupValue" value="8" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.LimitNotificationPoup" value="5" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.LimitNotifierToSelection" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CloseNotifierOnOpen" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.FadeNotifier" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.ShowExcerptInNotifier" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.AlwaysReuseFeedView" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.AlwaysReuseBrowser" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.OpenLinksInNewTab" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpBMByLastVisitState" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpBMByLastVisitValue" value="30" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpBMByLastUpdateState" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpBMByLastUpdateValue" value="30" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpBMByConError" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpBMBySynchronization" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpBMByDuplicates" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpNewsByCountState" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpNewsByCountValue" value="200" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpNewsByAgeState" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpNewsByAgeValue" value="30" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpReadNewsState" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpNeverDelUnreadNewsState" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpNeverDelLabeledNewsState" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpReminderDateMillies" value="1477540303437" type="3" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpReminderState" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpReminderDaysValue" value="30" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.CleanUpIndex" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.SearchDialogPreviewVisible" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.SearchDialogNewsColumns" value="12,0,11,1,5,6,9" type="2" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.SearchDialogNewsSortColumn" value="12" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.SearchDialogNewsSortAscending" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.ShowToolbar" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.ShowStatus" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMLoadTitleFromFeed" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.OpenBrowserInBackground" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.ShareProviderState" value="3,5,1,6,7,24,-8,-19,-9,-10,-12,-13,-4,-14,-15,-16,-17,-11,-18,-20,-21,-2,-22,-23,-25,-26" type="2" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.HideCompletedDownloads" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.ToolbarItems" value="2,0,5,6,0,7,8,0,10,0,11,12,0,39,0,13,14,0,20,0,15,16" type="2" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.ToolbarMode" value="0" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.DefaultNextAction" value="1" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.DefaultPreviousAction" value="5" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.BMMenuFilter" value="0" type="1" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.UpdateOnStartup" value="true" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.RememberAggregateNewsOption" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.AggregateNewsAsSearch" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.LocalizedFeedSearch" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.JSInfobarClosed" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.EnableIEPopupBlocker" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.ArchiveBinMarker" value="false" type="0" kind="0" />
+    <rssowl:pref id="org.rssowl.pref.NewsBrowserPageSize" value="50" type="1" kind="0" />
+    <rssowl:pref id="instance/org.eclipse.ui.workbench/OPEN_ON_SINGLE_CLICK" value="true" type="0" kind="1" />
+    <rssowl:pref id="instance/org.eclipse.ui.workbench/USE_IPERSISTABLE_EDITORS" value="true" type="0" kind="1" />
+    <rssowl:pref id="instance/org.eclipse.ui/SHOW_MULTIPLE_EDITOR_TABS" value="true" type="0" kind="1" />
+    <rssowl:pref id="instance/org.eclipse.ui.workbench/REUSE_OPEN_EDITORS_BOOLEAN" value="false" type="0" kind="1" />
+    <rssowl:pref id="instance/org.eclipse.ui.workbench/REUSE_OPEN_EDITORS" value="5" type="1" kind="1" />
+    <rssowl:pref id="/configuration/org.eclipse.core.net/proxiesEnabled" value="false" type="0" kind="1" />
+    <rssowl:pref id="/configuration/org.eclipse.core.net/systemProxiesEnabled" value="false" type="0" kind="1" />
+    <rssowl:pref id="/configuration/org.eclipse.core.net/proxyData/HTTP/hasAuth" value="false" type="0" kind="1" />
+    <rssowl:pref id="/configuration/org.eclipse.core.net/proxyData/HTTPS/hasAuth" value="false" type="0" kind="1" />
+    <rssowl:pref id="/configuration/org.eclipse.core.net/proxyData/SOCKS/hasAuth" value="false" type="0" kind="1" />
+  </body>
+</opml>
+

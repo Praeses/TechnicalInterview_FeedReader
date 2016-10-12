@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@model FeedReader.Models.RssChannel
+
+<style>
+    .rssItemHolder {
+        white-space: nowrap;
+        overflow: hidden;
+        margin: 10px;
+    }
+
+    .rssItemHolder > :first-child {
+        float: left;
+        display: inline-block;
+    }
+
+    .rssItemHolder > * {
+        display: block;
+    }
+
+    .rssItemMainImage {
+        max-height:125px; 
+        margin-right: 5px;
+    }
+    
+    .rssItemTextHolder {
+        white-space: normal
+    }   
+
+    .rssItemTitle a{
+        color: black;
+        font-size: 1.5em;
+    }
+
+    .rssItemDate {
+        color: grey;
+        font-size: .9em;
+    }
+    
+    .unsubscribeLink {
+        display: inline-block;
+        padding-left: 5px;
+        font-size: .5em;
+    }
+
+    #channelImage {
+        margin-right: 8px;
+    }
+</style>
+<h3><img id="channelImage" src="@(Model.ImageUrl)" /><a href="@Html.DisplayFor(modelItem => Model.Link)" target="_blank">@Html.DisplayFor(modelItem => Model.Title)</a><span class="unsubscribeLink"><a href="@Url.Action("RemoveSubscription", "Rss", new { rssChannelId = Model.RssChannelId })">Unsubscribe</a></span></h3>
+<div>@Html.ActionLink("Return To Feed List", "ListAllItems", new { refreshFeed = "false" })</div>
+@foreach (FeedReader.Models.RssItem item in Model.Items)
+{
+    <div class="rssItemHolder">
+        <img class="rssItemMainImage" src="@Html.ValueFor(modelItem => item.ImageUrl)" />
+        <div class="rssItemTextHolder">
+            <span class="rssItemTitle"><a href="@Html.ValueFor(modelItem => item.Link)" target="_blank">@Html.DisplayFor(modelItem => item.Title)</a></span>
+            <br />
+            <span class="rssItemDate">@item.PubDate.ToLocalTime().ToString("g")</span><br />
+            @{
+                string scrubbed = FeedReader.Utils.FeedReaderUtils.ScrubHtml(item.Description);
+                @Html.DisplayFor(modelItem => scrubbed);
+}
+            
+            @*@Html.Raw(item.Description)*@
+        </div>
+    </div>
+    <hr />
+
+}

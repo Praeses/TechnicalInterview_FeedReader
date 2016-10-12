@@ -1,9 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio Express 2013 for Web
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedReader", "FeedReader\FeedReader.csproj", "{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{64FC054B-F16A-4EC0-9B36-4A35CB8A589A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{918E0640-0887-4C48-B974-E85EE185C078}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +22,10 @@ Global
 		{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{498F7A8C-8E40-4CDA-800A-E72DA407EEAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64FC054B-F16A-4EC0-9B36-4A35CB8A589A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64FC054B-F16A-4EC0-9B36-4A35CB8A589A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64FC054B-F16A-4EC0-9B36-4A35CB8A589A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64FC054B-F16A-4EC0-9B36-4A35CB8A589A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

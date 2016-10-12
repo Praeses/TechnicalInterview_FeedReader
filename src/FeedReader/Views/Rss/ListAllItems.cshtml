@@ -1,0 +1,319 @@
+﻿@using FeedReader.Models;
+
+@{
+    ViewBag.Title = "All Feed Items";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+    @Scripts.Render("https://cdn.datatables.net/scroller/1.4.2/js/dataTables.scroller.js")
+    
+    
+    <script>
+    var dTable;
+    $(document).ready(function () {
+
+        //datatable initialization
+        dTable = $('#feedItemsTable').DataTable({
+            serverSide: true,
+            fixedColumns: true,
+            stateSave: true,
+            ordering: false,
+            select: true,
+            displayBuffer: 100,
+            searchDelay: 500,
+            dom: "fti",
+            ajax: function (data, callback, settings) {
+                $.ajax({
+                    url: "@Url.Action("FeedJson", new { refresh="false" })",
+                    type: "POST",
+                    data: data,
+                    success: function (result, textStatus, jqXHR) {
+                        callback({
+                            draw: data.draw,
+                            data: result.data,
+                            recordsTotal: result.recordsTotal,
+                            recordsFiltered: result.recordsFiltered
+                        });
+                    },
+                    error: function (xhr, textStatus, errorThrown) {    
+                        if (xhr.status == 0)
+                            alert("Unable to retrieve feeds. Please try again later");
+                    },
+                    cache: false
+                });   
+            },
+            "columnDefs": [{
+                targets: 0,
+                data: "wrapper",
+                render: function (data, type, full, meta) {
+                    return '<a class="feedLink" href="ViewFeed?feedUrl=' + encodeURIComponent(data.channel.feedUrl) + '">' + data.channel.title + '</a>';
+                }
+            },
+            {
+                targets: 1,
+                data: "wrapper",
+                render: function (data, type, full, meta) {
+                    var extraClasses = '';
+                    if (data.read) {
+                        extraClasses += 'readArticle'
+                    }
+                    return '<span class="' + extraClasses + '"><span class="tableFeedTitleDesc"><span class="tableFeedTitle">' + data.title + '</span><span class="tableFeedDescription">' + data.description + '</span></span>';
+                }
+            },
+            {
+                targets: 2,
+                data: "wrapper",
+                render: function (data, type, full, meta) {
+                    var pubDate = new Date(parseInt(data.pubDate.substr(6)));
+                    var now = new Date();
+                    var elapsed = now - pubDate;
+
+                    var dateHtml = '<span class="rssDateHolder">';
+                    if (elapsed < 0) {
+                        dateHtml += dateHtml += (pubDate.getUTCMonth() + 1) + "/" + pubDate.getUTCDate() + "/" + pubDate.getUTCFullYear();
+                    }
+                    else if (elapsed < 1000 * 60) { //within last minute
+                        dateHtml += Math.floor(elapsed / 1000) + " s";
+                    }
+                    else if (elapsed < 60 * 60 * 1000) { //within last hour
+                        dateHtml += Math.floor(elapsed / 1000 / 60) + " m";
+                    }
+                    else if (elapsed < 24 * 60 * 60 * 1000) { //within last day
+                        dateHtml += Math.floor(elapsed / 1000 / 60 / 60) + " h";
+                    }
+                    else {
+                        dateHtml += (pubDate.getUTCMonth() + 1) + "/" + pubDate.getUTCDate() + "/" + pubDate.getUTCFullYear();
+                    };
+
+                    return dateHtml + "</span>";
+                }
+            }],
+            scrollX: false,
+            scrollY: $(window).height() - 280,
+            scroller: {
+                loadingIndicator: true
+            }
+        });
+
+        //onclick of datatable row
+        $('#feedItemsTable tbody').on('click', 'tr', function () {
+            var data = dTable.row(this).data();
+
+            $(this).addClass('readArticle');
+
+            var rssId = data.wrapper.rssItemId;
+            $('#myModal .modal-content').load("ViewFeedItem?feedItemId=" + encodeURIComponent(rssId));
+            $('#myModal').modal('show');
+
+            $.post("@Url.Action("UpdateFeedItem", "Rss")?rssItemId=" + encodeURIComponent(rssId));
+        });
+
+        @if ((bool)ViewData["refreshFeed"] == true)
+            {
+                @Html.Raw("updateFeeds()");
+            }
+
+        //resize the table on window resize
+        $(window).resize(function () {
+            $('.dataTables_scrollBody').height($(window).height() - 330);
+        });
+
+        //resize once to set size
+        $(window).resize();
+    });
+
+     /*
+        Update feeds asynchronously and call a method to update the table afterwards
+    */
+    function updateFeeds() {
+        $('#loadingIcon').show();
+        $('#refreshIcon').hide();
+
+        $.ajax({
+            url: "@Url.Action("UpdateFeeds", "Rss")",
+            type: "POST",
+            success: function (data, textStatus, jqXHR) {
+                dTable.row(0).scrollTo();
+                dTable.ajax.reload();
+
+                $('#loadingIcon').hide();
+                $('#refreshIcon').show();
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                if (xhr.status == 0) {
+                    alert("Unable to update feeds at this time. Please try again later");
+                    $('#loadingIcon').hide();
+                    $('#refreshIcon').show();
+                }
+            },
+            error: function () {
+                
+            },
+            cache: false
+        });
+    }
+    </script>
+}
+
+@section css {
+    @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
+
+    <style>
+        #feedHolder {
+            display: inline-block;
+            float: left;
+        }
+        #feedItemHolder {
+            display: block;
+        }
+
+        #feedItemsTable tr {
+            cursor: pointer;
+        }
+        #feedItemsTable tr:hover {
+            background-color: rgb(226, 226, 226);
+        }
+        #feedItemsTable td{
+            white-space: nowrap;
+           /* padding: 0;
+            padding-top: 1px;
+            padding-bottom: 1px; */
+            width: 0px; /*prevents table row from overlapping to the side of the page*/
+            max-width: 500px; /*prevent table from overlapping page*/
+            padding-left: 10px;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #feedItemsTable td:nth-child(1), #feedItemsTable th:nth-child(1){
+            max-width: 150px;
+            overflow: hidden;
+            width: 20px !important;
+            padding-left: 0;
+            text-overflow: ellipsis;
+        }
+
+        .dataTables_scrollBody {
+
+        }
+
+        .feedLink {
+            color: inherit;
+        }
+
+        .tableFeedTitle {
+            font-weight: bold;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .tableFeedDescription {
+            color: grey;
+        }
+
+        .readArticle *{
+            color: grey;
+
+        }
+
+        a.tableFeedTitleDesc{
+            color: black;
+            overflow: hidden;
+            display: block;
+        }
+
+        .rssDateHolder{
+            float:right;
+            padding-right: 5px;
+        }
+
+        .modal {
+          text-align: center;
+          padding: 0!important;
+          padding: 10px;
+        }
+
+        .modal:before {
+          content: '';
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle;
+          margin-right: -4px;
+        }
+
+        .modal-dialog {
+          display: inline-block;
+          text-align: left;
+          vertical-align: middle;
+        }
+
+        #loadingIcon{
+            display: none;
+            height: 30px;
+        }
+
+        #refreshIcon {
+            padding: 5px;
+            margin-right: -3px;
+        }
+
+        #feedActions{
+            text-align: center;
+        }
+
+        .modal-lg {
+            width: 80%;
+        }
+    </style>
+}
+
+<div id="feedHolder">
+@*@foreach (RssChannel channel in (List<RssChannel>)ViewData["feeds"])
+{
+    <a href="ViewFeed?feedUrl=@Url.Encode(channel.FeedUrl)">@Html.DisplayFor(item => channel.Title)</a><br />
+}*@
+<br />
+</div>
+
+
+<div id="feedItemHolder">
+    <div id="feedActions">
+
+        <br />
+        <a href="@Url.Action("AddFeed", "Rss")" title="Add Feed"><img id="addIcon" src="@Url.Content("~/Content/Images/add.png")" /></a>
+        <img id="loadingIcon" src="@Url.Content("~/Content/Images/loading.gif")" />
+        <a href="#" title="Refresh Feeds" onclick="updateFeeds()"><img id="refreshIcon" src="@Url.Content("~/Content/Images/refresh.png")" /></a>
+        <a href="@Url.Action("ListAllFeeds", "Rss")" title="Feed List"><img id="feedListIcon" src="@Url.Content("~/Content/Images/feed_list.png")" /></a>
+    </div>
+    <table id="feedItemsTable" class="row-border">
+        <thead>
+            <tr>
+                <th>Feed</th>
+                <th>Title</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+           @* @foreach (RssItem rssItem in (List<RssItem>)ViewData["items"])
+            {
+                <tr>
+                    <td><a class="feedLink" href="ViewFeed?feedUrl=@Url.Encode(rssItem.Channel.FeedUrl)">@Html.DisplayFor(item => rssItem.Channel.Title)</a></td>
+                    <td>@Html.DisplayFor(item => rssItem.Title)</td>
+                    <td>@Html.DisplayFor(item => rssItem.PubDate)</td>
+                </tr>
+            } *@
+        </tbody>
+    </table>
+    
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog  modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+            </div>
+
+        </div>
+    </div>
+</div>

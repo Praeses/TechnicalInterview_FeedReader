@@ -1,0 +1,99 @@
+﻿@model FeedReader.Models.RssChannel
+
+@{
+    ViewBag.Title = "AddFeed";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add a Feed</h2>
+
+@section css {
+    @Styles.Render("~/Scripts/EasyAutocomplete-1.3.5/easy-autocomplete.min.css")
+
+    <style>
+        .autoCompleteLoading { 
+            background:url('@Url.Content("~/Content/Images/loading.gif")') no-repeat right center;
+            background-size: 25px;
+        }
+    </style>
+}
+
+@section scripts {
+    @Scripts.Render("~/Scripts/EasyAutocomplete-1.3.5/jquery.easy-autocomplete.js")
+
+    <script>
+        var select;
+        $(document).ready(function () {
+            select = $('#linkHolder');
+            
+            select.keydown(function () {
+                if (select.val().length > 0) {
+                    select.addClass('autoCompleteLoading');
+                }
+                else {
+                    select.removeClass('autoCompleteLoading');
+                }
+            })
+            $('#linkHolder').easyAutocomplete({
+                url: function (phrase) {
+                    return "@Url.Action("SearchRssFeeds", "Rss")?query=" + encodeURIComponent(phrase);
+                },
+                getValue: function (element) {
+                    return element.title;
+                },
+                requestDelay: 500,
+                listLocation: "results",
+                highlightPhrase: false,
+                list: {
+                    maxNumberOfElements: 100,
+                    
+                    onChooseEvent: function () {
+ 
+                        var data = select.getSelectedItemData();
+
+                        select.val(data.url);
+                    },
+                    onLoadEvent: function () {
+                        select.removeClass('autoCompleteLoading');
+
+                    },
+                    onBeforeLoadEvent: function (data) {
+
+                        var newDataRow = {
+                            title: "Url: " + select.val(),
+                            url: select.val()
+                        };
+
+                        data.push(newDataRow);
+                    }
+                }
+            });
+        });
+    </script>
+}
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control", @id="linkHolder"} })
+                @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ListAllItems")
+</div>

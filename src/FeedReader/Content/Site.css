@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-size: 1.8em;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -14,4 +15,14 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.appIconNav {
+    height: 20px;
+    padding-right: 3px;
+    vertical-align: top;
+}
+
+.container {
+    max-width: 80%;
 }

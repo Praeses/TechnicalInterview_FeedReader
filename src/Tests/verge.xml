@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>The Verge -  All Posts</title>
+  <icon>https://cdn3.vox-cdn.com/community_logos/34086/verge-fv.png</icon>
+  <updated>2016-10-12T14:00:05-04:00</updated>
+  <id>http://www.theverge.com/rss/full.xml</id>
+  <link type="text/html" href="http://www.theverge.com/" rel="alternate"/>
+  <entry>
+    <published>2016-10-12T14:00:05-04:00</published>
+    <updated>2016-10-12T14:00:05-04:00</updated>
+    <title>A new gene-editing technique could help treat sickle cell anemia</title>
+    <content type="html">  
+  &lt;img alt="" src="https://cdn0.vox-cdn.com/thumbor/A0ihhtzbDziv59JVenIHOZhMZjk=/2x0:1022x680/1310x873/cdn0.vox-cdn.com/uploads/chorus_image/image/51320757/4351126692_704111f0c6_b.1476291667.jpg" /&gt;
+
+
+
+  &lt;p id="AiFuoM"&gt;A new treatment for the blood disease sickle cell anemia is possible now that scientists have figured out how to repair the mutation that causes the condition. It doesn’t work all the time, but it does create hope for patients. &lt;/p&gt;
+&lt;p id="96PfeC"&gt;Researchers took blood from patients from sickle cell anemia. Then, they used a gene-editing technique called CRISPR to snip out the genetic mutation and replace it with healthy DNA, as described in a study published today in &lt;em&gt;&lt;a href="http://stm.sciencemag.org/content/8/360/360ra134"&gt;Science Translational Medicine&lt;/a&gt;&lt;/em&gt;. The procedure is very difficult, so only 6 percent of the cells, at most, were fully fixed. This is far from ideal, but 6 percent is theoretically still enough to help patients. The blood didn’t go back in the patients, so we don’t know what its effects on their condition might be. But the hope is that we can one day treat patients by giving them transfusions of their own, fixed blood, says study co-author &lt;a href="http://www.bioscience.utah.edu/faculty/biological-chemistry-faculty/carroll/carroll.php"&gt;Dana Carroll&lt;/a&gt;, a professor of biochemistry at the University of Utah. &lt;/p&gt;
+&lt;aside id="iBx0R4"&gt;&lt;q&gt;This could potentially help with other blood diseases&lt;/q&gt;&lt;/aside&gt;&lt;p id="iJRBUh"&gt;Sickle cell anemia is caused by a single gene mutation that makes the body produce red blood cells in a “sickle” shape, instead of the regular one, which looks kind of like a jelly donut with a dent in the middle. These unhealthy blood cells can lead to pain and weakness and damage the organs.  A type of bone marrow transplant can treat the disease. First, the patient’s immune system is suppressed. Then, stem blood cells found in the marrow are destroyed and replaced with healthy cells from a donor. But sometimes the body rejects the donor cells; because of this, transfusions aren’t used very often, especially for children. But if patients receive their &lt;em&gt;own&lt;/em&gt; healthy cells, one big problem will be solved and the treatment can help more people.&lt;/p&gt;
+&lt;p id="axZlep"&gt;To fix the mutation, the team created a special pre-formed molecule that works like using a pair of scissors to snip directly at the gene. Other methods, without the pre-formed molecule, are like sending scissor parts to the tailor and asking them to put the scissors together before snipping. The procedure is “technically well-done and kind of a tour de force” says  &lt;a href="http://wid.wisc.edu/profile/kris-saha/"&gt;Krishanu Saha&lt;/a&gt;, a professor of bioengineering at the University of Wisconsin-Madison who was not involved with the study. &lt;/p&gt;
+&lt;aside id="jxTjJN"&gt;&lt;q&gt;The fixed stem cells could theoretically last for life in humans&lt;/q&gt;&lt;/aside&gt;&lt;p id="SwkYLe"&gt;This isn’t the first time people have tried to fix the sickle gene mutation. Earlier, scientists figured out how to edit out the mutation in normal blood cells, but they failed when it came to stem cells. (We’re not exactly sure why this is.) Problem is, normal blood cells eventually vanish, but the stem blood cells last and create more blood cells, so the benefits would last much longer. “We thought that by using the CRISPR system and a new method of delivery, that maybe we could do better than that,” says Carroll. &lt;/p&gt;
+&lt;p id="C96OaW"&gt;They were right: they could edit stem cells, too. When the researchers gave mice the fixed blood, the stem cells lasted for four months. Carroll says that these stem cells could theoretically last for life in humans. The promise isn’t just for sickle cell, either — it could potentially help with other blood diseases, too.&lt;/p&gt;
+&lt;p id="WOtxC1"&gt;This method is more successful than anything we’ve seen before, but there’s still room for improvement. Fixing the mutation is a two-step process: first, disabling the genome, and then actually repairing the part that was mutated so it works properly. The team disabled the gene about half of the time, but they were only able to repair it up to 6 percent of the time, according to Carroll. So in the end the blood transfusion was made up of 6 percent corrected cells, 50 percent disabled cells. The remaining half still had the mutation. &lt;/p&gt;
+&lt;aside id="FBiMGt"&gt;&lt;q&gt;There could be a clinical trial in five years&lt;/q&gt;&lt;/aside&gt;&lt;p id="f74POt"&gt;This success rate is just good enough to be potentially helpful. Previous research in sickle cell anemia shows that even if only about 5 percent of the cells are “healthy,” the patient can still get better.&lt;/p&gt;
+&lt;p id="xh10GW"&gt;Researchers have focused on sickle cell anemia in part because it’s caused by a mutation in a single place, which makes “solving” it a lot more simple than with a disease caused by many different mutations. It’s also very common; just in the US, it affects 90,000 people, mostly African-Americans. The next steps are to improve the technique’s success rate — and, perhaps, to start a clinical trial in the next five years. &lt;/p&gt;
+&lt;p id="VRcfYU"&gt;         &lt;/p&gt;
+
+</content>
+    <link rel="alternate" type="text/html" href="http://www.theverge.com/2016/10/12/13258364/crispr-blood-transfusion-gene-editing-technique-sickle-cell-anemia-stem-cell"/>
+    <id>http://www.theverge.com/2016/10/12/13258364/crispr-blood-transfusion-gene-editing-technique-sickle-cell-anemia-stem-cell</id>
+    <author>
+      <name>Angela Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <published>2016-10-12T13:35:05-04:00</published>
+    <updated>2016-10-12T13:35:05-04:00</updated>
+    <title>Don’t be a clown for Halloween</title>
+    <content type="html">  
+  &lt;img alt="" src="https://cdn0.vox-cdn.com/thumbor/9vITzNhI363KoczRcrSUlTG0eo8=/0x80:1920x1360/1310x873/cdn0.vox-cdn.com/uploads/chorus_image/image/51321121/poltergeist_clown-2040.0.0.jpg" /&gt;
+
+
+
+  &lt;p id="9olMZL"&gt;Halloween is, obviously, the most important holiday of the year and what you wear on that day is your statement to the world about how original, fun, cultured, and resourceful you are. If you mess it up, you have to wait a whole year for another shot at acclaim. I’m not going to tell you what to be for Halloween this year (although here’s &lt;a href="http://www.theverge.com/2016/10/10/13232510/game-of-thrones-halloween-costume-white-walker"&gt;one option!&lt;/a&gt;) because that’s a highly personal decision you should discuss only with your life partner and / or physician. I’m not trying to be dramatic, just setting the stakes here!&lt;/p&gt;
+&lt;p id="OfRlbS"&gt;Normally I would hesitate to weigh in whatsoever. But this year, I feel that I must, out of decency: if you dress up as a clown this Halloween, you will regret it. &lt;/p&gt;
+&lt;p id="WO6MJl"&gt;You might think dressing up as a clown would be a funny thing to do, because it plays on a widespread fear that has&lt;a href="http://www.theverge.com/2016/10/7/13191788/clown-attack-threats-2016-panic-hoax-debunked"&gt; recently been pulled to the surface &lt;/a&gt;by &lt;a href="http://www.atlasobscura.com/articles/the-definitive-map-of-americas-creepy-clown-epidemic"&gt;dozens of pranksters and sociopaths &lt;/a&gt;and overactive social media accounts operated by local news stations. You might think it’s more topical and less offensive and significantly cheaper than dressing up as Harambe or Donald Trump’s &lt;a href="http://gawker.com/is-donald-trump-s-hair-a-60-000-weave-a-gawker-invest-1777581357"&gt;$60,000&lt;/a&gt;&lt;a href="http://gawker.com/is-donald-trump-s-hair-a-60-000-weave-a-gawker-invest-1777581357"&gt; &lt;/a&gt;head merkin. You might think “I already have a clown costume, from when I was &lt;a href="https://www.youtube.com/watch?v=6dqPtbqVI1I"&gt;Twisty the Clown&lt;/a&gt; for Halloween two years ago” and decide just to roll with it. &lt;/p&gt;
+&lt;div id="zHoVRj"&gt;
+&lt;blockquote class="twitter-tweet" align="center"&gt;
+&lt;p lang="en" dir="ltr"&gt;these clown sightings are getting scarier and scarier    &lt;a href="https://t.co/QjGwSoZQJV"&gt;pic.twitter.com/QjGwSoZQJV&lt;/a&gt;&lt;/p&gt;— memes (@memeprovider) &lt;a href="https://twitter.com/memeprovider/status/783095005338537985"&gt;October 4, 2016&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;p id="q1gSq1"&gt;Resist that inner monologue!&lt;/p&gt;
+&lt;p id="7OVApE"&gt;You will only exacerbate a ridiculous problem that has led to many &lt;em&gt;terrible &lt;/em&gt;attempts at solutions. Thanks to the clowns, we are already facing the following dire circumstances: &lt;/p&gt;
+&lt;ul id="vvwE9T"&gt;
+&lt;li&gt;
+&lt;a href="http://www.vulture.com/2016/10/mcdonalds-temporarily-benches-ronald-mcdonald.html?mid=twitter_vulture"&gt;McDonald’s isn’t letting Ronald McDonald go outside&lt;/a&gt;. McDonald’s says that Ronald McDonald will stop making public appearances for the time being in deference to “the current climate around clown sightings in communities.” McDonald doesn’t deserve this. Not this year. Not after &lt;a href="http://www.theverge.com/2015/7/8/8915443/minidoc-ronald-mcdonald-mascot-emotional-surreal"&gt;all he’s been through.&lt;/a&gt;
+&lt;/li&gt;
+&lt;li id="rrVzkr"&gt;
+&lt;a href="http://mashable.com/2016/10/12/batman-creepy-clowns-uk/?utm_cid=mash-com-fb-main-link#LaDTHHSTaqqz"&gt;Batman (a fictional person) is patrolling the streets now&lt;/a&gt;. A costume shop in Whitehaven, Cumbria has unleashed a man in a Batman suit to ease everyone in town’s fears about clown attacks. In this fun game they invented, the clowns are The Joker — a violent psychopath! And a random man is Batman — a non-violent psychopath!&lt;/li&gt;
+&lt;li id="VEzPGd"&gt;College students are forming &lt;a href="http://news.nationalpost.com/news/canada/recent-mass-terror-over-clowns-stems-from-baseless-reports-but-the-consequences-can-be-dangerous"&gt;“vigilante flash mobs”&lt;/a&gt; to hunt clowns. I’ve never seen a vigilante flash mob but based on my experience with &lt;a href="https://en.wikipedia.org/wiki/Beauty_and_the_Beast_(1991_film)"&gt;Disney animated films&lt;/a&gt; of &lt;a href="https://en.wikipedia.org/wiki/The_Hunchback_of_Notre_Dame_(1996_film)"&gt;the 1990s&lt;/a&gt; this is a &lt;em&gt;bad idea&lt;/em&gt;. &lt;/li&gt;
+&lt;li id="ATy6xz"&gt;Lots of people in the news media are using puns in their clown headlines. This is causing some&lt;a href="https://www.google.com/webhp?sourceid=chrome-instant&amp;amp;ion=1&amp;amp;espv=2&amp;amp;ie=UTF-8#q=the+tears+of+a+clown&amp;amp;tbm=nws"&gt; unfortunate SEO&lt;/a&gt; for the great Smokey Robinson. Try harder!&lt;/li&gt;
+&lt;li id="2XviHe"&gt;The internet is having&lt;a href="https://thehairpin.com/what-do-you-think-a-clown-is-c82f3bb05931#.nqua91u44"&gt; an important but altogether too philosophical and confusing debate&lt;/a&gt; about what defines a person as a genuine “clown,” versus just a “person in clown’s clothing.” And then of course, when is a genuine clown an evil clown and when is it just a whatever clown? Truly, do we ever find self-actualization? Probably not. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p id="E8fITU"&gt;I just don’t think it’s a good idea for you to make yourself a part of this problem. Be part of the solution by &lt;em&gt;not&lt;/em&gt; dressing up as a clown. &lt;/p&gt;
+&lt;aside id="T672Z4"&gt;&lt;q&gt;be part of the solution — not a clown&lt;/q&gt;&lt;/aside&gt;&lt;p id="CGQGgp"&gt;The biggest reason I don’t think you should dress as a clown, however, is not a morality appeal. The biggest reason you should not dress up as a clown is because it’s not going to be worth it. Nobody will think it’s funny! The clown panic was birthed and has thrived online. Internet joke costumes tend to fall flat. We often misjudge how much internet culture is the broader culture, and that’s why things like this embarrassing &lt;a href="http://nymag.com/selectall/2016/05/bachelorette-contestant-learns-important-lesson-never-explain-a-meme.html"&gt;“damn Daniel” moment &lt;/a&gt;on &lt;em&gt;The Bachelorette&lt;/em&gt; happen&lt;em&gt;. &lt;/em&gt;By the time we adapt a Twitter goof into a costume, the moment has passed, and we look like an out-of-touch fool.&lt;/p&gt;
+&lt;p id="DkwR9z"&gt;On the flip side, you’re also running the risk of getting the up-down at every costume party and then hearing the worst four words in the English language: “Oh. I get it.” Anyone who gets it is just going to... get it. Not laugh. Just get it. Maybe the only worse thing you could do is dress up as the children of &lt;em&gt;Stranger Things.&lt;/em&gt;&lt;/p&gt;
+&lt;p id="8DA4ej"&gt;Yes, this pretty bad year has produced a lot of snark, and it’s possible some of us have forgotten how to speak or act without somehow referencing a meme, but the least we can do to honor the magical annual celebration of candy and skull makeup is to try. Halloween is a time for joy and creativity and experimenting with life as the Babadook. It’s the one secular holiday that doesn’t fall back on celebrating familial or romantic relationships and instead just lets you celebrate yourself, your inner demons, and your outward ability to draw spider veins on your hands with purple eyeliner. Though shlock and cliche have their place and are an important part of the Halloween tradition, this is not a time to troll your friends with your least imaginative stab at shock humor. Give a good costume (&lt;a href="http://www.theverge.com/2016/10/10/13232510/game-of-thrones-halloween-costume-white-walker"&gt;this one!&lt;/a&gt;) a chance. Don’t be a clown.  &lt;/p&gt;
+&lt;p id="0umqVY"&gt;&lt;/p&gt;
+
+</content>
+    <link rel="alternate" type="text/html" href="http://www.theverge.com/2016/10/12/13257436/the-halloween-costume-not-to-do-is-a-clown"/>
+    <id>http://www.theverge.com/2016/10/12/13257436/the-halloween-costume-not-to-do-is-a-clown</id>
+    <author>
+      <name>Kaitlyn Tiffany</name>
+    </author>
+  </entry>
+  <entry>
+    <published>2016-10-12T12:53:37-04:00</published>
+    <updated>2016-10-12T12:53:37-04:00</updated>
+    <title>Verizon promises Google Pixel will get updates immediately just like iPhones</title>
+    <content type="html">  
+  &lt;img alt="" src="https://cdn0.vox-cdn.com/thumbor/bfvc-uhXDTReJ9SmkJJ3CzJ8pFc=/0x0:2039x1359/1310x873/cdn0.vox-cdn.com/uploads/chorus_image/image/51320583/jbareham_160926_1228_0389.0.0.jpg" /&gt;
+
+
+
+  &lt;p&gt;Verizon Wireless is completely dismissing the idea that it will be slowing down future Android updates on Google's Pixel and Pixel XL smartphones. Last week, Google revealed that although it's handling software and security updates for the devices,&amp;nbsp;&lt;a href="http://www.theverge.com/2016/10/6/13191614/verizon-google-pixel-android-updates"&gt;Verizon must certify them&lt;/a&gt; for carrier-sold Pixels before they can be rolled out to customers. That at least raised the &lt;i&gt;possibility&lt;/i&gt; that Verizon-sold Pixel phones might not get new Android features as soon as they're available for the Pixels that Google sells directly.&lt;/p&gt;
+&lt;p&gt;But a very straightforward statement that Verizon&amp;nbsp;&lt;a target="_blank" href="http://arstechnica.com/gadgets/2016/10/psa-if-you-like-updates-dont-buy-the-google-pixel-phone-from-verizon/"&gt;gave to&lt;i&gt; Ars Technica&lt;/i&gt;&lt;/a&gt; seems to eliminate any potential concern. (Emphasis added by &lt;i&gt;The Verge&lt;/i&gt;.)&lt;/p&gt;
+ 
+&lt;hr class="widget_boundry_marker hidden page_break"&gt;
+&lt;blockquote&gt;
+&lt;p&gt;First and foremost, all operating system and security updates to the Pixel devices will happen in partnership with Google. In other words, &lt;b&gt;when Google releases an update, Verizon phones will receive the same update at the same time (much like iOS updates). Verizon will not stand in the way of any major updates and users will get all updates at the same time as Google.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Also, &lt;b&gt;the Verizon version of the Google Pixel is carrier unlocked&lt;/b&gt;, so you can use it where ever you like. Finally, we have&lt;b&gt; three apps pre-installed&lt;/b&gt; on the phone Go90, My Verizon (which is your account management tool) and Verizon Messages (your messaging app). As you noted, &lt;b&gt;all three can easily be uninstalled&lt;/b&gt; by the user.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;There's a lot of good stuff in that statement that should relieve people planning on buying a Pixel from Verizon next week. First, Verizon is stating directly that it will not "stand in the way" of Google's updates. Somewhat remarkably, the carrier says the arrangement between both companies is similar to Apple's complete control over iOS software releases. That's not a comparison we've ever heard Verizon make about updates from Samsung, LG, Motorola, and other Android phone makers.&lt;/p&gt;
+&lt;p&gt;Second, the Pixel and Pixel XL will be unlocked for use on other networks — just like the other smartphones that Verizon sells. And third, it sounds as if the three — just three! — preloaded apps can be uninstalled by users. Hopefully that's true and Verizon isn't talking about merely disabling them, which isn't quite the same as removing the apps entirely.&lt;/p&gt;
+&lt;p&gt;Either way, it's hard to read this any other way: Verizon is pledging that Google's Pixel and Pixel XL won't fall behind when it comes to future Android updates. Does that make you more confident in purchasing from a Verizon store instead of Google come October 20th?&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;Google Pixel phone first look&lt;/h3&gt;
+
+&lt;div data-analytics-viewport="video" data-analytics-action="volume:view:article:middle" data-analytics-label="Google Pixel phone first look | 23655" data-volume-uuid="ef44d521b" data-volume-id="23655" data-analytics-placement="article:middle" data-volume-placement="article" id="volume-placement-7744" class="volume-video"&gt;&lt;/div&gt;
+
+
+</content>
+    <link rel="alternate" type="text/html" href="http://www.theverge.com/circuitbreaker/2016/10/12/13258286/verizon-google-pixel-fast-android-updates"/>
+    <id>http://www.theverge.com/circuitbreaker/2016/10/12/13258286/verizon-google-pixel-fast-android-updates</id>
+    <author>
+      <name>Chris Welch</name>
+    </author>
+  </entry>
+  <entry>
+    <published>2016-10-12T12:08:01-04:00</published>
+    <updated>2016-10-12T12:08:01-04:00</updated>
+    <title>Samsung will 'dispose of' recalled Note 7 phones, won't repair or refurbish them</title>
+    <content type="html">  
+  &lt;img alt="" src="https://cdn0.vox-cdn.com/thumbor/B02AMRhWZSOt2KO0QFYocUJ2KgE=/0x0:2039x1359/1310x873/cdn0.vox-cdn.com/uploads/chorus_image/image/51319981/jbareham_160811_1180_A_0217.0.0.jpg" /&gt;
+
+
+
+  &lt;p&gt;When Samsung says it's putting an end to the Galaxy Note 7 for good, it's not making any exceptions; the company has&amp;nbsp;&lt;a href="http://motherboard.vice.com/read/galaxy-note-7-explosion-environmental-impact-recycling" target="_blank"&gt;confirmed to &lt;i&gt;Motherboard&lt;/i&gt;&lt;/a&gt;&lt;i&gt; &lt;/i&gt;that there are no plans to repair or refurbish a single recalled device. Every Note 7 that Samsung receives back will be scrapped.&amp;nbsp;“We have a process in place to safely dispose of the phones,” a spokesperson said.&lt;/p&gt;
+&lt;p&gt;Earlier today, Samsung&amp;nbsp;&lt;a href="http://www.theverge.com/2016/10/12/13254634/samsung-earnings-forecast-cut-q3-2016"&gt;adjusted its third quarter profit estimates&lt;/a&gt; to account for over $2 billion in losses — a direct result of the Note 7 recall saga. But as &lt;i&gt;Motherboard's&lt;/i&gt; story explains, the environment will almost certainly pay a more significant cost. Samsung manufactured over 2 million Note 7s, and inefficient smartphone recycling practices make the difficult-to-mine rare earth elements and other components irrecoverable.&amp;nbsp;“These are all very expensive in terms of the environmental impact, but also in the lives they impact to mine them," iFixit CEO&amp;nbsp;Kyle Wiens told &lt;i&gt;Motherboard. &lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;Samsung hasn't expanded on exactly what its disposal process for the Note 7 entails, but environment-minded organizations like Greenpeace might urge the company to be transparent about the way it disposes of so many smartphones over the coming weeks and months. The company issues a sustainability report, but hasn't yet factored the Note 7 recall into those figures. Note 7 customers are receiving&amp;nbsp;&lt;a href="http://www.theverge.com/2016/10/11/13246020/samsung-note-7-fireproof-return-boxes"&gt;fireproof return boxes&lt;/a&gt; for safe transport of recalled (and potentially hazardous) units back to the company; the boxes can only be shipped via ground courier services and are forbidden from being transported by aircraft.&lt;/p&gt;
+
+</content>
+    <link rel="alternate" type="text/html" href="http://www.theverge.com/circuitbreaker/2016/10/12/13257504/samsung-galaxy-note-7-disposal"/>
+    <id>http://www.theverge.com/circuitbreaker/2016/10/12/13257504/samsung-galaxy-note-7-disposal</id>
+    <author>
+      <name>Chris Welch</name>
+    </author>
+  </entry>
+  <entry>
+    <published>2016-10-12T12:00:07-04:00</published>
+    <updated>2016-10-12T12:00:07-04:00</updated>
+    <title>Google and Facebook building super high-speed cable between LA and Hong Kong</title>
+    <content type="html">  
+  &lt;img alt="" src="https://cdn0.vox-cdn.com/thumbor/jRO1AKpfFUD6GHCwuYV9G4JUUjI=/0x1:3000x2001/1310x873/cdn0.vox-cdn.com/uploads/chorus_image/image/51318847/486234008.0.jpg" /&gt;
+
+
+
+  &lt;p id="AHXdnT"&gt;Google and Facebook are working together to lay a nearly 8,000-mile cable between Los Angeles and Hong Kong.&lt;/p&gt;
+&lt;p id="A3NRdc"&gt;The fiber-optic cable will have a bandwidth of 120 terabits per second, which Google says makes it the highest-capacity route between the US and Asia. It’ll double &lt;a href="http://www.theverge.com/2016/6/29/12061910/google-faster-pacific-ocean-internet-cable-japan-nec-corp"&gt;the current record&lt;/a&gt;, which is held by a cable that Google is also a partner on.&lt;/p&gt;
+&lt;p id="0dGJMX"&gt;The new cable should allow Google and Facebook to offer faster and more reliable service to visitors on the other side of the Pacific. The companies will likely each get a certain chunk of the cable’s total capacity and lease out the remaining space to others; but so far, they haven’t announced the specifics.&lt;/p&gt;
+&lt;div class="c-float-right" id="PBZ5Hi"&gt;&lt;aside&gt;&lt;q&gt;Facebook has partnered on an even faster cable across the Atlantic&lt;/q&gt;&lt;/aside&gt;&lt;/div&gt;
+&lt;p id="rBGQrc"&gt;These undersea cables are increasingly being built in partnership with big tech companies as those big tech companies come to represent more and more of the internet’s traffic. Facebook and Google both have plenty of data to send just between their own servers, so there’s reason they’d want to have a stake in the connections, rather than being forced to lease everything they need.&lt;/p&gt;
+&lt;p id="mGAhL2"&gt;Facebook, for instance, recently partnered with Microsoft to &lt;a href="http://www.theverge.com/2016/5/26/11787822/facebook-microsoft-marea-internet-cable-atlantic-ocean"&gt;build an even faster cable&lt;/a&gt; across the Atlantic. And for Google, this’ll be the sixth cable it’s taken an ownership stake in.&lt;/p&gt;
+&lt;p id="hBYKrX"&gt;The cable is being called the Pacific Light Cable Network and is expected to be completed and running sometime in 2018.&lt;/p&gt;
+  &lt;figure class="e-image"&gt;
+        &lt;img alt=" " src="https://cdn0.vox-cdn.com/thumbor/U-D2iAbasxZ3wpIdSKnugbUQ0o0=/400x0/filters:no_upscale()/cdn0.vox-cdn.com/uploads/chorus_asset/file/7264017/g.jpg"&gt;
+  &lt;/figure&gt;
+
+
+</content>
+    <link rel="alternate" type="text/html" href="http://www.theverge.com/2016/10/12/13255858/google-facebook-submarine-cable-trans-pacific"/>
+    <id>http://www.theverge.com/2016/10/12/13255858/google-facebook-submarine-cable-trans-pacific</id>
+    <author>
+      <name>Jacob Kastrenakes</name>
+    </author>
+  </entry>
+  <entry>
+    <published>2016-10-12T11:53:47-04:00</published>
+    <updated>2016-10-12T11:53:47-04:00</updated>
+    <title>Can Facebook and Twitter stop social media surveillance?</title>
+    <content type="html">  
+  &lt;img alt="" src="https://cdn0.vox-cdn.com/thumbor/OIO62qInVQwwRvHiBiZPFOwXA6U=/0x0:3500x2333/1310x873/cdn0.vox-cdn.com/uploads/chorus_image/image/51319597/542426724.0.jpg" /&gt;
+
+
+
+  &lt;p id="NJspzl"&gt;Yesterday, social media surveillance became a very real problem for Facebook and Twitter. &lt;a href="https://www.aclunc.org/blog/facebook-instagram-and-twitter-provided-data-access-surveillance-product-marketed-target"&gt;An ACLU report&lt;/a&gt; revealed a &lt;a href="https://theintercept.com/2016/04/14/in-undisclosed-cia-investments-social-media-mining-looms-large/"&gt;CIA-funded&lt;/a&gt; tool called Geofeedia was being used by police to track data from Facebook, Twitter, and Instagram to aid in investigations. Documents show Baltimore police used the tool, called Geofeedia, during protests after the death of Freddie Gray, even &lt;a href="http://www.theverge.com/2016/10/11/13243890/facebook-twitter-instagram-police-surveillance-geofeedia-api"&gt;feeding Instagram posts through a facial recognition system&lt;/a&gt; to find protestors with outstanding warrants.&lt;/p&gt;
+&lt;p id="lWJokr"&gt;Facebook and Twitter were quick to revoke Geofeedia’s access to social feeds — effectively shutting down the current version of the tool — but its broader implications are harder to dismiss. Facebook and Twitter can control direct access to their data, but they have much less control where the information goes. Now that police departments are looking to tweets and Instagrams for clues, stopping them may be harder than shutting down a single app.&lt;/p&gt;
+ 
+&lt;hr class="widget_boundry_marker hidden page_break"&gt;
+&lt;p&gt;&lt;q class="right"&gt;It's harder than shutting down a single app&lt;/q&gt;&lt;/p&gt;
+&lt;p id="5gmNzO"&gt;The center of the issue is how Geofeedia was getting the Facebook, Twitter, and Instagram posts it supplied to police. In each case, the company was drawing information directly from feeds supplied by the platforms: Facebook’s Topic Feed API, Instagram’s full API, and a feed supplied through &lt;a href="https://gnip.com/"&gt;Twitter’s social-data subsidiary GNIP&lt;/a&gt;. The feeds are meant to give developers direct, machine-friendly access to posts, making it easier to build software on top of the social networks. Typically, networks want developers building that software — it’s the same system that allows for third-party add-ons like VSCOCam and Tweetbot — but they control access with a Terms of Service and an API key that’s required to access the feeds.&lt;/p&gt;
+&lt;p id="IPw02W"&gt;After the ACLU report, Facebook and Twitter revoked those keys — but it’s worth considering how much that will set back similar tools in the future. Facebook and Twitter have complete control over their API keys, but both platforms have made it fairly easy to get one. Developers need to give a general description of the software they’re building and promise to abide by the Terms of Service, but there’s little enforcement and low-level terms of service violations are commonplace. Typically, that’s a good thing. The web was built on permissionless innovation, and heavy-handed enforcement efforts are often seen as bullying or arbitrary. But it also makes it hard for companies to ensure their data isn’t being used for anything controversial.&lt;/p&gt;
+&lt;p&gt;&lt;q class="left"&gt;Clients are easy to keep secret&lt;/q&gt;&lt;/p&gt;
+&lt;p id="u8Fwt4"&gt;In theory, the Terms of Service would provide a clear line between what’s allowed and what’s not, but that mechanism is also more complicated than it seems. The document works more like a political party platform than a constitution, and can be subject to abrupt changes as company strategy shifts and certain products get deprecated or &lt;a href="http://www.economist.com/blogs/babbage/2012/07/operating-systems-0"&gt;sherlocked&lt;/a&gt;. Facebook’s developer policy, for instance, includes strict language warning third-party data brokers and ad networks against exporting data. It’s a clear warning: if we catch you using the API to bypass our ad business, there’ll be trouble.&lt;/p&gt;
+&lt;p id="6eQf0S"&gt;Geofeedia’s infractions are more subtle. Nominally, the company was violating Facebook’s provisions against reselling data and Twitter’s provisions against investigating and surveilling users. But the rise of big data has created &lt;a href="http://www.social-alpha.com/"&gt;countless&lt;/a&gt; &lt;a href="http://simplymeasured.com/social-analytics/#sm.0001qza48dsuodbkxx026uxm8m3zz"&gt;startups&lt;/a&gt; &lt;a href="http://www.forbes.com/sites/teradata/2015/05/27/capitalize-on-social-media-with-big-data-analytics/#38b3eeadca3e"&gt;devoted&lt;/a&gt; to&lt;a href="http://www.ibmbigdatahub.com/blog/social-media-metrics-using-big-data-and-social-media-improve-retail-customer-experience"&gt; mining insights&lt;/a&gt; from social media streams. People use that data for all sorts of things — trading stocks, spotting trends, or identifying influencers. When people start to get arrested because of that data, there’s an obvious chilling effect, but the distinction between selling data to police rather than a hedge fund is hard to pin down. The problem is with the clients rather than the behavior itself — and clients are easy to keep secret.&lt;/p&gt;
+&lt;p id="XyyRUh"&gt;That ambiguity is a big part of why Geofeedia was able to stay on the platforms for so long. The company serves a wide range of clients — including "educational companies, cities, schools, sports teams, and the aviation sector," in the CEO’s words. Absent a public shaming, there was no reason to think law enforcement clients would be any different. A similar case played out on Twitter &lt;a href="http://www.wsj.com/articles/twitter-bars-intelligence-agencies-from-using-analytics-service-1462751682"&gt;earlier this year&lt;/a&gt;, when a company called Dataminr got in trouble for a contract selling Twitter analytics to the Department of Homeland Security. The company ultimately had to cancel the contract, faced with the prospect of losing access to Twitter’s data stream.&lt;/p&gt;
+&lt;p&gt;&lt;q class="center"&gt;If Pepsi can look for disgruntled Coke fans, why can’t police look for rioters and fugitives?&lt;/q&gt;&lt;/p&gt;
+&lt;p id="yOyLCE"&gt;If surveillance companies do lose official access, there’s always the possibility of scraping the data without Facebook or Twitter’s permission. It’s a hacky solution, slower and less stable than getting data directly, and companies routinely get sued for it. LinkedIn &lt;a href="https://techcrunch.com/2016/08/15/linkedin-sues-scrapers/"&gt;is currently suing&lt;/a&gt; a team of still-anonymous scrapers after detecting some strange patterns on its network, and Facebook has waged &lt;a href="https://en.wikipedia.org/wiki/Facebook,_Inc._v._Power_Ventures,_Inc."&gt;a number&lt;/a&gt; of &lt;a href="https://petewarden.com/2010/04/05/how-i-got-sued-by-facebook/"&gt;those battles&lt;/a&gt; over the years. That makes the tactic less appealing to contractors like Geofeedia, but if police departments or intelligence agencies conduct those scans directly, they might have a much easier time in court.&lt;/p&gt;
+&lt;p id="Fqfjhv"&gt;None of this will sound particularly encouraging to Geofeedia. Losing API access is still a huge blow, and it’s very hard to succeed as a social analytics business if Facebook and Twitter don’t want you to. Facebook and Twitter’s stance against law enforcement tracking really does make a difference, and will make it harder to build this kind of tool in the future. But it won’t make it impossible. There are plenty of less conspicuous ways to get at the same data, and as more of our lives move on to social media, it’s hard to believe police and intelligence agencies won’t exploit them.&lt;/p&gt;
+&lt;p id="YxrVx9"&gt;Social media has been a powerful tool for protest movements from Black Lives Matter to Occupy, but it’s also a powerful tool for tracking and containing them. Facebook and Twitter take measures to protect users from blowback and clearly see themselves on the empowering side of the equation — but their businesses are built on using this data for targeting. If Pepsi can use a tool to find disgruntled Coke fans, why can’t police use the same tool to look for rioters and fugitives? It’s an uncomfortable question for Facebook and Twitter, and the answer may not be up to them.&lt;/p&gt;
+
+</content>
+    <link rel="alternate" type="text/html" href="http://www.theverge.com/2016/10/12/13257080/police-surveillance-facebook-twitter-instagram-geofeedia"/>
+    <id>http://www.theverge.com/2016/10/12/13257080/police-surveillance-facebook-twitter-instagram-geofeedia</id>
+    <author>
+      <name>Russell Brandom</name>
+    </author>
+  </entry>
+  <entry>
+    <published>2016-10-12T11:49:22-04:00</published>
+    <updated>2016-10-12T11:49:22-04:00</updated>
+    <title>ZTE wants to ‘crowd source’ its next gadget</title>
+    <content type="html">  
+  &lt;img alt="" src="https://cdn0.vox-cdn.com/thumbor/az-SEIiQlKS-XYtGPLNbLEp0mjM=/0x0:2039x1359/1310x873/cdn0.vox-cdn.com/uploads/chorus_image/image/51319277/ZTEwm2_2040.0.0.jpg" /&gt;
+
+
+
+  &lt;p id="gN1CkM"&gt;ZTE&amp;nbsp;&lt;a href="http://www.projectcsx.info/"&gt;launched the final stage&lt;/a&gt; of its Project CSX contest today, where people, including you, can vote on the device you want to see next. How democratic! The company has some interesting suggestions, like an eye-tracking, self-adhesive phone that can be controlled by eye movement. It sticks to a wall or flat surface so users never have to touch it. There's also a waterproof VR diving mask that you can wear in a pool. You can see ocean life at the bottom of the water! This sounds hazardous to me, but I guess we'll never know until we try. You can also vote for a "powerglove" that controls  your fingers to help you learn a new skill. It's not the &lt;i&gt;worst idea&lt;/i&gt;. The contest goes until October 19th, and the winning device will be unveiled at CES next year.&lt;/p&gt;
+
+</content>
+    <link rel="alternate" type="text/html" href="http://www.theverge.com/circuitbreaker/2016/10/12/13256408/zte-contest-device-vr-mobile"/>
+    <id>http://www.theverge.com/circuitbreaker/2016/10/12/13256408/zte-contest-device-vr-mobile</id>
+    <author>
+      <name>Ashley Carman</name>
+    </author>
+  </entry>
+  <entry>
+    <published>2016-10-12T11:32:08-04:00</published>
+    <updated>2016-10-12T11:32:08-04:00</updated>
+    <title>How to buy a PlayStation VR</title>
+    <content type="html">  
+  &lt;img alt="" src="https://cdn0.vox-cdn.com/thumbor/CTIbEFZmyYitJ7JI9ChPWvTRB74=/0x0:2040x1360/1310x873/cdn0.vox-cdn.com/uploads/chorus_image/image/51319563/playstation-vr-james-bareham.0.jpg" /&gt;
+
+
+
+  &lt;p id="6Dy6Xo"&gt;Do you want to &lt;a href="http://www.theverge.com/2016/10/10/13231666/sony-playstation-vr-setup-video"&gt;replace all your worldly possessions&lt;/a&gt; with a virtual reality headset, specifically one made by Sony for the PlayStation 4 gaming console? October 13th is your lucky day — that’s when the PlayStation VR ships and hits store shelves.&lt;/p&gt;
+&lt;p id="kKkPcl"&gt;To be clear, there are reasons to hold off on PSVR, whether that’s for a few months or a whole generation of hardware. Sony promised 50 games by the end of the year, but only around 30 of these are out at launch. The Move motion controllers are distinctly subpar. Sony has promised that the upcoming PlayStation 4 Pro will give PSVR a performance bump, but &lt;a href="http://www.theverge.com/2016/9/7/12748316/sony-ps4-pro-announced-price-specs-release-date"&gt;it’s not coming out &lt;/a&gt;until November 10th. VR in general is an unproven, experimental format. And even if it’s cheaper than the Oculus Rift or HTC Vive, the PlayStation VR still costs several hundred dollars.&lt;/p&gt;
+&lt;p id="uEoYYj"&gt;But as we noted &lt;a href="http://www.theverge.com/2016/10/5/13167954/playstation-vr-review-ps4-psvr-virtual-reality-headset-controllers"&gt;in our review&lt;/a&gt;, the headset also has a lot of strong points: ease of use, incredibly comfortable hardware, and &lt;a href="http://www.theverge.com/2016/10/5/13164416/playstation-vr-sony-launch-games-review"&gt;some good launch games&lt;/a&gt;. It hits a sweet spot of accessibility and performance, and is probably the best option right now for mass-market VR gaming. So if you want to get a PSVR, and you didn’t preorder earlier this year, here’s how to buy one.&lt;/p&gt;
+  &lt;figure class="e-image"&gt;
+        &lt;img alt=" " src="https://cdn0.vox-cdn.com/thumbor/sDfU-jxrUstGyO-Az81KNHuMkfU=/400x0/filters:no_upscale()/cdn0.vox-cdn.com/uploads/chorus_asset/file/7254633/ps-vr-tutorial.0.gif"&gt;
+  &lt;/figure&gt;
+
+&lt;h3 id="vHZuCb"&gt;Bundle options&lt;/h3&gt;
+&lt;p id="jEbut2"&gt;First of all, which one do you want to buy? In our review, we suggested the $499 launch bundle, which comes with the headset, its accompanying video and audio processing box, a PlayStation Camera, and two PlayStation Move controllers. It also includes a copy of &lt;em&gt;PlayStation Worlds&lt;/em&gt;, an otherwise $39.99 collection of minigames that contains one of our favorite experiences, "The London Heist."&lt;/p&gt;
+&lt;p id="Q3P6tI"&gt;If you already have the camera and motion controllers, you can go for the $399 "core" bundle, which only includes the headset and processing box. Both bundles come with &lt;a href="http://www.theverge.com/2016/9/6/12823126/sony-playstation-vr-demo-disc-driveclub-rigs"&gt;an eight-game demo disc&lt;/a&gt;, which has samples of titles like &lt;em&gt;Battlezone&lt;/em&gt; and &lt;em&gt;Driveclub VR.&lt;/em&gt;&lt;/p&gt;
+&lt;aside id="LkIfl3"&gt;&lt;q&gt;Make sure you have a PlayStation&lt;/q&gt;&lt;/aside&gt;
+&lt;p id="tCvodm"&gt;And if you &lt;em&gt;really &lt;/em&gt;want to, you can save a little money by just buying the core bundle and camera separately, eschewing Move. While the camera is required just to get PSVR working, a lot of its upcoming titles can be played with the PlayStation 4’s standard DualShock controller, including some of the ones that have people most excited — like &lt;em&gt;Resident Evil 7&lt;/em&gt;. The camera costs between $40 and $60 depending on where you buy it, which knocks a little off the total cost. Just keep in mind that if you want to add the Move controllers later, the list price is around $100 for a pair.&lt;/p&gt;
+&lt;p id="Rewuj8"&gt;It should go without saying that you also need a PlayStation 4 or PlayStation 4 Slim.&lt;/p&gt;
+&lt;h3 id="uRWMkT"&gt;GameStop&lt;/h3&gt;
+&lt;p id="ktXpwm"&gt;If you want to pick up a PSVR in person, GameStop is opening around 1,600 of its roughly 4,400 US stores at 9PM ET tonight, taking orders for a few hours, and handing the units out at 12:01AM ET. It’s selling both bundle options, but each store will have "limited quantities" of headsets. You can &lt;a href="http://www.gamestop.com/PSVRLocator"&gt;find a local store here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id="Q4D8Xh"&gt;Best Buy&lt;/h3&gt;
+&lt;p id="a71t6Y"&gt;&lt;a href="http://www.bestbuy.com/site/clp/playstation-vr/pcmcat748301781160.c?id=pcmcat748301781160"&gt;Best Buy is also opening&lt;/a&gt; 350 of its roughly 1,400 stores for the launch — customers can get in at 12:01AM ET nationwide, right at the release time. It’s not totally clear how many headsets will be on hand, but the company promises limited quantities will be available the next day, and online sales will start up after launch.&lt;/p&gt;
+&lt;h3 id="7RKgXp"&gt;Amazon&lt;/h3&gt;
+&lt;p id="rYvTBW"&gt;Amazon &lt;a href="https://www.amazon.com/PlayStation-VR-Launch-Bundle-4/dp/B00SBXBQDS/ref=sr_1_1?s=videogames&amp;amp;ie=UTF8&amp;amp;qid=1476278110&amp;amp;sr=1-1&amp;amp;keywords=playstation+vr"&gt;lists the launch bundle&lt;/a&gt; on its site, but says it’s sold out its allocation of them already, and the best you can do is sign up for email updates in case it comes back in stock. You’ll have better luck if you’re buying &lt;a href="https://www.amazon.com/PlayStation-4-Camera/dp/B01LW1OM63/ref=sr_1_11?s=videogames&amp;amp;ie=UTF8&amp;amp;qid=1476278269&amp;amp;sr=1-11&amp;amp;keywords=playstation+vr"&gt;the camera&lt;/a&gt;, &lt;a href="https://www.amazon.com/PlayStation-Move-Motion-Controllers-Pack-4/dp/B01LD7MR2C/ref=sr_1_5?s=videogames&amp;amp;ie=UTF8&amp;amp;qid=1476278293&amp;amp;sr=1-5&amp;amp;keywords=playstation+vr"&gt;the Move&lt;/a&gt;, or various games.&lt;/p&gt;
+&lt;h3 id="OiDNTo"&gt;Other retailers&lt;/h3&gt;
+&lt;p id="UqFKum"&gt;&lt;a href="https://www.walmart.com/ip/PlayStation-VR-PS4-PlayStation-4/38662107"&gt;Walmart&lt;/a&gt;, &lt;a href="http://www.toysrus.com/product/index.jsp?productId=105054336&amp;amp;gclid=CKzFnojA1c8CFQNehgodY7EEtw&amp;amp;camp=PLAPPCG-_-PID24564322:TRUS&amp;amp;cagpspn=plat_24564322&amp;amp;eESource=CAPLA_DF:105054336:TRUS"&gt;Toys R Us&lt;/a&gt;, &lt;a href="http://www.target.com/p/playstation-vr-launch-bundle/-/A-50985388"&gt;Target&lt;/a&gt;, and other stores all have PlayStation VR listed online, although they’re not taking preorders. Toys R Us' product page notes that it’s being sold in stores, and Walmart confirmed to &lt;i&gt;The Verge&lt;/i&gt; that PlayStation VR will be appearing in "more than 2,000 stores." We’ve emailed Target for more details about in-store availability. &lt;a style="background-color: #ffffff;" href="http://www.newegg.com/Product/Product.aspx?Item=N82E16879261644"&gt;Newegg&lt;/a&gt; also has the PSVR listed, but it’s predictably out of stock.&lt;/p&gt;
+&lt;h3 id="bS2ltg"&gt;Sony Square, NYC&lt;/h3&gt;
+&lt;p id="6OdNys"&gt;If you happen to be in New York, Sony is having an official midnight PSVR launch at its New York showroom,&lt;a href="http://www.sony.com/square-nyc/"&gt; Sony Square&lt;/a&gt;. Attendees can begin lining up at 7PM ET, and Sony Interactive Entertainment America president Shawn Layden will sell the first one at 12:01AM. Sony says it will have 300 PlayStation VR units at the event, along with games and peripherals. We’re not sure how great an option this is for buying a headset, but it is a thing that exists, and that some people will probably want to attend.&lt;/p&gt;
+&lt;h3 id="W29iKd"&gt;Outside the US&lt;/h3&gt;
+&lt;p id="LFRwBL"&gt;We’re focusing on US options here, but based on Sony’s past statements, PlayStation VR will also be on sale in Canada, Japan, the UK, Ireland, France, Germany, Austria, Switzerland, Spain, Portugal, Italy, Belgium, Netherlands, Luxembourg, Australia, New Zealand, Poland, UAE, Saudi Arabia, Denmark, Sweden, Norway, Finland, Russia, and the Czech Republic. You can check local retail stores for pricing and availability.&lt;/p&gt;
+&lt;p&gt;&lt;i&gt;&lt;b&gt;Update 1:45PM ET: &lt;/b&gt;Added statement from Walmart.&lt;/i&gt;&lt;/p&gt;
+
+</content>
+    <link rel="alternate" type="text/html" href="http://www.theverge.com/2016/10/12/13255384/playstation-vr-launch-availability-where-how-to-buy"/>
+    <id>http://www.theverge.com/2016/10/12/13255384/playstation-vr-launch-availability-where-how-to-buy</id>
+    <author>
+      <name>Adi Robertson</name>
+    </author>
+  </entry>
+  <entry>
+    <published>2016-10-12T11:25:48-04:00</published>
+    <updated>2016-10-12T11:25:48-04:00</updated>
+    <title>This virus steals DNA from black widow spider venom to attack its prey</title>
+    <content type="html">  
+  &lt;img alt="" src="https://cdn0.vox-cdn.com/thumbor/xjlgDXFWSsH8fFrfUY_qVbiHh9I=/1x0:639x425/1310x873/cdn0.vox-cdn.com/uploads/chorus_image/image/51319481/7619861396_737c40b50e_z.0.jpg" /&gt;
+
+
+
+  &lt;p id="Hn0b2O"&gt;A type of virus that only infects bacteria &lt;a href="https://www.newscientist.com/article/2108671-virus-steals-black-widow-poison-gene-to-help-it-attack"&gt;has stolen the DNA of black widow spider&lt;/a&gt;&lt;a href="https://www.newscientist.com/article/2108671-virus-steals-black-widow-poison-gene-to-help-it-attack"&gt;s&lt;/a&gt; to attack its prey. And just not any DNA, but the genes that code for spider venom. This is the first time we’ve seen a virus take genes from such a complex organism.&lt;/p&gt;
+&lt;p id="IpOixc"&gt;The virus, named WO, attacks &lt;em&gt;Wolbachia, &lt;/em&gt;a bacteria that lives inside spiders and other insects. The virus’s job isn’t easy: WO has to infect the &lt;em&gt;Wolbachia&lt;/em&gt; bacteria, break out of the bacteria, and finally break out of the insect host to find its way into &lt;em&gt;another&lt;/em&gt; insect, and then into another &lt;em&gt;Wolbachia&lt;/em&gt;, and so on.&lt;/p&gt;
+&lt;p id="BJK0PP"&gt;To do this, WO stole a gene called latrotoxin that codes for black spider poison, according to &lt;a href="http://bordensteinlab.vanderbilt.edu/"&gt;Sarah and Seth Bordenstein&lt;/a&gt;, Vanderbilt University researchers who sequenced the WO genome and presented the results in a &lt;em&gt;&lt;a href="http://www.nature.com/articles/ncomms13155"&gt;Nature &lt;/a&gt;&lt;/em&gt;&lt;a href="http://www.nature.com/articles/ncomms13155"&gt;study&lt;/a&gt;. Latrotoxin pokes holes in cell membranes, and WO probably uses latrotoxin to punch holes in its targets to make it easier to get out. Most likely, WO picks up the spider DNA after breaking out of a &lt;em&gt;Wolbachia &lt;/em&gt;cell into the animal cell.&lt;/p&gt;
+&lt;p id="MVi4EH"&gt;In almost all cases, viruses just steal genes from bacteria. Spiders are more complicated organisms than bacteria, so it’s a much bigger deal that WO was able to take those genes. "There hasn’t been another case of a latrotoxin being found outside of spiders," Seth &lt;a href="http://www.theatlantic.com/science/archive/2016/10/the-virus-with-spider-dna/503585/"&gt;told &lt;/a&gt;&lt;em&gt;&lt;a href="http://www.theatlantic.com/science/archive/2016/10/the-virus-with-spider-dna/503585/"&gt;The Atlantic&lt;/a&gt;&lt;/em&gt;.&lt;/p&gt;
+&lt;p id="a0OZtF"&gt; &lt;/p&gt;
+&lt;p id="4iGXKL"&gt; &lt;/p&gt;
+
+</content>
+    <link rel="alternate" type="text/html" href="http://www.theverge.com/2016/10/12/13256190/wo-virus-wolbachia-black-widow-spider-venom-dna"/>
+    <id>http://www.theverge.com/2016/10/12/13256190/wo-virus-wolbachia-black-widow-spider-venom-dna</id>
+    <author>
+      <name>Angela Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <published>2016-10-12T10:34:22-04:00</published>
+    <updated>2016-10-12T10:34:22-04:00</updated>
+    <title>How YouTube character Miranda Sings made the move to Netflix’s Haters Back Off</title>
+    <content type="html">  
+  &lt;img alt="" src="https://cdn0.vox-cdn.com/thumbor/21CnAifnRghrhhqVMGPKpuax4FM=/4x0:3604x2400/1310x873/cdn0.vox-cdn.com/uploads/chorus_image/image/51318801/Haters_101_Unit_00044_R.0.jpg" /&gt;
+
+
+
+  &lt;p id="mx5COC"&gt;Colleen Ballinger created the character of Miranda Sings eight years ago as a parody of the girls she studied acting and voice with — the ones who took confidence in their own talent to a rude extreme. Miranda is egotistical, aggressively conservative, wildly antagonistic, and constantly off-pitch. She’s obsessed with fame, and one of her signature catchphrases is “haters make me famous.” That’s true in the most literal sense, because the early Miranda videos went viral mostly from comments and shares from people who misinterpreted the horrible singing, loud sermons about “sinners,” and absurd lipstick line as sincere. The character is a Roseanne Roseannadanna for modern times, lovingly parodying our generation’s tackiest obsessions while still reserving affection for creativity, imagination, and the simple bravery of being a weird girl in public. &lt;/p&gt;
+&lt;p id="kQCJu7"&gt;The haters propelled Miranda to more than 7 million subscribers on YouTube, touring gigs as a one-woman comedy show, and appearances on &lt;em&gt;Comedians in Cars Getting Coffee &lt;/em&gt;and &lt;em&gt;The Tonight Show with Jimmy Fallon&lt;/em&gt;. Now Colleen is tackling what Miranda calls her “2016 charity work” — the scripted Netflix series &lt;em&gt;Haters Back Off&lt;/em&gt;. It’s an offbeat, often dark portrait of a Midwestern family with a “superstar” at its center, and Ballinger says it's based on her own experiences with YouTube, viral fame, and the toll the internet can take on IRL relationships.I spoke to her about making the jump from YouTube to Netflix, what she hopes new audiences get from the show, and of course, the haters. &lt;/p&gt;
+&lt;div id="UP1OSO"&gt;&lt;div&gt;&lt;div style="left: 0px; width: 100%; height: 0px; position: relative; padding-bottom: 56.2493%;"&gt;&lt;iframe src="https://www.youtube.com/embed/bDDAClMibkM?wmode=transparent&amp;amp;rel=0&amp;amp;autohide=1&amp;amp;showinfo=0&amp;amp;enablejsapi=1" frameborder="0" allowfullscreen="" style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute;"&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p id="hB1XQj"&gt;&lt;em&gt;This interview has been edited for clarity and length&lt;/em&gt;&lt;em&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p id="q6964Z"&gt;&lt;strong&gt;Yo&lt;/strong&gt;&lt;strong&gt;u’re the first YouTube personality to transfer to a scripted show&lt;/strong&gt;&lt;strong&gt;, i&lt;/strong&gt;&lt;strong&gt;s that right? &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="gPPmL1"&gt;Yes, into a scripted show, that’s correct. &lt;/p&gt;
+&lt;p id="Rc1nFm"&gt;&lt;strong&gt;What was that process like? How did you make that happen? &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="RLrN6R"&gt;When I first started doing the character, it was just me all by myself — writing and producing and doing everything alone. Then I paired up with my brother, Christopher, who’s also my co-creator / co-producer / co-writer on &lt;em&gt;Haters Back Off&lt;/em&gt;&lt;em&gt;.&lt;/em&gt; Six or seven years ago, we started developing the idea of Miranda’s world. We were actually writing a movie, but then we quickly realized we had so much more story to tell that we wanted to make it into a TV show. We had never made a TV show before, we didn’t know what the steps were, but we knew we had a wonderful story that we wanted to share with the world. So we paired up with some incredible writers, showrunners, and producers and found people who were passionate about the show and about the story we wanted to tell. We started pitching it to different networks and Netflix was the best partner for us. Luckily, they believed in our show enough that they wanted to pick it up. &lt;/p&gt;
+&lt;p id="IoAytZ"&gt;&lt;strong&gt;What about Netflix makes it the best place for &lt;/strong&gt;&lt;em&gt;&lt;strong&gt;Haters Back Off? &lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p id="xEvglp"&gt;Miranda was created on the internet. The only reason I have any success at all in my career is because of the internet. So I knew I wanted to find a network that was tech-savvy and had a lot of success online. It just felt like it would be the perfect marriage for what I’ve already done, and for transitioning into the television world. I knew I wanted to find somewhere where it would be easy for my current fan base to carry over and watch this show. I love every Netflix original series, because they’re so creative and different, and they really believe in trusting the creators of these shows, and in their vision and passion. That was really appealing to me. So was the fact that they release all the episodes at once, and you can binge-watch. I know that for my current audience, that’s really important to them — to sit down and watch the whole thing, and not have to wait until a week for the next episode. &lt;/p&gt;
+  &lt;figure class="e-image"&gt;
+        &lt;img alt=" " src="https://cdn0.vox-cdn.com/thumbor/QiM2loGBK7aRDvMsBi3aHQJFXYM=/400x0/filters:no_upscale()/cdn0.vox-cdn.com/uploads/chorus_asset/file/7263379/Haters_104_Unit_00295_R.jpg"&gt;
+      &lt;cite&gt;Carol Segal/Netflix&lt;/cite&gt;
+  &lt;/figure&gt;
+&lt;p id="Ze0eea"&gt;&lt;strong&gt;You’ve been living your life as Miranda for eight years now. What was it like opening that up to other people&lt;/strong&gt;&lt;strong&gt;,&lt;/strong&gt;&lt;strong&gt; to make this bigger collaborative project? &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="5Jd5AY"&gt;It was definitely different for me. It was a totally new experience, to open up the Miranda world, and what I do, to so many other creators. We have such a wonderful team of writers on the show, but I’ve always done everything by myself. I’ve always written all my own material, and edited and produced it, and promoted it all alone. So to work with a whole team of people was was really daunting for me, and terrifying. But once I started doing it, I realized how incredible it was, and it opened up this world in a way I would never have been able to do by myself. I learned so much about the character and the world through other people. &lt;/p&gt;
+&lt;p id="6MaUcl"&gt;&lt;strong&gt;When you were expanding Miranda’s world from just her bedroom on YouTube to a full life and town, what &lt;/strong&gt;&lt;strong&gt;d&lt;/strong&gt;&lt;strong&gt;i&lt;/strong&gt;&lt;strong&gt;d&lt;/strong&gt;&lt;strong&gt; you start penciling in first? &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="jjJ2it"&gt;The first thing we really developed was the characters — Uncle Jim and Bethany, in particular. We had to figure out what their relationship was to Miranda, and how they treated each other, and what their passions were, and what their goals were. That was the most important thing to us. Once we had that, we really started diving into the world of Miranda — the house, the town she lives in, and that kind of stuff. Casting was an incredible experience, because I felt like I knew these characters so well after developing them for seven or eight years. To see them come to life in front of my eyes was such a surreal experience. It made me emotional so many different times. They surpassed my expectations by miles — the actors we have on the show are just incredible. &lt;/p&gt;
+&lt;div id="jDYlqS"&gt;
+&lt;blockquote class="twitter-tweet" align="center"&gt;
+&lt;p lang="en" dir="ltr"&gt;never froget. you are amazing and great no matter what anyone says. unless i dont like u.&lt;/p&gt;— Miranda Sings (@MirandaSings) &lt;a href="https://twitter.com/MirandaSings/status/785257324386672640"&gt;October 9, 2016&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;p id="5JItZK"&gt;&lt;strong&gt;&lt;em&gt;Haters Back Off&lt;/em&gt;&lt;/strong&gt;&lt;em&gt;&lt;strong&gt; &lt;/strong&gt;&lt;/em&gt;&lt;strong&gt;has a very classic suburban setting. It’s interesting that Miranda grew up in suburbia, because she was born on YouTube&lt;/strong&gt;&lt;strong&gt;,&lt;/strong&gt;&lt;strong&gt; where you&lt;/strong&gt;&lt;strong&gt; usually&lt;/strong&gt;&lt;strong&gt; see more authentic American homes — much more often than you do on traditional TV. &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="0RXMhF"&gt;The house and town Miranda grew up in are very much based on how I was raised, and my hometown. A lot of Miranda’s personality traits are based on me and my family members, and funny stories from our childhood. We wanted to make sure we stayed true to what we knew, because for us, the best way to write is to stay as authentic as possible.&lt;/p&gt;
+&lt;p id="geFhFL"&gt;It wouldn’t make sense for Miranda to be in a perfect cookie-cutter home. I knew she grew up in a crazy house full of clutter, and lived in a bubble, and was homeschooled. It wouldn’t be realistic for Miranda to live in a quaint, beautiful place. We wanted it to feel lived-in and relatable. I think 70 percent of homes in America look pretty much like Miranda’s house. People don’t have time to clean it up and make it look perfect and make everything match. They don’t have the money to make it look amazing or have time to make amazing home-cooked meals. That’s just life, that’s how it is. I wanted it to feel real. It was really, really important to me that the set reflected how life really is for most people. Especially for this family. &lt;strong&gt; &lt;/strong&gt;&lt;/p&gt;
+&lt;aside id="N0rCKw"&gt;&lt;q&gt;“It wouldn’t be realistic for miranda to live in a quaint, beautiful place.”&lt;/q&gt;&lt;/aside&gt;&lt;p id="bwnA2D"&gt;&lt;strong&gt;The series starts with Miranda before she gets famous, what made you choose that as the starting point? &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="LMOo7H"&gt;When I started creating a show, I always knew how I wanted the show to start and how I wanted it to end. Before we had created any characters, any plot lines, anything, I woke up one morning with this vision of starting with Miranda having just uploaded her first video. The process of getting her first viral video, and what that’s like. It was the only thing I &lt;em&gt;knew&lt;/em&gt; I wanted to do.&lt;/p&gt;
+&lt;p id="o9tB5g"&gt;I just think it’s fascinating. Nobody knows what goes on behind the scenes with a YouTuber. There are a lot of popular YouTubers these days, and all you guys see is us in our bedrooms for five minutes a day. To me, it’s interesting to figure out what goes on before they upload the video and after, and what they do while they’re filming it. That’s a side of YouTube that not many people have seen, and I thought it would be fun to create a world where I get to show my viewers the other side of the internet. &lt;/p&gt;
+  &lt;figure class="e-image"&gt;
+        &lt;img alt=" " src="https://cdn0.vox-cdn.com/thumbor/WTUfid_Htgem42u5E2jxxfkwgi4=/400x0/filters:no_upscale()/cdn0.vox-cdn.com/uploads/chorus_asset/file/7263381/Haters_101_Unit_00585_R.jpeg"&gt;
+      &lt;cite&gt;Carol Segal/Netflix&lt;/cite&gt;
+  &lt;/figure&gt;
+&lt;p id="sJNv6F"&gt;&lt;strong&gt;Does Miranda consider herself an artist&lt;/strong&gt;&lt;strong&gt;,&lt;/strong&gt;&lt;strong&gt; or is she just looking for viral fame? &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="dH9PDM"&gt;Miranda definitely considers herself an artist. She’s extremely talented, the most talented person in the world! She’s just been praised her whole life by her uncle and her mother, and she’s so sheltered living in her little bubble. She doesn’t know what is widely known as fame or talent. She believes in her head that she’s a famous person. In the beginning, her ambition to be famous is because she believes she’s super-talented and she wants everyone to know, she wants everyone to see it. Throughout the season and her life, she becomes more obsessed with the idea of fame, as opposed to letting everyone see her talent. And that’s where she gets into trouble. &lt;/p&gt;
+&lt;p id="5tBR4Z"&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;strong&gt; lot of Miranda’s behavior toward her family could be construed as abusive, especially toward her mom. Is there something to be gleaned from that, maybe for teenagers who get really invested in viral fame? &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="J6voae"&gt;I definitely think we’re living in a world or generation where we need constant gratification and adoration with Instagram and likes, and we base everything on attention. It’s changing how people treat each other, and that’s really shaped Miranda in this season of &lt;em&gt;Haters Back Off. &lt;/em&gt;She becomes so obsessed with fame and adoration that she starts to treat the people closest to her in a bad way. That’s something that would be good for my current audience, which is a little younger, to see and recognize. &lt;/p&gt;
+&lt;p id="mwFR5s"&gt;When I was growing up, I definitely had moments of treating my parents wrong, and I see on Twitter from a lot of my fans, they get annoyed with their parents, when really their parents are just trying to help or teach them. I think it will be good for people to see Miranda having a bratty attitude toward her family, and the consequences she has to face because of the way she’s treating everyone. All those stories in &lt;em&gt;Haters Back Off &lt;/em&gt;are told from real-life events that have happened to me, to people in my family. The way Miranda treats her family is not stuff I completely made up, it’s stuff I’ve seen. I’ve seen kids treat their parents this way and have this “It’s all about me” attitude. It’s really detrimental to family and their relationships, so I’m really hoping people can learn something from Miranda and how she treats people.&lt;/p&gt;
+&lt;div id="lY27qg"&gt;&lt;div&gt;&lt;div style="left: 0px; width: 100%; height: 0px; position: relative; padding-bottom: 56.2493%;"&gt;&lt;iframe src="https://www.youtube.com/embed/kKpo0v0wIbE?wmode=transparent&amp;amp;rel=0&amp;amp;autohide=1&amp;amp;showinfo=0&amp;amp;enablejsapi=1" frameborder="0" allowfullscreen="" style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute;"&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p id="EOZWj6"&gt;&lt;strong&gt;On the flip side, &lt;/strong&gt;&lt;strong&gt;can people learn anything&lt;/strong&gt;&lt;strong&gt; positive things from Miranda? Is she a good role model in any way? &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="YDyAiX"&gt;I think the most inspiring thing about Miranda is how confident she is, regardless of what anyone says to her. We’re living in a world where you’re praised for being beautiful and perfect all the time, especially as a woman. We’re taught to be perfect and pretty and talk a certain way and act a certain way, and Miranda defies all those rules. She dresses how she wants to dress, she looks how she wants to look, she acts how she wants to act. I’ve received thousands of letters from kids who are a little different and a little weird, and they thank me for teaching them to be confident in who they are. That’s a great lesson Miranda teaches everyone. &lt;/p&gt;
+&lt;aside id="BCA5bl"&gt;&lt;q&gt;“‘haters back off’... has become sort of an anthem”&lt;/q&gt;&lt;/aside&gt;&lt;p id="XnDZgc"&gt;“Haters back off” is something I started saying as a joke when I first created the character, but it’s actually become an anthem for people all over the world who watch my videos. They’ve learned to say “haters back off” to people who are bullying them and making them feel less than what they are. Even though the character started off as a complete joke, she’s become this inspirational girl for people to look up to in the way that she’s confident and she doesn’t let anyone tear her down. &lt;/p&gt;
+&lt;p id="D35rPX"&gt;&lt;strong&gt;Will it be strange&lt;/strong&gt;&lt;strong&gt; not to have a comments section&lt;/strong&gt;&lt;strong&gt;,&lt;/strong&gt;&lt;strong&gt; or a direct way for fans to interact with each episode? How do you think you’ll work around that? &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="ahP4Cf"&gt;It’s definitely different to not have comments on something I’ve created. My entire career has been, you post something online and you immediately get a response on the comments, or Twitter, or Instagram. People will tell me exactly what they like and what they don’t like, and what I should change. That has been a big reason for my success. I have someone constantly telling me what I can do better to find more success in the future. That’s been a really wonderful tool for me. &lt;/p&gt;
+&lt;p id="KTT6IF"&gt;So it’s going to be different to not have a comments section on Netflix, and not know what people are thinking about the show. But I think it might be refreshing. It’s totally different, and I’m not afraid of change. I think it’ll be a really fun way to create. And I still have Twitter and Instagram, so I know my true fans will still tell me what they think. I’ll still get some sort of feedback. It’s a little daunting, a little scary, but I think it’ll be good. &lt;/p&gt;
+  &lt;figure class="e-image"&gt;
+        &lt;img alt=" " src="https://cdn0.vox-cdn.com/thumbor/q3TvQ2VAFvTLjVRyVTvm4e-CqSo=/400x0/filters:no_upscale()/cdn0.vox-cdn.com/uploads/chorus_asset/file/7263383/Haters_101_Unit_00398_R2.jpg"&gt;
+      &lt;cite&gt;Carol Segal/Netflix&lt;/cite&gt;
+  &lt;/figure&gt;
+&lt;p id="9o3KfI"&gt;&lt;strong&gt;Obviously your fans, who are mostly young people, will follow the show to Netflix&lt;/strong&gt;&lt;strong&gt;.&lt;/strong&gt;&lt;strong&gt; &lt;/strong&gt;&lt;strong&gt;B&lt;/strong&gt;&lt;strong&gt;ut this platform opens up a whole new audience base of people who might &lt;/strong&gt;&lt;strong&gt;have &lt;/strong&gt;&lt;strong&gt;never heard of you. How do you think “grown-ups” will react to the show&lt;/strong&gt;&lt;strong&gt;? W&lt;/strong&gt;&lt;strong&gt;hat do you hope they get from it? &lt;/strong&gt;&lt;/p&gt;
+&lt;p id="YV8dC8"&gt;When I created this show, I promised myself I would make something that I was proud of and that I would want to watch. On YouTube, I’ve always catered my videos to what the viewers want to see. Whatever the comments are telling me they want to watch, whatever the trends are online, I’ve always catered my content to what’s popular on the internet. &lt;/p&gt;
+&lt;p id="RbWH8L"&gt;With this show, I’m making it the way I want to, and trying to create something that would be watchable by anybody. I think people will like it no matter what age they are… I’m hoping. I really enjoy it, and I’m 29 years old. The mother character, I think, is very relatable for moms all around the world struggling with the same things — a daughter who is problematic and egotistical and not nice to her. There are so many different things that are relatable in the show. &lt;/p&gt;
+&lt;p id="Hxc7uh"&gt;I’ve been working on &lt;em&gt;Haters Back Off&lt;/em&gt; for so many years that I’m just ready for it to be out there. I’m excited for this new adventure, and this new chapter in the life of Miranda. I’ll always be on YouTube, I’ll always have that, but I’m so excited to branch out into something different and new. &lt;/p&gt;
+
+</content>
+    <link rel="alternate" type="text/html" href="http://www.theverge.com/2016/10/12/13249098/miranda-sings-haters-back-off-netflix-youtube-interview"/>
+    <id>http://www.theverge.com/2016/10/12/13249098/miranda-sings-haters-back-off-netflix-youtube-interview</id>
+    <author>
+      <name>Kaitlyn Tiffany</name>
+    </author>
+  </entry>
+</feed>

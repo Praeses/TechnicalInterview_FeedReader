@@ -1,0 +1,67 @@
+﻿@using FeedReader.Models;
+
+@model RssItem
+
+    <style>
+
+        .rssItemHolder {
+            white-space: nowrap;
+            overflow: hidden;
+            margin: 10px;
+        }
+
+        .rssItemHolder > :first-child {
+            float: left;
+            display: inline-block;
+        }
+
+        .rssItemHolder > * {
+            display: block;
+        }
+
+        .rssItemMainImage {
+            max-height:100px; 
+            margin-right: 5px;
+        }
+    
+        .rssItemTextHolder {
+            white-space: normal
+        }   
+
+        .rssItemTitle a{
+            color: black;
+            font-size: 1.5em;
+            text-decoration: underline;
+        }
+
+        .rssItemDate {
+            color: grey;
+            font-size: .9em;
+        }
+
+        .viewFeedLink {
+            font-size: smaller;
+        }
+    </style>
+<div class="rssItemHolder">
+    <img class="rssItemMainImage" src="@Html.ValueFor(modelItem => modelItem.ImageUrl)" />
+    <div class="rssItemTextHolder">
+        <span class="rssItemTitle"><a href="@Html.ValueFor(modelItem => modelItem.Link)" target="_blank">@Html.DisplayFor(modelItem => modelItem.Title)</a></span>
+        <br />
+        <div class="feedLinks">
+            @{
+                var url = Uri.EscapeDataString(Model.Channel.FeedUrl);
+            }
+            <a href="ViewFeed?feedUrl=@Html.ValueFor(a => url)">View Feed</a>
+        </div>
+        <span class="rssItemDate">@Model.PubDate.ToLocalTime().ToString("g")</span><br />
+        <p>
+        @{
+            string scrubbed = FeedReader.Utils.FeedReaderUtils.ScrubHtml(Model.Description);
+            @Html.DisplayFor(a => scrubbed);
+        }
+        </p>
+        
+        @*@Html.Raw(item.Description)*@
+    </div>
+</div>

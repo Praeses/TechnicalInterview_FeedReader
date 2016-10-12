@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "ListAllFeeds";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using FeedReader.Models;
+
+@model ICollection<RssChannel>
+<style>
+    #channelListHolder {
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding-top: 5px;
+    }
+     #channelListHolder a{
+        color: black;
+        text-decoration: underline;
+    }
+
+    .unsubscribeLink {
+        display: none;
+        padding-left: 5px;
+        cursor: pointer;
+    }
+
+    #channelListHolder li {
+        list-style: none;
+    }
+
+    #returnLinkHolder{
+        margin-left: -10px;
+    }
+</style>
+
+@section scripts {
+<script>
+    $(function () {
+        $('li').hover(function () {
+            $(this).find('.unsubscribeLink').show();
+        }, function () {
+            $(this).find('.unsubscribeLink').hide();
+        });
+    });
+</script>
+}
+<br />
+<div id="returnLinkHolder">@Html.ActionLink("Return To Feed List", "ListAllItems", new { refreshFeed = "false" })</div>
+<ul id="channelListHolder">
+    @foreach (RssChannel channel in Model)
+    {
+
+         var url = Uri.EscapeDataString(channel.FeedUrl);
+        <li><a href="ViewFeed?feedUrl=@Html.ValueFor(a=> url)">@Html.DisplayFor(a => channel.Title)</a><a class="unsubscribeLink" title="Unsubscribe" href="@Url.Action("RemoveSubscription", "Rss", new { rssChannelId = channel.RssChannelId })"><img src="@Url.Content("~/Content/Images/unsubscribe.png")" /></a></li>
+    }
+</ul>
+
