@@ -45,6 +45,7 @@ namespace FeedReader.Providers
 
         public override string ReadString()
         {
+            Debug.WriteLine("Read using custom syndication reader");
             string dateVal = base.ReadString();
 
             try

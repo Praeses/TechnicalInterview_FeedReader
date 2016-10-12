@@ -43,10 +43,10 @@ namespace FeedReader.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
- 
-            ICollection<RssSubscription> subscriptions = _manager.RetrieveSubscriptions();
 
-            if (subscriptions.Count() == 0)
+            int count = _manager.RetrieveSubscriptions().Count();
+
+            if (count == 0)
             {
                 return RedirectToAction("AddFeed");
             }
@@ -58,11 +58,7 @@ namespace FeedReader.Controllers
 
         public ActionResult ListAllFeeds()
         {
-            var query = from sub in _manager.RetrieveSubscriptions()
-                        orderby sub.Feed.Title
-                        select sub.Feed;
-      
-            return View(query.ToList());
+            return View(_manager.RetrieveChannels());
         }
         /// <summary>
         /// Takes user to the non static feed list that is updated with JSON
@@ -120,7 +116,7 @@ namespace FeedReader.Controllers
         [HttpPost]
         public virtual JsonResult FeedJson(DTableRequest dTableRequest)
         {  
-            dTableRequest.search.value = Request.Params["search[value]"]; //TO-DO: find out why second level objects are not parsed by mvc
+            //dTableRequest.search.value = Request.Params["search[value]"]; //TO-DO: find out why second level objects are not parsed by mvc
 
             DTableResponse<Object> dTableResponse = _manager.RetrieveDataTableRssItems(dTableRequest);
 
@@ -135,8 +131,7 @@ namespace FeedReader.Controllers
         /// <returns>Page representation of the view requested</returns>
         public ActionResult ViewFeed(string feedUrl)
         {
-            RssChannel channel = _dbContext.RssChannels.Include("Items").Where(itemId => itemId.FeedUrl == feedUrl).FirstOrDefault();
-            channel.Items = new List<RssItem>(channel.Items.OrderByDescending(a => a.PubDate));
+            RssChannel channel = _manager.RetrieveChannel(feedUrl);
 
             return View(channel);
         }

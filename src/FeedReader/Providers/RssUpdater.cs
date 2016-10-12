@@ -50,9 +50,10 @@ namespace FeedReader.Providers
                 {
                     channel = updater.RetrieveChannel(url);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     Debug.WriteLine("Unable to parse feed " + url + " with parser: " + updater.ToString());
+                    Debug.WriteLine(e);
                 }                
 
                 if(channel != null){
@@ -292,7 +293,6 @@ namespace FeedReader.Providers
     /// </summary>
     public class SyndicationRssUpdater : IRssUpdater
     {
-
         /// <summary>
         /// Retrieves a channel from a requested url
         /// </summary>

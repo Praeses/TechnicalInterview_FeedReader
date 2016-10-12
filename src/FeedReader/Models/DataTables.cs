@@ -41,8 +41,8 @@ namespace FeedReader.Models
     /// </summary>
     public class Search
     {
-        public bool regex { get; set; }
-        public string value { get; set; }
+        public bool Regex { get; set; }
+        public string Value { get; set; }
     }
     /// <summary>
     /// Datatables internal column representation

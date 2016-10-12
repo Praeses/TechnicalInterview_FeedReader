@@ -82,11 +82,23 @@ namespace FeedReader.Providers
         /// Finds all subscriptions for the user
         /// </summary>
         /// <returns>ICollection of RssSubscriptions with included RssChannel Feed</returns>
-        public ICollection<RssSubscription> RetrieveSubscriptions()
+        public IQueryable<RssSubscription> RetrieveSubscriptions()
         {
-            ICollection<RssSubscription> subs = dbContext.RssSubscriptions.Where(sub => sub.UserId == appUserId).Include(sub => sub.Feed).Include("Feed").ToList();
+            return dbContext.RssSubscriptions.Where(sub => sub.UserId == appUserId).Include(sub => sub.Feed).Include("Feed");
+        }
 
-            return subs;
+        public RssChannel RetrieveChannel(string feedUrl)
+        {
+            var channel = RetrieveChannels().Include("Items").Where(itemId => itemId.FeedUrl == feedUrl).FirstOrDefault();
+            channel.Items = new List<RssItem>(channel.Items.OrderByDescending(a => a.PubDate));
+
+            return channel;
+        }
+        public IQueryable<RssChannel> RetrieveChannels()
+        {
+            return from sub in RetrieveSubscriptions()
+                                               orderby sub.Feed.Title
+                                               select sub.Feed;
         }
 
         /// <summary>
@@ -121,7 +133,7 @@ namespace FeedReader.Providers
         /// </summary>
         public void RequestChannelUpdate()
         {
-            ICollection<RssSubscription> subscriptions = RetrieveSubscriptions();
+            var subscriptions = RetrieveSubscriptions();
             List<RssChannel> feeds = new List<RssChannel>();
 
             foreach (RssSubscription sub in subscriptions)
@@ -213,7 +225,7 @@ namespace FeedReader.Providers
             //if the user requested filtereing add it to the query. 
             //The search value is searched across the 
             //  Rss Feed Item Title, Rss Feed Item Description, and the RssChannel title
-            string search = dTableRequest.search.value;
+            string search = dTableRequest.search.Value;
             if (search != null)
             {
                 entries = entries.Where(a => a.rssItem.Title.Contains(search) || a.rssItem.Description.Contains(search) || a.filteredChannel.Title.Contains(search));
