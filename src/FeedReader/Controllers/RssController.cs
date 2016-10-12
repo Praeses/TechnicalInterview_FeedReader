@@ -27,16 +27,20 @@ namespace FeedReader.Controllers
     [Authorize]
     public class RssController : Controller
     {
-        
+
+        private RssManager _manager;
+        public RssController(RssManager manager)
+        {
+            this._manager = manager;
+        }
         /// <summary>
         /// Index of RSS. Take user to Feed List on first pass
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
         {
-            RssManager manager = new RssManager(User.Identity.GetUserId());
-
-            ICollection<RssSubscription> subscriptions = manager.RetrieveSubscriptions();
+ 
+            ICollection<RssSubscription> subscriptions = _manager.RetrieveSubscriptions();
 
             if (subscriptions.Count() == 0)
             {
@@ -50,8 +54,7 @@ namespace FeedReader.Controllers
 
         public ActionResult ListAllFeeds()
         {
-            RssManager manager = new RssManager(User.Identity.GetUserId());
-            var query = from sub in manager.RetrieveSubscriptions()
+            var query = from sub in _manager.RetrieveSubscriptions()
                         orderby sub.Feed.Title
                         select sub.Feed;
       
@@ -76,8 +79,7 @@ namespace FeedReader.Controllers
         [HttpPost]
         public JsonResult UpdateFeeds()
         {
-            RssManager manager = new RssManager(User.Identity.GetUserId());
-            manager.RequestChannelUpdate();
+            _manager.RequestChannelUpdate();
 
             return Json("success");
         }
@@ -88,8 +90,7 @@ namespace FeedReader.Controllers
         /// <returns></returns>
         public ActionResult RemoveSubscription(int rssChannelId)
         {
-            RssManager manager = new RssManager(User.Identity.GetUserId());
-            manager.RemoveSubscription(rssChannelId);
+            _manager.RemoveSubscription(rssChannelId);
             return RedirectToAction("ListAllItems");
         }
 
@@ -102,9 +103,7 @@ namespace FeedReader.Controllers
         [HttpPost]
         public JsonResult UpdateFeedItem(int rssItemId, bool hide = false)
         {
-            string userId = User.Identity.GetUserId();
-            RssManager manager = new RssManager(userId);
-            manager.UpdateRssItem(rssItemId, hide,true);
+            _manager.UpdateRssItem(rssItemId, hide,true);
           
             return Json("success");
         }
@@ -116,13 +115,10 @@ namespace FeedReader.Controllers
         /// <returns>JSON representation of the DTableResponse object</returns>
         [HttpPost]
         public virtual JsonResult FeedJson(DTableRequest dTableRequest)
-        {
-            RssManager manager = new RssManager(User.Identity.GetUserId());   
-            string userId = User.Identity.GetUserId();
-
+        {  
             dTableRequest.search.value = Request.Params["search[value]"]; //TO-DO: find out why second level objects are not parsed by mvc
 
-            DTableResponse<Object> dTableResponse = manager.RetrieveDataTableRssItems(dTableRequest);
+            DTableResponse<Object> dTableResponse = _manager.RetrieveDataTableRssItems(dTableRequest);
 
             return Json(dTableResponse, JsonRequestBehavior.AllowGet);
         }
@@ -185,8 +181,7 @@ namespace FeedReader.Controllers
         {
             String link = channel.Link;
 
-            RssManager manager = new RssManager(User.Identity.GetUserId());
-            RssSubscription existingSubscription = manager.FindSubscription(link);
+            RssSubscription existingSubscription = _manager.FindSubscription(link);
 
             if (existingSubscription != null)
             {
@@ -198,7 +193,7 @@ namespace FeedReader.Controllers
                 RssSubscription subscription = null;
                 try
                 {
-                    subscription = manager.AddSubscription(link);
+                    subscription = _manager.AddSubscription(link);
                 }
                 catch (RssUpdateException e)
                 {

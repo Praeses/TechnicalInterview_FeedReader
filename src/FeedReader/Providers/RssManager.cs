@@ -22,16 +22,21 @@ namespace FeedReader.Providers
         private RssContext dbContext;
         private string appUserId;
 
+        public RssManager(IUserContext userContext)
+        {
+            this.dbContext = new RssContext();
+            this.appUserId = userContext.UserId;
+        }
         /// <summary>
         /// Most all actions are done across a user in the RssContext. Include them here so they don't have to be passed into each method.
         /// </summary>
         /// <param name="userId"></param>
-        public RssManager(string userId)
-        {
-            this.dbContext = new RssContext();
-            this.appUserId = userId;
-            //dbContext.Database.Log = s => Debug.WriteLine(s);
-        }
+        //public RssManager(string userId)
+        //{
+        //    this.dbContext = new RssContext();
+        //    this.appUserId = userId;
+        //    //dbContext.Database.Log = s => Debug.WriteLine(s);
+        //}
 
         /// <summary>
         /// Finds a subscription tied to a particular user if it exists.
