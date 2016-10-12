@@ -29,9 +29,13 @@ namespace FeedReader.Controllers
     {
 
         private RssManager _manager;
-        public RssController(RssManager manager)
+        private RssContext _dbContext;
+        private IRssSearchProvider _rssSearchProvider;
+        public RssController(RssManager manager, RssContext dbContext, GoogleRssProvider rssProvider)
         {
             this._manager = manager;
+            this._dbContext = dbContext;
+            this._rssSearchProvider = rssProvider;
         }
         /// <summary>
         /// Index of RSS. Take user to Feed List on first pass
@@ -131,8 +135,7 @@ namespace FeedReader.Controllers
         /// <returns>Page representation of the view requested</returns>
         public ActionResult ViewFeed(string feedUrl)
         {
-            RssContext context = new RssContext();
-            RssChannel channel = context.RssChannels.Include("Items").Where(itemId => itemId.FeedUrl == feedUrl).FirstOrDefault();
+            RssChannel channel = _dbContext.RssChannels.Include("Items").Where(itemId => itemId.FeedUrl == feedUrl).FirstOrDefault();
             channel.Items = new List<RssItem>(channel.Items.OrderByDescending(a => a.PubDate));
 
             return View(channel);
@@ -145,8 +148,7 @@ namespace FeedReader.Controllers
         /// <returns>Partial View of the feed item</returns>
         public ActionResult ViewFeedItem(int feedItemId)
         {
-            RssContext context = new RssContext();
-            RssItem rssItem = context.RssItems.Include(a=>a.Channel).FirstOrDefault(a=> a.RssItemId == feedItemId);
+            RssItem rssItem = _dbContext.RssItems.Include(a => a.Channel).FirstOrDefault(a => a.RssItemId == feedItemId);
 
             return PartialView("~/Views/Rss/Partial/ViewFeedItem.cshtml", rssItem);
         }
@@ -158,8 +160,7 @@ namespace FeedReader.Controllers
         /// <returns>View representing the search result</returns>
         public JsonResult SearchRssFeeds(string query)
         {
-            IRssSearchProvider rssSearch = new GoogleRssProvider();
-            return Json(rssSearch.Search(query), JsonRequestBehavior.AllowGet);
+            return Json(_rssSearchProvider.Search(query), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

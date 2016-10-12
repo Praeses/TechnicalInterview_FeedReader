@@ -21,11 +21,15 @@ namespace FeedReader.Providers
     {
         private RssContext dbContext;
         private string appUserId;
+        private IRssUpdater _rssUpdater;
+        private ThreadedChannelUpdater _channelUpdater;
 
-        public RssManager(IUserContext userContext)
+        public RssManager(IUserContext userContext, RssContext dbContext, ChainingRssReader rssUpdater, ThreadedChannelUpdater channelUpdater)
         {
-            this.dbContext = new RssContext();
+            this.dbContext = dbContext;
             this.appUserId = userContext.UserId;
+            this._rssUpdater = rssUpdater;
+            this._channelUpdater = channelUpdater;
         }
         /// <summary>
         /// Most all actions are done across a user in the RssContext. Include them here so they don't have to be passed into each method.
@@ -96,8 +100,7 @@ namespace FeedReader.Providers
 
             if (channel == null)
             {
-                IRssUpdater updater = new ChainingRssReader();
-                channel = updater.RetrieveChannel(feedUrl);
+                channel = _rssUpdater.RetrieveChannel(feedUrl);
 
                 //workaround for issue where the channel id is needed for the hash for the rssitems but the id is 0
                 //save the channel without the items first to get an id and then save the channel items so the hash is computed correctly
@@ -127,8 +130,7 @@ namespace FeedReader.Providers
             }
 
             //update each rssChannel asyncrounously but syncronously wait for the return
-            ThreadedChannelUpdater updater = new ThreadedChannelUpdater();
-            updater.UpdateFeeds(feeds);
+            _channelUpdater.UpdateFeeds(feeds);
         }
 
         /// <summary>
