@@ -1,12 +1,16 @@
-﻿using System.Web.Mvc;
-
-namespace FeedReader.Controllers
+﻿namespace FeedReader.Controllers
 {
+    using System.Web.Mvc;
+
     public class HomeController : Controller
     {
+        #region Public Methods and Operators
+
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
+
+        #endregion
     }
 }
