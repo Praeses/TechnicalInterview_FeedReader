@@ -1,0 +1,32 @@
+﻿@model FeedReader.Models.RssFeed
+
+@{
+    ViewBag.Title = "Subscription Details";
+}
+
+<h2 class="top-buffer">Details for @Model.Title</h2>
+
+<div class="backInGray roundCorners whiteText minw415" id="subDiv">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Link)
+        </dd>
+    </dl>
+    
+    <div id="buttonDiv">
+        <button class="btn btn-default">@Html.ActionLink("Back to List", "Index", routeValues: null, htmlAttributes: new { @class = "btn-default"})</button> 
+        <button class="btn btn-default">@Html.ActionLink("Edit", "Edit", new { UserId=@Model.UserId, Title=@Model.Title }, htmlAttributes: new { @class = "btn-default"})</button>
+    </div>
+</div>

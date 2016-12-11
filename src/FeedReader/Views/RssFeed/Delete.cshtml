@@ -1,0 +1,38 @@
+﻿@model FeedReader.Models.RssFeed
+
+@{
+    ViewBag.Title = "Delete Subscription";
+}
+
+<h2>Delete @Model.Title Feed</h2>
+
+<h3 class="whiteText">Are you sure?</h3>
+<div id="subDiv" class="roundCorners whiteText backInGray minw415">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Link)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color" id="buttonDiv">
+            <button class="btn btn-default">@Html.ActionLink("Back to List", "Index", routeValues: null, htmlAttributes: new { @class = "btn-default"})</button> 
+            <input type="submit" value="Delete" class="btn btn-default" /> 
+        </div>
+    }
+</div>

@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace FeedReader.Models
 {
@@ -15,18 +17,32 @@ namespace FeedReader.Models
             // Add custom user claims here
             return userIdentity;
         }
-    }
+
+        public virtual ICollection<RssFeed> RssFeeds { get; set; }
+    }    
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
+        { }
+
+        public DbSet<RssFeed> RssFeeds { get; set; }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }     
+                
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            //Build relationship between RssFeeds and Users
+            modelBuilder.Entity<RssFeed>().HasKey(x => new { x.UserId, x.Title });
+            modelBuilder.Entity<ApplicationUser>().HasMany(x => x.RssFeeds).WithRequired(x => x.User).HasForeignKey(x => x.UserId).WillCascadeOnDelete(false);
+
         }
+         
     }
 }

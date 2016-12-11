@@ -4,11 +4,11 @@
     ViewBag.Title = "Manage Account";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2 class="top-buffer">@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div class="row">
-    <div class="col-md-12">
+<div class="row" id="subDiv">
+    <div class="col-md-8 whiteText backInGray roundCorners">
         @if (ViewBag.HasLocalPassword)
         {
             @Html.Partial("_ChangePasswordPartial")
@@ -18,6 +18,10 @@
             @Html.Partial("_SetPasswordPartial")
         }
 
+
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-3 whiteText backInGray roundCorners">
         <section id="externalLogins">
             @Html.Action("RemoveAccountList")
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })

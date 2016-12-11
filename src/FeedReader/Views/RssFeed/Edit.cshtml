@@ -1,0 +1,37 @@
+﻿@model FeedReader.Models.RssFeed
+
+@{
+    ViewBag.Title = "Edit Subscription";
+}
+
+<h2 class="top-buffer">Edit URL for @Model.Title</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal backInGray roundCorners whiteText minw415" id="subDiv">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.UserId)
+
+        @Html.HiddenFor(model => model.Title)
+
+        <div class="form-group">
+            <div>@Html.LabelFor(model => model.Link, new { @class = "control-label col-md-2" })</div>            
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Link)
+                @Html.ValidationMessageFor(model => model.Link)
+            </div>
+        </div>
+
+        <div id="buttonDiv">          
+            <button class="btn btn-default">@Html.ActionLink("Back to List", "Index", routeValues: null, htmlAttributes: new { @class = "btn-default"})</button> 
+            <input type="submit" value="Save" class="btn btn-default" /> 
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

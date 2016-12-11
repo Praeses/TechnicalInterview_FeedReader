@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: url(Images/bg.jpg);
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -14,4 +15,79 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.minw415{
+    min-width:415px;
+}
+
+.minw1085{
+    min-width:1085px;
+}
+
+#logo {
+    height: 40px;
+}
+
+.nav-buffer {
+    margin-top: 10px;
+}
+
+.top-buffer{
+    margin-top: 30px;
+}
+
+.backInBlack {
+    background-color: black;
+}
+
+.roundCorners {
+    border-radius: 10px;
+}
+
+.roundBottomCorners{
+    border-radius: 0px 0px 10px 10px;
+}
+
+.jumbotron-color{    
+    color: #999;
+}
+
+h2,table, .whiteText{
+    color: white;
+}
+
+.orangeLink {
+    color: #FF6600;
+}
+
+.slideRight {
+    float:right;
+}
+
+.backInGray {
+    background-color: #222;
+}
+
+#subDiv{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#buttonDiv{
+    margin-left: 130px;
+}
+
+#Link{
+    width: 350px;
+    max-width: 350px !important;
+}
+
+.transparent, transparent:hover{
+    background:transparent;
+    border:none;
+}
+
+.padding20{
+    padding:20px;
 }

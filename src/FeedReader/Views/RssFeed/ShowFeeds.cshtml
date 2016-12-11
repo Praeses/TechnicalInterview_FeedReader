@@ -1,0 +1,81 @@
+﻿@model Dictionary<string, List<FeedReader.Models.RssArticle>>
+@{
+    ViewBag.Title = "My Feeds";
+}
+
+<style type="text/css">
+    .table tbody tr td {
+        border: none;
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+        color:white;
+        background-color: #222;
+        cursor:default;
+        border-color:#222;
+        border-bottom-color:transparent;
+    }
+    .nav-tabs{
+        border-bottom: 1px solid #222;
+    }
+    a {
+        color: #FF6600;
+    }
+    a:hover{
+        color: red;
+    }
+    .table tbody tr td{
+        border-bottom: 1px solid white;
+    }
+    .dataTables_scrollBody {
+        overflow: no-display !important;
+        width: 100%;
+    }
+</style>
+
+<h2 class="top-buffer">Show Feeds</h2>
+
+<ul class="nav nav-tabs" role="tablist" id="tabs"></ul>
+
+<div id="tabDivContainer" class="tab-content"></div>
+
+<br />
+
+<div id="createNew">
+        <a href='@Url.Action("Create","RssFeed")' class="slideRight">
+            <button class="btn btn-default">Add Feed</button>
+        </a>
+</div>
+
+<br />
+
+@section Scripts
+{
+    <script src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/custom/rssfeed")"></script>
+
+    <script type="text/javascript">
+
+    var model = @Html.Raw(Json.Encode(Model));
+    var keyList = @Html.Raw(Json.Encode(Model.Keys));
+
+    $(document).ready(function(){
+        buildSubscriptionTabs(keyList, model);
+
+        $('#tabs a').click(function (e){
+            e.preventDefault() ;
+            $(this).tab('show');
+        });
+
+        //this listeners are to fix a bug with datatables
+        //where the table header width is wrong
+        //because the table is created when the div is hidden
+        $('#tabs a').on('shown.bs.tab',function(){
+            var table = $(this).attr('href').replace('#','') + 'Table';
+            var dataTable = $('#'+table).dataTable();
+            dataTable.fnAdjustColumnSizing();
+        });        
+    });
+    </script>
+}
+
+
+
