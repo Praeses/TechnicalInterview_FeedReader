@@ -1,0 +1,48 @@
+﻿@model FeedReader.Models.UserFeedModel
+
+@{
+    ViewBag.Title = "List of Items";
+}
+
+<h2>@Html.ValueFor(model => model.Title)</h2>
+@using (@Html.BeginForm("List", "UserFeed", FormMethod.Get, new { @action = Url.Action("List", "UserFeed", FormMethod.Get, Request.Url.Scheme)}))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="searchBox" class="control-label col-md-1">Search:</label>
+            <div class="col-md-10" style="width: 300px;">
+                @Html.TextBox("searchFilter", ViewBag.CurrentFilter as string, new { @id = "searchBox", @class = "form-control", @autofocus = true  })
+            </div>
+            <input type="submit" class="btn btn-default" value="Search" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+    <br /><br />
+</div>
+
+<table class="table">
+   
+@foreach (var item in Model.FeedList) {
+    <tr>
+        <th>
+            @Html.Raw(item.Title)
+        </th>
+        <th align="right">
+            @Html.Raw(item.PubDate)
+        </th>
+    </tr>
+    <tr>
+        <td colspan="2">
+            @Html.Raw(item.Description)
+        </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
